@@ -7,7 +7,7 @@ export default function Home() {
         <header className="px-10">
           <div>
             {" "}
-            <h1 className="text-3xl font-extrabold">AI Faiss</h1>
+            <h1 className="text-3xl">AI Faiss</h1>
           </div>
         </header>
         <div className="container mx-auto px-6 mt-20 max-w-6xl">
