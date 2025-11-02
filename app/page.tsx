@@ -1,65 +1,132 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="bg-white text-gray-900">
+      {/* HERO */}
+      <section className="relative overflow-hidden py-4">
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-blue-500 to-purple-500 opacity-10" />
+        <header className="px-10">
+          <div>
+            {" "}
+            <h1 className="text-3xl font-extrabold">AI Faiss</h1>
+          </div>
+        </header>
+        <div className="container mx-auto px-6 mt-20 max-w-6xl">
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+            AI Consulting & Automation for
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+              Future-Ready Businesses
+            </span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-6 text-xl max-w-2xl text-gray-600">
+            Deploy smart automation, custom AI workflows, and data-aware
+            copilots. We help companies scale, innovate, and operate faster in
+            2026 and beyond.
           </p>
+
+          <div className="mt-10 flex gap-4">
+            <a
+              href="/contact"
+              className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-lg rounded-lg"
+            >
+              Schedule Strategy Call
+            </a>
+            <a
+              href="#services"
+              className="px-6 py-3 border border-gray-300 hover:border-gray-400 rounded-lg text-lg"
+            >
+              Explore Solutions
+            </a>
+          </div>
+
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 opacity-80">
+            <img src="/logo-1.svg" alt="Client Logo" className="h-10" />
+            <img src="/logo-2.svg" alt="Client Logo" className="h-10" />
+            <img src="/logo-3.svg" alt="Client Logo" className="h-10" />
+            <img src="/logo-4.svg" alt="Client Logo" className="h-10" />
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+      </section>
+
+      {/* IMAGE FEATURE */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <img
+              src="https://images.unsplash.com/photo-1550745165-9bc0b252726f"
+              alt="AI dashboard"
+              className="rounded-2xl shadow-lg"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div>
+              <h2 className="text-4xl font-bold">
+                Automation that actually delivers
+              </h2>
+              <p className="mt-4 text-lg text-gray-600">
+                From workflow automations to enterprise AI copilots — we design
+                systems that reduce manual work, cut costs, and unlock new
+                growth.
+              </p>
+
+              <ul className="mt-6 space-y-3 text-gray-700">
+                <li>• AI workflow automation</li>
+                <li>• Custom LLM agents & copilots</li>
+                <li>• CRM & support automation</li>
+                <li>• AI onboarding for teams</li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* SERVICES */}
+      <section id="services" className="py-24">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <h2 className="text-4xl font-bold text-center mb-14">
+            What We Build
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {[
+              {
+                title: "AI Strategy & Advisory",
+                text: "Executive-level AI roadmaps, technical review & deployment plans.",
+              },
+              {
+                title: "End-to-End Automation",
+                text: "Automated workflows across sales, operations, support & finance.",
+              },
+              {
+                title: "Custom AI Agents",
+                text: "Data-aware agents integrated with your stack and real-world tools.",
+              },
+            ].map((s) => (
+              <div
+                key={s.title}
+                className="p-8 border rounded-2xl hover:shadow-xl transition"
+              >
+                <h3 className="text-2xl font-semibold">{s.title}</h3>
+                <p className="mt-3 text-gray-600">{s.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center">
+        <h2 className="text-4xl font-bold">
+          Ready to future-proof your business?
+        </h2>
+        <p className="mt-4 text-xl opacity-90">
+          Let’s architect your AI advantage.
+        </p>
+        <a
+          href="/contact"
+          className="mt-8 inline-block px-8 py-4 bg-white text-indigo-700 font-semibold rounded-lg hover:bg-gray-200"
+        >
+          Book a Session
+        </a>
+      </section>
+    </main>
   );
 }
