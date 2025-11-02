@@ -2,13 +2,9 @@
 import { useState } from "react";
 
 export default function Home() {
-  const [dark, setDark] = useState(true);
-
   // Classes based on dark/light mode
-  const bgClass = dark ? "bg-black" : "bg-white";
-  const textClass = dark ? "text-white" : "text-black";
-  const secondaryText = dark ? "text-gray-300" : "text-gray-700";
-  const borderColor = dark ? "border-gray-700" : "border-gray-300";
+  const bgClass = "bg-black";
+  const textClass = "text-white";
   const accentColor = "text-purple-500"; // tertiary color
 
   return (
@@ -17,30 +13,12 @@ export default function Home() {
     >
       {/* HERO */}
       <section className="relative overflow-hidden py-6">
-        <header className="container mx-auto px-6 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">AI Faiss</h1>
-          <nav className="space-x-6">
-            <a
-              href="#services"
-              className={`${secondaryText} hover:${accentColor} transition`}
-            >
-              Services
-            </a>
-            <a
-              href="/contact"
-              className={`${secondaryText} hover:${accentColor} transition`}
-            >
-              Contact
-            </a>
-          </nav>
-        </header>
-
         <div className="container mx-auto px-6 mt-32 max-w-4xl text-center">
           <h1 className={`text-5xl md:text-6xl font-bold leading-tight`}>
             AI Consulting & Automation for <br />
             <span className={`${accentColor}`}>Future-Ready Businesses</span>
           </h1>
-          <p className={`mt-6 text-lg ${secondaryText}`}>
+          <p className={`mt-6 text-lg text-gray-300`}>
             Deploy smart automation, custom AI workflows, and data-aware
             copilots. We help companies scale, innovate, and operate faster in
             2026 and beyond.
@@ -55,7 +33,7 @@ export default function Home() {
             </a>
             <a
               href="#services"
-              className={`px-6 py-3 border ${borderColor} rounded-lg ${secondaryText} hover:${accentColor} transition`}
+              className={`px-6 py-3 border border-gray-700 rounded-lg text-gray-300 hover:${accentColor} transition`}
             >
               Explore Solutions
             </a>
@@ -64,7 +42,7 @@ export default function Home() {
       </section>
 
       <section>
-        <div className="w-screen justify-center flex md:gap-32 gap-6">
+        <div className="w-full justify-center flex md:gap-32 gap-6">
           {" "}
           <img
             src="/logo-1.webp"
@@ -113,10 +91,10 @@ export default function Home() {
             ].map((s) => (
               <div
                 key={s.title}
-                className={`p-8 border ${borderColor} rounded-2xl hover:shadow-xl transition`}
+                className={`p-8 border border-gray-700 rounded-2xl hover:shadow-xl transition`}
               >
                 <h3 className="text-2xl font-semibold">{s.title}</h3>
-                <p className={`mt-3 ${secondaryText}`}>{s.text}</p>
+                <p className={`mt-3 text-gray-300`}>{s.text}</p>
               </div>
             ))}
           </div>
@@ -128,7 +106,7 @@ export default function Home() {
         <h2 className="text-4xl font-bold">
           Ready to future-proof your business?
         </h2>
-        <p className={`mt-4 text-lg ${secondaryText}`}>
+        <p className={`mt-4 text-lg text-gray-300`}>
           Let’s architect your AI advantage.
         </p>
         <a

@@ -48,11 +48,11 @@ export default function ContactPage() {
       >
         <motion.h1
           variants={fadeUp}
-          className="text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500"
+          className="text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-purple-500"
         >
           Neem contact op — Vraag een offerte aan
         </motion.h1>
-        <motion.p variants={fadeUp} className="text-gray-700 mb-12 text-center">
+        <motion.p variants={fadeUp} className=" mb-12 text-center">
           Vul het formulier in en ons team neemt snel contact met je op. Samen
           zorgen we voor een schone, comfortabele en gezonde ruimte.
         </motion.p>
@@ -94,7 +94,7 @@ export default function ContactPage() {
           <div className="sm:col-span-2 flex items-center gap-4">
             <button
               type="submit"
-              className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:scale-105 transition"
+              className="px-6 py-3 bg-green-500 text-black cursor-pointer font-semibold rounded-xl shadow-lg hover:scale-105 transition"
             >
               Verstuur
             </button>

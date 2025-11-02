@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
     const SMTP_USER = process.env.SMTP_USER;
     const SMTP_PASS = process.env.SMTP_PASS;
-    const TO_EMAIL = process.env.TO_EMAIL || "hartschoon@gmail.com";
+    const TO_EMAIL = process.env.TO_EMAIL || "info@aifais.com";
 
     if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
       return new Response(JSON.stringify({ error: "SMTP not configured" }), {
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     await transporter.sendMail({
       from: `${name} <${email}>`,
       to: TO_EMAIL,
-      subject: `Contactformulier: ${name} via HartSchoon`,
+      subject: `Contactformulier: ${name} via Aifais`,
       text: mailBody,
     });
 
