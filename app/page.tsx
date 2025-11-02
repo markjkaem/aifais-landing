@@ -10,7 +10,7 @@ export default function Home() {
             <h1 className="text-3xl">AI Faiss</h1>
           </div>
         </header>
-        <div className="container mx-auto px-6 mt-20 max-w-6xl">
+        <div className="container mx-auto px-6 mt-32 max-w-6xl">
           <h1 className="text-5xl md:text-6xl font-bold leading-tight">
             AI Consulting & Automation for
             <br />
