@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
@@ -25,12 +26,12 @@ export default function Home() {
           </p>
 
           <div className="mt-10 flex justify-center gap-4">
-            <a
+            <Link
               href="/contact"
               className={`px-6 py-3 ${accentColor} border border-green-500 font-semibold rounded-lg hover:bg-green-500 hover:text-black transition`}
             >
               Schedule Strategy Call
-            </a>
+            </Link>
             <a
               href="#services"
               className={`px-6 py-3 border border-gray-700 rounded-lg text-gray-300 hover:${accentColor} transition`}
@@ -109,12 +110,12 @@ export default function Home() {
         <p className={`mt-4 text-lg text-gray-300`}>
           Let’s architect your AI advantage.
         </p>
-        <a
+        <Link
           href="/contact"
           className={`mt-8 inline-block px-10 py-4 ${accentColor} border border-green-500 font-semibold rounded-lg hover:bg-green-500 hover:text-black transition`}
         >
           Book a Session
-        </a>
+        </Link>
       </section>
     </main>
   );

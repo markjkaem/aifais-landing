@@ -39,7 +39,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="bg-gradient-to-br bg-black min-h-screen py-24 px-6">
+    <div className=" bg-black min-h-screen py-14 px-6">
       <motion.section
         className="max-w-3xl mx-auto"
         initial="hidden"
@@ -48,11 +48,11 @@ export default function ContactPage() {
       >
         <motion.h1
           variants={fadeUp}
-          className="text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-purple-500"
+          className="text-4xl font-bold mb-6  bg-clip-text text-transparent text-white"
         >
           Neem contact op — Vraag een offerte aan
         </motion.h1>
-        <motion.p variants={fadeUp} className=" mb-12 text-center">
+        <motion.p variants={fadeUp} className=" mb-12">
           Vul het formulier in en ons team neemt snel contact met je op. Samen
           zorgen we voor een schone, comfortabele en gezonde ruimte.
         </motion.p>
