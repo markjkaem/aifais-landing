@@ -47,7 +47,7 @@ export default function Home() {
             alt="Hero"
             layout="fill"
             objectFit="cover"
-            className="absolute top-0 left-0 w-full h-full opacity-20 object-center"
+            className="absolute top-0 left-0 w-full h-full opacity-20 object-center pointer-events-none"
           />
         </div>
       </section>
