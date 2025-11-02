@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ai Fais - AI Consulting & Automation",
+  title: "AI Fais - AI Consulting & Automation",
   description: "AI Consulting & Automation Services",
 };
 
