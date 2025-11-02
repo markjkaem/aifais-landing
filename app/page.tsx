@@ -64,32 +64,27 @@ export default function Home() {
       </section>
 
       <section>
-        <div className="w-screen justify-center flex gap-32">
+        <div className="w-screen justify-center flex md:gap-32 gap-6">
           {" "}
           <img
             src="/logo-1.webp"
             alt="Description of image"
-            className="w-40 h-auto invert"
+            className="md:w-40 w-14 h-auto invert"
           />
           <img
             src="/logo-1.webp"
             alt="Description of image"
-            className="w-40 h-auto invert"
+            className="md:w-40 w-14 h-auto invert"
           />
           <img
             src="/logo-1.webp"
             alt="Description of image"
-            className="w-40 h-auto invert"
+            className="md:w-40 w-14 h-auto invert"
           />
           <img
             src="/logo-1.webp"
             alt="Description of image"
-            className="w-40 h-auto invert"
-          />
-          <img
-            src="/logo-1.webp"
-            alt="Description of image"
-            className="w-40 h-auto invert"
+            className="md:w-40 w-14 h-auto invert"
           />
         </div>
       </section>
