@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,7 +15,7 @@ export default function Home() {
     >
       {/* HERO */}
       <section className="relative overflow-hidden py-6">
-        <div className="container mx-auto px-6 mt-32 max-w-4xl text-center">
+        <div className="container mx-auto px-18 mt-32 max-w-4xl text-center">
           <h1 className={`text-5xl md:text-6xl font-bold leading-tight`}>
             AI Consulting & Automation for <br />
             <span className={`${accentColor}`}>Future-Ready Businesses</span>
@@ -39,6 +40,15 @@ export default function Home() {
               Explore Solutions
             </a>
           </div>
+        </div>
+        <div>
+          <Image
+            src="/afais.jpg"
+            alt="Hero"
+            layout="fill"
+            objectFit="cover"
+            className="absolute top-0 left-0 w-full h-full opacity-20 object-center"
+          />
         </div>
       </section>
 
