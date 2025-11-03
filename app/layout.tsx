@@ -41,20 +41,34 @@ export default function RootLayout({
               height={1000}
             />
           </Link>
-          <nav className="space-x-6">
-            <a
-              href="#services"
-              className={`text-gray-300 hover:${accentColor} transition`}
-            >
-              Services
-            </a>
-            <a
-              href="/contact"
-              className={`text-gray-300 hover:${accentColor} transition`}
-            >
-              Contact
-            </a>
-          </nav>
+          <div className="flex justify-center items-center md:space-x-8">
+            <div className="md:flex space-x-2 hidden">
+              <img
+                src="/uk.jpg"
+                alt="Description of image"
+                className="md:w-5 md:h-4 w-14"
+              />
+              <img
+                src="/netherlands.webp"
+                alt="Description of image"
+                className="md:w-5 md:h-4 w-14"
+              />
+            </div>
+            <nav className="space-x-6">
+              <a
+                href="#services"
+                className={`text-gray-300 hover:${accentColor} transition`}
+              >
+                Services
+              </a>
+              <a
+                href="/contact"
+                className={`text-gray-300 hover:${accentColor} transition`}
+              >
+                Contact
+              </a>
+            </nav>
+          </div>
         </header>
         {children}
         {/* Soft minimal footer */}

@@ -58,22 +58,27 @@ export default function Home() {
           <img
             src="/logo-1.webp"
             alt="Description of image"
-            className="md:w-40 w-14 h-auto invert"
+            className="md:w-40 w-14 object-contain h-auto opacity-50 invert"
           />
           <img
-            src="/logo-1.webp"
+            src="/google.svg"
             alt="Description of image"
-            className="md:w-40 w-14 h-auto invert"
+            className="md:w-40 object-contain w-14 h-auto opacity-50 grayscale "
           />
           <img
-            src="/logo-1.webp"
+            src="/n8n.svg"
             alt="Description of image"
-            className="md:w-40 w-14 h-auto invert"
+            className=" object-contain md:w-40 w-14 h-auto opacity-50 grayscale invert"
           />
           <img
-            src="/logo-1.webp"
+            src="/openai.svg"
             alt="Description of image"
-            className="md:w-40 w-14 h-auto invert"
+            className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert"
+          />
+          <img
+            src="/claude.svg"
+            alt="Description of image"
+            className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert"
           />
         </div>
       </section>
