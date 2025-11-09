@@ -1,135 +1,162 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { projects } from "./portfolio/data";
 
 export default function Home() {
-  // Classes based on dark/light mode
+  // Klassen op basis van dark/light mode
   const bgClass = "bg-black";
   const textClass = "text-white";
-  const accentColor = "text-purple-500"; // tertiary color
+  const accentColor = "text-purple-500"; // accentkleur
 
   return (
     <main
       className={`${bgClass} ${textClass} min-h-screen transition-colors duration-500`}
     >
       {/* HERO */}
-      <section className="relative overflow-hidden py-6">
-        <div className="container mx-auto px-18 mt-32 max-w-4xl text-center">
-          <h1 className={`text-5xl md:text-6xl font-bold leading-tight`}>
-            AI Consulting & Automation for <br />
-            <span className={`${accentColor}`}>Future-Ready Businesses</span>
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-black">
+        {/* Achtergrondafbeelding met gradient overlay */}
+        <div className="absolute inset-0">
+          <Image
+            src="/afais.jpg"
+            alt="AI Background"
+            layout="fill"
+            objectFit="cover"
+            className="opacity-30 object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/90" />
+        </div>
+
+        {/* Hero content */}
+        <div className="relative z-10 text-center max-w-4xl px-6">
+          <h1 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight">
+            <span className="block text-white">AI Automatisering</span>
+            <span className="block text-4xl  mt-2 bg-gradient-to-r from-purple-400 via-fuchsia-500 to-blue-400 bg-clip-text text-transparent">
+              Voor Toekomstgerichte Bedrijven
+            </span>
+            <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-yellow-300/20 via-fuchsia-400/10 to-blue-400/20 blur-3xl animate-pulse" />
           </h1>
-          <p className={`mt-6 text-lg text-gray-300`}>
-            Deploy smart automation, custom AI workflows, and data-aware
-            copilots. We help companies scale, innovate, and operate faster in
-            2026 and beyond.
+
+          <p className="mt-8 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
+            Wij ontwerpen en implementeren intelligente workflows, autonome
+            agents en data-gedreven AI-oplossingen die groei versnellen, kosten
+            verlagen en innovatie stimuleren.
           </p>
 
-          <div className="mt-10 flex justify-center gap-4">
+          {/* CTA-knoppen */}
+          <div className="mt-12 flex justify-center gap-4 flex-wrap">
             <Link
               href="/contact"
-              className={`px-6 py-3 ${accentColor} border border-green-500 font-semibold rounded-lg hover:bg-green-500 hover:text-black transition`}
+              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-yellow-300 text-black font-semibold rounded-xl hover:scale-105 transition-transform duration-300 shadow-lg"
             >
-              Schedule Strategy Call
+              Vraag offerte aan
             </Link>
             <a
               href="#services"
-              className={`px-6 py-3 border border-gray-700 rounded-lg text-gray-300 hover:${accentColor} transition`}
+              className="px-8 py-4 border border-gray-700 rounded-xl text-gray-200 hover:text-white hover:border-purple-400 transition"
             >
-              Explore Solutions
+              Ontdek Oplossingen
             </a>
           </div>
         </div>
-        <div>
-          <Image
-            src="/afais.jpg"
-            alt="Hero"
-            layout="fill"
-            objectFit="cover"
-            className="absolute top-0 left-0 w-full h-full opacity-20 object-center pointer-events-none"
-          />
-        </div>
+        {/* Glass panels */}
+        <div className="absolute inset-y-0 left-0 w-[120px] bg-white/5 backdrop-blur-sm border-r border-white/10 hidden md:block" />
+        <div className="absolute inset-y-0 right-0 w-[120px] bg-white/5 backdrop-blur-sm border-l border-white/10 hidden md:block" />
+
+        {/* Subtiele animatie-glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-600/20 blur-3xl rounded-full pointer-events-none" />
       </section>
 
+      {/* PARTNERS / LOGO'S */}
       <section>
         <div className="w-full justify-center flex md:gap-32 gap-6">
-          {" "}
           <img
             src="/logo-1.webp"
-            alt="Description of image"
+            alt="Partnerlogo"
             className="md:w-40 w-14 object-contain h-auto opacity-50 invert"
           />
           <img
             src="/google.svg"
-            alt="Description of image"
-            className="md:w-40 object-contain w-14 h-auto opacity-50 grayscale "
+            alt="Google logo"
+            className="md:w-40 object-contain w-14 h-auto opacity-50 grayscale"
           />
           <img
             src="/n8n.svg"
-            alt="Description of image"
-            className=" object-contain md:w-40 w-14 h-auto opacity-50 grayscale invert"
+            alt="n8n logo"
+            className="object-contain md:w-40 w-14 h-auto opacity-50 grayscale invert"
           />
           <img
             src="/openai.svg"
-            alt="Description of image"
+            alt="OpenAI logo"
             className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert"
           />
           <img
             src="/claude.svg"
-            alt="Description of image"
+            alt="Claude logo"
             className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert"
           />
         </div>
       </section>
 
-      {/* SERVICES */}
+      {/* DIENSTEN / PROJECTEN */}
       <section id="services" className="py-24">
         <div className="container mx-auto px-6 max-w-6xl">
           <h2 className="text-4xl font-bold text-center mb-14">
-            What We Build
+            Wat Wij Bouwen
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "AI Strategy & Advisory",
-                text: "Executive-level AI roadmaps, technical review & deployment plans.",
-              },
-              {
-                title: "End-to-End Automation",
-                text: "Automated workflows across sales, operations, support & finance.",
-              },
-              {
-                title: "Custom AI Agents",
-                text: "Data-aware agents integrated with your stack and real-world tools.",
-              },
-            ].map((s) => (
+            {projects.slice(0, 3).map((s) => (
               <div
-                key={s.title}
-                className={`p-8 border border-gray-700 rounded-2xl hover:shadow-xl transition`}
+                key={s.slug}
+                className="group rounded-2xl overflow-hidden border border-gray-700 bg-gray-900 hover:shadow-xl transition-shadow duration-300"
               >
-                <h3 className="text-2xl font-semibold">{s.title}</h3>
-                <p className={`mt-3 text-gray-300`}>{s.text}</p>
+                <img
+                  src={s.image}
+                  alt={s.title}
+                  className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="p-6">
+                  <h3 className="text-2xl font-semibold mb-2">{s.title}</h3>
+                  <p className="text-gray-300 mb-4 line-clamp-3">
+                    {s.description}
+                  </p>
+                  <Link
+                    href={`/portfolio/${s.slug}`}
+                    className="inline-block mt-2 text-yellow-300 font-semibold hover:underline"
+                  >
+                    Bekijk Case →
+                  </Link>
+                </div>
               </div>
             ))}
+          </div>
+
+          {/* CTA naar volledige portfolio */}
+          <div className="text-center mt-16">
+            <Link
+              href="/portfolio"
+              className="inline-block px-10 py-4 border border-yellow-300 text-yellow-300 font-semibold rounded-lg hover:bg-yellow-400 hover:text-black transition"
+            >
+              Bekijk Volledige Portfolio
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* AFSLUITENDE CTA */}
       <section className="py-24 text-center">
         <h2 className="text-4xl font-bold">
-          Ready to future-proof your business?
+          Klaar om jouw bedrijf toekomstbestendig te maken?
         </h2>
-        <p className={`mt-4 text-lg text-gray-300`}>
-          Let’s architect your AI advantage.
+        <p className="mt-4 text-lg text-gray-300">
+          Samen ontwerpen we jouw AI-voorsprong.
         </p>
         <Link
           href="/contact"
           className={`mt-8 inline-block px-10 py-4 ${accentColor} border border-green-500 font-semibold rounded-lg hover:bg-green-500 hover:text-black transition`}
         >
-          Book a Session
+          Plan een Gesprek
         </Link>
       </section>
     </main>
