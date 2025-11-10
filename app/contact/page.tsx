@@ -53,7 +53,7 @@ export default function ContactPage() {
           </h1>
           <p className="mb-12 text-gray-300">
             Vul het formulier in en ons team neemt snel contact met je op. Samen
-            zorgen we voor een schone, comfortabele en gezonde ruimte.
+            zorgen we voor een toekomstgerichte AI-oplossing voor jouw bedrijf.
           </p>
 
           <form
