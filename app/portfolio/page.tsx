@@ -5,7 +5,7 @@ export default function Portfolio() {
   return (
     <section className="py-24 bg-gray-950 min-h-screen">
       <div className="container mx-auto px-6 max-w-6xl">
-        <h1 className="text-4xl font-bold mb-12 text-center">Our Portfolio</h1>
+        <h1 className="text-4xl font-bold mb-12 text-center">Ons Portfolio</h1>
 
         <div className="grid md:grid-cols-3 gap-12">
           {projects.map((project) => (
