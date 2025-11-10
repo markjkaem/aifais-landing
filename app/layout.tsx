@@ -34,7 +34,7 @@ export default function RootLayout({
         <header className="container mx-auto bg-black px-6 py-4 flex justify-between items-center">
           <Link href="/">
             <Image
-              className="invert w-40"
+              className="invert w-32"
               src="/logo.png"
               alt="AI Faiss Logo"
               width={1000}

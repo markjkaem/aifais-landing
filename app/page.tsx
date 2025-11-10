@@ -34,7 +34,7 @@ export default function Home() {
             <span className="block text-4xl  mt-2 bg-gradient-to-r from-purple-400 via-fuchsia-500 to-blue-400 bg-clip-text text-transparent">
               Voor Toekomstgerichte Bedrijven
             </span>
-            <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-yellow-300/20 via-fuchsia-400/10 to-blue-400/20 blur-3xl animate-pulse" />
+            <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-300/20 via-fuchsia-400/10 to-blue-400/20 blur-3xl animate-pulse" />
           </h1>
 
           <p className="mt-8 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
@@ -47,7 +47,7 @@ export default function Home() {
           <div className="mt-12 flex justify-center gap-4 flex-wrap">
             <Link
               href="/contact"
-              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-yellow-300 text-black font-semibold rounded-xl hover:scale-105 transition-transform duration-300 shadow-lg"
+              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-300 text-black font-semibold rounded-xl hover:scale-105 transition-transform duration-300 shadow-lg"
             >
               Vraag offerte aan
             </Link>
@@ -123,7 +123,7 @@ export default function Home() {
                   </p>
                   <Link
                     href={`/portfolio/${s.slug}`}
-                    className="inline-block mt-2 text-yellow-300 font-semibold hover:underline"
+                    className="inline-block mt-2 text-purple-300 font-semibold hover:underline"
                   >
                     Bekijk Case →
                   </Link>
@@ -136,10 +136,50 @@ export default function Home() {
           <div className="text-center mt-16">
             <Link
               href="/portfolio"
-              className="inline-block px-10 py-4 border border-yellow-300 text-yellow-300 font-semibold rounded-lg hover:bg-yellow-400 hover:text-black transition"
+              className={`mt-8 inline-block px-10 py-4 ${accentColor} border border-purple-500 font-semibold rounded-lg hover:bg-purple-500 hover:text-black transition`}
             >
               Bekijk Volledige Portfolio
             </Link>
+          </div>
+        </div>
+      </section>
+      {/* OVER ONS / FOUNDER */}
+      <section className="py-24 bg-gradient-to-b from-black via-gray-950 to-black">
+        <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-12 items-center">
+          {/* Tekst */}
+          <div>
+            <h2 className="text-4xl font-bold mb-6">
+              Over <span className="text-purple-400">Aifais</span>
+            </h2>
+            <p className="text-gray-300 leading-relaxed mb-6">
+              Aifais is opgericht met één missie: bedrijven helpen om het
+              maximale uit AI te halen. Met ervaring in automatisering,
+              data-integratie en AI-strategie helpen wij organisaties om
+              slimmer, efficiënter en innovatiever te werken.
+            </p>
+            <p className="text-gray-400 italic">
+              “AI is geen hype — het is de nieuwe bedrijfsmotor. En wij helpen
+              je hem starten.”
+            </p>
+          </div>
+
+          {/* Foto’s van jou */}
+          <div className="grid grid-cols-2 gap-4">
+            <img
+              src="/logo.png"
+              alt="Aan het werk op kantoor"
+              className="rounded-2xl object-contain invert h-64 w-full hover:scale-105 transition-transform duration-300"
+            />
+            <img
+              src="/office-people.jpg"
+              alt="Uitleg geven aan klant"
+              className="rounded-2xl object-cover h-64 w-full hover:scale-105 transition-transform duration-300"
+            />
+            <img
+              src="/lesson.jpg"
+              alt="In overleg met klant"
+              className="rounded-2xl object-cover object-right h-64 w-full hover:scale-105 transition-transform duration-300 col-span-2"
+            />
           </div>
         </div>
       </section>
@@ -154,7 +194,7 @@ export default function Home() {
         </p>
         <Link
           href="/contact"
-          className={`mt-8 inline-block px-10 py-4 ${accentColor} border border-green-500 font-semibold rounded-lg hover:bg-green-500 hover:text-black transition`}
+          className={`mt-8 inline-block px-10 py-4 ${accentColor} border border-purple-500 font-semibold rounded-lg hover:bg-purple-500 hover:text-black transition`}
         >
           Plan een Gesprek
         </Link>

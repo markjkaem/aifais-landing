@@ -92,7 +92,7 @@ export default function ContactPage() {
             <div className="sm:col-span-2 flex items-center gap-4">
               <button
                 type="submit"
-                className="px-6 py-3 bg-green-500 text-black font-semibold rounded-xl shadow-lg hover:scale-105 transition"
+                className="px-6 py-3 bg-purple-500 text-black font-semibold rounded-xl shadow-lg hover:scale-105 transition"
               >
                 Verstuur
               </button>
@@ -100,7 +100,7 @@ export default function ContactPage() {
                 <span className="text-gray-200">Versturen...</span>
               )}
               {status === "ok" && (
-                <span className="text-green-400">
+                <span className="text-purple-400">
                   Bedankt! We nemen snel contact op.
                 </span>
               )}
@@ -123,7 +123,7 @@ export default function ContactPage() {
           <div className="text-right">
             <p className="">Kampenringweg 45D, 2803 PE Gouda</p>
             <p className="">Zuid-Holland, Netherlands</p>
-            <p className="">info@aifais.com</p>
+            <p className="">contact@aifais.com</p>
             <p className="">+31 6 27467225</p>
           </div>
         </motion.div>

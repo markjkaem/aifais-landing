@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
     const SMTP_USER = process.env.SMTP_USER;
     const SMTP_PASS = process.env.SMTP_PASS;
-    const TO_EMAIL = process.env.TO_EMAIL || "info@aifais.com";
+    const TO_EMAIL = process.env.TO_EMAIL || "contact@aifais.com";
 
     if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
       return new Response(JSON.stringify({ error: "SMTP not configured" }), {
