@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { projects } from "./portfolio/data";
 import { Space_Grotesk } from "next/font/google";
+import { useRef, useState } from "react";
 
 const h1 = Space_Grotesk({
   weight: "700",
@@ -14,6 +15,26 @@ export default function Home() {
   const bgClass = "bg-black";
   const textClass = "text-white";
   const accentColor = "text-purple-500"; // accentkleur
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const [isMuted, setIsMuted] = useState(true);
+
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+
+    if (isMuted) {
+      // Video unmute en opnieuw starten
+      videoRef.current.muted = false;
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+    } else {
+      // Video mute
+      videoRef.current.muted = true;
+    }
+
+    setIsMuted(!isMuted);
+  };
 
   return (
     <main
@@ -108,6 +129,94 @@ export default function Home() {
             className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert"
           />
         </div>
+      </section>
+
+      {/* PROMO VIDEO SECTION */}
+      <section className="py-32 bg-gradient-to-b from-black via-gray-950 to-black relative">
+        <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-16 items-center">
+          {/* TEXT */}
+          <div>
+            <h2 className=" md:text-4xl font-bold mb-6">
+              Bekijk onze{" "}
+              <span className="text-purple-400">Introductievideo</span>
+            </h2>
+            <p className="text-gray-300 leading-relaxed mb-6">
+              In één minuut ontdek je hoe Aifais bedrijven helpt met
+              intelligente AI-automatisering, autonome agents en data-gedreven
+              oplossingen.
+            </p>
+            <p className="text-gray-400 italic">
+              “AI werkt voor jou — niet andersom.”
+            </p>
+          </div>
+
+          {/* VIDEO */}
+          <div className="relative w-full max-w-md mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 backdrop-blur-lg bg-white/5">
+            <video
+              ref={videoRef}
+              src="/aifaispromo.mp4"
+              autoPlay
+              loop
+              muted={isMuted}
+              playsInline
+              className="w-full aspect-square object-cover"
+            />
+
+            {/* MUTE / UNMUTE BUTTON */}
+            <button
+              onClick={toggleMute}
+              className="absolute bottom-4 right-4 bg-purple-500/70 hover:bg-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition"
+              aria-label={isMuted ? "Unmute video" : "Mute video"}
+            >
+              {isMuted ? (
+                // MUTED icon (speaker with diagonal slash)
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  className="w-6 h-6"
+                >
+                  {/* Speaker */}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5v14l12-7-12-7z"
+                  />
+                  {/* Diagonal slash */}
+                  <line
+                    x1="5"
+                    y1="5"
+                    x2="19"
+                    y2="19"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              ) : (
+                // UNMUTED icon (speaker without slash)
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5v14l12-7-12-7z"
+                  />
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Subtiele glow achter video */}
+        <div className="absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/20 blur-3xl rounded-full opacity-40" />
       </section>
 
       {/* DIENSTEN / PROJECTEN */}
