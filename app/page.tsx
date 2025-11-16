@@ -2,6 +2,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { projects } from "./portfolio/data";
+import { Space_Grotesk } from "next/font/google";
+
+const h1 = Space_Grotesk({
+  weight: "700",
+  subsets: ["latin"],
+});
 
 export default function Home() {
   // Klassen op basis van dark/light mode
@@ -11,7 +17,7 @@ export default function Home() {
 
   return (
     <main
-      className={`${bgClass} ${textClass} min-h-screen transition-colors duration-500`}
+      className={`${bgClass} ${textClass}  min-h-screen transition-colors duration-500`}
     >
       {/* HERO */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-black">
@@ -29,9 +35,15 @@ export default function Home() {
 
         {/* Hero content */}
         <div className="relative z-10 text-center max-w-4xl px-6">
-          <h1 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight">
-            <span className="block text-white">AI Automatisering</span>
-            <span className="block text-4xl  mt-2 bg-gradient-to-r from-purple-400 via-fuchsia-500 to-blue-400 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-extrabold  tracking-widest leading-tight">
+            <span
+              className={`${h1.className} font-bold block text-gray-100  text-shadow-white shadow-lg text-shadow-lg`}
+            >
+              AI Automatisering
+            </span>
+            <span
+              className={`block text-4xl   mt-2 bg-gradient-to-r from-purple-400 via-white to-orange-400 bg-clip-text text-transparent`}
+            >
               Voor Toekomstgerichte Bedrijven
             </span>
             <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-300/20 via-fuchsia-400/10 to-blue-400/20 blur-3xl animate-pulse" />

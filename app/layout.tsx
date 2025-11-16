@@ -3,6 +3,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
+import { Inter } from "next/font/google";
+import { Stardos_Stencil } from "next/font/google";
+
+const anton = Inter({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,9 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${anton.className} tracking-wider`}>
         <header className="container mx-auto bg-black px-6 py-4 flex justify-between items-center">
           <Link href="/">
             <Image
