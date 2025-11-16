@@ -28,21 +28,21 @@ export default function Home() {
             alt="AI Background"
             layout="fill"
             objectFit="cover"
-            className="opacity-30 object-center"
+            className="opacity-60 object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/90" />
         </div>
 
         {/* Hero content */}
         <div className="relative z-10 text-center max-w-4xl px-6">
-          <h1 className="text-5xl md:text-7xl font-extrabold  tracking-widest leading-tight">
+          <h1 className="text-4xl md:text-7xl font-extrabold  tracking-widest leading-tight">
             <span
-              className={`${h1.className} font-bold block text-gray-100  text-shadow-white shadow-lg text-shadow-lg`}
+              className={`${h1.className} font-bold block text-gray-100  text-shadow-white text-shadow-lg`}
             >
               AI Automatisering
             </span>
             <span
-              className={`block text-4xl   mt-2 bg-gradient-to-r from-purple-400 via-white to-orange-400 bg-clip-text text-transparent`}
+              className={`block text-4xl   mt-2 bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent`}
             >
               Voor Toekomstgerichte Bedrijven
             </span>
