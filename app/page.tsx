@@ -58,7 +58,7 @@ export default function Home() {
         <div className="relative z-10 text-center max-w-4xl px-6">
           <h1 className="text-4xl md:text-7xl font-extrabold  tracking-widest leading-tight">
             <span
-              className={`${h1.className} font-bold block text-gray-100  text-shadow-white text-shadow-lg`}
+              className={`${h1.className} font-bold block text-gray-100  text-shadow-white text-shadow-sm`}
             >
               AI Automatisering
             </span>
