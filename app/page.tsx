@@ -132,8 +132,8 @@ export default function Home() {
           {/* TEXT */}
           <div>
             <h2 className="text-2xl md:text-4xl font-bold mb-6">
-              Bekijk onze{" "}
-              <span className="text-purple-400">Introductievideo</span>
+              Bekijk hoe automatisering jouw werk{" "}
+              <span className="text-purple-400">vereenvoudigt</span>
             </h2>
             <p className="text-gray-300 leading-relaxed mb-6 text-base md:text-lg">
               In één minuut ontdek je hoe Aifais bedrijven helpt met
