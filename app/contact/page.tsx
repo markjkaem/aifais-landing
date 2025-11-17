@@ -124,7 +124,6 @@ export default function ContactPage() {
             <p className="">Kampenringweg 45D, 2803 PE Gouda</p>
             <p className="">Zuid-Holland, Netherlands</p>
             <p className="">contact@aifais.com</p>
-            <p className="">+31 6 27467225</p>
           </div>
         </motion.div>
       </motion.section>

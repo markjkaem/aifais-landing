@@ -36,11 +36,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${anton.className} tracking-wider`}>
-        <header className="container mx-auto bg-black px-6 py-4 flex justify-between items-center">
+        <header className="container mx-auto bg-black px-6 py-1 flex justify-between items-center">
           <Link href="/">
             <Image
-              className="invert w-32"
-              src="/logo.png"
+              className="invert w-16"
+              src="/logo_official.png"
               alt="AI Faiss Logo"
               width={1000}
               height={1000}
@@ -83,12 +83,6 @@ export default function RootLayout({
               <h3 className="font-semibold text-lg mb-2">Aifais</h3>
               <p>Kampenringweg 45D</p>
               <p>2803 PE Gouda</p>
-              <p>
-                Tel:{" "}
-                <a href="tel:+31627467225" className="hover:underline">
-                  0627467225
-                </a>
-              </p>
             </div>
 
             <div className="flex flex-col gap-2">

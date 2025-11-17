@@ -287,7 +287,7 @@ export default function Home() {
           {/* Foto’s van jou */}
           <div className="grid grid-cols-2 gap-4">
             <img
-              src="/logo.png"
+              src="/logo_official.png"
               alt="Aan het werk op kantoor"
               className="rounded-2xl object-contain invert h-64 w-full hover:scale-105 transition-transform duration-300"
             />
