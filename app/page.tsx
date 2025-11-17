@@ -171,7 +171,7 @@ export default function Home() {
               loop
               muted={isMuted}
               playsInline
-              className="w-full aspect-video md:aspect-[1] object-cover"
+              className="w-full aspect-[1] object-cover"
             />
 
             {/* MUTE / UNMUTE BUTTON */}
