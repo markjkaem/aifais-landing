@@ -53,8 +53,8 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-black/80" />
         {/* Hero content */}
-        <div className="relative z-10 text-left max-w-6xl px-4 md:px-40">
-          <h1 className="text-4xl md:text-7xl font-extrabold  tracking-widest leading-tight">
+        <div className="relative z-10 text-left md:max-w-6xl px-4 md:px-40">
+          <h1 className="text-4xl md:text-7xl font-extrabold tracking-widest leading-tight">
             <span className={`${h1.className} font-bold block text-gray-100  `}>
               AI-GESTUURDE PROCESSEN
             </span>
@@ -63,7 +63,6 @@ export default function Home() {
             >
               Voor Toekomstgerichte Bedrijven
             </span>
-            <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-300/20 via-fuchsia-400/10 to-blue-400/20 blur-3xl animate-pulse" />
           </h1>
 
           <p className="mt-8 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl">
