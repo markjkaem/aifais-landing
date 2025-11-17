@@ -58,8 +58,9 @@ export default function Home() {
             alt="AI Background"
             layout="fill"
             objectFit="cover"
-            className="opacity-60 object-center"
+            className="opacity-60 object-center transform scale-100 animate-zoomSlow"
           />
+
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/90" />
         </div>
 
