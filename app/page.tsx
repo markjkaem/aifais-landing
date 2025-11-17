@@ -44,7 +44,7 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex mx-2 md:mx-10 items-center">
         {/* Achtergrondafbeelding met gradient overlay */}
         <video
-          src={"lights.mp4"}
+          src={"lights_small.mp4"}
           autoPlay
           loop
           muted
