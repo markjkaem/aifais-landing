@@ -41,7 +41,16 @@ export default function Home() {
       className={`${bgClass} ${textClass}  min-h-screen transition-colors duration-500`}
     >
       {/* HERO */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-black">
+      <section className="relative min-h-[90vh] flex mx-2 md:mx-10 items-center overflow-hidden bg-black">
+        <div className="absolute z-20 inset-0 right-0 top-0 md:flex hidden justify-end pointer-events-none">
+          <Image
+            height={1000}
+            width={1000}
+            src="/logo_official.png"
+            alt="AI Background"
+            className="opacity-60 object-center w-100 h-100"
+          />
+        </div>
         {/* Achtergrondafbeelding met gradient overlay */}
         <div className="absolute inset-0">
           <Image
@@ -55,7 +64,7 @@ export default function Home() {
         </div>
 
         {/* Hero content */}
-        <div className="relative z-10 text-center max-w-4xl px-6">
+        <div className="relative z-10 text-left max-w-6xl px-4 md:px-40">
           <h1 className="text-4xl md:text-7xl font-extrabold  tracking-widest leading-tight">
             <span
               className={`${h1.className} font-bold block text-gray-100  text-shadow-white text-shadow-sm`}
@@ -70,14 +79,14 @@ export default function Home() {
             <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-300/20 via-fuchsia-400/10 to-blue-400/20 blur-3xl animate-pulse" />
           </h1>
 
-          <p className="mt-8 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-8 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl">
             Wij ontwerpen en implementeren intelligente workflows, autonome
             agents en data-gedreven AI-oplossingen die groei versnellen, kosten
             verlagen en innovatie stimuleren.
           </p>
 
           {/* CTA-knoppen */}
-          <div className="mt-12 flex justify-center gap-4 flex-wrap">
+          <div className="mt-12 flex  gap-4 flex-wrap">
             <Link
               href="/contact"
               className="px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-300 text-black font-semibold rounded-xl hover:scale-105 transition-transform duration-300 shadow-lg"
@@ -132,26 +141,29 @@ export default function Home() {
       </section>
 
       {/* PROMO VIDEO SECTION */}
-      <section className="py-32 bg-gradient-to-b from-black via-gray-950 to-black relative">
-        <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-16 items-center">
+      <section
+        id="introduction"
+        className="py-24 md:py-32 bg-gradient-to-b from-black via-gray-950 to-black relative"
+      >
+        <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* TEXT */}
           <div>
-            <h2 className=" md:text-4xl font-bold mb-6">
+            <h2 className="text-2xl md:text-4xl font-bold mb-6">
               Bekijk onze{" "}
               <span className="text-purple-400">Introductievideo</span>
             </h2>
-            <p className="text-gray-300 leading-relaxed mb-6">
+            <p className="text-gray-300 leading-relaxed mb-6 text-base md:text-lg">
               In één minuut ontdek je hoe Aifais bedrijven helpt met
               intelligente AI-automatisering, autonome agents en data-gedreven
               oplossingen.
             </p>
-            <p className="text-gray-400 italic">
+            <p className="text-gray-400 italic text-sm md:text-base">
               “AI werkt voor jou — niet andersom.”
             </p>
           </div>
 
           {/* VIDEO */}
-          <div className="relative w-full max-w-md mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 backdrop-blur-lg bg-white/5">
+          <div className="relative w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 backdrop-blur-lg bg-white/5 mx-auto">
             <video
               ref={videoRef}
               src="/aifaispromo.mp4"
@@ -159,7 +171,7 @@ export default function Home() {
               loop
               muted={isMuted}
               playsInline
-              className="w-full aspect-square object-cover"
+              className="w-full aspect-video md:aspect-[1] object-cover"
             />
 
             {/* MUTE / UNMUTE BUTTON */}
@@ -169,7 +181,6 @@ export default function Home() {
               aria-label={isMuted ? "Unmute video" : "Mute video"}
             >
               {isMuted ? (
-                // MUTED icon (speaker with diagonal slash)
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -178,13 +189,11 @@ export default function Home() {
                   strokeWidth={2}
                   className="w-6 h-6"
                 >
-                  {/* Speaker */}
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M9 5v14l12-7-12-7z"
                   />
-                  {/* Diagonal slash */}
                   <line
                     x1="5"
                     y1="5"
@@ -195,7 +204,6 @@ export default function Home() {
                   />
                 </svg>
               ) : (
-                // UNMUTED icon (speaker without slash)
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -215,12 +223,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Subtiele glow achter video */}
-        <div className="absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/20 blur-3xl rounded-full opacity-40" />
+        {/* Subtle glow behind video */}
+        <div className="absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-purple-600/20 blur-3xl rounded-full opacity-40" />
       </section>
 
       {/* DIENSTEN / PROJECTEN */}
-      <section id="services" className="py-24">
+      <section id="cases" className="py-24">
         <div className="container mx-auto px-6 max-w-6xl">
           <h2 className="text-4xl font-bold text-center mb-14">
             Wat Wij Bouwen
@@ -265,7 +273,10 @@ export default function Home() {
         </div>
       </section>
       {/* OVER ONS / FOUNDER */}
-      <section className="py-24 bg-gradient-to-b from-black via-gray-950 to-black">
+      <section
+        id="about"
+        className="py-24 bg-gradient-to-b from-black via-gray-950 to-black"
+      >
         <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-12 items-center">
           {/* Tekst */}
           <div>

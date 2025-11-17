@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { Stardos_Stencil } from "next/font/google";
+import HeaderMockup from "./Components/Header";
 
 const anton = Inter({
   weight: "400",
@@ -36,45 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${anton.className} tracking-wider`}>
-        <header className="container mx-auto bg-black px-6 py-1 flex justify-between items-center">
-          <Link href="/">
-            <Image
-              className="invert w-16"
-              src="/logo_official.png"
-              alt="AI Faiss Logo"
-              width={1000}
-              height={1000}
-            />
-          </Link>
-          <div className="flex justify-center items-center md:space-x-8">
-            <nav className="space-x-6">
-              <Link
-                href="#services"
-                className={`text-gray-300 hover:${accentColor} transition underline`}
-              >
-                Services
-              </Link>
-              <Link
-                href="/contact"
-                className={`text-gray-300 hover:${accentColor} transition underline`}
-              >
-                Contact
-              </Link>
-            </nav>
-            <div className="md:flex space-x-2 hidden">
-              <img
-                src="/uk.jpg"
-                alt="Description of image"
-                className="md:w-6 md:h-4 w-14"
-              />
-              <img
-                src="/netherlands.webp"
-                alt="Description of image"
-                className="md:w-6 md:h-4 w-14"
-              />
-            </div>
-          </div>
-        </header>
+        <HeaderMockup />
         {children}
         {/* Soft minimal footer */}
         <footer className=" text-gray-200 bg-gray-950 mt-12">
