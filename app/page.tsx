@@ -51,7 +51,7 @@ export default function Home() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover brightness-50 contrast-125 saturate-150"
         />
-        <div className="absolute inset-0 bg-black/80" />
+        <div className="absolute inset-0 bg-black/50" />
         {/* Hero content */}
         <div className="relative z-10 text-left md:max-w-6xl px-4 md:px-40">
           <h1 className="text-4xl md:text-7xl font-extrabold tracking-widest leading-tight">
