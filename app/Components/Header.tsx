@@ -156,9 +156,6 @@ export default function HeaderMockup() {
                   <p className="text-gray-400 mt-1">
                     In 1 dag helemaal up-to-date
                   </p>
-                  <p className="underline text-purple-300 mt-2 text-base">
-                    Meld je aan
-                  </p>
                 </div>
               </div>
             </div>
@@ -195,9 +192,6 @@ export default function HeaderMockup() {
                   <p className="font-semibold text-lg">AI Event — 2 Dec 2025</p>
                   <p className="text-gray-400 mt-1">
                     In 1 dag helemaal up-to-date
-                  </p>
-                  <p className="underline text-purple-300 mt-2 text-base">
-                    Meld je aan
                   </p>
                 </div>
               </div>
