@@ -4,7 +4,7 @@ import Link from "next/link";
 import { projects } from "./portfolio/data";
 import { Space_Grotesk } from "next/font/google";
 import { useRef, useState } from "react";
-
+import VantaHalo from "./Components/Vanta";
 const h1 = Space_Grotesk({
   weight: "700",
   subsets: ["latin"],
@@ -42,28 +42,8 @@ export default function Home() {
     >
       {/* HERO */}
       <section className="relative min-h-[90vh] flex mx-2 md:mx-10 items-center overflow-hidden bg-black">
-        <div className="absolute z-20 inset-0 right-0 top-0 md:flex hidden justify-end pointer-events-none">
-          <Image
-            height={1000}
-            width={1000}
-            src="/logo_official.png"
-            alt="AI Background"
-            className="opacity-60 object-center w-100 h-100"
-          />
-        </div>
-
         {/* Achtergrondafbeelding met gradient overlay */}
-        <div className="absolute inset-0">
-          <Image
-            src="/afais.jpg"
-            alt="AI Background"
-            layout="fill"
-            objectFit="cover"
-            className="opacity-80 object-center transform scale-100 animate-zoomSlow"
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/90" />
-        </div>
+        <VantaHalo />
 
         {/* Hero content */}
         <div className="relative z-10 text-left max-w-6xl px-4 md:px-40">
@@ -106,9 +86,6 @@ export default function Home() {
         {/* Glass panels */}
         <div className="absolute inset-y-0 left-0 w-[120px] bg-white/5 backdrop-blur-sm border-r border-white/10 hidden md:block" />
         <div className="absolute inset-y-0 right-0 w-[120px] bg-white/5 backdrop-blur-sm border-l border-white/10 hidden md:block" />
-
-        {/* Subtiele animatie-glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-600/20 blur-3xl rounded-full pointer-events-none" />
       </section>
 
       {/* PARTNERS / LOGO'S */}

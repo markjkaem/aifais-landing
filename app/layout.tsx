@@ -38,6 +38,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${anton.className} tracking-wider`}>
         <HeaderMockup />
+
         {children}
         {/* Soft minimal footer */}
         <footer className=" text-gray-200 bg-gray-950 mt-12">
