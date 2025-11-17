@@ -4,7 +4,7 @@ import Link from "next/link";
 import { projects } from "./portfolio/data";
 import { Space_Grotesk } from "next/font/google";
 import { useRef, useState } from "react";
-import VantaHalo from "./Components/Vanta";
+
 const h1 = Space_Grotesk({
   weight: "700",
   subsets: ["latin"],
@@ -43,18 +43,23 @@ export default function Home() {
       {/* HERO */}
       <section className="relative min-h-[90vh] flex mx-2 md:mx-10 items-center">
         {/* Achtergrondafbeelding met gradient overlay */}
-        <VantaHalo />
-
+        <video
+          src={"lights.mp4"}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover brightness-50 contrast-125 saturate-150"
+        />
+        <div className="absolute inset-0 bg-black/80" />
         {/* Hero content */}
         <div className="relative z-10 text-left max-w-6xl px-4 md:px-40">
           <h1 className="text-4xl md:text-7xl font-extrabold  tracking-widest leading-tight">
-            <span
-              className={`${h1.className} font-bold block text-gray-100  text-shadow-white text-shadow-sm`}
-            >
-              AI Automatisering
+            <span className={`${h1.className} font-bold block text-gray-100  `}>
+              AI-GESTUURDE PROCESSEN
             </span>
             <span
-              className={`block text-4xl   mt-2 bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent`}
+              className={`block text-4xl   mt-2 bg-gradient-to-r from-purple-300 via-purple-500 to-purple-700 bg-clip-text text-transparent`}
             >
               Voor Toekomstgerichte Bedrijven
             </span>
@@ -84,8 +89,8 @@ export default function Home() {
           </div>
         </div>
         {/* Glass panels */}
-        <div className="absolute inset-y-0 left-0 w-[120px] bg-white/5 backdrop-blur-sm border-r border-white/10 hidden md:block" />
-        <div className="absolute inset-y-0 right-0 w-[120px] bg-white/5 backdrop-blur-sm border-l border-white/10 hidden md:block" />
+        <div className="absolute inset-y-0 left-0 w-[120px] bg-black/70 backdrop-blur-sm border-r border-white/10 hidden md:block" />
+        <div className="absolute inset-y-0 right-0 w-[120px] bg-black/70 backdrop-blur-sm border-l border-white/10 hidden md:block" />
       </section>
 
       {/* PARTNERS / LOGO'S */}
