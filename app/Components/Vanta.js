@@ -6,36 +6,34 @@ export default function VantaHalo() {
   const [vantaEffect, setVantaEffect] = useState(null);
 
   useEffect(() => {
-    let effect;
+  if (vantaEffect || !vantaRef.current) return; // early exit
 
-    async function initVanta() {
-      const THREE = (await import("three")).default || (await import("three"));
-      const VANTA = (await import("vanta/dist/vanta.halo.min")).default;
+  let effect;
+  const loadVanta = async () => {
+    const THREE = (await import("three")).default || (await import("three"));
+    const VANTA = (await import("vanta/dist/vanta.halo.min")).default;
 
-      if (!vantaEffect && vantaRef.current) {
-        effect = VANTA({
-          el: vantaRef.current,
-          THREE: THREE,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.0,
-          minWidth: 200.0,
-          amplitudeFactor: 3.0,
-          xOffset: 0.24,
-          size: 1.6,
-        });
-        setVantaEffect(effect);
-        console.log("Vanta initialized!");
-      }
-    }
+    effect = VANTA({
+      el: vantaRef.current,
+      THREE: THREE,
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.0,
+      minWidth: 200.0,
+      amplitudeFactor: 3.0,
+      xOffset: 0.24,
+      size: 1.6,
+    });
+    setVantaEffect(effect);
+  };
 
-    initVanta();
+  loadVanta();
 
-    return () => {
-      if (effect) effect.destroy();
-    };
-  }, [vantaEffect]);
+  return () => {
+    if (effect) effect.destroy();
+  };
+}, [vantaEffect]);
 
   return <div ref={vantaRef} className="absolute inset-0" />;
 }

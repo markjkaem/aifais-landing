@@ -41,7 +41,7 @@ export default function Home() {
       className={`${bgClass} ${textClass}  min-h-screen transition-colors duration-500`}
     >
       {/* HERO */}
-      <section className="relative min-h-[90vh] flex mx-2 md:mx-10 items-center overflow-hidden bg-black">
+      <section className="relative min-h-[90vh] flex mx-2 md:mx-10 items-center">
         {/* Achtergrondafbeelding met gradient overlay */}
         <VantaHalo />
 
