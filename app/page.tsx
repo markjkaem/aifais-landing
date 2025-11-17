@@ -61,7 +61,7 @@ export default function Home() {
             <span
               className={`block text-4xl   mt-2 bg-gradient-to-r from-purple-300 via-purple-500 to-purple-700 bg-clip-text text-transparent`}
             >
-              Voor Toekomstgerichte Bedrijven
+              Voor de leiders van morgen
             </span>
           </h1>
 
