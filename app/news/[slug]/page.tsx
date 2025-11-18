@@ -1,6 +1,46 @@
 import Link from "next/link";
 import { news } from "./data";
 import { marked } from "marked";
+import { Metadata } from "next";
+
+// SEO Metadata per blogpagina
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const slug = params.slug;
+  const project = news.find((p) => p.slug === slug);
+
+  if (!project) return {};
+
+  return {
+    title: project.title,
+    description: project.excerpt,
+    authors: [{ name: project.author }],
+    keywords: [
+      "AI",
+      "automatisering",
+      "workflow",
+      "n8n",
+      "MKB",
+      "business automation",
+    ],
+    openGraph: {
+      title: project.title,
+      description: project.excerpt,
+      type: "article",
+      publishedTime: new Date(project.date).toISOString(),
+      images: project.image ? [project.image] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.excerpt,
+      images: project.image ? [project.image] : [],
+    },
+  };
+}
 
 export default async function Page({
   params,
@@ -10,18 +50,20 @@ export default async function Page({
   const slug = (await params).slug;
   const project = news.find((p) => p.slug === slug);
 
+  if (!project) return <p>Blog niet gevonden</p>;
+
   return (
     <>
       <section className="py-20 max-w-3xl mx-auto">
-        <h1 className="text-5xl font-bold mb-6">{project?.title}</h1>
+        <h1 className="text-5xl font-bold mb-6">{project.title}</h1>
 
         <div className="flex items-center gap-4 text-gray-400 text-sm mb-10">
-          <span>{project?.author}</span>
+          <span>{project.author}</span>
           <span>•</span>
-          <span>{project?.date}</span>
+          <span>{project.date}</span>
         </div>
 
-        {project?.image && (
+        {project.image && (
           <img
             src={project.image}
             alt={project.title}
@@ -31,9 +73,7 @@ export default async function Page({
 
         <article
           className="blog-content"
-          dangerouslySetInnerHTML={{
-            __html: project ? marked(project.content) : "",
-          }}
+          dangerouslySetInnerHTML={{ __html: marked(project.content) }}
         />
       </section>
 

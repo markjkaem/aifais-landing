@@ -163,7 +163,7 @@ In een wereld waarin concurrentie nooit slaapt, is handmatig werk simpelweg te t
     title: "AI en Documentautomatisering: De Slimme Workflow van 2025",
     excerpt:
       "Met AI-gebaseerde documentautomatisering en slimme workflows kunnen bedrijven foutmarges verlagen en productiviteit exponentieel verhogen.",
-    date: "18 November 2025",
+    date: "16 November 2025",
     author: "Sanne van der Meer",
     content: `## AI-Geautomatiseerde Documentworkflows
 
@@ -234,7 +234,7 @@ In een wereld die steeds sneller wordt, is AI niet langer optioneel, maar een st
   title: "AI in Klantenservice en Marketing: Efficiëntie en Personalisatie in 2025",
   excerpt:
     "AI verandert de manier waarop bedrijven communiceren met klanten. Door workflows te automatiseren, verbeteren bedrijven snelheid, efficiëntie en personalisatie.",
-  date: "18 November 2025",
+  date: "15 November 2025",
   author: "Jeroen van Loon",
   content: `## AI in Klantenservice en Marketing
 
@@ -318,7 +318,7 @@ Door AI in klantenservice en marketing te integreren:
     title: "EU Overweegt Aanpassing AI-wetgeving na Druk van Grote Techbedrijven",
     excerpt:
       "De Europese Commissie zou bepaalde delen van de AI Act tijdelijk willen uitstellen onder druk van techreuzen en de VS. Een ontwikkeling met grote gevolgen voor automatisering en compliance.",
-    date: "07 November 2025",
+    date: "14 November 2025",
     author: "Redactie AI Nieuws",
     content: `## EU Overweegt Verzachting van de AI Act
 
