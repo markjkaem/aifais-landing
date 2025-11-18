@@ -8,6 +8,9 @@ dependencies:
   framer-motion:
     specifier: ^12.23.24
     version: 12.23.24(react-dom@19.2.0)(react@19.2.0)
+  marked:
+    specifier: ^17.0.0
+    version: 17.0.0
   next:
     specifier: 16.0.1
     version: 16.0.1(@babel/core@7.28.5)(react-dom@19.2.0)(react@19.2.0)
@@ -3636,6 +3639,12 @@ packages:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
     dev: true
+
+  /marked@17.0.0:
+    resolution: {integrity: sha512-KkDYEWEEiYJw/KC+DVm1zzlpMQSMIu6YRltkcCvwheCp8HWPXCk9JwOmHJKBlGfzcpzcIt6x3sMnTsRm/51oDg==}
+    engines: {node: '>= 20'}
+    hasBin: true
+    dev: false
 
   /math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}

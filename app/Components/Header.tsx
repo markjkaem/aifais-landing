@@ -6,17 +6,18 @@ import { useState } from "react";
 import { projects } from "../portfolio/data";
 // At the top, import:
 import { useRouter } from "next/navigation";
+import { news } from "../news/[slug]/data";
 
 export default function HeaderMockup() {
   // Inside the component:
   const router = useRouter();
   const [openDropdown, setOpenDropdown] = useState<
-    "services" | "blogs" | "languages" | null
+    "services" | "news" | "languages" | null
   >(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDropdownToggle = (
-    dropdown: "services" | "blogs" | "languages"
+    dropdown: "services" | "news" | "languages"
   ) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
@@ -50,10 +51,10 @@ export default function HeaderMockup() {
           </button>
 
           <button
-            onClick={() => handleDropdownToggle("blogs")}
+            onClick={() => handleDropdownToggle("news")}
             className="hover:text-purple-400 transition flex items-center gap-1"
           >
-            Blogs <span className="text-xs">▼</span>
+            Nieuws <span className="text-xs">▼</span>
           </button>
 
           <Link
@@ -129,7 +130,7 @@ export default function HeaderMockup() {
       {/* Desktop Mega Menu */}
       {openDropdown === "services" && (
         <div className="hidden md:block w-full bg-black/95 border-b border-white/10 shadow-2xl py-10">
-          <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="grid grid-cols-2 gap-x-10 text-gray-200 text-sm">
               {projects.map((project) => (
                 <Link
@@ -142,7 +143,7 @@ export default function HeaderMockup() {
                 </Link>
               ))}
             </div>
-            <div className="flex items-center justify-center bg-black border border-white/10 rounded-2xl p-6 shadow-lg hover:border-purple-500 transition cursor-pointer min-h-[220px]">
+            <div className="flex items-center justify-center bg-black border border-white/10 rounded-2xl p-4 shadow-lg hover:border-purple-500 transition cursor-pointer">
               <div className="flex items-center space-x-5">
                 <Image
                   src="/event.jpg"
@@ -151,7 +152,7 @@ export default function HeaderMockup() {
                   height={120}
                   className="rounded-lg object-cover"
                 />
-                <div className="text-sm text-gray-200 leading-tight max-w-[180px]">
+                <div className="text-sm text-gray-200 leading-tight ">
                   <p className="font-semibold text-lg">AI Event — 2 Dec 2025</p>
                   <p className="text-gray-400 mt-1">
                     In 1 dag helemaal up-to-date
@@ -163,23 +164,35 @@ export default function HeaderMockup() {
         </div>
       )}
 
-      {openDropdown === "blogs" && (
+      {openDropdown === "news" && (
         <div className="hidden md:block w-full bg-black/95 border-b border-white/10 shadow-2xl py-10">
-          <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="grid grid-cols-2 gap-x-10 text-gray-200 text-sm">
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="grid grid-cols-2 gap-x-10  text-gray-200 text-sm">
+              {news
+                .filter((item) => item.id < 6)
+                .map((blog) => (
+                  <Link
+                    key={blog.slug}
+                    href={`/news/${blog.slug}`}
+                    className="block p-2 hover:text-purple-400 transition"
+                    onClick={closeAll}
+                  >
+                    {blog.title}
+                  </Link>
+                ))}
               <Link
                 href="#introduction"
-                className="block hover:text-purple-400"
+                className="block p-2 hover:text-purple-400"
                 onClick={(e) => {
                   e.preventDefault();
                   router.push("/#introduction");
                   closeAll();
                 }}
               >
-                Introduction to AIFAIS
+                Bekijk hoe automatisering jouw werk vereenvoudigt
               </Link>
             </div>
-            <div className="flex items-center justify-center bg-black border border-white/10 rounded-2xl p-6 shadow-lg hover:border-purple-500 transition cursor-pointer min-h-[220px]">
+            <div className="flex items-center justify-center bg-black border border-white/10 rounded-2xl p-4 shadow-lg hover:border-purple-500 transition cursor-pointer">
               <div className="flex items-center space-x-5">
                 <Image
                   src="/event.jpg"
@@ -188,7 +201,7 @@ export default function HeaderMockup() {
                   height={120}
                   className="rounded-lg object-cover"
                 />
-                <div className="text-sm text-gray-200 leading-tight max-w-[180px]">
+                <div className="text-sm text-gray-200 leading-tight ">
                   <p className="font-semibold text-lg">AI Event — 2 Dec 2025</p>
                   <p className="text-gray-400 mt-1">
                     In 1 dag helemaal up-to-date
@@ -227,12 +240,12 @@ export default function HeaderMockup() {
             )}
 
             <button
-              onClick={() => handleDropdownToggle("blogs")}
+              onClick={() => handleDropdownToggle("news")}
               className="w-full flex justify-between items-center py-2"
             >
-              Blogs <span>▼</span>
+              Nieuws <span>▼</span>
             </button>
-            {openDropdown === "blogs" && (
+            {openDropdown === "news" && (
               <div className="pl-4 mt-2 space-y-2">
                 <Link
                   href="#introduction"
@@ -243,8 +256,18 @@ export default function HeaderMockup() {
                     closeAll();
                   }}
                 >
-                  Introduction to AIFAIS
+                  Bekijk hoe automatisering jouw werk vereenvoudigt
                 </Link>
+                {news.map((blog) => (
+                  <Link
+                    key={blog.slug}
+                    href={`/news/${blog.slug}`}
+                    className="block hover:text-purple-400 transition"
+                    onClick={closeAll}
+                  >
+                    {blog.title}
+                  </Link>
+                ))}
               </div>
             )}
           </div>
