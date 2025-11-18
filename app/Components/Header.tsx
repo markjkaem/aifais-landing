@@ -130,13 +130,13 @@ export default function HeaderMockup() {
       {/* Desktop Mega Menu */}
       {openDropdown === "services" && (
         <div className="hidden md:block w-full bg-black/95 border-b border-white/10 shadow-2xl py-10">
-          <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="grid grid-cols-2 gap-x-10 text-gray-200 text-sm">
               {projects.map((project) => (
                 <Link
                   key={project.slug}
                   href={`/portfolio/${project.slug}`}
-                  className="hover:text-purple-400 transition"
+                  className="hover:text-purple-400 p-2 transition"
                   onClick={closeAll}
                 >
                   {project.title}
@@ -241,7 +241,7 @@ export default function HeaderMockup() {
 
             <button
               onClick={() => handleDropdownToggle("news")}
-              className="w-full flex justify-between items-center py-2"
+              className="w-full flex justify-between items-center pt-6 pb-2"
             >
               Nieuws <span>▼</span>
             </button>
@@ -249,7 +249,7 @@ export default function HeaderMockup() {
               <div className="pl-4 mt-2 space-y-2">
                 <Link
                   href="#introduction"
-                  className="block hover:text-purple-400"
+                  className="block p-2 hover:text-purple-400"
                   onClick={(e) => {
                     e.preventDefault();
                     router.push("/#introduction");
@@ -258,16 +258,18 @@ export default function HeaderMockup() {
                 >
                   Bekijk hoe automatisering jouw werk vereenvoudigt
                 </Link>
-                {news.map((blog) => (
-                  <Link
-                    key={blog.slug}
-                    href={`/news/${blog.slug}`}
-                    className="block hover:text-purple-400 transition"
-                    onClick={closeAll}
-                  >
-                    {blog.title}
-                  </Link>
-                ))}
+                {news
+                  .filter((item) => item.id < 4)
+                  .map((blog) => (
+                    <Link
+                      key={blog.slug}
+                      href={`/news/${blog.slug}`}
+                      className="block p-2 hover:text-purple-400 transition"
+                      onClick={closeAll}
+                    >
+                      {blog.title}
+                    </Link>
+                  ))}
               </div>
             )}
           </div>
