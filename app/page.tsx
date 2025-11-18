@@ -4,6 +4,7 @@ import Link from "next/link";
 import { projects } from "./portfolio/data";
 import { Space_Grotesk } from "next/font/google";
 import { useRef, useState } from "react";
+import GoogleReviews from "./Components/Reviews";
 
 const h1 = Space_Grotesk({
   weight: "700",
@@ -313,6 +314,9 @@ export default function Home() {
         >
           Plan een Gesprek
         </Link>
+      </section>
+      <section>
+        <GoogleReviews />
       </section>
     </main>
   );

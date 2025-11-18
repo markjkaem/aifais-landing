@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { projects } from "../portfolio/data"; // your projects file
+import GoogleReviews from "../Components/Reviews";
 
 export default function Portfolio() {
   return (
