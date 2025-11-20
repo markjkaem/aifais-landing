@@ -334,7 +334,7 @@ export default function Home() {
         <h2 className="text-4xl font-bold">
           Klaar Om 40+ Uur Per Maand Terug Te Winnen?
         </h2>
-        <p className="mt-4 text-lg text-gray-300 w-3/6 mx-auto">
+        <p className="mt-4 text-lg text-gray-300 w-5/6  md:w-3/6 mx-auto">
           We beginnen met een gratis 30-minuten haalbaarheidscheck waarin we: ✓
           Jouw grootste tijdvreters in kaart brengen ✓ 2-3 quick wins
           identificeren die direct te automatiseren zijn ✓ Een ROI-inschatting
