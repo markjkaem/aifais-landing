@@ -58,7 +58,7 @@ export default function Home() {
           <h1 className="text-4xl md:text-6xl uppercase font-extrabold tracking-widest leading-12">
             <span className="text-4xl md:text-3xl">
               {" "}
-              Bespaar 20+ Uur Per week!
+              Bespaar uren Per week!
             </span>
             <span className={`${h1.className} font-bold block text-zinc-300  `}>
               Met Slimme Workflow Automatisering
@@ -247,7 +247,7 @@ export default function Home() {
             {projects.slice(0, 3).map((s) => (
               <div
                 key={s.slug}
-                className="group rounded-2xl overflow-hidden border border-gray-700 bg-gray-900 hover:shadow-xl transition-shadow duration-300"
+                className="group rounded-2xl overflow-hidden border border-gray-700 bg-gray-950 hover:shadow-xl transition-shadow duration-300"
               >
                 <img
                   src={s.image}
@@ -330,11 +330,11 @@ export default function Home() {
       </section>
 
       {/* AFSLUITENDE CTA */}
-      <section className="py-24 max-w-3xl mx-auto text-center">
+      <section className="py-24 mx-auto text-center bg-gray-950 ">
         <h2 className="text-4xl font-bold">
           Klaar Om 40+ Uur Per Maand Terug Te Winnen?
         </h2>
-        <p className="mt-4 text-lg text-gray-300">
+        <p className="mt-4 text-lg text-gray-300 w-3/6 mx-auto">
           We beginnen met een gratis 30-minuten haalbaarheidscheck waarin we: ✓
           Jouw grootste tijdvreters in kaart brengen ✓ 2-3 quick wins
           identificeren die direct te automatiseren zijn ✓ Een ROI-inschatting
