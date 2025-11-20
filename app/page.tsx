@@ -78,7 +78,7 @@ export default function Home() {
             </span>
             <span>
               <span className="text-green-400">✓</span> Gespecialiseerd in
-              NederlandseMKB-bedrijven
+              Nederlandse MKB-bedrijven
             </span>
           </div>
 
@@ -91,7 +91,7 @@ export default function Home() {
               Bereken jouw besparing
             </Link>
             <a
-              href="#services"
+              href="#cases"
               className="px-8 py-4 border border-gray-700 rounded-xl text-gray-200 hover:text-white hover:border-purple-400 transition"
             >
               Bekijk voorbeelden

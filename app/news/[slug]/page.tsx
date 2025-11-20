@@ -54,7 +54,7 @@ export default async function Page({
 
   return (
     <>
-      <section className="py-20 max-w-3xl mx-auto">
+      <section className="py-20 max-w-3xl p-4 mx-auto">
         <h1 className="text-5xl font-bold mb-6">{project.title}</h1>
 
         <div className="flex items-center gap-4 text-gray-400 text-sm mb-10">
