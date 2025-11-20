@@ -45,7 +45,7 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex mx-2 md:mx-10 items-center">
         {/* Achtergrondafbeelding met gradient overlay */}
         <video
-          src={"lights_small.mp4"}
+          src={"coding.mp4"}
           autoPlay
           loop
           muted
@@ -56,18 +56,22 @@ export default function Home() {
         {/* Hero content */}
         <div className="relative z-10 text-left md:max-w-6xl px-4 md:px-40">
           <h1 className="text-4xl md:text-6xl uppercase font-extrabold tracking-widest leading-12">
-            <span className={`${h1.className} font-bold block text-white  `}>
-              Bespaar 40+ Uur Per Maand Met Slimme Workflow Automatisering
+            <span className="text-4xl md:text-3xl">
+              {" "}
+              Bespaar 20+ Uur Per week!
+            </span>
+            <span className={`${h1.className} font-bold block text-zinc-300  `}>
+              Met Slimme Workflow Automatisering
             </span>
           </h1>
 
-          <p className="mt-8 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl">
+          <p className="mt-4 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl">
             Stop met handmatig werk dat jouw team 10+ uur per week kost. Wij
             automatiseren repetitieve processen met n8n – van offertes versturen
             tot data-synchronisatie. Bespaar kosten, voorkom fouten, en schaal
             zonder nieuwe medewerkers.
           </p>
-          <div className="flex flex-col">
+          <div className="flex mt-4 flex-col">
             <span>
               <span className="text-green-400">✓</span> Binnen 2 weken
               operationeel{" "}
