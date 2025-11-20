@@ -55,38 +55,56 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/50" />
         {/* Hero content */}
         <div className="relative z-10 text-left md:max-w-6xl px-4 md:px-40">
-          <h1 className="text-4xl md:text-7xl font-extrabold tracking-widest leading-tight">
-            <span className={`${h1.className} font-bold block text-gray-100  `}>
-              AI-GESTUURDE PROCESSEN
-            </span>
-            <span
-              className={`block text-4xl   mt-2 bg-gradient-to-r from-purple-300 via-purple-500 to-purple-700 bg-clip-text text-transparent`}
-            >
-              Voor de leiders van morgen
+          <h1 className="text-4xl md:text-6xl uppercase font-extrabold tracking-widest leading-12">
+            <span className={`${h1.className} font-bold block text-white  `}>
+              Bespaar 40+ Uur Per Maand Met Slimme Workflow Automatisering
             </span>
           </h1>
 
           <p className="mt-8 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl">
-            Wij ontwerpen en implementeren intelligente workflows, autonome
-            agents en data-gedreven AI-oplossingen die groei versnellen, kosten
-            verlagen en innovatie stimuleren.
+            Stop met handmatig werk dat jouw team 10+ uur per week kost. Wij
+            automatiseren repetitieve processen met n8n – van offertes versturen
+            tot data-synchronisatie. Bespaar kosten, voorkom fouten, en schaal
+            zonder nieuwe medewerkers.
           </p>
+          <div className="flex flex-col">
+            <span>
+              <span className="text-green-400">✓</span> Binnen 2 weken
+              operationeel{" "}
+            </span>
+            <span>
+              <span className="text-green-400">✓</span> Gemiddelde ROI: 3
+              maanden
+            </span>
+            <span>
+              <span className="text-green-400">✓</span> Gespecialiseerd in
+              NederlandseMKB-bedrijven
+            </span>
+          </div>
 
           {/* CTA-knoppen */}
-          <div className="mt-12 flex  gap-4 flex-wrap">
+          <div className="mt-6 flex  gap-4 flex-wrap">
             <Link
-              href="/contact"
+              href="/quickscan"
               className="px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-300 text-black font-semibold rounded-xl hover:scale-105 transition-transform duration-300 shadow-lg"
             >
-              Vraag offerte aan
+              Bereken jouw besparing
             </Link>
             <a
               href="#services"
               className="px-8 py-4 border border-gray-700 rounded-xl text-gray-200 hover:text-white hover:border-purple-400 transition"
             >
-              Ontdek Oplossingen
+              Bekijk voorbeelden
             </a>
+            <div className=" md:flex hidden absolute -right-32 bottom-0">
+              <GoogleReviews />
+            </div>
           </div>
+
+          {/* small text */}
+          <span className="text-xs text-white">
+            * Gratis en vrijblijvend, antwoord binnen 24 uur
+          </span>
         </div>
         {/* Glass panels */}
         <div className="absolute inset-y-0 left-0 w-[120px] bg-black/70 backdrop-blur-sm border-r border-white/10 hidden md:block" />
@@ -133,16 +151,18 @@ export default function Home() {
           {/* TEXT */}
           <div>
             <h2 className="text-2xl md:text-4xl font-bold mb-6">
-              Bekijk hoe automatisering jouw werk{" "}
-              <span className="text-purple-400">vereenvoudigt</span>
+              Zie Hoe Wij 15 Uur Per Week Besparen Voor Bedrijven
+              <span className="text-purple-400"> Zoals Het Jouwe</span>
             </h2>
             <p className="text-gray-300 leading-relaxed mb-6 text-base md:text-lg">
-              In één minuut ontdek je hoe Aifais bedrijven helpt met
-              intelligente AI-automatisering, autonome agents en data-gedreven
-              oplossingen.
+              In deze 60-seconden demo zie je exact hoe onze n8n workflows
+              handmatige processen overnemen – van lead-opvolging tot
+              rapportage-automatisering. Geen technische kennis nodig.
+              "Eindelijk een team dat hun uren investeert in groei, niet in
+              data-invoer."
             </p>
             <p className="text-gray-400 italic text-sm md:text-base">
-              “AI werkt voor jou — niet andersom.”
+              — Oprichter MKB-bedrijf, 25 medewerkers
             </p>
           </div>
 
@@ -215,7 +235,8 @@ export default function Home() {
       <section id="cases" className="py-24">
         <div className="container mx-auto px-6 max-w-6xl">
           <h2 className="text-4xl font-bold text-center mb-14">
-            Wat Wij Bouwen
+            Welke Processen Kunnen Wij Voor Jou Automatiseren? Deze workflows
+            draaien al bij 50+ Nederlandse bedrijven
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -265,17 +286,21 @@ export default function Home() {
           {/* Tekst */}
           <div>
             <h2 className="text-4xl font-bold mb-6">
-              Over <span className="text-purple-400">Aifais</span>
+              Waarom Kiezen Bedrijven Voor Aifais?
             </h2>
             <p className="text-gray-300 leading-relaxed mb-6">
-              Aifais is opgericht met één missie: bedrijven helpen om het
-              maximale uit AI te halen. Met ervaring in automatisering,
-              data-integratie en AI-strategie helpen wij organisaties om
-              slimmer, efficiënter en innovatiever te werken.
+              Wij zijn geen IT-consultants die jargon verkopen. Wij zijn
+              specialisten die al 3+ jaar n8n workflows bouwen voor Nederlandse
+              MKB-bedrijven. Van 5-mans teams tot scale-ups met 100+
+              medewerkers. Onze aanpak is simpel: - We luisteren naar jouw
+              frustraties met handmatig werk - We bouwen een custom workflow die
+              direct inzetbaar is - We trainen jouw team zodat jullie autonoom
+              zijn Resultaat? Gemiddeld 40 uur per maand tijdsbesparing, binnen
+              2 weken operationeel. "Eindelijk iemand die begrijpt dat wij geen
+              IT-afdeling hebben, maar wel willen automatiseren."
             </p>
             <p className="text-gray-400 italic">
-              “AI is geen hype — het is de nieuwe bedrijfsmotor. En wij helpen
-              je hem starten.”
+              — Operations Manager, E-commerce bedrijf
             </p>
           </div>
 
@@ -301,12 +326,16 @@ export default function Home() {
       </section>
 
       {/* AFSLUITENDE CTA */}
-      <section className="py-24 text-center">
+      <section className="py-24 max-w-3xl mx-auto text-center">
         <h2 className="text-4xl font-bold">
-          Klaar om jouw bedrijf toekomstbestendig te maken?
+          Klaar Om 40+ Uur Per Maand Terug Te Winnen?
         </h2>
         <p className="mt-4 text-lg text-gray-300">
-          Samen ontwerpen we jouw AI-voorsprong.
+          We beginnen met een gratis 30-minuten haalbaarheidscheck waarin we: ✓
+          Jouw grootste tijdvreters in kaart brengen ✓ 2-3 quick wins
+          identificeren die direct te automatiseren zijn ✓ Een ROI-inschatting
+          maken (investering vs. besparing) Geen verplichtingen. Geen sales
+          pressure. Gewoon eerlijk advies.
         </p>
         <Link
           href="/contact"
@@ -315,8 +344,65 @@ export default function Home() {
           Plan een Gesprek
         </Link>
       </section>
-      <section>
-        <GoogleReviews />
+      <section className="py-24 p-8 max-w-3xl mx-auto text-center">
+        <h2 className="text-4xl font-bold">
+          Vragen Die We Vaak Krijgen (FAQ){" "}
+        </h2>
+        <div className="py-2 mt-4">
+          {" "}
+          <h3 className="font-bold text-purple-400">
+            Hoelang duurt het voordat een workflow live is?
+          </h3>
+          <p>
+            {" "}
+            Gemiddeld 2 weken van intake tot go-live. Simpele workflows (zoals
+            data-sync) vaak binnen 1 week.{" "}
+          </p>
+        </div>
+        <div className="py-2">
+          {" "}
+          <h3 className="font-bold text-purple-400">
+            {" "}
+            Moet ik technische kennis hebben?
+          </h3>{" "}
+          <p>
+            Nee. Wij bouwen en implementeren alles. Jij krijgt een dashboard
+            waar je in gewone taal aanpassingen kunt maken.{" "}
+          </p>
+        </div>
+        <div className="py-2">
+          {" "}
+          <h3 className="font-bold text-purple-400">
+            {" "}
+            Wat kost een workflow gemiddeld?
+          </h3>
+          <p>
+            Vanaf €2.500 voor een standaard workflow. Complexe multi-step
+            automatiseringen vanaf €5.000. Altijd transparante offerte vooraf.{" "}
+          </p>
+        </div>
+        <div className="py-2">
+          {" "}
+          <h3 className="font-bold text-purple-400">
+            {" "}
+            Werken jullie ook met ons bestaande software?
+          </h3>
+          <p>
+            Ja. n8n integreert met 400+ tools zoals Google Workspace, HubSpot,
+            Exact Online, Salesforce, Slack, en meer.
+          </p>
+        </div>
+        <div className="py-2">
+          {" "}
+          <h3 className="font-bold text-purple-400">
+            {" "}
+            Wat als de workflow niet werkt zoals verwacht?
+          </h3>
+          <p>
+            We bieden 30 dagen gratis support na go-live. Daarna optionele
+            onderhoudscontracten vanaf €200/maand.
+          </p>
+        </div>
       </section>
     </main>
   );
