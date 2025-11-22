@@ -44,21 +44,32 @@ export default function Home() {
       {/* HERO */}
       <section className="relative min-h-[90vh] flex mx-2 md:mx-10 items-center">
         {/* Achtergrondafbeelding met gradient overlay */}
-        <video
-          src={"coding.mp4"}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover brightness-50 contrast-125 saturate-150"
-        />
+        <div className="absolute inset-0 w-full h-full object-cover brightness-50 contrast-125 saturate-150">
+          {" "}
+          <video
+            src="/coding.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            title="n8n workflow automatisering in actie"
+            aria-label="Achtergrond video van workflow automatisering code"
+            poster="/coding-poster.jpg"
+          >
+            <p>
+              Je browser ondersteunt geen video. Bekijk onze diensten hieronder.
+            </p>
+          </video>
+        </div>
         <div className="absolute inset-0 bg-black/50" />
         {/* Hero content */}
         <div className="relative z-10 text-left md:max-w-6xl px-4 md:px-40">
-          <h1 className="text-4xl md:text-6xl uppercase font-extrabold tracking-widest leading-12">
-            <span className="text-xl md:text-3xl"> Bespaar uren Per week!</span>
-            <span className={`${h1.className} font-bold block text-zinc-300  `}>
-              Met Slimme Workflow Automatisering
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-wide leading-tight">
+            <span className="text-3xl md:text-4xl font-bold text-purple-400 block mb-2">
+              n8n Workflow Automatisering voor Nederlandse MKB-Bedrijven
+            </span>
+            <span className="text-5xl md:text-7xl block text-white">
+              Bespaar 40+ Uur Per Week Met Slimme Automatisering
             </span>
           </h1>
 
@@ -117,28 +128,38 @@ export default function Home() {
         <div className="w-full justify-center flex md:gap-32 gap-6">
           <img
             src="/logo-1.webp"
-            alt="Partnerlogo"
-            className="md:w-40 w-14 object-contain h-auto opacity-50 invert"
+            alt="Aifais partner - workflow automatisering specialist"
+            width="160"
+            height="60"
+            loading="lazy"
           />
           <img
             src="/google.svg"
-            alt="Google logo"
-            className="md:w-40 object-contain w-14 h-auto opacity-50 grayscale"
+            alt="Google Workspace integratie voor n8n workflows"
+            width="160"
+            height="60"
+            loading="lazy"
           />
           <img
             src="/n8n.svg"
-            alt="n8n logo"
-            className="object-contain md:w-40 w-14 h-auto opacity-50 grayscale invert"
+            alt="n8n workflow automatisering platform"
+            width="160"
+            height="60"
+            loading="lazy"
           />
           <img
             src="/openai.svg"
-            alt="OpenAI logo"
-            className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert"
+            alt="OpenAI GPT integratie in automatisering workflows"
+            width="160"
+            height="60"
+            loading="lazy"
           />
           <img
             src="/claude.svg"
-            alt="Claude logo"
-            className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert"
+            alt="Claude AI integratie voor slimme automatisering"
+            width="160"
+            height="60"
+            loading="lazy"
           />
         </div>
       </section>
@@ -393,11 +414,11 @@ export default function Home() {
 
           <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
             <h3 className="font-bold text-lg text-purple-400 mb-2">
-              Moet ik technische kennis hebben?
+              Hoe lang duurt de implementatie van een n8n workflow?
             </h3>
             <p className="text-gray-300">
-              Nee. Wij bouwen en implementeren alles. Jij krijgt een dashboard
-              waar je in gewone taal aanpassingen kunt maken.
+              Van eerste gesprek tot go-live: gemiddeld 2-3 weken. Dit omvat
+              intake, development, testing, en training van jouw team.
             </p>
           </div>
 
