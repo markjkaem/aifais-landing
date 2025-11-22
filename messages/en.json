@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "services": "Services",
+    "news": "News",
+    "cases": "Cases",
+    "about": "About us",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "hero": {
+    "badge": "Specialist in Dutch SME Automation",
+    "eyebrow": "n8n Workflow Automation",
+    "title": "Save",
+    "titleHighlight": "40+ Hours Per Week",
+    "subtitle": "With Smart Automation",
+    "description": "Stop manual work. Automate repetitive processes with n8n – from sending quotes to data synchronization.",
+    "descriptionBold": "Save costs, prevent errors, and scale without new employees.",
+    "cta": {
+      "primary": "Calculate Your Savings",
+      "secondary": "View Examples"
+    },
+    "stats": {
+      "hoursSaved": "Hours saved/week",
+      "implementation": "To implementation",
+      "roi": "Average ROI",
+      "lessErrors": "Less errors"
+    },
+    "benefits": {
+      "operational": "operational",
+      "withinWeeks": "Within 2 weeks",
+      "noCoding": "No coding",
+      "needed": "required",
+      "integrations": "400+ integrations",
+      "available": "available",
+      "dataOwnership": "100% data ownership",
+      "guaranteed": "guaranteed"
+    },
+    "trust": {
+      "free": "Free feasibility check",
+      "response": "Response within 24 hours",
+      "noObligations": "No obligations"
+    }
+  },
+  "event": {
+    "title": "AI Event — Dec 2, 2025",
+    "subtitle": "Fully up-to-date in 1 day"
+  }
+}

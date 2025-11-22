@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import HomeClient from "./HomeClient";
+import { useTranslations } from "next-intl";
 
 // ✅ SEO METADATA (Dit was al in layout.tsx, maar homepage kan specifiekere metadata hebben)
 export const metadata: Metadata = {
@@ -55,6 +56,7 @@ export const metadata: Metadata = {
 
 // Server Component (voor metadata + schema)
 export default function HomePage() {
+  const t = useTranslations("hero");
   return (
     <>
       {/* ✅ SCHEMA.ORG - FAQ PAGE (voor je FAQ sectie) */}

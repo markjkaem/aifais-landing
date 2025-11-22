@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "services": "Diensten",
+    "news": "Nieuws",
+    "cases": "Cases",
+    "about": "Over ons",
+    "contact": "Contact",
+    "language": "Taal"
+  },
+  "hero": {
+    "badge": "Specialist in Nederlandse MKB Automatisering",
+    "eyebrow": "n8n Workflow Automatisering",
+    "title": "Bespaar",
+    "titleHighlight": "40+ Uur Per Week",
+    "subtitle": "Met Slimme Automatisering",
+    "description": "Stop met handmatig werk. Automatiseer repetitieve processen met n8n – van offertes versturen tot data-synchronisatie.",
+    "descriptionBold": "Bespaar kosten, voorkom fouten, en schaal zonder nieuwe medewerkers.",
+    "cta": {
+      "primary": "Bereken Jouw Besparing",
+      "secondary": "Bekijk Voorbeelden"
+    },
+    "stats": {
+      "hoursSaved": "Uur bespaard/week",
+      "implementation": "Tot implementatie",
+      "roi": "Gemiddelde ROI",
+      "lessErrors": "Minder fouten"
+    },
+    "benefits": {
+      "operational": "operationeel",
+      "withinWeeks": "Binnen 2 weken",
+      "noCoding": "Geen programmeren",
+      "needed": "nodig",
+      "integrations": "400+ integraties",
+      "available": "beschikbaar",
+      "dataOwnership": "100% data-eigendom",
+      "guaranteed": "gegarandeerd"
+    },
+    "trust": {
+      "free": "Gratis haalbaarheidscheck",
+      "response": "Reactie binnen 24 uur",
+      "noObligations": "Geen verplichtingen"
+    }
+  },
+  "event": {
+    "title": "AI Event — 2 Dec 2025",
+    "subtitle": "In 1 dag helemaal up-to-date"
+  }
+}

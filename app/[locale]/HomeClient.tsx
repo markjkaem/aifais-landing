@@ -16,7 +16,7 @@ import {
   useRef,
   useState,
 } from "react";
-import GoogleReviews from "./Components/Reviews";
+import GoogleReviews from "./../Components/Reviews";
 import { projects } from "./portfolio/data";
 
 const h1 = Space_Grotesk({
