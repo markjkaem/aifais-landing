@@ -1,5 +1,6 @@
 // ========================================
 // FILE: app/portfolio/data.ts
+// UPDATED WITH 6 NEW STRATEGIC CASE STUDIES
 // ========================================
 
 export interface Project {
@@ -19,7 +20,7 @@ export interface Project {
     timeSaved?: string;
     roiMonths?: number;
     costSaving?: string;
-    improvement?: string; // bijv. "80% sneller", "42% meer engagement"
+    improvement?: string;
   };
   
   testimonial?: {
@@ -44,7 +45,6 @@ export const projects: Project[] = [
       "Reduced manual inbox handling time by 80%.",
     ],
     
-    // ✅ NIEUW:
     category: "Customer Support Automation",
     tags: ["n8n", "OpenAI", "Pinecone", "Gmail", "Vector Database", "AI Agent"],
     readTime: 6,
@@ -77,7 +77,6 @@ export const projects: Project[] = [
       "Fully syncs with HubSpot, Pipedrive, or Notion CRM databases.",
     ],
     
-    // ✅ NIEUW:
     category: "Lead Automatisering",
     tags: ["n8n", "HubSpot", "LinkedIn", "Clearbit", "Apollo", "Slack", "CRM"],
     readTime: 7,
@@ -111,7 +110,6 @@ export const projects: Project[] = [
       "Reduced average response time by 35%.",
     ],
     
-    // ✅ NIEUW:
     category: "Customer Support Automation",
     tags: ["n8n", "Zendesk", "Intercom", "OpenAI", "Sentiment Analysis", "Vector DB"],
     readTime: 5,
@@ -144,7 +142,6 @@ export const projects: Project[] = [
       "Increased engagement rates by 42% on average.",
     ],
     
-    // ✅ NIEUW:
     category: "Marketing Automatisering",
     tags: ["n8n", "OpenAI", "Mailchimp", "LinkedIn", "Google Analytics", "Segmentation"],
     readTime: 6,
@@ -177,7 +174,6 @@ export const projects: Project[] = [
       "Reduced manual report generation from hours to minutes.",
     ],
     
-    // ✅ NIEUW:
     category: "Data & Rapportage Automatisering",
     tags: ["n8n", "Google Sheets", "Power BI", "Google Data Studio", "API Integration", "ETL"],
     readTime: 8,
@@ -211,7 +207,6 @@ export const projects: Project[] = [
       "Decreased overstocking by 25% and stockouts by 40%.",
     ],
     
-    // ✅ NIEUW:
     category: "Voorspellende Automatisering",
     tags: ["n8n", "Machine Learning", "Forecasting", "ERP Integration", "Slack", "AI Predictions"],
     readTime: 7,
@@ -230,10 +225,208 @@ export const projects: Project[] = [
       company: "E-commerce Retail (78 medewerkers)"
     }
   },
+
+  // ========================================
+  // 🆕 NEW CASE STUDIES (6 ADDED)
+  // ========================================
+
+  {
+    slug: "recruitment-screening-automation",
+    title: "Recruitment Screening Automation",
+    image: "/recruitment-agent.png",
+    description:
+      "AI-powered candidate screening system that analyzes CVs, matches job requirements, and schedules interviews automatically.",
+    details: [
+      "Automatically extracts and scores CV data against job descriptions using AI.",
+      "Integrates with LinkedIn, Indeed, and recruitment platforms.",
+      "Sends personalized rejection/invitation emails based on fit score.",
+      "Auto-schedules interviews via Calendly integration with top candidates.",
+      "Reduced time-to-hire by 55% and screening workload by 90%.",
+    ],
+    
+    category: "HR & Recruitment Automatisering",
+    tags: ["n8n", "OpenAI", "LinkedIn", "Calendly", "CV Parsing", "ATS Integration", "Recruitment"],
+    readTime: 6,
+    date: "2024-10-28",
+    
+    results: {
+      timeSaved: "30 uur/week",
+      roiMonths: 1,
+      improvement: "55% snellere hiring, 90% minder screening werk"
+    },
+    
+    testimonial: {
+      quote: "We kregen 200+ sollicitaties per vacature. Ons HR team verdronk erin. Nu analyseert AI alle CV's, matcht ze met de functie, en plant gesprekken met de top 5%. We stellen 55% sneller aan.",
+      author: "Jasper Verhoeven",
+      role: "HR Director",
+      company: "Tech Scale-up (120 medewerkers)"
+    }
+  },
+
+  {
+    slug: "meeting-notes-action-items-agent",
+    title: "Meeting Notes & Action Items Agent",
+    image: "/meeting-agent.png",
+    description:
+      "Automatically transcribes meetings, generates summaries, extracts action items, and assigns tasks to team members.",
+    details: [
+      "Integrates with Google Meet, Zoom, and Microsoft Teams for auto-transcription.",
+      "Uses AI to identify key decisions, action items, and deadlines.",
+      "Automatically creates tasks in Asana, Monday.com, or Notion.",
+      "Sends personalized follow-up emails to attendees with their action items.",
+      "Eliminated 8 uur/week of manual note-taking and follow-ups.",
+    ],
+    
+    category: "Productiviteits Automatisering",
+    tags: ["n8n", "OpenAI", "Whisper", "Google Meet", "Zoom", "Asana", "Notion", "Task Management"],
+    readTime: 5,
+    date: "2024-09-15",
+    
+    results: {
+      timeSaved: "8 uur/week",
+      roiMonths: 2,
+      improvement: "100% meeting follow-through, 0 vergeten acties"
+    },
+    
+    testimonial: {
+      quote: "Niemand hield zich aan meeting acties omdat we vergaten wie wat moest doen. Nu krijgt iedereen automatisch hun taken met deadlines. Onze uitvoering is van 40% naar 95% gegaan.",
+      author: "Lisa Vermeer",
+      role: "Operations Manager",
+      company: "Consultancy Firm (42 medewerkers)"
+    }
+  },
+
+  {
+    slug: "invoice-payment-reminder-automation",
+    title: "Invoice & Payment Reminder Automation",
+    image: "/invoice-agent.png",
+    description:
+      "Automated invoicing and payment follow-up system that reduces outstanding invoices by 60% and improves cash flow.",
+    details: [
+      "Generates and sends invoices automatically based on project completion or milestones.",
+      "Sends personalized payment reminders at 7, 14, and 30-day intervals.",
+      "Escalates overdue invoices to management with full payment history.",
+      "Integrates with Exact, Moneybird, and QuickBooks.",
+      "Reduced Days Sales Outstanding (DSO) from 45 to 18 dagen.",
+    ],
+    
+    category: "Financiële Automatisering",
+    tags: ["n8n", "Exact", "Moneybird", "QuickBooks", "Payment Reminders", "Cash Flow", "Invoicing"],
+    readTime: 5,
+    date: "2024-08-22",
+    
+    results: {
+      timeSaved: "6 uur/week",
+      roiMonths: 1,
+      costSaving: "€18.000/jaar",
+      improvement: "60% minder onbetaalde facturen, DSO van 45→18 dagen"
+    },
+    
+    testimonial: {
+      quote: "We hadden structureel €80K aan uitstaande facturen. Handmatig herinneren lukte niet. Nu stuurt het systeem automatisch vriendelijke reminders en escalaties. Onze cashflow is dramatisch verbeterd.",
+      author: "Robert Jansen",
+      role: "Financial Controller",
+      company: "Professional Services (55 medewerkers)"
+    }
+  },
+
+  {
+    slug: "social-media-content-scheduler",
+    title: "Social Media Content Scheduler & Analytics",
+    image: "/social-agent.png",
+    description:
+      "AI-powered social media automation that plans, creates, schedules, and analyzes posts across multiple platforms.",
+    details: [
+      "Generates platform-optimized content variations (LinkedIn, Instagram, Twitter) from one source.",
+      "Uses AI to suggest best posting times based on audience engagement data.",
+      "Auto-schedules posts to Buffer, Hootsuite, or native platform APIs.",
+      "Tracks performance metrics and generates weekly insight reports.",
+      "Increased social media output by 400% with same team size.",
+    ],
+    
+    category: "Social Media Automatisering",
+    tags: ["n8n", "OpenAI", "Buffer", "LinkedIn", "Instagram", "Twitter", "Analytics", "Content Creation"],
+    readTime: 6,
+    date: "2024-07-30",
+    
+    results: {
+      timeSaved: "14 uur/week",
+      roiMonths: 2,
+      improvement: "400% meer content, 67% meer engagement"
+    },
+    
+    testimonial: {
+      quote: "We postten 2x per week omdat content maken zo veel tijd kostte. Nu genereert AI variaties voor elk platform, plant optimaal in, en analyseert wat werkt. We posten nu dagelijks met betere resultaten.",
+      author: "Emma Bakker",
+      role: "Marketing Lead",
+      company: "SaaS Startup (18 medewerkers)"
+    }
+  },
+
+  {
+    slug: "customer-onboarding-automation",
+    title: "Customer Onboarding Automation",
+    image: "/onboarding-agent.png",
+    description:
+      "End-to-end customer onboarding workflow that reduces setup time by 70% and improves customer satisfaction scores.",
+    details: [
+      "Triggers personalized welcome sequences upon new customer signup.",
+      "Automatically provisions accounts, sends credentials, and schedules kickoff calls.",
+      "Delivers step-by-step onboarding content via email and in-app messages.",
+      "Tracks onboarding progress and alerts CSM team when customers stall.",
+      "Reduced customer onboarding time from 14 days to 4 days on average.",
+    ],
+    
+    category: "Customer Success Automatisering",
+    tags: ["n8n", "Intercom", "HubSpot", "Calendly", "Customer Success", "Onboarding", "Email Automation"],
+    readTime: 6,
+    date: "2024-11-12",
+    
+    results: {
+      timeSaved: "16 uur/week",
+      roiMonths: 2,
+      improvement: "70% snellere onboarding (14→4 dagen), 35% hogere customer satisfaction"
+    },
+    
+    testimonial: {
+      quote: "Klanten raakten gefrustreerd tijdens onze langzame onboarding. Nu krijgen ze direct alles wat ze nodig hebben, automatisch. Time-to-value is gehalveerd en onze NPS is met 35 punten gestegen.",
+      author: "Sophie Mulder",
+      role: "Head of Customer Success",
+      company: "B2B SaaS Platform (67 medewerkers)"
+    }
+  },
+
+  {
+    slug: "contract-renewal-management",
+    title: "Contract Renewal Management System",
+    image: "/contract-agent.png",
+    description:
+      "Proactive contract management automation that prevents revenue leakage and improves renewal rates by 28%.",
+    details: [
+      "Monitors all customer contracts and triggers renewal workflows 90/60/30 days before expiration.",
+      "Sends personalized renewal offers based on usage data and customer health scores.",
+      "Escalates at-risk renewals to account managers with full customer context.",
+      "Auto-generates renewal contracts and DocuSign workflows.",
+      "Increased contract renewal rate from 68% to 96%.",
+    ],
+    
+    category: "Revenue Operations Automatisering",
+    tags: ["n8n", "Salesforce", "HubSpot", "DocuSign", "Contract Management", "Revenue Retention", "Customer Success"],
+    readTime: 7,
+    date: "2024-06-25",
+    
+    results: {
+      timeSaved: "10 uur/week",
+      roiMonths: 1,
+      costSaving: "€120.000/jaar (saved revenue)",
+      improvement: "28% hogere renewal rate (68%→96%)"
+    },
+    
+    testimonial: {
+      quote: "We verloren €150K per jaar aan contracten die stilletjes verliepen. Niemand had overzicht. Nu worden renewals proactief gemanaged en krijgen we alerts bij risico's. Onze renewal rate is van 68% naar 96%.",
+      author: "Martijn de Vries",
+      role: "VP of Sales",
+      company: "Enterprise Software Vendor (210 medewerkers)"
+    }
+  },
 ];
-
-
-// ========================================
-// OPTIONAL: TYPE EXPORT FOR TYPESCRIPT
-// ========================================
-
