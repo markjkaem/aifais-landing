@@ -1,132 +1,105 @@
-"use client";
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { Metadata } from "next";
+import ContactClient from "./ContactClient";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
+// ✅ SEO METADATA
+export const metadata: Metadata = {
+  title: "Contact | Gratis Automatisering Consult | Aifais n8n Specialist",
+  description:
+    "Neem contact op voor een gratis haalbaarheidscheck. n8n workflow automatisering specialist in Gouda, Nederland. Reactie binnen 24 uur gegarandeerd.",
+
+  keywords: [
+    "contact n8n specialist",
+    "workflow automatisering offerte",
+    "n8n consultant Nederland",
+    "automatisering Gouda",
+    "bedrijfsautomatisering contact",
+  ],
+
+  openGraph: {
+    title: "Contact | Gratis Automatisering Consult | Aifais",
+    description:
+      "Neem contact op voor een gratis haalbaarheidscheck. Reactie binnen 24 uur.",
+    url: "https://aifais.com/contact",
+    type: "website",
+    images: [
+      {
+        url: "https://aifais.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Contact Aifais voor workflow automatisering",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact | Gratis Automatisering Consult | Aifais",
+    description:
+      "Neem contact op voor een gratis haalbaarheidscheck. Reactie binnen 24 uur.",
+    images: ["https://aifais.com/og-image.jpg"],
+  },
+
+  alternates: {
+    canonical: "https://aifais.com/contact",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function ContactPage() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">(
-    "idle"
-  );
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setStatus("sending");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      if (res.ok) {
-        setStatus("ok");
-        setForm({ name: "", email: "", phone: "", message: "" });
-      } else {
-        setStatus("error");
-      }
-    } catch (err) {
-      setStatus("error");
-    }
-  }
-
   return (
-    <div className="bg-black min-h-screen py-14 px-6">
-      <motion.section
-        className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start"
-        initial="hidden"
-        animate="show"
-        variants={{ show: { transition: { staggerChildren: 0.1 } } }}
-      >
-        {/* Left: Form */}
-        <motion.div variants={fadeUp}>
-          <h1 className="text-4xl font-bold mb-6 text-white">
-            Neem contact op — Vraag een offerte aan
-          </h1>
-          <p className="mb-12 text-gray-300">
-            Vul het formulier in en ons team neemt snel contact met je op. Samen
-            zorgen we voor een toekomstgerichte AI-oplossing voor jouw bedrijf.
-          </p>
+    <>
+      {/* ✅ SCHEMA.ORG - CONTACT PAGE */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contact Aifais",
+            description:
+              "Neem contact op met Aifais voor n8n workflow automatisering",
+            url: "https://aifais.com/contact",
+            mainEntity: {
+              "@type": "LocalBusiness",
+              "@id": "https://aifais.com/#organization",
+              name: "Aifais",
+              telephone: "+31-6 18424470", // ✅ VUL IN
+              email: "contact@aifais.com",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Kampenringweg 45D",
+                postalCode: "2803 PE",
+                addressLocality: "Gouda",
+                addressRegion: "Zuid-Holland",
+                addressCountry: "NL",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: "52.0115",
+                longitude: "4.7104",
+              },
+              openingHoursSpecification: {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                ],
+                opens: "09:00",
+                closes: "17:00",
+              },
+            },
+          }),
+        }}
+      />
 
-          <form
-            onSubmit={handleSubmit}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-          >
-            <input
-              required
-              placeholder="Naam"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="p-4 rounded-xl border border-gray-300"
-            />
-            <input
-              required
-              type="email"
-              placeholder="Email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="p-4 rounded-xl border border-gray-200"
-            />
-            <input
-              placeholder="Telefoon"
-              value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              className="p-4 rounded-xl border border-gray-300"
-            />
-            <textarea
-              required
-              placeholder="Bericht"
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              className="p-4 rounded-xl border border-gray-300 col-span-1 sm:col-span-2 h-40"
-            />
-
-            <div className="sm:col-span-2 flex items-center gap-4">
-              <button
-                type="submit"
-                className="px-6 py-3 bg-purple-500 text-black font-semibold rounded-xl shadow-lg hover:scale-105 transition"
-              >
-                Verstuur
-              </button>
-              {status === "sending" && (
-                <span className="text-gray-200">Versturen...</span>
-              )}
-              {status === "ok" && (
-                <span className="text-purple-400">
-                  Bedankt! We nemen snel contact op.
-                </span>
-              )}
-              {status === "error" && (
-                <span className="text-red-500">
-                  Er ging iets mis. Probeer later of mail direct.
-                </span>
-              )}
-            </div>
-          </form>
-        </motion.div>
-
-        {/* Right: Image + Contact Info */}
-        <motion.div variants={fadeUp} className="flex flex-col text-gray-300">
-          <img
-            src="/building.jpg" // replace with your image name in public folder
-            alt="Building"
-            className="rounded-xl mb-6 w-full object-cover h-80"
-          />
-          <div className="text-right">
-            <p className="">Kampenringweg 45D, 2803 PE Gouda</p>
-            <p className="">Zuid-Holland, Netherlands</p>
-            <p className="">contact@aifais.com</p>
-          </div>
-        </motion.div>
-      </motion.section>
-    </div>
+      <ContactClient />
+    </>
   );
 }

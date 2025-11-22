@@ -1,475 +1,173 @@
-"use client";
-import Image from "next/image";
-import Link from "next/link";
-import { projects } from "./portfolio/data";
-import { Space_Grotesk } from "next/font/google";
-import { useRef, useState } from "react";
-import GoogleReviews from "./Components/Reviews";
+import { Metadata } from "next";
+import HomeClient from "./HomeClient";
 
-const h1 = Space_Grotesk({
-  weight: "700",
-  subsets: ["latin"],
-});
+// ✅ SEO METADATA (Dit was al in layout.tsx, maar homepage kan specifiekere metadata hebben)
+export const metadata: Metadata = {
+  title:
+    "n8n Workflow Automatisering Nederland | Bespaar 40+ Uur/Week | Aifais",
+  description:
+    "n8n workflow automatisering specialist voor Nederlandse MKB-bedrijven. Bespaar 40+ uur per week door repetitieve taken te automatiseren. Vanaf €2.500, live binnen 2 weken.",
 
-export default function Home() {
-  // Klassen op basis van dark/light mode
-  const bgClass = "bg-black";
-  const textClass = "text-white";
-  const accentColor = "text-purple-500"; // accentkleur
+  keywords: [
+    "n8n automatisering",
+    "workflow automatisering Nederland",
+    "n8n specialist",
+    "bedrijfsprocessen automatiseren",
+    "n8n consultant Nederland",
+    "automatisering MKB",
+    "handmatig werk automatiseren",
+    "n8n workflows bouwen",
+  ],
 
-  const videoRef = useRef<HTMLVideoElement>(null);
+  openGraph: {
+    title: "n8n Workflow Automatisering Nederland | Bespaar 40+ Uur/Week",
+    description:
+      "Specialist in n8n workflow automatisering voor Nederlandse MKB-bedrijven. Bespaar tijd, voorkom fouten, schaal zonder extra personeel.",
+    url: "https://aifais.com",
+    type: "website",
+    images: [
+      {
+        url: "https://aifais.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Aifais n8n Workflow Automatisering - Bespaar 40+ uur per week",
+      },
+    ],
+  },
 
-  const [isMuted, setIsMuted] = useState(true);
+  twitter: {
+    card: "summary_large_image",
+    title: "n8n Workflow Automatisering Nederland | Bespaar 40+ Uur/Week",
+    description:
+      "Specialist in n8n workflow automatisering voor Nederlandse MKB-bedrijven. Live binnen 2 weken, vanaf €2.500.",
+    images: ["https://aifais.com/og-image.jpg"],
+  },
 
-  const toggleMute = () => {
-    if (!videoRef.current) return;
+  alternates: {
+    canonical: "https://aifais.com",
+  },
 
-    if (isMuted) {
-      // Video unmute en opnieuw starten
-      videoRef.current.muted = false;
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    } else {
-      // Video mute
-      videoRef.current.muted = true;
-    }
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
-    setIsMuted(!isMuted);
-  };
-
+// Server Component (voor metadata + schema)
+export default function HomePage() {
   return (
-    <main
-      className={`${bgClass} ${textClass}  min-h-screen transition-colors duration-500`}
-    >
-      {/* HERO */}
-      <section className="relative min-h-[90vh] flex mx-2 md:mx-10 items-center">
-        {/* Achtergrondafbeelding met gradient overlay */}
-        <div className="absolute inset-0 w-full h-full object-cover brightness-50 contrast-125 saturate-150">
-          {" "}
-          <video
-            src="/coding.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            title="n8n workflow automatisering in actie"
-            aria-label="Achtergrond video van workflow automatisering code"
-            poster="/coding-poster.jpg"
-          >
-            <p>
-              Je browser ondersteunt geen video. Bekijk onze diensten hieronder.
-            </p>
-          </video>
-        </div>
-        <div className="absolute inset-0 bg-black/50" />
-        {/* Hero content */}
-        <div className="relative z-10 text-left md:max-w-6xl px-4 md:px-40">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-wide leading-tight">
-            <span className="text-3xl md:text-4xl font-bold text-purple-400 block mb-2">
-              n8n Workflow Automatisering voor Nederlandse MKB-Bedrijven
-            </span>
-            <span className="text-5xl md:text-7xl block text-white">
-              Bespaar 40+ Uur Per Week Met Slimme Automatisering
-            </span>
-          </h1>
+    <>
+      {/* ✅ SCHEMA.ORG - FAQ PAGE (voor je FAQ sectie) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "Hoelang duurt het voordat een workflow live is?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Gemiddeld 2 weken van intake tot go-live. Simpele workflows (zoals data-sync) vaak binnen 1 week.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Hoe lang duurt de implementatie van een n8n workflow?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Van eerste gesprek tot go-live: gemiddeld 2-3 weken. Dit omvat intake, development, testing, en training van jouw team.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Moet ik technische kennis hebben?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Nee. Wij bouwen en implementeren alles. Jij krijgt een dashboard waar je in gewone taal aanpassingen kunt maken.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Wat kost een workflow gemiddeld?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Vanaf €2.500 voor een standaard workflow. Complexe multi-step automatiseringen vanaf €5.000. Altijd transparante offerte vooraf.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Werken jullie ook met ons bestaande software?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Ja. n8n integreert met 400+ tools zoals Google Workspace, HubSpot, Exact Online, Salesforce, Slack, en meer.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Wat als de workflow niet werkt zoals verwacht?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "We bieden 30 dagen gratis support na go-live. Daarna optionele onderhoudscontracten vanaf €200/maand.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
 
-          <p className="mt-4 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl">
-            Stop met handmatig werk dat jouw team 10+ uur per week kost. Wij
-            automatiseren repetitieve processen met n8n – van offertes versturen
-            tot data-synchronisatie. Bespaar kosten, voorkom fouten, en schaal
-            zonder nieuwe medewerkers.
-          </p>
-          <div className="flex mt-6 flex-col gap-2 text-base md:text-lg">
-            <span className="flex items-center gap-2">
-              <span className="text-green-400 text-xl">✓</span>
-              Binnen 2 weken operationeel
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="text-green-400 text-xl">✓</span>
-              Gemiddelde ROI: 3 maanden
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="text-green-400 text-xl">✓</span>
-              Gespecialiseerd in Nederlandse MKB-bedrijven
-            </span>
-          </div>
+      {/* ✅ SCHEMA.ORG - SERVICE */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            serviceType: "n8n Workflow Automatisering",
+            provider: {
+              "@type": "LocalBusiness",
+              "@id": "https://aifais.com/#organization",
+            },
+            areaServed: {
+              "@type": "Country",
+              name: "Nederland",
+            },
+            hasOfferCatalog: {
+              "@type": "OfferCatalog",
+              name: "Automatisering Services",
+              itemListElement: [
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Standaard Workflow Automatisering",
+                    description:
+                      "Automatiseer repetitieve taken zoals offertes, data-invoer en rapportages",
+                  },
+                  price: "2500",
+                  priceCurrency: "EUR",
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Complexe Multi-Step Automatisering",
+                    description:
+                      "Geavanceerde workflows met meerdere systemen en complexe logica",
+                  },
+                  price: "5000",
+                  priceCurrency: "EUR",
+                },
+              ],
+            },
+          }),
+        }}
+      />
 
-          {/* CTA-knoppen */}
-          <div className="mt-6 flex  gap-4 flex-wrap">
-            <Link
-              href="/quickscan"
-              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-300 text-black font-semibold rounded-xl hover:scale-105 transition-transform duration-300 shadow-lg"
-            >
-              Bereken jouw besparing →
-            </Link>
-            <a
-              href="#cases"
-              className="px-8 py-4 border border-gray-700 rounded-xl text-gray-200 hover:text-white hover:border-purple-400 transition"
-            >
-              Bekijk voorbeelden
-            </a>
-            <div className=" md:flex hidden absolute -right-32 bottom-0">
-              <GoogleReviews />
-            </div>
-          </div>
-
-          {/* small text */}
-          <span className="text-xs text-white">
-            * Gratis en vrijblijvend, antwoord binnen 24 uur
-          </span>
-        </div>
-        {/* Glass panels */}
-        <div className="absolute inset-y-0 left-0 w-[120px] bg-black/70 backdrop-blur-sm border-r border-white/10 hidden md:block" />
-        <div className="absolute inset-y-0 right-0 w-[120px] bg-black/70 backdrop-blur-sm border-l border-white/10 hidden md:block" />
-      </section>
-
-      {/* PARTNERS / LOGO'S */}
-      <section>
-        <div className="w-full justify-center flex md:gap-32 gap-6">
-          <img
-            src="/logo-1.webp"
-            alt="Aifais partner - workflow automatisering specialist"
-            width="160"
-            height="60"
-            loading="lazy"
-          />
-          <img
-            src="/google.svg"
-            alt="Google Workspace integratie voor n8n workflows"
-            width="160"
-            height="60"
-            loading="lazy"
-          />
-          <img
-            src="/n8n.svg"
-            alt="n8n workflow automatisering platform"
-            width="160"
-            height="60"
-            loading="lazy"
-          />
-          <img
-            src="/openai.svg"
-            alt="OpenAI GPT integratie in automatisering workflows"
-            width="160"
-            height="60"
-            loading="lazy"
-          />
-          <img
-            src="/claude.svg"
-            alt="Claude AI integratie voor slimme automatisering"
-            width="160"
-            height="60"
-            loading="lazy"
-          />
-        </div>
-      </section>
-
-      {/* PROMO VIDEO SECTION */}
-      <section
-        id="introduction"
-        aria-labelledby="cases-heading"
-        className="py-24 md:py-32 bg-gradient-to-b from-black via-gray-950 to-black relative"
-      >
-        <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-          {/* TEXT */}
-          <div>
-            <h2
-              id="cases-heading"
-              className="text-2xl md:text-4xl font-bold mb-6"
-            >
-              Zie Hoe Wij 15 Uur Per Week Besparen Voor Bedrijven
-              <span className="text-purple-400"> Zoals Het Jouwe</span>
-            </h2>
-            <p className="text-gray-300 leading-relaxed mb-6 text-base md:text-lg">
-              In deze 60-seconden demo zie je exact hoe onze n8n workflows
-              handmatige processen overnemen – van lead-opvolging tot
-              rapportage-automatisering. Geen technische kennis nodig.
-              "Eindelijk een team dat hun uren investeert in groei, niet in
-              data-invoer."
-            </p>
-            <p className="text-gray-400 italic text-sm md:text-base">
-              — Oprichter MKB-bedrijf, 25 medewerkers
-            </p>
-          </div>
-
-          {/* VIDEO */}
-          <div className="relative w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 backdrop-blur-lg bg-white/5 mx-auto">
-            <video
-              ref={videoRef}
-              src="/aifaispromo.mp4"
-              autoPlay
-              loop
-              muted={isMuted}
-              playsInline
-              className="w-full aspect-[1] object-cover"
-            />
-
-            {/* MUTE / UNMUTE BUTTON */}
-            <button
-              onClick={toggleMute}
-              className="absolute bottom-4 right-4 bg-purple-500/70 hover:bg-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition"
-              aria-label={isMuted ? "Unmute video" : "Mute video"}
-            >
-              {isMuted ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 5v14l12-7-12-7z"
-                  />
-                  <line
-                    x1="5"
-                    y1="5"
-                    x2="19"
-                    y2="19"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 5v14l12-7-12-7z"
-                  />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Subtle glow behind video */}
-        <div className="absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-purple-600/20 blur-3xl rounded-full opacity-40" />
-      </section>
-
-      {/* DIENSTEN / PROJECTEN */}
-      <section aria-labelledby="cases-heading" id="cases" className="py-24">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="text-center mb-14">
-            <h2
-              id="cases-heading"
-              className="text-3xl md:text-4xl font-bold mb-3"
-            >
-              Welke Processen Kunnen Wij Voor Jou Automatiseren?
-            </h2>
-            <p className="text-gray-400 text-lg">
-              Deze workflows draaien al bij 50+ Nederlandse bedrijven
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {projects.slice(0, 3).map((s) => (
-              <div
-                key={s.slug}
-                className="group rounded-2xl overflow-hidden border border-gray-700 bg-gray-950 hover:shadow-xl transition-shadow duration-300"
-              >
-                <img
-                  src={s.image}
-                  alt={s.title}
-                  className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold mb-2">{s.title}</h3>
-                  <p className="text-gray-300 mb-4 line-clamp-3">
-                    {s.description}
-                  </p>
-                  <Link
-                    href={`/portfolio/${s.slug}`}
-                    className="inline-block mt-2 text-purple-300 font-semibold hover:underline"
-                    aria-label={`Bekijk ${s.title} workflow automatisering case`}
-                  >
-                    Bekijk {s.title} Case →
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* CTA naar volledige portfolio */}
-          <div className="text-center mt-16">
-            <Link
-              href="/portfolio"
-              className={`mt-8 inline-block px-10 py-4 ${accentColor} border border-purple-500 font-semibold rounded-lg hover:bg-purple-500 hover:text-black transition`}
-            >
-              Bekijk Volledige Portfolio
-            </Link>
-          </div>
-        </div>
-      </section>
-      {/* OVER ONS / FOUNDER */}
-      <section
-        aria-labelledby="cases-heading"
-        id="about"
-        className="py-24 bg-gradient-to-b from-black via-gray-950 to-black"
-      >
-        <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-          {/* Tekst */}
-          <div>
-            <h2 id="cases-heading" className="text-4xl font-bold mb-6">
-              Waarom Kiezen Bedrijven Voor Aifais?
-            </h2>
-            <p className="text-gray-300 leading-relaxed mb-4">
-              Wij zijn geen IT-consultants die jargon verkopen. Wij zijn
-              specialisten die al 3+ jaar n8n workflows bouwen voor Nederlandse
-              MKB-bedrijven. Van 5-mans teams tot scale-ups met 100+
-              medewerkers.
-            </p>
-
-            <div className="space-y-3 mb-6">
-              <p className="flex items-start gap-3">
-                <span className="text-purple-400 text-xl flex-shrink-0">•</span>
-                <span>
-                  We luisteren naar jouw frustraties met handmatig werk
-                </span>
-              </p>
-              <p className="flex items-start gap-3">
-                <span className="text-purple-400 text-xl flex-shrink-0">•</span>
-                <span>
-                  We bouwen een custom workflow die direct inzetbaar is
-                </span>
-              </p>
-              <p className="flex items-start gap-3">
-                <span className="text-purple-400 text-xl flex-shrink-0">•</span>
-                <span>We trainen jouw team zodat jullie autonoom zijn</span>
-              </p>
-            </div>
-
-            <p className="text-gray-300 font-semibold mb-4">
-              Resultaat? Gemiddeld 40 uur per maand tijdsbesparing, binnen 2
-              weken operationeel.
-            </p>
-
-            <p className="text-gray-400 italic border-l-4 border-purple-500 pl-4">
-              "Eindelijk iemand die begrijpt dat wij geen IT-afdeling hebben,
-              maar wel willen automatiseren."
-              <br />
-              <span className="text-sm">
-                — Operations Manager, E-commerce bedrijf
-              </span>
-            </p>
-          </div>
-
-          {/* Foto’s van jou */}
-          <div className="grid grid-cols-2 gap-4">
-            <img
-              src="/logo_official.png"
-              alt="Aan het werk op kantoor"
-              className="rounded-2xl object-contain invert h-64 w-full hover:scale-105 transition-transform duration-300"
-            />
-            <img
-              src="/office-people.jpg"
-              alt="Uitleg geven aan klant"
-              className="rounded-2xl object-cover h-64 w-full hover:scale-105 transition-transform duration-300"
-            />
-            <img
-              src="/lesson.jpg"
-              alt="In overleg met klant"
-              className="rounded-2xl object-cover object-right h-64 w-full hover:scale-105 transition-transform duration-300 col-span-2"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* AFSLUITENDE CTA */}
-      <section className="py-24 mx-auto text-center bg-gray-950 ">
-        <h2 className="text-4xl font-bold">
-          Klaar Om 40+ Uur Per Maand Terug Te Winnen?
-        </h2>
-        <p className="mt-4 text-lg text-gray-300 w-5/6  md:w-3/6 mx-auto">
-          We beginnen met een gratis 30-minuten haalbaarheidscheck waarin we: ✓
-          Jouw grootste tijdvreters in kaart brengen ✓ 2-3 quick wins
-          identificeren die direct te automatiseren zijn ✓ Een ROI-inschatting
-          maken (investering vs. besparing) Geen verplichtingen. Geen sales
-          pressure. Gewoon eerlijk advies.
-        </p>
-        <Link
-          href="/contact"
-          className={`mt-8 inline-block px-10 py-4 ${accentColor} border border-purple-500 font-semibold rounded-lg hover:bg-purple-500 hover:text-black transition`}
-        >
-          Plan een Gesprek
-        </Link>
-      </section>
-
-      <section
-        aria-labelledby="faq-heading"
-        className="py-24 p-8 max-w-3xl mx-auto text-center"
-      >
-        <h2 className="text-4xl font-bold">Veelgestelde vragen</h2>
-
-        <dl className="space-y-6 text-left mt-8">
-          <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <dt className="font-bold text-lg text-purple-400 mb-2">
-              Hoelang duurt het voordat een workflow live is?
-            </dt>
-            <dd className="text-gray-300">
-              Gemiddeld 2 weken van intake tot go-live. Simpele workflows (zoals
-              data-sync) vaak binnen 1 week.
-            </dd>
-          </div>
-
-          <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <dt className="font-bold text-lg text-purple-400 mb-2">
-              Hoe lang duurt de implementatie van een n8n workflow?
-            </dt>
-            <dd className="text-gray-300">
-              Van eerste gesprek tot go-live: gemiddeld 2-3 weken. Dit omvat
-              intake, development, testing, en training van jouw team.
-            </dd>
-          </div>
-
-          <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <dt className="font-bold text-lg text-purple-400 mb-2">
-              Moet ik technische kennis hebben?
-            </dt>
-            <dd className="text-gray-300">
-              Nee. Wij bouwen en implementeren alles. Jij krijgt een dashboard
-              waar je in gewone taal aanpassingen kunt maken.
-            </dd>
-          </div>
-          <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <dt className="font-bold text-lg text-purple-400 mb-2">
-              Wat kost een workflow gemiddeld?
-            </dt>
-            <dd className="text-gray-300">
-              Vanaf €2.500 voor een standaard workflow. Complexe multi-step
-              automatiseringen vanaf €5.000. Altijd transparante offerte vooraf.{" "}
-            </dd>
-          </div>
-          <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <dt className="font-bold text-lg text-purple-400 mb-2">
-              Werken jullie ook met ons bestaande software?{" "}
-            </dt>
-            <dd className="text-gray-300">
-              Ja. n8n integreert met 400+ tools zoals Google Workspace, HubSpot,
-              Exact Online, Salesforce, Slack, en meer.
-            </dd>
-          </div>
-          <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <dt className="font-bold text-lg text-purple-400 mb-2">
-              Wat als de workflow niet werkt zoals verwacht?
-            </dt>
-            <dd className="text-gray-300">
-              We bieden 30 dagen gratis support na go-live. Daarna optionele
-              onderhoudscontracten vanaf €200/maand.
-            </dd>
-          </div>
-        </dl>
-      </section>
-    </main>
+      {/* Client Component */}
+      <HomeClient />
+    </>
   );
 }
