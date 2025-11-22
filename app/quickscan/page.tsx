@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function QuickScanPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     medewerkers: "",
     taken: [] as string[],
@@ -105,8 +107,16 @@ export default function QuickScanPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      if (res.ok) setStatus("ok");
-      else setStatus("error");
+      if (res.ok) {
+        setStatus("ok");
+
+        // Gebruik de lokale variabele 'besparing', niet result uit state
+        router.push(`/thank-you?besparing=${besparing}&uren=${formData.uren}`);
+
+        return;
+      } else {
+        setStatus("error");
+      }
     } catch {
       setStatus("error");
     }
@@ -244,34 +254,6 @@ export default function QuickScanPage() {
         >
           Bereken mijn besparing
         </button>
-
-        {/* Resultaat */}
-        {result !== null && (
-          <div className="mt-6 p-6 bg-gray-900 rounded-xl text-white space-y-4">
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold">
-                Jouw team kan {formData.uren} uur per week besparen (~€
-                {result.toLocaleString()}/jaar)
-              </span>
-              <span className="text-xs">
-                *uitgegaan van minimale aantal medewerkers die u heeft gekozen
-              </span>
-            </div>
-
-            <p>
-              Met een workflow van €4.500 verdien je dit in ongeveer{" "}
-              {((workflowCost / result) * 12).toFixed(1)} maanden terug.
-            </p>
-
-            {status === "sending" && <p className="text-white">Versturen...</p>}
-            {status === "ok" && (
-              <p className="text-purple-400">Bedankt! We nemen contact op.</p>
-            )}
-            {status === "error" && (
-              <p className="text-red-500">Er ging iets mis.</p>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

@@ -56,10 +56,7 @@ export default function Home() {
         {/* Hero content */}
         <div className="relative z-10 text-left md:max-w-6xl px-4 md:px-40">
           <h1 className="text-4xl md:text-6xl uppercase font-extrabold tracking-widest leading-12">
-            <span className="text-3xl md:text-3xl">
-              {" "}
-              Bespaar uren Per week!
-            </span>
+            <span className="text-xl md:text-3xl"> Bespaar uren Per week!</span>
             <span className={`${h1.className} font-bold block text-zinc-300  `}>
               Met Slimme Workflow Automatisering
             </span>
