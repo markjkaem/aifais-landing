@@ -167,12 +167,16 @@ export default function Home() {
       {/* PROMO VIDEO SECTION */}
       <section
         id="introduction"
+        aria-labelledby="cases-heading"
         className="py-24 md:py-32 bg-gradient-to-b from-black via-gray-950 to-black relative"
       >
         <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* TEXT */}
           <div>
-            <h2 className="text-2xl md:text-4xl font-bold mb-6">
+            <h2
+              id="cases-heading"
+              className="text-2xl md:text-4xl font-bold mb-6"
+            >
               Zie Hoe Wij 15 Uur Per Week Besparen Voor Bedrijven
               <span className="text-purple-400"> Zoals Het Jouwe</span>
             </h2>
@@ -254,10 +258,13 @@ export default function Home() {
       </section>
 
       {/* DIENSTEN / PROJECTEN */}
-      <section id="cases" className="py-24">
+      <section aria-labelledby="cases-heading" id="cases" className="py-24">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">
+            <h2
+              id="cases-heading"
+              className="text-3xl md:text-4xl font-bold mb-3"
+            >
               Welke Processen Kunnen Wij Voor Jou Automatiseren?
             </h2>
             <p className="text-gray-400 text-lg">
@@ -284,8 +291,9 @@ export default function Home() {
                   <Link
                     href={`/portfolio/${s.slug}`}
                     className="inline-block mt-2 text-purple-300 font-semibold hover:underline"
+                    aria-label={`Bekijk ${s.title} workflow automatisering case`}
                   >
-                    Bekijk Case →
+                    Bekijk {s.title} Case →
                   </Link>
                 </div>
               </div>
@@ -305,13 +313,14 @@ export default function Home() {
       </section>
       {/* OVER ONS / FOUNDER */}
       <section
+        aria-labelledby="cases-heading"
         id="about"
         className="py-24 bg-gradient-to-b from-black via-gray-950 to-black"
       >
         <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-12 items-center">
           {/* Tekst */}
           <div>
-            <h2 className="text-4xl font-bold mb-6">
+            <h2 id="cases-heading" className="text-4xl font-bold mb-6">
               Waarom Kiezen Bedrijven Voor Aifais?
             </h2>
             <p className="text-gray-300 leading-relaxed mb-4">
@@ -396,69 +405,70 @@ export default function Home() {
         </Link>
       </section>
 
-      <section className="py-24 p-8 max-w-3xl mx-auto text-center">
-        <h2 className="text-4xl font-bold">
-          Vragen Die We Vaak Krijgen (FAQ){" "}
-        </h2>
+      <section
+        aria-labelledby="faq-heading"
+        className="py-24 p-8 max-w-3xl mx-auto text-center"
+      >
+        <h2 className="text-4xl font-bold">Veelgestelde vragen</h2>
 
-        <div className="space-y-6 text-left mt-8">
+        <dl className="space-y-6 text-left mt-8">
           <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <h3 className="font-bold text-lg text-purple-400 mb-2">
+            <dt className="font-bold text-lg text-purple-400 mb-2">
               Hoelang duurt het voordat een workflow live is?
-            </h3>
-            <p className="text-gray-300">
+            </dt>
+            <dd className="text-gray-300">
               Gemiddeld 2 weken van intake tot go-live. Simpele workflows (zoals
               data-sync) vaak binnen 1 week.
-            </p>
+            </dd>
           </div>
 
           <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <h3 className="font-bold text-lg text-purple-400 mb-2">
+            <dt className="font-bold text-lg text-purple-400 mb-2">
               Hoe lang duurt de implementatie van een n8n workflow?
-            </h3>
-            <p className="text-gray-300">
+            </dt>
+            <dd className="text-gray-300">
               Van eerste gesprek tot go-live: gemiddeld 2-3 weken. Dit omvat
               intake, development, testing, en training van jouw team.
-            </p>
+            </dd>
           </div>
 
           <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <h3 className="font-bold text-lg text-purple-400 mb-2">
+            <dt className="font-bold text-lg text-purple-400 mb-2">
               Moet ik technische kennis hebben?
-            </h3>
-            <p className="text-gray-300">
+            </dt>
+            <dd className="text-gray-300">
               Nee. Wij bouwen en implementeren alles. Jij krijgt een dashboard
               waar je in gewone taal aanpassingen kunt maken.
-            </p>
+            </dd>
           </div>
           <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <h3 className="font-bold text-lg text-purple-400 mb-2">
+            <dt className="font-bold text-lg text-purple-400 mb-2">
               Wat kost een workflow gemiddeld?
-            </h3>
-            <p className="text-gray-300">
+            </dt>
+            <dd className="text-gray-300">
               Vanaf €2.500 voor een standaard workflow. Complexe multi-step
               automatiseringen vanaf €5.000. Altijd transparante offerte vooraf.{" "}
-            </p>
+            </dd>
           </div>
           <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <h3 className="font-bold text-lg text-purple-400 mb-2">
+            <dt className="font-bold text-lg text-purple-400 mb-2">
               Werken jullie ook met ons bestaande software?{" "}
-            </h3>
-            <p className="text-gray-300">
+            </dt>
+            <dd className="text-gray-300">
               Ja. n8n integreert met 400+ tools zoals Google Workspace, HubSpot,
               Exact Online, Salesforce, Slack, en meer.
-            </p>
+            </dd>
           </div>
           <div className="border border-gray-800 rounded-lg p-6 hover:border-purple-500 transition">
-            <h3 className="font-bold text-lg text-purple-400 mb-2">
+            <dt className="font-bold text-lg text-purple-400 mb-2">
               Wat als de workflow niet werkt zoals verwacht?
-            </h3>
-            <p className="text-gray-300">
+            </dt>
+            <dd className="text-gray-300">
               We bieden 30 dagen gratis support na go-live. Daarna optionele
               onderhoudscontracten vanaf €200/maand.
-            </p>
+            </dd>
           </div>
-        </div>
+        </dl>
       </section>
     </main>
   );
