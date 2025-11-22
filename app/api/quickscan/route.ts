@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import crypto from "crypto";
 
 // Simple in-memory rate limit (optioneel)
 const rateLimitStore: { [key: string]: { count: number; lastRequest: number } } = {};
@@ -27,6 +28,53 @@ export async function POST(req: NextRequest) {
     rateLimitStore[user].count += 1;
     rateLimitStore[user].lastRequest = now;
 
+    // ✅ Add to Mailchimp
+    let mailchimpSuccess = false;
+    try {
+      const memberHash = crypto
+        .createHash('md5')
+        .update(email.toLowerCase())
+        .digest('hex');
+
+      const mailchimpData = {
+        email_address: email,
+        status: 'subscribed',
+        merge_fields: {
+          FNAME: naam.split(' ')[0] || naam,
+          LNAME: naam.split(' ').slice(1).join(' ') || '',
+          PHONE: telefoon || '',
+          EMPLOYEES: medewerkers || '',
+          TASKS: taken.join(', ') || '',
+          HOURS: uren?.toString() || '0',
+        },
+        tags: ['Quickscan Lead', 'Website'],
+      };
+
+      const mailchimpResponse = await fetch(
+        `https://${process.env.MAILCHIMP_SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_AUDIENCE_ID}/members/${memberHash}`,
+        {
+          method: 'PUT', // PUT = update or create
+          headers: {
+            Authorization: `Bearer ${process.env.MAILCHIMP_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(mailchimpData),
+        }
+      );
+
+      const mailchimpResult = await mailchimpResponse.json();
+
+      if (mailchimpResponse.ok) {
+        mailchimpSuccess = true;
+        console.log('✅ Lead added to Mailchimp:', email);
+      } else {
+        console.error('❌ Mailchimp error:', mailchimpResult);
+      }
+    } catch (mailchimpError) {
+      console.error('❌ Mailchimp exception:', mailchimpError);
+      // Don't fail the whole request if Mailchimp fails
+    }
+
     // SMTP setup
     const SMTP_HOST = process.env.SMTP_HOST;
     const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
@@ -41,7 +89,7 @@ export async function POST(req: NextRequest) {
     const transporter = nodemailer.createTransport({
       host: SMTP_HOST,
       port: SMTP_PORT,
-      secure: SMTP_PORT === 465, // true voor 465, false voor andere poorten
+      secure: SMTP_PORT === 465,
       auth: { user: SMTP_USER, pass: SMTP_PASS },
     });
 
@@ -54,6 +102,8 @@ Telefoon: ${telefoon || "-"}
 Aantal medewerkers: ${medewerkers}
 Taken: ${taken.join(", ")}
 Uren per week: ${uren}
+
+Mailchimp: ${mailchimpSuccess ? '✅ Toegevoegd' : '❌ Gefaald'}
 `;
 
     await transporter.sendMail({
@@ -63,7 +113,11 @@ Uren per week: ${uren}
       text: mailBody,
     });
 
-    return NextResponse.json({ ok: true }, { status: 200 });
+    return NextResponse.json({ 
+      ok: true,
+      mailchimp: mailchimpSuccess ? 'added' : 'failed'
+    }, { status: 200 });
+    
   } catch (err) {
     console.error("Quickscan API error", err);
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
