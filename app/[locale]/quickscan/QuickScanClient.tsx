@@ -94,7 +94,7 @@ export default function QuickScanClient() {
       }
     })();
 
-    const besparing = formData.uren * 30 * medewerkersNum * 52;
+    const besparing = formData.uren * 12 * medewerkersNum * 52;
     setResult(besparing);
 
     setStatus("sending");
