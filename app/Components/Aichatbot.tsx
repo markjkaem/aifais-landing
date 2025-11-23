@@ -16,7 +16,13 @@ export default function AIChatbot() {
   const [name, setName] = useState("");
   const [hasProvidedEmail, setHasProvidedEmail] = useState(false);
   const [showEmailForm, setShowEmailForm] = useState(false);
+  const [sessionId] = useState(
+    () => `session_${Date.now()}_${Math.random().toString(36)}`
+  );
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const MAX_INPUT_LENGTH = 300; // Was 500
+  const MAX_MESSAGES = 10; // Was 20
 
   // Auto-scroll to bottom
   const scrollToBottom = () => {
@@ -26,6 +32,14 @@ export default function AIChatbot() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Scroll to bottom when opening chat
+  useEffect(() => {
+    if (isOpen && messages.length > 0) {
+      // Small delay to ensure DOM is ready
+      setTimeout(() => scrollToBottom(), 100);
+    }
+  }, [isOpen]);
 
   // Welcome message when opening chat
   useEffect(() => {
@@ -83,6 +97,19 @@ export default function AIChatbot() {
 
     if (!input.trim()) return;
 
+    // Check message limit
+    if (messages.length >= MAX_MESSAGES) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content:
+            "U heeft het maximaal aantal berichten bereikt. Voor uitgebreidere vragen raad ik u aan contact op te nemen via contact@aifais.com of plan een gratis gesprek.",
+        },
+      ]);
+      return;
+    }
+
     // Check if email is needed (after 2 messages)
     if (!hasProvidedEmail && messages.length >= 4) {
       setShowEmailForm(true);
@@ -103,10 +130,16 @@ export default function AIChatbot() {
         body: JSON.stringify({
           messages: [...messages, { role: "user", content: userMessage }],
           email: hasProvidedEmail ? email : null,
+          sessionId: sessionId,
         }),
       });
 
-      if (!response.ok) throw new Error("API error");
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error("rate_limit");
+        }
+        throw new Error("API error");
+      }
 
       const data = await response.json();
 
@@ -114,15 +147,32 @@ export default function AIChatbot() {
         ...prev,
         { role: "assistant", content: data.message },
       ]);
+
+      // Check if limit was reached
+      if (data.isLimit) {
+        // Disable further input
+        setInput("");
+      }
     } catch (error) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content:
-            "Excuses, er ging iets mis. Probeer het opnieuw of neem direct contact op via contact@aifais.com",
-        },
-      ]);
+      if (error instanceof Error && error.message === "rate_limit") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content:
+              "U heeft te veel verzoeken gedaan. Probeer het over 10 minuten opnieuw of neem direct contact op via contact@aifais.com",
+          },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content:
+              "Excuses, er ging iets mis. Probeer het opnieuw of neem direct contact op via contact@aifais.com",
+          },
+        ]);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -287,17 +337,34 @@ export default function AIChatbot() {
           {/* Input */}
           <div className="border-t border-zinc-800 p-4 bg-zinc-900/50">
             <form onSubmit={handleSendMessage} className="flex gap-2">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Stel uw vraag..."
-                disabled={isLoading || showEmailForm}
-                className="flex-1 px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none disabled:opacity-50 text-sm"
-              />
+              <div className="flex-1 relative">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) =>
+                    setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))
+                  }
+                  placeholder="Stel uw vraag..."
+                  disabled={
+                    isLoading ||
+                    showEmailForm ||
+                    messages.length >= MAX_MESSAGES
+                  }
+                  maxLength={MAX_INPUT_LENGTH}
+                  className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none disabled:opacity-50 text-sm pr-16"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">
+                  {input.length}/{MAX_INPUT_LENGTH}
+                </span>
+              </div>
               <button
                 type="submit"
-                disabled={isLoading || !input.trim() || showEmailForm}
+                disabled={
+                  isLoading ||
+                  !input.trim() ||
+                  showEmailForm ||
+                  messages.length >= MAX_MESSAGES
+                }
                 className="px-5 py-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg
@@ -315,6 +382,12 @@ export default function AIChatbot() {
                 </svg>
               </button>
             </form>
+            {messages.length >= MAX_MESSAGES && (
+              <p className="text-xs text-amber-400 mt-2 text-center">
+                ⚠️ Maximum aantal berichten bereikt. Neem contact op voor
+                verdere hulp.
+              </p>
+            )}
             <p className="text-xs text-gray-500 mt-2 text-center">
               Powered by Claude AI
             </p>
