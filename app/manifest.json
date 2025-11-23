@@ -1,0 +1,75 @@
+{
+  "name": "AIFAIS - AI Workflow Automatisering",
+  "short_name": "AIFAIS",
+  "description": "Automatiseer repetitieve taken met AI. Bespaar tijd en focus op wat echt belangrijk is.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#000000",
+  "theme_color": "#9333ea",
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "nl-NL",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Quickscan",
+      "short_name": "Scan",
+      "description": "Start een gratis Quickscan",
+      "url": "/quickscan",
+      "icons": [
+        {
+          "src": "/icon-quickscan-96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Neem contact op",
+      "url": "/contact",
+      "icons": [
+        {
+          "src": "/icon-contact-96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile-1.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "AIFAIS Homepage"
+    },
+    {
+      "src": "/screenshot-desktop-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "AIFAIS Dashboard"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
