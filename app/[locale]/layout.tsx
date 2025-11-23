@@ -8,6 +8,7 @@ import Footer from "../Components/Footer";
 import HeaderMockup from "../Components/Header";
 import { notFound } from "next/navigation";
 import { locales } from "@/i18n";
+import CookieBanner from "../Components/CookieBanner"; // 👈 Import cookie banner
 
 const anton = Inter({
   weight: "400",
@@ -188,6 +189,31 @@ export default async function LocaleLayout({ children, params }: Props) {
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
 
+        {/* Google Analytics with Consent Mode */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+        />
+        <script
+          id="google-analytics"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              
+              // Start met consent denied - alleen laden na cookie toestemming
+              gtag('consent', 'default', {
+                'analytics_storage': 'denied'
+              });
+              
+              gtag('config', 'G-XXXXXXXXXX', {
+                'anonymize_ip': true
+              });
+            `,
+          }}
+        />
+
         {/* Schema.org - LOCAL BUSINESS */}
         <script
           type="application/ld+json"
@@ -321,6 +347,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <HeaderMockup />
           {children}
           <Footer />
+          <CookieBanner /> {/* 👈 Cookie banner at the bottom */}
         </NextIntlClientProvider>
       </body>
     </html>
