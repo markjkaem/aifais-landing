@@ -39,14 +39,14 @@ export async function POST(req: NextRequest) {
       const mailchimpData = {
         email_address: email,
         status: 'subscribed',
-        merge_fields: {
-          FNAME: naam.split(' ')[0] || naam,
-          LNAME: naam.split(' ').slice(1).join(' ') || '',
-          PHONE: telefoon || '',
-          EMPLOYEES: medewerkers || '',
-          TASKS: taken.join(', ') || '',
-          HOURS: uren?.toString() || '0',
-        },
+       merge_fields: {
+  FNAME: naam.split(' ')[0] || naam,
+  LNAME: naam.split(' ').slice(1).join(' ') || '',
+  PHONE: telefoon || '',
+  MMERGE7: medewerkers.toString(),  // ✅
+  MMERGE8: taken.join(', '),        // ✅
+  MMERGE9: Number(uren),            // ✅
+},
         tags: ['Quickscan Lead', 'Website'],
       };
 
@@ -61,6 +61,7 @@ export async function POST(req: NextRequest) {
           body: JSON.stringify(mailchimpData),
         }
       );
+      console.log(await mailchimpResponse.json(), mailchimpData)
 
       const mailchimpResult = await mailchimpResponse.json();
 
