@@ -156,7 +156,7 @@ export default async function PortfolioItemPage({
 
       {/* ✅ BREADCRUMBS UI */}
       <nav
-        className="bg-gray-950 py-4 border-b border-gray-800"
+        className="bg-black py-4 border-b border-gray-800"
         aria-label="Breadcrumb"
       >
         <div className="container mx-auto px-6 max-w-6xl">
@@ -185,7 +185,7 @@ export default async function PortfolioItemPage({
       </nav>
 
       {/* ✅ HERO SECTION */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-gray-950 to-gray-900">
+      <section className="py-16 md:py-24 bg-black">
         <div className="container mx-auto px-6 max-w-5xl">
           <header className="text-center mb-12">
             {/* Category Badge */}
@@ -263,7 +263,7 @@ export default async function PortfolioItemPage({
 
       {/* ✅ RESULTS SECTION (if available) */}
       {project.results && (
-        <section className="py-16 bg-gray-900">
+        <section className="py-16 bg-black">
           <div className="container mx-auto px-6 max-w-5xl">
             <h2 className="text-3xl font-bold text-center mb-12">
               Behaalde Resultaten
@@ -304,7 +304,7 @@ export default async function PortfolioItemPage({
       )}
 
       {/* ✅ MAIN CONTENT */}
-      <article className="py-16 bg-gray-950">
+      <article className="py-16 bg-black">
         <div className="container mx-auto px-6 max-w-4xl">
           {/* Details/Features */}
           <section className="prose prose-invert prose-lg max-w-none">
@@ -374,7 +374,7 @@ export default async function PortfolioItemPage({
 
       {/* ✅ RELATED PROJECTS */}
       {relatedProjects.length > 0 && (
-        <section className="py-16 bg-gray-900">
+        <section className="py-16 bg-black">
           <div className="container mx-auto px-6 max-w-6xl">
             <h2 className="text-3xl font-bold mb-10 text-center">
               Meer Projecten
@@ -420,7 +420,7 @@ export default async function PortfolioItemPage({
       )}
 
       {/* ✅ CTA SECTION */}
-      <section className="py-24 bg-gradient-to-b from-gray-900 to-black text-center">
+      <section className="py-24 bg-gradient-to-b from-black to-gray-950 text-center">
         <div className="container mx-auto px-6 max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Klaar Voor Jouw Eigen{" "}

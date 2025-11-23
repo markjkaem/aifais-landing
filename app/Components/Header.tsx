@@ -123,11 +123,11 @@ export default function HeaderMockup() {
           </button>
 
           <Link
-            href={`${getLocalizedPath("/")}#cases`}
+            href={`${getLocalizedPath("/")}portfolio`}
             className="hover:text-purple-400 transition"
             onClick={(e) => {
               e.preventDefault();
-              router.push(`${getLocalizedPath("/")}#cases`);
+              router.push(`${getLocalizedPath("/")}portfolio`);
               closeAll();
             }}
           >
@@ -399,11 +399,11 @@ export default function HeaderMockup() {
           </div>
 
           <Link
-            href={`${getLocalizedPath("/")}#cases`}
+            href={`${getLocalizedPath("/")}portfolio`}
             className="block py-2 hover:text-purple-400"
             onClick={(e) => {
               e.preventDefault();
-              router.push(`${getLocalizedPath("/")}#cases`);
+              router.push(`${getLocalizedPath("/")}portfolio`);
               closeAll();
             }}
           >

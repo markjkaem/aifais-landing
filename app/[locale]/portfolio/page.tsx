@@ -85,7 +85,7 @@ export default function Portfolio() {
       />
 
       {/* ✅ IMPROVED: Hero Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-black via-gray-950 to-gray-900">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-black via-gray-950 to-gray-950">
         <div className="container mx-auto px-6 max-w-6xl text-center">
           <header className="max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -121,7 +121,7 @@ export default function Portfolio() {
       </section>
 
       {/* ✅ IMPROVED: Projects Grid */}
-      <section className="py-16 md:py-24 bg-gray-900 min-h-screen">
+      <section className="py-16 md:py-24 bg-gray-950 min-h-screen">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project) => (
@@ -219,7 +219,7 @@ export default function Portfolio() {
       </section> */}
 
       {/* ✅ IMPROVED: CTA Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-900 to-black text-center">
+      <section className="py-24 bg-gradient-to-b from-gray-950 to-black text-center">
         <div className="container mx-auto px-6 max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Klaar Voor Jouw Eigen{" "}

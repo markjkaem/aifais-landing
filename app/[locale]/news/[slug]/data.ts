@@ -7,8 +7,8 @@ export const news = [
     "Ontdek hoe workflow-automatisering met n8n jouw bedrijf helpt om efficiënter te werken, kosten te besparen en sneller te schalen. Leer waarom steeds meer Nederlandse MKB-bedrijven kiezen voor slimme automatisering.",
   date: "2025-11-10", // ✅ Changed to ISO format for better schema.org compatibility
   updatedAt: "2025-11-10", // ✅ Added for freshness signals
-  author: "Alex Teekens",
-  authorBio: "Alex Teekens is automatisering-specialist bij Aifais en helpt bedrijven bij het implementeren van slimme workflow-oplossingen met n8n en AI.", // ✅ Added for authority
+  author: "Mark Teekens",
+  authorBio: "Mark Teekens is automatisering-specialist bij Aifais en helpt bedrijven bij het implementeren van slimme workflow-oplossingen met n8n en AI.", // ✅ Added for authority
   category: "Automatisering", // ✅ Added for better organization
   image: "/event.jpg", // ✅ Added featured image path
   readTime: 8, // ✅ Added estimated read time
@@ -120,7 +120,7 @@ Bedrijven die **nu** investeren in workflow-automatisering, bouwen een voorspron
 
 De vraag is niet meer **óf** je moet automatiseren, maar **wanneer** je begint.
 
-> "De beste tijd om te beginnen met automatisering was vorig jaar. De op één na beste tijd is nu." – Alex Teekens, Aifais
+> "De beste tijd om te beginnen met automatisering was vorig jaar. De op één na beste tijd is nu." – Mark Teekens, Aifais
 
 **Klaar om jouw eerste workflow te automatiseren?** Plan een gratis haalbaarheidscheck en ontdek hoeveel tijd en geld je kunt besparen.`,
 },
@@ -132,8 +132,8 @@ De vraag is niet meer **óf** je moet automatiseren, maar **wanneer** je begint.
     "Ontdek welke 5 repetitieve bedrijfsprocessen je binnen 24 uur kunt automatiseren met n8n. Van lead-opvolging tot facturatie - concrete voorbeelden met meetbare tijdsbesparing.",
   date: "2025-11-17",
   updatedAt: "2025-11-17",
-  author: "Alex Teekens",
-  authorBio: "Alex Teekens is automatisering-specialist bij Aifais en helpt bedrijven bij het implementeren van slimme workflow-oplossingen met n8n en AI.",
+  author: "Mark Teekens",
+  authorBio: "Mark Teekens is automatisering-specialist bij Aifais en helpt bedrijven bij het implementeren van slimme workflow-oplossingen met n8n en AI.",
   category: "Automatisering",
   image: "/automation-processes.jpg",
   readTime: 10,

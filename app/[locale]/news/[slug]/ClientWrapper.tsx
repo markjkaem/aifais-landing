@@ -394,7 +394,7 @@ export function ClientWrapper({
       <div className="relative">
         <TableOfContents content={article.content} />
 
-        <article className="py-12 md:py-20 bg-gradient-to-b from-gray-950 to-black">
+        <article className="py-12 md:py-20  bg-black">
           <div className="max-w-3xl px-6 mx-auto">
             <header className="mb-10">
               {article.category && (

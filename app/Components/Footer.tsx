@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer
-      className="text-gray-200 bg-gray-950 mt-12"
+      className="text-gray-200 bg-black mt-12"
       itemScope
       itemType="https://schema.org/Organization"
     >

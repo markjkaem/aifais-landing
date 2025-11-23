@@ -258,7 +258,7 @@ export default function QuickScanClient() {
 
       <div className="max-w-3xl mx-auto space-y-6">
         <header className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-yellow-400 to-purple-400 bg-clip-text text-transparent">
             Gratis Automatisering Quickscan
           </h1>
           <p className="text-lg md:text-2xl text-gray-200 mb-3 font-medium">
@@ -453,7 +453,7 @@ export default function QuickScanClient() {
                 htmlFor="uren"
                 className="block mb-4 text-white font-semibold text-lg"
               >
-                Hoeveel uur per week kost dit gemiddeld?
+                Hoeveel uur per week per medewerker kost dit gemiddeld?
               </label>
               <div className="space-y-3">
                 <input
@@ -611,7 +611,7 @@ export default function QuickScanClient() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="w-full px-8 py-5 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 text-white font-bold text-xl rounded-2xl hover:scale-105 transition-transform duration-300 shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-8 py-5 bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500 text-white font-bold text-xl rounded-2xl hover:scale-105 transition-transform duration-300 shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Bereken mijn automatisering besparing"
             >
               {status === "sending" ? (
@@ -687,29 +687,6 @@ export default function QuickScanClient() {
             </div>
           </div>
         </aside>
-
-        <div className="mt-8 p-6 bg-gradient-to-r from-green-900/20 to-emerald-900/20 border border-green-500/30 rounded-2xl">
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <svg
-              className="w-8 h-8 text-green-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fillRule="evenodd"
-                d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <h3 className="text-xl font-bold text-white">
-              100% Vrijblijvend & Gratis
-            </h3>
-          </div>
-          <p className="text-center text-gray-300">
-            Geen hidden costs, geen verplichtingen. Alleen een eerlijk inzicht
-            in jouw besparingsmogelijkheden.
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -168,7 +168,7 @@ export default async function NewsArticlePage({
       />
 
       <nav
-        className="bg-gray-950 py-4 border-b border-gray-800"
+        className="bg-black 0 py-4 border-b border-gray-800"
         aria-label="Breadcrumb"
       >
         <div className="container mx-auto px-6 max-w-4xl">
