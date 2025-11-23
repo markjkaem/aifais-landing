@@ -30,6 +30,11 @@ export default function CookieBanner() {
       });
     }
 
+    // Hotjar
+    if (typeof window !== "undefined" && (window as any).hj) {
+      (window as any).hj("stateChange", window.location.pathname);
+    }
+
     // Mailchimp tracking (if applicable)
     // Add any other tracking scripts here
   };
