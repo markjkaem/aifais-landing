@@ -62,7 +62,6 @@ export default function HomeClient() {
             playsInline
             title="n8n workflow automatisering in actie"
             aria-label="Achtergrond video van workflow automatisering code"
-            poster="/coding-poster.jpg"
             className="w-full h-full object-cover brightness-[0.35] contrast-125 saturate-150 scale-105"
           >
             <p>
