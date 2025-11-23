@@ -61,16 +61,16 @@ export async function POST(req: NextRequest) {
           body: JSON.stringify(mailchimpData),
         }
       );
-      console.log(await mailchimpResponse.json(), mailchimpData)
+     
 
       const mailchimpResult = await mailchimpResponse.json();
 
       if (mailchimpResponse.ok) {
-        mailchimpSuccess = true;
-        console.log('✅ Lead added to Mailchimp:', email);
-      } else {
-        console.error('❌ Mailchimp error:', mailchimpResult);
-      }
+  mailchimpSuccess = true;
+  console.log('✅ Lead added to Mailchimp:', email);
+} else {
+  console.error('❌ Mailchimp error:', mailchimpResult);
+}
     } catch (mailchimpError) {
       console.error('❌ Mailchimp exception:', mailchimpError);
       // Don't fail the whole request if Mailchimp fails
