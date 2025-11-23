@@ -10,7 +10,7 @@ export default function ExitIntentPopup() {
   const [hasShown, setHasShown] = useState(false);
 
   // Check if current page should show popup
-  const excludedPaths = ["/quickscan", "/contact", "/bedankt"];
+  const excludedPaths = ["/", "/quickscan", "/contact", "/bedankt"];
   const shouldShowPopup = !excludedPaths.some((path) =>
     pathname.includes(path)
   );
