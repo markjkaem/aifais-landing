@@ -483,7 +483,7 @@ export default function HeaderMockup() {
             <div className="flex items-start">
               <div className="bg-gradient-to-br from-purple-900/20 to-purple-700/10 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-500/50 transition cursor-pointer">
                 <Image
-                  src="/event.jpg"
+                  src="/lesson.jpg"
                   alt="Event Preview"
                   width={300}
                   height={180}
@@ -543,7 +543,7 @@ export default function HeaderMockup() {
             <div className="flex items-start">
               <div className="bg-gradient-to-br from-purple-900/20 to-purple-700/10 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-500/50 transition cursor-pointer">
                 <Image
-                  src="/event.jpg"
+                  src="/lesson.jpg"
                   alt="Event Preview"
                   width={300}
                   height={180}
