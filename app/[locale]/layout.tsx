@@ -9,6 +9,8 @@ import HeaderMockup from "../Components/Header";
 import { notFound } from "next/navigation";
 import { locales } from "@/i18n";
 import CookieBanner from "../Components/CookieBanner"; // 👈 Import cookie banner
+import ExitIntentPopup from "../Components/ExitIntentPopup";
+import AIChatbot from "../Components/Aichatbot";
 
 const anton = Inter({
   weight: "400",
@@ -348,6 +350,8 @@ export default async function LocaleLayout({ children, params }: Props) {
           {children}
           <Footer />
           <CookieBanner /> {/* 👈 Cookie banner at the bottom */}
+          <ExitIntentPopup />
+          <AIChatbot /> {/* 👈 Voeg dit toe */}
         </NextIntlClientProvider>
       </body>
     </html>
