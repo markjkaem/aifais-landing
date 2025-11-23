@@ -12,6 +12,8 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
     const { naam, email, telefoon, medewerkers, taken, uren } = data;
 
+    const besparing = uren * 12 * medewerkers * 52;
+
     if (!email || !naam) {
       return NextResponse.json({ error: "Naam en email zijn verplicht" }, { status: 400 });
     }
@@ -46,6 +48,7 @@ export async function POST(req: NextRequest) {
   MMERGE7: medewerkers.toString(),  // ✅
   MMERGE8: taken.join(', '),        // ✅
   MMERGE9: Number(uren),            // ✅
+  MMERGE10: Number(besparing),   // ✅
 },
         tags: ['Quickscan Lead', 'Website'],
       };
