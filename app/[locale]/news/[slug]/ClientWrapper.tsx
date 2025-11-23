@@ -203,33 +203,6 @@ function StickyRightSidebar({ article, slug }: { article: any; slug: string }) {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-500/30 rounded-xl p-6">
-          <h4 className="text-lg font-bold text-white mb-2">
-            Meer Automatisering Tips?
-          </h4>
-          <p className="text-sm text-gray-400 mb-4">
-            Ontvang wekelijks praktische tips in je inbox.
-          </p>
-          <form action="/api/newsletter" method="POST" className="space-y-3">
-            <input
-              type="email"
-              name="email"
-              placeholder="je@email.nl"
-              required
-              className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder:text-gray-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none"
-            />
-            <button
-              type="submit"
-              className="w-full px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:scale-105 transition-transform"
-            >
-              Inschrijven
-            </button>
-          </form>
-          <p className="text-xs text-gray-500 mt-2">
-            Geen spam. Uitschrijven wanneer je wilt.
-          </p>
-        </div>
-
         <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
           <h4 className="text-lg font-bold text-white mb-2">
             Klaar om te starten?
