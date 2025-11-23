@@ -16,7 +16,6 @@ import {
   useRef,
   useState,
 } from "react";
-import GoogleReviews from "./../Components/Reviews";
 import { projects } from "./portfolio/data";
 
 const h1 = Space_Grotesk({
@@ -347,13 +346,6 @@ export default function HomeClient() {
                 <span>Geen verplichtingen</span>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Google Reviews - Floating card */}
-        <div className="absolute bottom-8 right-8 hidden xl:block z-20">
-          <div className="bg-black/60 backdrop-blur-lg border border-white/10 rounded-2xl p-4 shadow-2xl hover:scale-105 transition-transform duration-300">
-            <GoogleReviews />
           </div>
         </div>
 
