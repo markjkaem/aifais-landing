@@ -333,6 +333,8 @@ export default async function LocaleLayout({ children, params }: Props) {
             }),
           }}
         />
+        {/* ContentSquare (voor Hotjar) */}
+        <script src="https://t.contentsquare.net/uxa/28bf15ae3204a.js" async />
         {/* Hotjar Tracking Code - Loads but waits for consent */}
         <script
           dangerouslySetInnerHTML={{
