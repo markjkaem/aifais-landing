@@ -19,16 +19,52 @@ export default function HeaderMockup() {
     "services" | "news" | "languages" | null
   >(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  // ✅ Hide/Show header on scroll
+  useEffect(() => {
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+
+      // Don't hide if dropdown is open
+      if (openDropdown || searchOpen || mobileOpen) {
+        setIsVisible(true);
+        setLastScrollY(currentScrollY);
+        return;
+      }
+
+      if (currentScrollY < 10) {
+        // Always show at top
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down & past 100px
+        setIsVisible(false);
+      } else {
+        // Scrolling up
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", controlNavbar);
+    return () => window.removeEventListener("scroll", controlNavbar);
+  }, [lastScrollY, openDropdown, searchOpen, mobileOpen]);
 
   const handleDropdownToggle = (
     dropdown: "services" | "news" | "languages"
   ) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
+    setSearchOpen(false);
   };
 
   const closeAll = () => {
     setOpenDropdown(null);
     setMobileOpen(false);
+    setSearchOpen(false);
   };
 
   // ✅ Close dropdown when clicking outside
@@ -40,37 +76,62 @@ export default function HeaderMockup() {
       }
     };
 
-    if (openDropdown || mobileOpen) {
+    if (openDropdown || mobileOpen || searchOpen) {
       document.addEventListener("click", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [openDropdown, mobileOpen]);
+  }, [openDropdown, mobileOpen, searchOpen]);
 
-  // ✅ DEFINITIEVE WERKENDE OPLOSSING - Hard redirect
+  // ✅ Search functionality
+  const allSearchableContent = [
+    ...projects.map((p) => ({
+      type: "case",
+      title: p.title,
+      slug: `/portfolio/${p.slug}`,
+    })),
+    ...news.map((n) => ({
+      type: "news",
+      title: n.title,
+      slug: `/news/${n.slug}`,
+    })),
+    {
+      type: "page",
+      title: locale === "nl" ? "Contact" : "Contact",
+      slug: "/contact",
+    },
+    {
+      type: "page",
+      title: locale === "nl" ? "Over Ons" : "About Us",
+      slug: "/#about",
+    },
+  ];
+
+  const searchResults =
+    searchQuery.length > 0
+      ? allSearchableContent
+          .filter((item) =>
+            item.title.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .slice(0, 5)
+      : [];
+
   const switchLanguage = (newLocale: string) => {
-    // Don't do anything if already on that locale
     if (locale === newLocale) {
-      console.log("⚠️ Already on", newLocale);
       closeAll();
       return;
     }
 
-    console.log("🔄 Switching from", locale, "to", newLocale);
-    console.log("📍 Current pathname:", pathname);
-
     let pathWithoutLocale = pathname;
 
-    // Remove /en prefix if it exists
     if (pathWithoutLocale.startsWith("/en/")) {
       pathWithoutLocale = pathWithoutLocale.substring(3);
     } else if (pathWithoutLocale === "/en") {
       pathWithoutLocale = "/";
     }
 
-    // Build new path
     let newPath: string;
     if (newLocale === "nl") {
       newPath = pathWithoutLocale || "/";
@@ -78,13 +139,9 @@ export default function HeaderMockup() {
       newPath = pathWithoutLocale === "/" ? "/en" : `/en${pathWithoutLocale}`;
     }
 
-    console.log("✅ Hard redirecting to:", newPath);
-
-    // ✅ Use window.location for guaranteed redirect
     window.location.href = newPath;
   };
 
-  // ✅ Helper to get localized path
   const getLocalizedPath = (path: string) => {
     if (locale === "nl") {
       return path;
@@ -93,12 +150,20 @@ export default function HeaderMockup() {
   };
 
   return (
-    <header className="w-full bg-black/90 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+    <header
+      className={`w-full bg-black/95 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50 transition-transform duration-300 ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
-        <Link href={getLocalizedPath("/")} onClick={closeAll}>
+        <Link
+          href={getLocalizedPath("/")}
+          onClick={closeAll}
+          className="flex-shrink-0"
+        >
           <Image
-            className="invert w-20"
+            className="invert w-24 hover:scale-105 transition-transform"
             src="/logo_official.png"
             alt="Aifais Logo"
             width={200}
@@ -107,19 +172,45 @@ export default function HeaderMockup() {
         </Link>
 
         {/* Desktop navigation */}
-        <nav className="hidden md:flex items-center space-x-10 text-sm text-gray-300">
+        <nav className="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-300">
           <button
             onClick={() => handleDropdownToggle("services")}
-            className="hover:text-purple-400 transition flex items-center gap-1"
+            className="hover:text-purple-400 transition flex items-center gap-2 group"
           >
-            {t("services")} <span className="text-xs">▼</span>
+            {t("services")}
+            <svg
+              className={`w-3 h-3 transition-transform ${
+                openDropdown === "services" ? "rotate-180" : ""
+              }`}
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
           </button>
 
           <button
             onClick={() => handleDropdownToggle("news")}
-            className="hover:text-purple-400 transition flex items-center gap-1"
+            className="hover:text-purple-400 transition flex items-center gap-2"
           >
-            {t("news")} <span className="text-xs">▼</span>
+            {t("news")}
+            <svg
+              className={`w-3 h-3 transition-transform ${
+                openDropdown === "news" ? "rotate-180" : ""
+              }`}
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
           </button>
 
           <Link
@@ -155,17 +246,20 @@ export default function HeaderMockup() {
           </Link>
         </nav>
 
-        {/* Desktop language selector */}
-        <div className="hidden md:block relative">
+        {/* Desktop actions */}
+        <div className="hidden lg:flex items-center gap-3">
+          {/* Search button */}
           <button
             onClick={(e) => {
               e.stopPropagation();
-              handleDropdownToggle("languages");
+              setSearchOpen(!searchOpen);
+              setOpenDropdown(null);
             }}
-            className="text-gray-300 hover:text-purple-400 transition text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5"
+            className="text-gray-300 hover:text-purple-400 transition p-2 rounded-lg hover:bg-white/5"
+            aria-label="Search"
           >
             <svg
-              className="w-4 h-4"
+              className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -174,111 +268,231 @@ export default function HeaderMockup() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
               />
             </svg>
-            {locale.toUpperCase()}
-            <span className="text-xs">▼</span>
           </button>
 
-          {openDropdown === "languages" && (
-            <div
-              className="absolute right-0 mt-3 bg-black/95 border border-white/10 rounded-lg shadow-xl overflow-hidden min-w-[160px] z-50"
-              onClick={(e) => e.stopPropagation()}
+          {/* Language selector */}
+          <div className="relative">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDropdownToggle("languages");
+              }}
+              className="text-gray-300 hover:text-purple-400 transition text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5"
             >
-              <button
-                onClick={() => switchLanguage("nl")}
-                disabled={locale === "nl"}
-                className={`w-full text-left px-4 py-3 hover:bg-white/5 transition flex items-center gap-3 ${
-                  locale === "nl"
-                    ? "text-purple-400 bg-white/5 cursor-default"
-                    : "text-gray-300 cursor-pointer"
-                }`}
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <span className="text-xl">🇳🇱</span>
-                <span>Nederlands</span>
-                {locale === "nl" && (
-                  <svg
-                    className="w-4 h-4 ml-auto"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
-              </button>
-              <button
-                onClick={() => switchLanguage("en")}
-                disabled={locale === "en"}
-                className={`w-full text-left px-4 py-3 hover:bg-white/5 transition flex items-center gap-3 ${
-                  locale === "en"
-                    ? "text-purple-400 bg-white/5 cursor-default"
-                    : "text-gray-300 cursor-pointer"
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+                />
+              </svg>
+              {locale.toUpperCase()}
+              <svg
+                className={`w-3 h-3 transition-transform ${
+                  openDropdown === "languages" ? "rotate-180" : ""
                 }`}
+                fill="currentColor"
+                viewBox="0 0 20 20"
               >
-                <span className="text-xl">🇬🇧</span>
-                <span>English</span>
-                {locale === "en" && (
-                  <svg
-                    className="w-4 h-4 ml-auto"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
-              </button>
-            </div>
-          )}
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+
+            {openDropdown === "languages" && (
+              <div
+                className="absolute right-0 mt-2 bg-zinc-900/98 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl overflow-hidden min-w-[180px] z-50 animate-slideDown"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => switchLanguage("nl")}
+                  disabled={locale === "nl"}
+                  className={`w-full text-left px-4 py-3 hover:bg-white/5 transition flex items-center gap-3 ${
+                    locale === "nl"
+                      ? "text-purple-400 bg-purple-500/10 cursor-default"
+                      : "text-gray-300 cursor-pointer"
+                  }`}
+                >
+                  <span className="text-xl">🇳🇱</span>
+                  <span className="font-medium">Nederlands</span>
+                  {locale === "nl" && (
+                    <svg
+                      className="w-4 h-4 ml-auto"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  )}
+                </button>
+                <button
+                  onClick={() => switchLanguage("en")}
+                  disabled={locale === "en"}
+                  className={`w-full text-left px-4 py-3 hover:bg-white/5 transition flex items-center gap-3 ${
+                    locale === "en"
+                      ? "text-purple-400 bg-purple-500/10 cursor-default"
+                      : "text-gray-300 cursor-pointer"
+                  }`}
+                >
+                  <span className="text-xl">🇬🇧</span>
+                  <span className="font-medium">English</span>
+                  {locale === "en" && (
+                    <svg
+                      className="w-4 h-4 ml-auto"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* CTA Button */}
+          <Link
+            href={getLocalizedPath("/quickscan")}
+            className="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-semibold rounded-lg transition-all shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105"
+            onClick={closeAll}
+          >
+            Quickscan
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-gray-200 text-3xl"
+          className="lg:hidden text-gray-200 text-3xl hover:text-purple-400 transition"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Menu"
         >
-          ☰
+          {mobileOpen ? "✕" : "☰"}
         </button>
       </div>
 
+      {/* Search Overlay */}
+      {searchOpen && (
+        <div className="absolute top-full left-0 right-0 bg-zinc-900/98 backdrop-blur-xl border-b border-white/20 shadow-2xl animate-slideDown">
+          <div className="max-w-3xl mx-auto px-6 py-6">
+            <div className="relative">
+              <svg
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <input
+                type="text"
+                placeholder={
+                  locale === "nl"
+                    ? "Zoek cases, nieuws, pagina's..."
+                    : "Search cases, news, pages..."
+                }
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 bg-black border border-white/20 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none text-lg"
+                autoFocus
+              />
+            </div>
+
+            {/* Search Results */}
+            {searchResults.length > 0 && (
+              <div className="mt-4 space-y-2">
+                {searchResults.map((result, i) => (
+                  <Link
+                    key={i}
+                    href={getLocalizedPath(result.slug)}
+                    onClick={closeAll}
+                    className="block px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg transition group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded uppercase font-semibold">
+                        {result.type}
+                      </span>
+                      <span className="text-gray-300 group-hover:text-white transition">
+                        {result.title}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {searchQuery.length > 0 && searchResults.length === 0 && (
+              <p className="mt-4 text-center text-gray-400">
+                {locale === "nl"
+                  ? "Geen resultaten gevonden"
+                  : "No results found"}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Desktop Mega Menu - Services */}
       {openDropdown === "services" && (
-        <div className="hidden md:block w-full bg-black/95 border-b border-white/10 shadow-2xl py-10">
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="grid grid-cols-2 gap-x-10 text-gray-200 text-sm">
+        <div className="hidden lg:block w-full bg-zinc-900/98 backdrop-blur-xl border-b border-white/20 shadow-2xl py-8 animate-slideDown">
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 gap-8">
+            {/* Projects Grid */}
+            <div className="col-span-2 grid grid-cols-2 gap-4">
               {projects.map((project) => (
                 <Link
                   key={project.slug}
                   href={getLocalizedPath(`/portfolio/${project.slug}`)}
-                  className="hover:text-purple-400 p-2 transition"
+                  className="group p-4 rounded-xl hover:bg-white/5 transition border border-transparent hover:border-white/10"
                   onClick={closeAll}
                 >
-                  {project.title}
+                  <h3 className="text-white font-semibold mb-1 group-hover:text-purple-400 transition">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-gray-400 line-clamp-2">
+                    {project.description}
+                  </p>
                 </Link>
               ))}
             </div>
-            <div className="flex items-center justify-center bg-black border border-white/10 rounded-2xl p-4 shadow-lg hover:border-purple-500 transition cursor-pointer">
-              <div className="flex items-center space-x-5">
+
+            {/* Featured Event */}
+            <div className="flex items-start">
+              <div className="bg-gradient-to-br from-purple-900/20 to-purple-700/10 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-500/50 transition cursor-pointer">
                 <Image
                   src="/event.jpg"
                   alt="Event Preview"
-                  width={180}
-                  height={120}
-                  className="rounded-lg object-cover"
+                  width={300}
+                  height={180}
+                  className="rounded-lg object-cover mb-4"
                 />
-                <div className="text-sm text-gray-200 leading-tight">
-                  <p className="font-semibold text-lg">{tEvent("title")}</p>
-                  <p className="text-gray-400 mt-1">{tEvent("subtitle")}</p>
-                </div>
+                <p className="font-semibold text-lg text-white mb-2">
+                  {tEvent("title")}
+                </p>
+                <p className="text-sm text-gray-400">{tEvent("subtitle")}</p>
               </div>
             </div>
           </div>
@@ -287,48 +501,58 @@ export default function HeaderMockup() {
 
       {/* Desktop Mega Menu - News */}
       {openDropdown === "news" && (
-        <div className="hidden md:block w-full bg-black/95 border-b border-white/10 shadow-2xl py-10">
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="grid grid-cols-2 gap-x-10 text-gray-200 text-sm">
+        <div className="hidden lg:block w-full bg-zinc-900/98 backdrop-blur-xl border-b border-white/20 shadow-2xl py-8 animate-slideDown">
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 gap-8">
+            {/* News Grid */}
+            <div className="col-span-2 grid grid-cols-2 gap-4">
               {news
                 .filter((item) => item.id < 6)
                 .map((blog) => (
                   <Link
                     key={blog.slug}
                     href={getLocalizedPath(`/news/${blog.slug}`)}
-                    className="block p-2 hover:text-purple-400 transition"
+                    className="group p-4 rounded-xl hover:bg-white/5 transition border border-transparent hover:border-white/10"
                     onClick={closeAll}
                   >
-                    {blog.title}
+                    <h3 className="text-white font-semibold mb-1 group-hover:text-purple-400 transition">
+                      {blog.title}
+                    </h3>
+                    <p className="text-sm text-gray-400 line-clamp-2">
+                      {blog.excerpt}
+                    </p>
                   </Link>
                 ))}
               <Link
                 href={`${getLocalizedPath("/")}#introduction`}
-                className="block p-2 hover:text-purple-400"
+                className="group p-4 rounded-xl hover:bg-white/5 transition border border-transparent hover:border-white/10"
                 onClick={(e) => {
                   e.preventDefault();
                   router.push(`${getLocalizedPath("/")}#introduction`);
                   closeAll();
                 }}
               >
-                {locale === "nl"
-                  ? "Bekijk hoe automatisering jouw werk vereenvoudigt"
-                  : "See how automation simplifies your work"}
+                <h3 className="text-white font-semibold mb-1 group-hover:text-purple-400 transition">
+                  {locale === "nl"
+                    ? "Bekijk hoe automatisering jouw werk vereenvoudigt"
+                    : "See how automation simplifies your work"}
+                </h3>
               </Link>
             </div>
-            <div className="flex items-center justify-center bg-black border border-white/10 rounded-2xl p-4 shadow-lg hover:border-purple-500 transition cursor-pointer">
-              <div className="flex items-center space-x-5">
+
+            {/* Featured Event */}
+            <div className="flex items-start">
+              <div className="bg-gradient-to-br from-purple-900/20 to-purple-700/10 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-500/50 transition cursor-pointer">
                 <Image
                   src="/event.jpg"
                   alt="Event Preview"
-                  width={180}
-                  height={120}
-                  className="rounded-lg object-cover"
+                  width={300}
+                  height={180}
+                  className="rounded-lg object-cover mb-4"
                 />
-                <div className="text-sm text-gray-200 leading-tight">
-                  <p className="font-semibold text-lg">{tEvent("title")}</p>
-                  <p className="text-gray-400 mt-1">{tEvent("subtitle")}</p>
-                </div>
+                <p className="font-semibold text-lg text-white mb-2">
+                  {tEvent("title")}
+                </p>
+                <p className="text-sm text-gray-400">{tEvent("subtitle")}</p>
               </div>
             </div>
           </div>
@@ -337,22 +561,46 @@ export default function HeaderMockup() {
 
       {/* MOBILE MENU */}
       {mobileOpen && (
-        <div className="md:hidden bg-black/95 border-t border-white/10 px-6 py-4 space-y-4 text-gray-200 text-base">
+        <div className="lg:hidden bg-zinc-900/98 backdrop-blur-xl border-t border-white/10 px-6 py-6 space-y-4 text-gray-200 text-base max-h-[80vh] overflow-y-auto animate-slideDown">
+          {/* Mobile Search */}
+          <div className="pb-4 border-b border-white/10">
+            <input
+              type="text"
+              placeholder={locale === "nl" ? "Zoeken..." : "Search..."}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-3 bg-black border border-white/20 rounded-lg text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none"
+            />
+          </div>
+
           {/* Mobile: Services */}
           <div>
             <button
               onClick={() => handleDropdownToggle("services")}
-              className="w-full flex justify-between items-center py-2"
+              className="w-full flex justify-between items-center py-3 font-semibold"
             >
-              {t("services")} <span>▼</span>
+              {t("services")}
+              <svg
+                className={`w-4 h-4 transition-transform ${
+                  openDropdown === "services" ? "rotate-180" : ""
+                }`}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
             </button>
             {openDropdown === "services" && (
-              <div className="pl-4 mt-2 space-y-2">
+              <div className="pl-4 mt-2 space-y-3 animate-slideDown">
                 {projects.map((project) => (
                   <Link
                     key={project.slug}
                     href={getLocalizedPath(`/portfolio/${project.slug}`)}
-                    className="block hover:text-purple-400"
+                    className="block py-2 hover:text-purple-400 transition"
                     onClick={closeAll}
                   >
                     {project.title}
@@ -360,35 +608,38 @@ export default function HeaderMockup() {
                 ))}
               </div>
             )}
+          </div>
 
+          {/* Mobile: News */}
+          <div>
             <button
               onClick={() => handleDropdownToggle("news")}
-              className="w-full flex justify-between items-center pt-6 pb-2"
+              className="w-full flex justify-between items-center py-3 font-semibold"
             >
-              {t("news")} <span>▼</span>
+              {t("news")}
+              <svg
+                className={`w-4 h-4 transition-transform ${
+                  openDropdown === "news" ? "rotate-180" : ""
+                }`}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
             </button>
             {openDropdown === "news" && (
-              <div className="pl-4 mt-2 space-y-2">
-                <Link
-                  href={`${getLocalizedPath("/")}#introduction`}
-                  className="block p-2 hover:text-purple-400"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    router.push(`${getLocalizedPath("/")}#introduction`);
-                    closeAll();
-                  }}
-                >
-                  {locale === "nl"
-                    ? "Bekijk hoe automatisering jouw werk vereenvoudigt"
-                    : "See how automation simplifies your work"}
-                </Link>
+              <div className="pl-4 mt-2 space-y-3 animate-slideDown">
                 {news
                   .filter((item) => item.id < 4)
                   .map((blog) => (
                     <Link
                       key={blog.slug}
                       href={getLocalizedPath(`/news/${blog.slug}`)}
-                      className="block p-2 hover:text-purple-400 transition"
+                      className="block py-2 hover:text-purple-400 transition"
                       onClick={closeAll}
                     >
                       {blog.title}
@@ -400,7 +651,7 @@ export default function HeaderMockup() {
 
           <Link
             href={`${getLocalizedPath("/")}portfolio`}
-            className="block py-2 hover:text-purple-400"
+            className="block py-3 hover:text-purple-400 transition font-semibold"
             onClick={(e) => {
               e.preventDefault();
               router.push(`${getLocalizedPath("/")}portfolio`);
@@ -412,7 +663,7 @@ export default function HeaderMockup() {
 
           <Link
             href={`${getLocalizedPath("/")}#about`}
-            className="block py-2 hover:text-purple-400"
+            className="block py-3 hover:text-purple-400 transition font-semibold"
             onClick={(e) => {
               e.preventDefault();
               router.push(`${getLocalizedPath("/")}#about`);
@@ -424,18 +675,27 @@ export default function HeaderMockup() {
 
           <Link
             href={getLocalizedPath("/contact")}
-            className="block py-2 hover:text-purple-400"
+            className="block py-3 hover:text-purple-400 transition font-semibold"
             onClick={closeAll}
           >
             {t("contact")}
           </Link>
 
+          {/* Mobile CTA */}
+          <Link
+            href={getLocalizedPath("/quickscan")}
+            className="block mt-4 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-bold rounded-lg text-center hover:from-purple-500 hover:to-purple-600 transition"
+            onClick={closeAll}
+          >
+            Start Quickscan
+          </Link>
+
           {/* Mobile languages */}
           <div className="pt-4 border-t border-white/10">
-            <p className="text-xs text-gray-400 mb-2 uppercase tracking-wider">
+            <p className="text-xs text-gray-400 mb-3 uppercase tracking-wider font-semibold">
               {t("language")}
             </p>
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <button
                 onClick={() => switchLanguage("nl")}
                 disabled={locale === "nl"}
@@ -464,6 +724,23 @@ export default function HeaderMockup() {
           </div>
         </div>
       )}
+
+      <style jsx global>{`
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-slideDown {
+          animation: slideDown 0.2s ease-out;
+        }
+      `}</style>
     </header>
   );
 }
