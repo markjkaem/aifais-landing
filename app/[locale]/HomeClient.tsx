@@ -429,13 +429,13 @@ export default function HomeClient() {
       </section>
 
       {/* PROMO VIDEO SECTION */}
-      <section
+      {/* <section
         id="introduction"
         aria-labelledby="intro-heading"
         className="py-24 md:py-32 bg-gradient-to-b from-black via-gray-950 to-black relative"
       >
         <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-          {/* TEXT */}
+          
           <div>
             <h2
               id="intro-heading"
@@ -460,7 +460,7 @@ export default function HomeClient() {
             </blockquote>
           </div>
 
-          {/* VIDEO */}
+         
           <div className="relative w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 backdrop-blur-lg bg-white/5 mx-auto">
             <video
               ref={videoRef}
@@ -473,7 +473,7 @@ export default function HomeClient() {
               title="Aifais promo video - n8n workflow automatisering demo"
             />
 
-            {/* MUTE / UNMUTE BUTTON */}
+            
             <button
               onClick={toggleMute}
               className="absolute bottom-4 right-4 bg-purple-500/70 hover:bg-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition"
@@ -524,172 +524,12 @@ export default function HomeClient() {
           </div>
         </div>
 
-        {/* Subtle glow behind video */}
+        
         <div
           className="absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-purple-600/20 blur-3xl rounded-full opacity-40"
           aria-hidden="true"
         />
-      </section>
-
-      {/* ABOUT US SECTION */}
-      <section id="about" className="relative py-24 bg-black overflow-hidden">
-        {/* Background gradient effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-transparent to-amber-900/5" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-purple-400 via-white to-amber-400 bg-clip-text text-transparent">
-                Over Ons
-              </span>
-            </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Wij zijn Mark en Faisal, specialisten in n8n workflow
-              automatisering. Ons doel: bedrijven helpen 40+ uur per week te
-              besparen door slimme automatisering.
-            </p>
-          </div>
-
-          {/* Team Members */}
-          <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            {/* Mark */}
-            <div className="group relative">
-              <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
-                {/* Gradient border effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/10 to-pink-600/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div className="relative">
-                  {/* Photo */}
-                  <div className="mb-6 relative">
-                    <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-purple-500/20 group-hover:ring-purple-500/50 transition-all duration-300">
-                      <Image
-                        src="/mark.png"
-                        alt="Mark - Co-founder AIFAIS"
-                        width={192}
-                        height={192}
-                        className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-300"
-                      />
-                    </div>
-                    {/* Decorative gradient circle */}
-                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-purple-600 via-white to-amber-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
-                  </div>
-
-                  {/* Info */}
-                  <div className="text-center">
-                    <h3 className="text-2xl font-bold text-white mb-2">Mark</h3>
-                    <p className="text-purple-400 font-semibold mb-4">
-                      Co-founder & Technical Expert
-                    </p>
-                    <p className="text-gray-400 leading-relaxed mb-6">
-                      Begonnen als software engineer heb ik jarenlang bedrijven
-                      geholpen hun processen te digitaliseren. Mijn missie is om
-                      automatisering toegankelijk te maken voor elk bedrijf.
-                    </p>
-
-                    {/* Skills/Tags */}
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
-                        Software Development
-                      </span>
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
-                        n8n Expert
-                      </span>
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
-                        AI Integration
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Faisal */}
-            <div className="group relative">
-              <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
-                {/* Gradient border effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-white/5 to-amber-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div className="relative">
-                  {/* Photo */}
-                  <div className="mb-6 relative">
-                    <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-purple-500/20 group-hover:ring-purple-500/50 transition-all duration-300">
-                      <Image
-                        src="/faissal.png"
-                        alt="Faissal - Co-founder AIFAIS"
-                        width={192}
-                        height={192}
-                        className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-300"
-                      />
-                    </div>
-                    {/* Decorative gradient circle */}
-                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-purple-600 via-white to-amber-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
-                  </div>
-
-                  {/* Info */}
-                  <div className="text-center">
-                    <h3 className="text-2xl font-bold text-white mb-2">
-                      Faissal
-                    </h3>
-                    <p className="text-purple-400 font-semibold mb-4">
-                      Co-founder & Business Development
-                    </p>
-                    <p className="text-gray-400 leading-relaxed mb-6">
-                      Na jaren ondernemerschap weet ik hoe het is om vast te
-                      zitten in repetitieve taken. Bij aifais vertaal ik die
-                      frustratie naar concrete oplossingen die bedrijven écht
-                      helpen groeien.
-                    </p>
-
-                    {/* Skills/Tags */}
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
-                        Process Design
-                      </span>
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
-                        Customer Success
-                      </span>
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
-                        Growth Strategy
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom CTA */}
-          <div className="mt-16 text-center">
-            <p className="text-gray-400 mb-6">
-              Wil je kennismaken en ontdekken hoe wij jouw bedrijf kunnen
-              helpen?
-            </p>
-            <a
-              href="/quickscan"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-white text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/50 hover:scale-105"
-            >
-              Start Gratis Quickscan
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </section>
-
+      </section> */}
       {/* DIENSTEN / PROJECTEN */}
       <section
         id="cases"
@@ -875,6 +715,164 @@ export default function HomeClient() {
                 </svg>
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+      {/* ABOUT US SECTION */}
+      <section id="about" className="relative py-24 bg-black overflow-hidden">
+        {/* Background gradient effects */}
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-transparent to-amber-900/5" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-purple-400 via-white to-amber-400 bg-clip-text text-transparent">
+                Over Ons
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Wij zijn Mark en Faisal, specialisten in n8n workflow
+              automatisering. Ons doel: bedrijven helpen 40+ uur per week te
+              besparen door slimme automatisering.
+            </p>
+          </div>
+
+          {/* Team Members */}
+          <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+            {/* Mark */}
+            <div className="group relative">
+              <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
+                {/* Gradient border effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/10 to-pink-600/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                <div className="relative">
+                  {/* Photo */}
+                  <div className="mb-6 relative">
+                    <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-purple-500/20 group-hover:ring-purple-500/50 transition-all duration-300">
+                      <Image
+                        src="/mark.png"
+                        alt="Mark - Co-founder AIFAIS"
+                        width={192}
+                        height={192}
+                        className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-300"
+                      />
+                    </div>
+                    {/* Decorative gradient circle */}
+                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-purple-600 via-white to-amber-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
+                  </div>
+
+                  {/* Info */}
+                  <div className="text-center">
+                    <h3 className="text-2xl font-bold text-white mb-2">Mark</h3>
+                    <p className="text-purple-400 font-semibold mb-4">
+                      Co-founder & Technical Expert
+                    </p>
+                    <p className="text-gray-400 leading-relaxed mb-6">
+                      Begonnen als software engineer heb ik jarenlang bedrijven
+                      geholpen hun processen te digitaliseren. Mijn missie is om
+                      automatisering toegankelijk te maken voor elk bedrijf.
+                    </p>
+
+                    {/* Skills/Tags */}
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                        Software Development
+                      </span>
+                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                        n8n Expert
+                      </span>
+                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                        AI Integration
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Faisal */}
+            <div className="group relative">
+              <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
+                {/* Gradient border effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-white/5 to-amber-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                <div className="relative">
+                  {/* Photo */}
+                  <div className="mb-6 relative">
+                    <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-purple-500/20 group-hover:ring-purple-500/50 transition-all duration-300">
+                      <Image
+                        src="/faissal.png"
+                        alt="Faissal - Co-founder AIFAIS"
+                        width={192}
+                        height={192}
+                        className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-300"
+                      />
+                    </div>
+                    {/* Decorative gradient circle */}
+                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-purple-600 via-white to-amber-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
+                  </div>
+
+                  {/* Info */}
+                  <div className="text-center">
+                    <h3 className="text-2xl font-bold text-white mb-2">
+                      Faissal
+                    </h3>
+                    <p className="text-purple-400 font-semibold mb-4">
+                      Co-founder & Business Development
+                    </p>
+                    <p className="text-gray-400 leading-relaxed mb-6">
+                      Na jaren ondernemerschap weet ik hoe het is om vast te
+                      zitten in repetitieve taken. Bij aifais vertaal ik die
+                      frustratie naar concrete oplossingen die bedrijven écht
+                      helpen groeien.
+                    </p>
+
+                    {/* Skills/Tags */}
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                        Process Design
+                      </span>
+                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                        Customer Success
+                      </span>
+                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                        Growth Strategy
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="mt-16 text-center">
+            <p className="text-gray-400 mb-6">
+              Wil je kennismaken en ontdekken hoe wij jouw bedrijf kunnen
+              helpen?
+            </p>
+            <a
+              href="/quickscan"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-white text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/50 hover:scale-105"
+            >
+              Start Gratis Quickscan
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </a>
           </div>
         </div>
       </section>
