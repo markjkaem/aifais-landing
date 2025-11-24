@@ -333,9 +333,6 @@ export default async function LocaleLayout({ children, params }: Props) {
             }),
           }}
         />
-        
-      
-        />
       </head>
       <body className={`${anton.className} tracking-wider`}>
         <noscript>
