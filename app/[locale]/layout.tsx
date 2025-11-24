@@ -17,16 +17,6 @@ const anton = Inter({
   subsets: ["latin"],
 });
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 // ✅ Dynamic metadata per locale - AWAIT params
 export async function generateMetadata({
   params,
