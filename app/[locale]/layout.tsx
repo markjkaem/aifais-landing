@@ -158,6 +158,21 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html lang={locale}>
       <head>
+        {/* Google Ads Global Tag */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17756832047"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17756832047');
+            `,
+          }}
+        />
         {/* Google Tag Manager */}
         <script
           dangerouslySetInnerHTML={{
