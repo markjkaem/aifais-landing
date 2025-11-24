@@ -8,32 +8,29 @@ import Footer from "../Components/Footer";
 import HeaderMockup from "../Components/Header";
 import { notFound } from "next/navigation";
 import { locales } from "@/i18n";
-import CookieBanner from "../Components/CookieBanner"; // 👈 Import cookie banner
+import Script from "next/script"; // ✅ Import Script component
+import CookieBanner from "../Components/CookieBanner";
 import ExitIntentPopup from "../Components/ExitIntentPopup";
 import AIChatbot from "../Components/Aichatbot";
 
+// ✅ Dynamic imports voor non-critical components (lazy loading)
+
+// ✅ Font optimization met display swap
 const anton = Inter({
   weight: "400",
   subsets: ["latin"],
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap", // Voorkomt invisible text
+  preload: true,
+  variable: "--font-inter",
 });
 
 // ✅ Dynamic metadata per locale - AWAIT params
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>; // ✅ params is a Promise
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params; // ✅ AWAIT here
+  const { locale } = await params;
   const isNL = locale === "nl";
 
   return {
@@ -152,13 +149,12 @@ export function generateStaticParams() {
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>; // ✅ params is a Promise
+  params: Promise<{ locale: string }>;
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await params; // ✅ AWAIT params
+  const { locale } = await params;
 
-  // ✅ Check if locale is valid
   if (!locales.includes(locale as any)) {
     notFound();
   }
@@ -166,18 +162,30 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={`${anton.variable}`}>
       <head>
-        {/* Google Tag Manager */}
-        <script
+        {/* ✅ Critical CSS - Inline voor fastest render */}
+        <style
           dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-TMVXP6WQ');`,
+            __html: `
+              body { 
+                margin: 0; 
+                background: #000; 
+                color: #fff;
+                font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+              }
+              header { 
+                background: rgba(0,0,0,0.95); 
+                backdrop-filter: blur(12px);
+              }
+              img { max-width: 100%; height: auto; }
+              * { box-sizing: border-box; }
+            `,
           }}
         />
+
+        {/* ✅ DNS Prefetch & Preconnect voor external resources */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -186,35 +194,13 @@ export default async function LocaleLayout({ children, params }: Props) {
           crossOrigin="anonymous"
         />
 
+        {/* ✅ Favicon & PWA */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
 
-        {/* Google Analytics with Consent Mode */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-        />
-        <script
-          id="google-analytics"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              
-              // Start met consent denied - alleen laden na cookie toestemming
-              gtag('consent', 'default', {
-                'analytics_storage': 'denied'
-              });
-              
-              gtag('config', 'G-XXXXXXXXXX', {
-                'anonymize_ip': true
-              });
-            `,
-          }}
-        />
+        {/* ✅ Preload critical resources */}
+        <link rel="preload" href="/logo_official.png" as="image" />
 
         {/* Schema.org - LOCAL BUSINESS */}
         <script
@@ -344,15 +330,54 @@ export default async function LocaleLayout({ children, params }: Props) {
           ></iframe>
         </noscript>
 
-        {/* ✅ Wrap with NextIntlClientProvider */}
         <NextIntlClientProvider messages={messages} locale={locale}>
           <HeaderMockup />
           {children}
           <Footer />
-          <CookieBanner /> {/* 👈 Cookie banner at the bottom */}
+
+          {/* ✅ Non-critical components lazy loaded */}
+          <CookieBanner />
           <ExitIntentPopup />
-          <AIChatbot /> {/* 👈 Voeg dit toe */}
+          <AIChatbot />
         </NextIntlClientProvider>
+
+        {/* ✅ Google Tag Manager - Deferred */}
+        <Script
+          id="gtm"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-TMVXP6WQ');`,
+          }}
+        />
+
+        {/* ✅ Google Analytics - Deferred with Consent Mode */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              
+              gtag('consent', 'default', {
+                'analytics_storage': 'denied'
+              });
+              
+              gtag('config', 'G-XXXXXXXXXX', {
+                'anonymize_ip': true
+              });
+            `,
+          }}
+        />
       </body>
     </html>
   );
