@@ -18,9 +18,9 @@ export default function Footer() {
             itemScope
             itemType="https://schema.org/PostalAddress"
           >
-            <p itemProp="streetAddress">Kampenringweg 45D</p>
+            <p itemProp="streetAddress">Groningenweg 8</p>
             <p>
-              <span itemProp="postalCode">2803 PE</span>{" "}
+              <span itemProp="postalCode">2803 PV</span>{" "}
               <span itemProp="addressLocality">Gouda</span>
             </p>
             <meta itemProp="addressCountry" content="NL" />

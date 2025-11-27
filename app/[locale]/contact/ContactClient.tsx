@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -551,10 +552,19 @@ export default function ContactClient() {
                   </div>
                   <div>
                     <p className="font-semibold text-white mb-1">Kantoor</p>
+                    <div>
+                      <Image
+                        src="/office.jpg"
+                        alt="Kantoor locatie"
+                        width={200}
+                        height={150}
+                        className=" py-2 rounded-2xl"
+                      />
+                    </div>
                     <address className="not-italic text-gray-300 text-sm leading-relaxed">
-                      Kampenringweg 45D
+                      Groningenweg 8
                       <br />
-                      2803 PE Gouda
+                      2803 PV Gouda
                       <br />
                       Nederland
                     </address>

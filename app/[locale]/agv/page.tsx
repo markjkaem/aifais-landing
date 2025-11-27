@@ -45,7 +45,7 @@ export default function AGVPage() {
           <p className="text-gray-300 leading-relaxed mb-4">
             Deze algemene voorwaarden zijn van toepassing op alle overeenkomsten
             tussen <strong className="text-white">Aifais</strong> (hierna: "wij"
-            of "Aifais"), gevestigd aan Kampenringweg 45D, 2803 PE Gouda, en de
+            of "Aifais"), gevestigd aan Groningenweg 8, 2803 PV Gouda, en de
             opdrachtgever (hierna: "u" of "klant") betreffende n8n workflow
             automatisering diensten.
           </p>
@@ -53,7 +53,7 @@ export default function AGVPage() {
             <p>
               <strong className="text-white">Contactgegevens:</strong>
             </p>
-            <p>Kampenringweg 45D, 2803 PE Gouda</p>
+            <p>Groningenweg 8, 2803 PV Gouda</p>
             <p>
               Email:{" "}
               <a

@@ -71,8 +71,8 @@ export default function ContactPage() {
               email: "contact@aifais.com",
               address: {
                 "@type": "PostalAddress",
-                streetAddress: "Kampenringweg 45D",
-                postalCode: "2803 PE",
+                streetAddress: "Groningenweg 8",
+                postalCode: "2803 PV",
                 addressLocality: "Gouda",
                 addressRegion: "Zuid-Holland",
                 addressCountry: "NL",

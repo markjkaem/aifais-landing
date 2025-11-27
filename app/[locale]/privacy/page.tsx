@@ -38,7 +38,7 @@ export default function PrivacyPage() {
         {/* Intro */}
         <section className="mb-12 bg-gray-900/40 border border-gray-800 rounded-xl p-6">
           <p className="text-gray-300 leading-relaxed mb-4">
-            Aifais, gevestigd aan Kampenringweg 45D, 2803 PE Gouda, is
+            Aifais, gevestigd aan Groningenweg 8, 2803 PV Gouda, is
             verantwoordelijk voor de verwerking van persoonsgegevens zoals
             weergegeven in deze privacyverklaring.
           </p>
@@ -46,7 +46,7 @@ export default function PrivacyPage() {
             <p>
               <strong className="text-white">Contactgegevens:</strong>
             </p>
-            <p>Kampenringweg 45D, 2803 PE Gouda</p>
+            <p>Groningenweg 8, 2803 PV Gouda</p>
             <p>
               Email:{" "}
               <a

@@ -6,7 +6,7 @@ Je bent een professionele virtuele assistent voor AIFAIS, een bedrijf gespeciali
 
 BEDRIJFSINFORMATIE:
 - Bedrijfsnaam: AIFAIS
-- Locatie: Kampenringweg 45D, 2803 PE Gouda, Nederland
+- Locatie: Groningenweg 8, 2803 PV Gouda, Nederland
 - Email: contact@aifais.com
 - Specialisatie: n8n workflow automatisering voor MKB
 
