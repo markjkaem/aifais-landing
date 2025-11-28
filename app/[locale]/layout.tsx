@@ -11,6 +11,7 @@ import { locales } from "@/i18n";
 import CookieBanner from "../Components/CookieBanner"; // 👈 Import cookie banner
 import ExitIntentPopup from "../Components/ExitIntentPopup";
 import AIChatbot from "../Components/Aichatbot";
+import Script from "next/script";
 
 const anton = Inter({
   weight: "400",
@@ -338,22 +339,6 @@ export default async function LocaleLayout({ children, params }: Props) {
             }),
           }}
         />
-        {/* Mailchimp Connected Site Script */}
-        <Script
-          id="mcjs"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(c,h,i,m,p){
-                m=c.createElement(h),
-                p=c.getElementsByTagName(h)[0],
-                m.async=1,
-                m.src=i,
-                p.parentNode.insertBefore(m,p)
-              }(document,"script","https://chimpstatic.com/mcjs-connected/js/users/c66f45e7f503cc57bbaf5e5db/9a532f162e3351306564318b7.js");
-            `,
-          }}
-        />
       </head>
       <body className={`${anton.className} tracking-wider`}>
         <noscript>
@@ -374,6 +359,22 @@ export default async function LocaleLayout({ children, params }: Props) {
           <ExitIntentPopup />
           <AIChatbot /> {/* 👈 Voeg dit toe */}
         </NextIntlClientProvider>
+        {/* 👇 MOVE MAILCHIMP SCRIPT HERE - BEFORE CLOSING BODY TAG */}
+        <Script
+          id="mcjs"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(c,h,i,m,p){
+                m=c.createElement(h),
+                p=c.getElementsByTagName(h)[0],
+                m.async=1,
+                m.src=i,
+                p.parentNode.insertBefore(m,p)
+              }(document,"script","https://chimpstatic.com/mcjs-connected/js/users/c66f45e7f503cc57bbaf5e5db/9a532f162e3351306564318b7.js");
+            `,
+          }}
+        />
       </body>
     </html>
   );
