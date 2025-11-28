@@ -338,6 +338,22 @@ export default async function LocaleLayout({ children, params }: Props) {
             }),
           }}
         />
+        {/* Mailchimp Connected Site Script */}
+        <Script
+          id="mcjs"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(c,h,i,m,p){
+                m=c.createElement(h),
+                p=c.getElementsByTagName(h)[0],
+                m.async=1,
+                m.src=i,
+                p.parentNode.insertBefore(m,p)
+              }(document,"script","https://chimpstatic.com/mcjs-connected/js/users/c66f45e7f503cc57bbaf5e5db/9a532f162e3351306564318b7.js");
+            `,
+          }}
+        />
       </head>
       <body className={`${anton.className} tracking-wider`}>
         <noscript>
