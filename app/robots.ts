@@ -5,30 +5,22 @@ export default function robots(): MetadataRoute.Robots {
   
   return {
     rules: [
+      // 1. Regular Bots (Google, Bing, etc.)
       {
         userAgent: '*',
         allow: '/',
-        disallow: [
-          '/api/', // Blokkeer API routes
-          '/admin/', // Als je een admin panel hebt
-          '/_next/', // Next.js internal files
-          '/thank-you', // Bedankt pagina hoeft niet geïndexeerd
-        ],
+        disallow: ['/api/', '/admin/', '/thank-you'],
       },
+      // 2. Specific AI Scrapers (Optional: Block them if you want)
+      // If you WANT to be in ChatGPT, remove this block.
+      // If you want to protect your IP, keep this.
       {
-        userAgent: 'Googlebot',
-        allow: '/',
-        disallow: [
-          '/api/',
-          '/thank-you',
-        ],
-      },
-      {
-        userAgent: 'Googlebot-Image',
-        allow: '/',
+        userAgent: ['GPTBot', 'CCBot', 'ClaudeBot'], 
+        disallow: ['/admin/', '/api/', '/thank-you'], 
+        // Note: 'allow: /' is implied if not disallowed, 
+        // but you can set 'disallow: /' here to block them entirely.
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
   }
 }
