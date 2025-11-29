@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { news } from "./data";
+import { news } from "../data";
 import { ClientWrapper } from "./ClientWrapper";
 
 const SITE_URL = "https://aifais.com";

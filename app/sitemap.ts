@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 import { projects } from "./[locale]/portfolio/data"; // Check your path
-import { news } from "./[locale]/news/[slug]/data"; // Check your path
+import { news } from "./[locale]/news/data"; // Check your path
 import { services } from "./[locale]/diensten/data";
 
 const BASE_URL = "https://aifais.com";

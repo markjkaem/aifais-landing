@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { projects } from "../[locale]/portfolio/data";
-import { news } from "../[locale]/news/[slug]/data";
+import { news } from "../[locale]/news/data";
 
 // ✅ NEW: Define Service Links for Navigation & Search
 const serviceLinks = [

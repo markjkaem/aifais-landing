@@ -5,7 +5,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { news } from "./[slug]/data"; // Adjust path if your data is elsewhere
+import { news } from "./data"; // Adjust path if your data is elsewhere
 
 // ✅ SEO METADATA
 export const metadata: Metadata = {
