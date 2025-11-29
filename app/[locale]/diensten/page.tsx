@@ -156,8 +156,11 @@ export default function ServicesPage() {
                 </li>
               </ul>
               {/* Internal Link to specific service page (Future Proofing) */}
-              // NEW (Good for SEO)
-              <Link href="/diensten/workflow-automatisering" className="...">
+
+              <Link
+                href="/diensten/workflow-automatisering"
+                className="text-white font-semibold border-b border-purple-500 pb-1 hover:text-purple-400 transition"
+              >
                 Lees meer over Workflows →
               </Link>
             </article>
