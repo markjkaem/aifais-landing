@@ -2,28 +2,29 @@ import { Metadata } from "next";
 import HomeClient from "./HomeClient";
 import { useTranslations } from "next-intl";
 
-// ✅ SEO METADATA (Dit was al in layout.tsx, maar homepage kan specifiekere metadata hebben)
+// ✅ SEO METADATA - Aangepast voor normale bedrijfseigenaren
 export const metadata: Metadata = {
-  title:
-    "n8n Workflow Automatisering Nederland | Bespaar 40+ Uur/Week | Aifais",
+  title: "Bedrijfsautomatisering Nederland | Bespaar 40+ Uur/Week | AIFAIS",
   description:
-    "n8n workflow automatisering specialist voor Nederlandse MKB-bedrijven. Bespaar 40+ uur per week door repetitieve taken te automatiseren. Vanaf €2.500, live binnen 2 weken.",
+    "Automatiseer repetitieve taken en bedrijfsprocessen voor MKB. Bespaar 40+ uur per week. Geen programmeerkennis nodig. Vanaf €2.500, live binnen 2 weken.",
 
   keywords: [
-    "n8n automatisering",
-    "workflow automatisering Nederland",
-    "n8n specialist",
-    "bedrijfsprocessen automatiseren",
-    "n8n consultant Nederland",
-    "automatisering MKB",
-    "handmatig werk automatiseren",
-    "n8n workflows bouwen",
+    "bedrijfsautomatisering",
+    "processen automatiseren",
+    "tijd besparen automatisering",
+    "automatisering mkb",
+    "handmatige taken automatiseren",
+    "repetitieve taken automatisch",
+    "administratie automatiseren",
+    "bedrijfsprocessen digitaliseren",
+    "automatisering kleine bedrijven",
+    "automatisering zonder programmeren",
   ],
 
   openGraph: {
-    title: "n8n Workflow Automatisering Nederland | Bespaar 40+ Uur/Week",
+    title: "Bedrijfsautomatisering Nederland | Bespaar 40+ Uur/Week",
     description:
-      "Specialist in n8n workflow automatisering voor Nederlandse MKB-bedrijven. Bespaar tijd, voorkom fouten, schaal zonder extra personeel.",
+      "Automatiseer handmatig werk voor MKB bedrijven. Bespaar tijd, voorkom fouten, schaal zonder extra personeel. Live binnen 2 weken.",
     url: "https://aifais.com",
     type: "website",
     images: [
@@ -31,16 +32,16 @@ export const metadata: Metadata = {
         url: "https://aifais.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Aifais n8n Workflow Automatisering - Bespaar 40+ uur per week",
+        alt: "AIFAIS Bedrijfsautomatisering - Bespaar 40+ uur per week",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "n8n Workflow Automatisering Nederland | Bespaar 40+ Uur/Week",
+    title: "Bedrijfsautomatisering Nederland | Bespaar 40+ Uur/Week",
     description:
-      "Specialist in n8n workflow automatisering voor Nederlandse MKB-bedrijven. Live binnen 2 weken, vanaf €2.500.",
+      "Automatiseer handmatig werk voor MKB. Stop met repetitieve taken. Live binnen 2 weken, vanaf €2.500.",
     images: ["https://aifais.com/og-image.jpg"],
   },
 
@@ -59,7 +60,7 @@ export default function HomePage() {
   const t = useTranslations("hero");
   return (
     <>
-      {/* ✅ SCHEMA.ORG - FAQ PAGE (voor je FAQ sectie) */}
+      {/* ✅ SCHEMA.ORG - FAQ PAGE */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -69,18 +70,18 @@ export default function HomePage() {
             mainEntity: [
               {
                 "@type": "Question",
-                name: "Hoelang duurt het voordat een workflow live is?",
+                name: "Hoelang duurt het voordat mijn processen geautomatiseerd zijn?",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "Gemiddeld 2 weken van intake tot go-live. Simpele workflows (zoals data-sync) vaak binnen 1 week.",
+                  text: "Gemiddeld 2 weken van intake tot live. Simpele automatiseringen (zoals automatische emails of data-invoer) vaak binnen 1 week.",
                 },
               },
               {
                 "@type": "Question",
-                name: "Hoe lang duurt de implementatie van een n8n workflow?",
+                name: "Hoe lang duurt de implementatie?",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "Van eerste gesprek tot go-live: gemiddeld 2-3 weken. Dit omvat intake, development, testing, en training van jouw team.",
+                  text: "Van eerste gesprek tot live: gemiddeld 2-3 weken. Dit omvat intake, bouwen van de automatisering, testen, en training van jouw team.",
                 },
               },
               {
@@ -88,31 +89,31 @@ export default function HomePage() {
                 name: "Moet ik technische kennis hebben?",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "Nee. Wij bouwen en implementeren alles. Jij krijgt een dashboard waar je in gewone taal aanpassingen kunt maken.",
+                  text: "Nee. Wij bouwen en implementeren alles. Jij krijgt een eenvoudig dashboard waar je in gewone taal aanpassingen kunt maken.",
                 },
               },
               {
                 "@type": "Question",
-                name: "Wat kost een workflow gemiddeld?",
+                name: "Wat kost automatisering gemiddeld?",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "Vanaf €2.500 voor een standaard workflow. Complexe multi-step automatiseringen vanaf €5.000. Altijd transparante offerte vooraf.",
+                  text: "Vanaf €2.500 voor standaard automatisering (facturen, offertes, data-invoer). Complexe processen vanaf €5.000. Altijd transparante offerte vooraf.",
                 },
               },
               {
                 "@type": "Question",
-                name: "Werken jullie ook met ons bestaande software?",
+                name: "Werkt dit met mijn huidige systemen?",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "Ja. n8n integreert met 400+ tools zoals Google Workspace, HubSpot, Exact Online, Salesforce, Slack, en meer.",
+                  text: "Ja. We koppelen met 400+ tools zoals Google Workspace, Excel, HubSpot, Exact Online, Salesforce, Slack, en meer.",
                 },
               },
               {
                 "@type": "Question",
-                name: "Wat als de workflow niet werkt zoals verwacht?",
+                name: "Wat als het niet werkt zoals verwacht?",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "We bieden 30 dagen gratis support na go-live. Daarna optionele onderhoudscontracten vanaf €200/maand.",
+                  text: "We bieden 30 dagen gratis support na livegang. Daarna optionele onderhoudscontracten vanaf €200/maand.",
                 },
               },
             ],
@@ -127,7 +128,7 @@ export default function HomePage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Service",
-            serviceType: "n8n Workflow Automatisering",
+            serviceType: "Bedrijfsautomatisering voor MKB",
             provider: {
               "@type": "LocalBusiness",
               "@id": "https://aifais.com/#organization",
@@ -138,15 +139,15 @@ export default function HomePage() {
             },
             hasOfferCatalog: {
               "@type": "OfferCatalog",
-              name: "Automatisering Services",
+              name: "Automatisering Diensten",
               itemListElement: [
                 {
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Standaard Workflow Automatisering",
+                    name: "Standaard Bedrijfsautomatisering",
                     description:
-                      "Automatiseer repetitieve taken zoals offertes, data-invoer en rapportages",
+                      "Automatiseer repetitieve taken zoals offertes, administratie, facturatie en rapportages. Bespaar direct 40+ uur per week.",
                   },
                   price: "2500",
                   priceCurrency: "EUR",
@@ -155,9 +156,9 @@ export default function HomePage() {
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Complexe Multi-Step Automatisering",
+                    name: "Complexe Proces Automatisering",
                     description:
-                      "Geavanceerde workflows met meerdere systemen en complexe logica",
+                      "Geavanceerde automatisering met meerdere systemen, complexe beslissingslogica en AI-integraties.",
                   },
                   price: "5000",
                   priceCurrency: "EUR",

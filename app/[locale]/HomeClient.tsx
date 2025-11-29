@@ -1,5 +1,5 @@
 // ========================================
-// FILE 2: app/HomeClient.tsx (NIEUWE FILE!)
+// FILE: app/HomeClient.tsx - VOLLEDIG AANGEPAST
 // ========================================
 
 "use client";
@@ -71,8 +71,8 @@ export default function HomeClient() {
             loop
             muted
             playsInline
-            title="n8n workflow automatisering in actie"
-            aria-label="Achtergrond video van workflow automatisering code"
+            title="Bedrijfsautomatisering in actie"
+            aria-label="Achtergrond video van automatisering code"
             className="w-full h-full object-cover brightness-[0.35] contrast-125 saturate-150 scale-105"
           >
             <p>
@@ -115,7 +115,7 @@ export default function HomeClient() {
 
             {/* Eyebrow */}
             <p className="text-purple-400 font-semibold text-base md:text-lg mb-4 tracking-wide uppercase">
-              n8n Workflow Automatisering
+              Bedrijfsautomatisering Nederland
             </p>
 
             {/* Main Headline - Improved hierarchy */}
@@ -133,12 +133,12 @@ export default function HomeClient() {
 
             {/* Subheadline - More compelling */}
             <p className="text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed mb-8 max-w-3xl">
-              Stop met handmatig werk. Automatiseer repetitieve processen met
-              n8n – van offertes versturen tot data-synchronisatie.
+              Stop met handmatig werk. Automatiseer repetitieve processen – van
+              offertes versturen tot administratie.
               <span className="text-white font-semibold">
                 {" "}
                 Bespaar kosten, voorkom fouten, en schaal zonder nieuwe
-                medewerkers.
+                medewerkers. Geen programmeerkennis nodig.
               </span>
             </p>
 
@@ -387,7 +387,7 @@ export default function HomeClient() {
         <div className="w-full justify-center flex md:gap-32 gap-6 flex-wrap">
           <img
             src="/logo-1.webp"
-            alt="Aifais partner - workflow automatisering specialist"
+            alt="AIFAIS partner - automatisering specialist"
             width={160}
             height={60}
             loading="lazy"
@@ -395,7 +395,7 @@ export default function HomeClient() {
           />
           <img
             src="/google.svg"
-            alt="Google Workspace integratie voor n8n workflows"
+            alt="Google Workspace integratie voor automatisering"
             width={160}
             height={60}
             loading="lazy"
@@ -403,7 +403,7 @@ export default function HomeClient() {
           />
           <img
             src="/n8n.svg"
-            alt="n8n workflow automatisering platform"
+            alt="Automatisering platform"
             width={160}
             height={60}
             loading="lazy"
@@ -411,7 +411,7 @@ export default function HomeClient() {
           />
           <img
             src="/openai.svg"
-            alt="OpenAI GPT integratie in automatisering workflows"
+            alt="OpenAI GPT integratie in automatisering"
             width={160}
             height={60}
             loading="lazy"
@@ -428,108 +428,6 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* PROMO VIDEO SECTION */}
-      {/* <section
-        id="introduction"
-        aria-labelledby="intro-heading"
-        className="py-24 md:py-32 bg-gradient-to-b from-black via-gray-950 to-black relative"
-      >
-        <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-          
-          <div>
-            <h2
-              id="intro-heading"
-              className="text-2xl md:text-4xl font-bold mb-6"
-            >
-              Zie Hoe Wij 15 Uur Per Week Besparen Voor Bedrijven
-              <span className="text-purple-400"> Zoals Het Jouwe</span>
-            </h2>
-            <p className="text-gray-300 leading-relaxed mb-6 text-base md:text-lg">
-              In deze 60-seconden demo zie je exact hoe onze n8n workflows
-              handmatige processen overnemen – van lead-opvolging tot
-              rapportage-automatisering. Geen technische kennis nodig.
-            </p>
-            <blockquote className="text-gray-400 italic text-sm md:text-base border-l-4 border-purple-500 pl-4">
-              <p>
-                "Eindelijk een team dat hun uren investeert in groei, niet in
-                data-invoer."
-              </p>
-              <footer className="mt-2">
-                — Oprichter MKB-bedrijf, 25 medewerkers
-              </footer>
-            </blockquote>
-          </div>
-
-         
-          <div className="relative w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 backdrop-blur-lg bg-white/5 mx-auto">
-            <video
-              ref={videoRef}
-              src="/aifaispromo.mp4"
-              autoPlay
-              loop
-              muted={isMuted}
-              playsInline
-              className="w-full aspect-[1] object-cover"
-              title="Aifais promo video - n8n workflow automatisering demo"
-            />
-
-            
-            <button
-              onClick={toggleMute}
-              className="absolute bottom-4 right-4 bg-purple-500/70 hover:bg-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition"
-              aria-label={isMuted ? "Unmute video" : "Mute video"}
-            >
-              {isMuted ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  className="w-6 h-6"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 5v14l12-7-12-7z"
-                  />
-                  <line
-                    x1="5"
-                    y1="5"
-                    x2="19"
-                    y2="19"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  className="w-6 h-6"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 5v14l12-7-12-7z"
-                  />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
-
-        
-        <div
-          className="absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-purple-600/20 blur-3xl rounded-full opacity-40"
-          aria-hidden="true"
-        />
-      </section> */}
       {/* DIENSTEN / PROJECTEN */}
       <section
         id="cases"
@@ -554,7 +452,7 @@ export default function HomeClient() {
               className="text-4xl md:text-5xl font-bold mb-4"
             >
               <span className="bg-gradient-to-r from-white via-purple-300 to-amber-400 bg-clip-text text-transparent">
-                Workflows Die Écht Werken
+                Automatiseringen Die Écht Werken
               </span>
             </h2>
             <p className="text-gray-400 text-xl max-w-3xl mx-auto">
@@ -583,7 +481,7 @@ export default function HomeClient() {
                 <div className="relative overflow-hidden h-56 bg-zinc-950">
                   <Image
                     src={project.image}
-                    alt={`${project.title} - n8n workflow automatisering`}
+                    alt={`${project.title} - bedrijfsautomatisering`}
                     width={400}
                     height={224}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -652,7 +550,9 @@ export default function HomeClient() {
                 <div className="text-4xl font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent mb-2">
                   50+
                 </div>
-                <div className="text-gray-400 text-sm">Actieve Workflows</div>
+                <div className="text-gray-400 text-sm">
+                  Actieve Automatiseringen
+                </div>
               </div>
               <div>
                 <div className="text-4xl font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent mb-2">
@@ -718,6 +618,7 @@ export default function HomeClient() {
           </div>
         </div>
       </section>
+
       {/* ABOUT US SECTION */}
       <section id="about" className="relative py-24 bg-black overflow-hidden">
         {/* Background gradient effects */}
@@ -734,9 +635,9 @@ export default function HomeClient() {
               </span>
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Wij zijn Mark en Faisal, specialisten in n8n workflow
-              automatisering. Ons doel: bedrijven helpen 40+ uur per week te
-              besparen door slimme automatisering.
+              Wij zijn Mark en Faissal, specialisten in bedrijfsautomatisering
+              voor MKB. Ons doel: bedrijven helpen 40+ uur per week te besparen
+              door slimme automatisering.
             </p>
           </div>
 
@@ -782,7 +683,7 @@ export default function HomeClient() {
                         Software Development
                       </span>
                       <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
-                        n8n Expert
+                        Automatisering Expert
                       </span>
                       <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
                         AI Integration
@@ -825,7 +726,7 @@ export default function HomeClient() {
                     </p>
                     <p className="text-gray-400 leading-relaxed mb-6">
                       Na jaren ondernemerschap weet ik hoe het is om vast te
-                      zitten in repetitieve taken. Bij aifais vertaal ik die
+                      zitten in repetitieve taken. Bij AIFAIS vertaal ik die
                       frustratie naar concrete oplossingen die bedrijven écht
                       helpen groeien.
                     </p>
@@ -854,7 +755,7 @@ export default function HomeClient() {
               Wil je kennismaken en ontdekken hoe wij jouw bedrijf kunnen
               helpen?
             </p>
-            <a
+            <Link
               href="/quickscan"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-white text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/50 hover:scale-105"
             >
@@ -872,109 +773,10 @@ export default function HomeClient() {
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
-
-      {/* OVER ONS */}
-      {/* <section
-        id="about"
-        aria-labelledby="about-heading"
-        className="py-24 bg-gradient-to-b from-black via-gray-950 to-black"
-      >
-        <div className="container mx-auto px-6 max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-         
-          <div>
-            <h2 id="about-heading" className="text-4xl font-bold mb-6">
-              Waarom Kiezen Bedrijven Voor Aifais?
-            </h2>
-            <p className="text-gray-300 leading-relaxed mb-4">
-              Wij zijn geen IT-consultants die jargon verkopen. Wij zijn
-              specialisten die al 3+ jaar n8n workflows bouwen voor Nederlandse
-              MKB-bedrijven. Van 5-mans teams tot scale-ups met 100+
-              medewerkers.
-            </p>
-
-            <ul className="space-y-3 mb-6 list-none">
-              <li className="flex items-start gap-3">
-                <span
-                  className="text-purple-400 text-xl flex-shrink-0"
-                  aria-hidden="true"
-                >
-                  •
-                </span>
-                <span>
-                  We luisteren naar jouw frustraties met handmatig werk
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span
-                  className="text-purple-400 text-xl flex-shrink-0"
-                  aria-hidden="true"
-                >
-                  •
-                </span>
-                <span>
-                  We bouwen een custom workflow die direct inzetbaar is
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span
-                  className="text-purple-400 text-xl flex-shrink-0"
-                  aria-hidden="true"
-                >
-                  •
-                </span>
-                <span>We trainen jouw team zodat jullie autonoom zijn</span>
-              </li>
-            </ul>
-
-            <p className="text-gray-300 font-semibold mb-4">
-              Resultaat? Gemiddeld 40 uur per maand tijdsbesparing, binnen 2
-              weken operationeel.
-            </p>
-
-            <blockquote className="text-gray-400 italic border-l-4 border-purple-500 pl-4">
-              <p>
-                "Eindelijk iemand die begrijpt dat wij geen IT-afdeling hebben,
-                maar wel willen automatiseren."
-              </p>
-              <footer className="text-sm mt-2">
-                — Operations Manager, E-commerce bedrijf
-              </footer>
-            </blockquote>
-          </div>
-
-         
-          <div className="grid grid-cols-2 gap-4">
-            <img
-              src="/logo_official.png"
-              alt="Aifais team aan het werk op kantoor"
-              width={256}
-              height={256}
-              loading="lazy"
-              className="rounded-2xl object-contain invert h-64 w-full hover:scale-105 transition-transform duration-300"
-            />
-            <img
-              src="/office-people.jpg"
-              alt="Aifais specialist geeft uitleg aan klant over workflow automatisering"
-              width={256}
-              height={256}
-              loading="lazy"
-              className="rounded-2xl object-cover h-64 w-full hover:scale-105 transition-transform duration-300"
-            />
-            <img
-              src="/lesson.jpg"
-              alt="Aifais team in overleg met klant over n8n implementatie"
-              width={512}
-              height={256}
-              loading="lazy"
-              className="rounded-2xl object-cover object-right h-64 w-full hover:scale-105 transition-transform duration-300 col-span-2"
-            />
-          </div>
-        </div>
-      </section> */}
 
       {/* AFSLUITENDE CTA */}
       <section className="relative py-24 bg-black overflow-hidden">
