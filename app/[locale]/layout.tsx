@@ -302,33 +302,45 @@ export default async function LocaleLayout({ children, params }: Props) {
           }}
         />
 
-        {/* ✅ SCHEMA.ORG: PROFESSIONAL SERVICE (Topic Authority) */}
+        {/* ✅ SCHEMA.ORG: PROFESSIONAL SERVICE (GECORRIGEERD) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
-              name: "AIFAIS - Bedrijfsautomatisering voor MKB",
+              "@id": "https://aifais.com/#organization", // Zorg dat ID consistent is
+              name: "AIFAIS",
               description: isNL
-                ? "Wij automatiseren repetitieve bedrijfsprocessen. Bespaar 40+ uur per week voor Nederlandse MKB-bedrijven. Geen programmeerkennis nodig."
-                : "We automate repetitive business processes. Save 40+ hours per week for Dutch SME companies. No programming required.",
+                ? "Specialist in bedrijfsautomatisering voor Nederlandse MKB-bedrijven. Automatiseer repetitieve taken en bespaar 40+ uur per week."
+                : "Specialist in business automation for Dutch SME companies. Automate repetitive tasks and save 40+ hours per week.",
               url: BASE_URL,
-              priceRange: "€2500 - €5000+", // Aligns with LocalBusiness
+              telephone: "+31-6 18424470",
+              email: "info@aifais.com",
+              priceRange: "€€€",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Groningenweg 8",
+                postalCode: "2803 PV",
+                addressLocality: "Gouda",
+                addressRegion: "Zuid-Holland",
+                addressCountry: "NL",
+              },
+              image: `${BASE_URL}/logo_official.png`,
               areaServed: {
                 "@type": "Country",
                 name: "Nederland",
               },
-              serviceType: [
+              // ❌ serviceType VERWIJDERD (Ongeldig op Organization)
+              // ✅ VERVANGEN DOOR: knowsAbout (Geldig op Organization)
+              knowsAbout: [
                 "Bedrijfsautomatisering",
                 "Proces Automatisering",
                 "Administratie Automatisering",
                 "AI Automatisering",
+                "n8n Workflow",
               ],
-              provider: {
-                "@type": "LocalBusiness",
-                "@id": "https://aifais.com/#organization",
-              },
+              // ❌ provider VERWIJDERD (Een bedrijf heeft geen provider, het IS de provider)
             }),
           }}
         />

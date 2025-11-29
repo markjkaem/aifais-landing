@@ -52,26 +52,49 @@ export default async function ServiceDetailPage({
     notFound();
   }
 
-  // ✅ SCHEMA: Service + FAQ
+  // ✅ SCHEMA: Service + FAQ (100% Validatie Proof)
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Service",
+        "@id": `https://aifais.com/diensten/${slug}#service`, // Unieke ID voor deze service
         name: service.title,
         description: service.description,
+        serviceType: service.title, // ✅ Hier is serviceType verplicht en toegestaan
         provider: {
-          "@type": "Organization",
+          "@type": "LocalBusiness",
+          "@id": "https://aifais.com/#organization", // Linkt aan je layout schema
           name: "AIFAIS",
-          "@id": "https://aifais.com/#organization",
+          image: "https://aifais.com/logo_official.png",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Groningenweg 8",
+            postalCode: "2803 PV",
+            addressLocality: "Gouda",
+            addressCountry: "NL",
+          },
         },
         areaServed: {
           "@type": "Country",
           name: "Nederland",
         },
+        // ✅ Extra detail: Je features als 'aanbod' markeren
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Functionaliteiten",
+          itemListElement: service.features.map((feature) => ({
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: feature,
+            },
+          })),
+        },
       },
       {
         "@type": "FAQPage",
+        "@id": `https://aifais.com/diensten/${slug}#faq`,
         mainEntity: service.faq.map((f) => ({
           "@type": "Question",
           name: f.question,
@@ -80,6 +103,29 @@ export default async function ServiceDetailPage({
             text: f.answer,
           },
         })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://aifais.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Diensten",
+            item: "https://aifais.com/diensten",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: service.title,
+            item: `https://aifais.com/diensten/${slug}`,
+          },
+        ],
       },
     ],
   };
