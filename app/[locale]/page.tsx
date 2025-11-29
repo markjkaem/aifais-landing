@@ -136,8 +136,6 @@ const ServiceSchema = () => {
       "@type": "Country",
       name: "Nederland",
     },
-    // ✅ IMPROVEMENT: Added priceRange to Service to align with Organization
-    priceRange: "€2500 - €5000+",
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Automatisering Diensten",
@@ -187,8 +185,6 @@ const OrganizationSchema = () => {
     logo: `${BASE_URL}/logo_official.svg`, // ✅ IMPROVEMENT: Assume a specific logo path
     description:
       "Specialist in bedrijfsautomatisering en AI-integraties voor het MKB in Nederland.",
-    // ✅ IMPROVEMENT: Added priceRange for completeness
-    priceRange: "€2500 - €5000+",
     areaServed: {
       "@type": "Country",
       name: "Nederland",

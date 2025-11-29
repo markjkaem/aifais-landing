@@ -85,7 +85,6 @@ export default function ContactPage() {
       name: "AIFAIS",
       telephone: "+31-6 18424470",
       email: "contact@aifais.com",
-      priceRange: "€€€",
       areaServed: {
         "@type": "Country",
         name: "Nederland",

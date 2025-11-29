@@ -260,7 +260,6 @@ export default async function LocaleLayout({ children, params }: Props) {
               url: BASE_URL,
               telephone: "+31-6 18424470", // ✅ CONFIRMED: Real phone number
               email: "contact@aifais.com",
-              priceRange: "€2500 - €5000+", // ✅ IMPROVED: Specific price range from audit
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "Groningenweg 8",
@@ -317,7 +316,6 @@ export default async function LocaleLayout({ children, params }: Props) {
               url: BASE_URL,
               telephone: "+31-6 18424470",
               email: "info@aifais.com",
-              priceRange: "€€€",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "Groningenweg 8",
