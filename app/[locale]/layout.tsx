@@ -259,7 +259,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                 : "Specialist in business automation for Dutch SME companies. Automate repetitive tasks and save 40+ hours per week.",
               url: BASE_URL,
               telephone: "+31-6 18424470", // ✅ CONFIRMED: Real phone number
-              email: "info@aifais.com",
+              email: "contact@aifais.com",
               priceRange: "€2500 - €5000+", // ✅ IMPROVED: Specific price range from audit
               address: {
                 "@type": "PostalAddress",

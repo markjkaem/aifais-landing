@@ -3,17 +3,28 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer
-      className="text-gray-200 bg-black mt-12"
+      className="text-gray-300 bg-black mt-12 border-t border-gray-900"
       itemScope
       itemType="https://schema.org/Organization"
     >
-      <div className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-8">
-        <div className="flex flex-col gap-2">
-          <h3 className="font-semibold text-lg mb-2" itemProp="name">
-            Aifais
-          </h3>
+      <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-4 gap-12 text-sm">
+        {/* COL 1: Company Info & Address */}
+        <div className="flex flex-col gap-4">
+          <Link href="/" className="inline-block" itemProp="url">
+            <span
+              className="font-bold text-2xl text-white tracking-tight"
+              itemProp="name"
+            >
+              AIFAIS
+            </span>
+          </Link>
+          <p className="text-gray-400 leading-relaxed">
+            Specialist in bedrijfsautomatisering en AI-integraties voor het
+            Nederlandse MKB.
+          </p>
+
           <address
-            className="not-italic"
+            className="not-italic mt-2 flex flex-col gap-1"
             itemProp="address"
             itemScope
             itemType="https://schema.org/PostalAddress"
@@ -25,62 +36,129 @@ export default function Footer() {
             </p>
             <meta itemProp="addressCountry" content="NL" />
           </address>
-          {/* ✅ VUL IN ALS JE TELEFOONNUMMER & EMAIL PUBLIEK WILT */}
-          {/* <p itemProp="telephone">
-                <a href="tel:+31XXXXXXXXX" className="hover:underline">
-                  +31 (0)XX XXX XXXX
-                </a>
-              </p>
-              <p itemProp="email">
-                <a href="mailto:info@aifais.com" className="hover:underline">
-                  info@aifais.com
-                </a>
-              </p> */}
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <h3 className="font-semibold text-lg mb-2">Zakelijke informatie</h3>
-          <p>
-            BTW: <span className="italic">NL000099998B57</span>
-          </p>
-          <p itemProp="vatID">KvK: 27199999</p>
-          <p>Verzekerd & gecertificeerd</p>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <h3 className="font-semibold text-lg mb-2">Navigatie</h3>
-          <nav aria-label="Footer navigatie">
-            <Link
-              href="/"
-              className="hover:underline block mb-2"
-              itemProp="url"
+          {/* ✅ CRITICAL E-E-A-T: Contact Details */}
+          <div className="flex flex-col gap-1 mt-2">
+            <a
+              href="mailto:contact@aifais.com"
+              className="hover:text-purple-400 transition"
+              itemProp="email"
             >
-              Home
+              contact@aifais.com
+            </a>
+            <a
+              href="tel:+31618424470"
+              className="hover:text-purple-400 transition"
+              itemProp="telephone"
+            >
+              +31 6 1842 4470
+            </a>
+          </div>
+        </div>
+
+        {/* COL 2: Services (NEW - SEO BOOST) */}
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold text-white text-base">Onze Diensten</h3>
+          <nav className="flex flex-col gap-3">
+            <Link
+              href="/diensten/workflow-automatisering"
+              className="hover:text-purple-400 transition"
+            >
+              Workflow Automatisering
             </Link>
-            <Link href="/portfolio" className="hover:underline block mb-2">
-              Portfolio
+            <Link
+              href="/diensten/ai-integratie"
+              className="hover:text-purple-400 transition"
+            >
+              AI & ChatGPT Integraties
             </Link>
-            <Link href="/contact" className="hover:underline block mb-2">
-              Contact
+            <Link
+              href="/diensten/administratieve-automatisering"
+              className="hover:text-purple-400 transition"
+            >
+              Administratie Automatiseren
             </Link>
-            <Link href="/agv" className="hover:underline block mb-2">
-              Algemene Voorwaarden
-            </Link>
-            <Link href="/privacy" className="hover:underline block mb-2">
-              Privacy Policy
+            <Link
+              href="/diensten"
+              className="text-purple-400 hover:text-purple-300 transition font-medium mt-2"
+            >
+              Bekijk alle diensten →
             </Link>
           </nav>
         </div>
+
+        {/* COL 3: Quick Links */}
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold text-white text-base">Navigatie</h3>
+          <nav className="flex flex-col gap-3">
+            <Link
+              href="/portfolio"
+              className="hover:text-purple-400 transition"
+            >
+              Portfolio & Cases
+            </Link>
+            <Link href="/news" className="hover:text-purple-400 transition">
+              Kennisbank & Nieuws
+            </Link>
+            <Link href="/#about" className="hover:text-purple-400 transition">
+              Over Ons
+            </Link>
+            <Link href="/contact" className="hover:text-purple-400 transition">
+              Contact
+            </Link>
+          </nav>
+        </div>
+
+        {/* COL 4: Legal & Trust */}
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold text-white text-base">Bedrijfsgegevens</h3>
+          <div className="flex flex-col gap-2 text-gray-400">
+            <p>
+              KvK: <span className="text-gray-300">27199999</span>
+            </p>
+            <p>
+              BTW: <span className="text-gray-300">NL000099998B57</span>
+            </p>
+          </div>
+
+          <div className="mt-4 pt-4 border-t border-gray-800 flex flex-col gap-2">
+            <Link href="/agv" className="hover:text-white transition text-xs">
+              Algemene Voorwaarden
+            </Link>
+            <Link
+              href="/privacy"
+              className="hover:text-white transition text-xs"
+            >
+              Privacy & Cookie Policy
+            </Link>
+          </div>
+
+          {/* Social Icons (Placeholder) */}
+          <div className="flex gap-4 mt-2">
+            <a
+              href="https://linkedin.com/company/aifais"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition"
+              aria-label="LinkedIn"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
 
-      <div className="border-t border-gray-700 mt-8 pt-4 text-center text-sm text-gray-400">
-        <p>
-          © {new Date().getFullYear()} <span itemProp="name">Aifais</span> —
-          Alle rechten voorbehouden
-        </p>
-        <p className="mt-2">
-          n8n Workflow Automatisering Specialist | Gevestigd in Gouda, Nederland
-        </p>
+      {/* Bottom Bar */}
+      <div className="border-t border-gray-900 bg-black py-6">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+          <p>© {new Date().getFullYear()} AIFAIS. Alle rechten voorbehouden.</p>
+          <p className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-green-500"></span>
+            Alle systemen operationeel
+          </p>
+        </div>
       </div>
     </footer>
   );

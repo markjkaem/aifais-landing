@@ -728,7 +728,7 @@ export default function HomeClient() {
 
                     {/* E-E-A-T LINK */}
                     <Link
-                      href="https://linkedin.com/in/mark-profiellink"
+                      href="https://www.linkedin.com/in/mark-v-898408309/"
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="LinkedIn profiel Mark"
@@ -791,16 +791,26 @@ export default function HomeClient() {
                       </span>
                     </div>
 
-                    {/* E-E-A-T LINK */}
-                    <Link
-                      href="https://linkedin.com/in/faissal-profiellink"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn profiel Faissal"
-                      className="mt-4 inline-flex items-center gap-2 group"
+                    {/* ✅ REPLACEMENT: Direct Email Icon instead of LinkedIn */}
+                    <a
+                      href="mailto:faissal@aifais.com"
+                      className="mt-4 inline-flex items-center gap-2 group text-gray-400 hover:text-white transition-colors"
+                      aria-label="Stuur Faissal een email"
                     >
-                      <LinkedInIcon />
-                    </Link>
+                      <svg
+                        className="w-6 h-6 group-hover:text-purple-400 transition-colors"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                        />
+                      </svg>
+                    </a>
                   </div>
                 </div>
               </div>
