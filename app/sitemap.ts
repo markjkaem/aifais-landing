@@ -67,13 +67,73 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Hardcoded voorbeeld (vervang door dynamic als je projects hebt):
   const portfolioRoutes = [
     {
-      url: `${baseUrl}/portfolio/example-project-1`,
+      url: `${baseUrl}/portfolio/email-reply-ai-agent`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/portfolio/example-project-2`,
+      url: `${baseUrl}/portfolio/sales-lead-automation`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/portfolio/support-ticket-summarizer`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/portfolio/dynamic-marketing-content-generator`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/portfolio/data-pipeline-and-reporting-automation`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/portfolio/inventory-forecasting-agent`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/portfolio/recruitment-screening-automation`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+     {
+      url: `${baseUrl}/portfolio/meeting-notes-action-items-agent`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+     {
+      url: `${baseUrl}/portfolio/invoice-payment-reminder-automation`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+     {
+      url: `${baseUrl}/portfolio/social-media-content-scheduler`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+     {
+      url: `${baseUrl}/portfolio/customer-onboarding-automation`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+     {
+      url: `${baseUrl}/portfolio/contract-renewal-management`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
