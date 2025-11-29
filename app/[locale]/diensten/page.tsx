@@ -156,11 +156,9 @@ export default function ServicesPage() {
                 </li>
               </ul>
               {/* Internal Link to specific service page (Future Proofing) */}
-              <Link
-                href="/contact"
-                className="text-white font-semibold border-b border-purple-500 pb-1 hover:text-purple-400 transition"
-              >
-                Vraag advies aan →
+              // NEW (Good for SEO)
+              <Link href="/diensten/workflow-automatisering" className="...">
+                Lees meer over Workflows →
               </Link>
             </article>
 
@@ -200,7 +198,7 @@ export default function ServicesPage() {
                 </li>
               </ul>
               <Link
-                href="/contact"
+                href="/diensten/ai-integraties"
                 className="text-white font-semibold border-b border-blue-500 pb-1 hover:text-blue-400 transition"
               >
                 Ontdek AI Kansen →
@@ -244,7 +242,7 @@ export default function ServicesPage() {
                 </li>
               </ul>
               <Link
-                href="/contact"
+                href="/diensten/administratieve-automatisering"
                 className="text-white font-semibold border-b border-green-500 pb-1 hover:text-green-400 transition"
               >
                 Bespaar Tijd →
