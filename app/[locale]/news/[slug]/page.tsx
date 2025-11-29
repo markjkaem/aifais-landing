@@ -8,14 +8,13 @@ import { notFound } from "next/navigation";
 import { news } from "./data";
 import { ClientWrapper } from "./ClientWrapper";
 
-// Define a consistent domain constant to avoid repetition
 const SITE_URL = "https://aifais.com";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// ✅ SEO Metadata
+// ✅ SEO METADATA
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -24,26 +23,24 @@ export async function generateMetadata({
 
   if (!article) {
     return {
-      title: "Artikel Niet Gevonden | Aifais",
-      robots: { index: false, follow: false }, // Don't index 404s
+      title: "Artikel Niet Gevonden | AIFAIS",
+      robots: { index: false, follow: false },
     };
   }
 
   const ogImage = article.image
     ? `${SITE_URL}${article.image}`
-    : `${SITE_URL}/default-og.png`; // Fallback image recommended
+    : `${SITE_URL}/og-news.jpg`; // Ensure you have a generic news fallback image
 
   return {
-    title: `${article.title} | Aifais Blog`,
+    title: `${article.title} | AIFAIS Kennisbank`,
     description: article.excerpt,
     authors: [{ name: article.author }],
     keywords: [
-      "AI automatisering",
-      "workflow automatisering",
-      "n8n",
-      "bedrijfsautomatisering",
-      "MKB automatisering",
-      article.title,
+      "AI automatisering kennisbank",
+      "n8n tutorials nederlands",
+      "bedrijfsprocessen optimaliseren",
+      "AIFAIS blog",
       ...((article.tags as string[]) || []),
     ],
     openGraph: {
@@ -64,7 +61,8 @@ export async function generateMetadata({
           alt: article.title,
         },
       ],
-      siteName: "Aifais",
+      siteName: "AIFAIS",
+      locale: "nl_NL",
     },
     twitter: {
       card: "summary_large_image",
@@ -75,12 +73,6 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: `${SITE_URL}/news/${slug}`,
-    },
-    robots: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
     },
   };
 }
@@ -99,7 +91,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
     return notFound();
   }
 
-  // Pre-calculate data
+  // Pre-calculations
   const wordCount = article.content.split(/\s+/).length;
   const readTime = article.readTime || Math.ceil(wordCount / 200);
   const relatedArticles = news.filter((a) => a.slug !== slug).slice(0, 3);
@@ -107,24 +99,25 @@ export default async function NewsArticlePage({ params }: PageProps) {
   const articleUrl = `${SITE_URL}/news/${slug}`;
   const imageUrl = article.image ? `${SITE_URL}${article.image}` : undefined;
 
-  // 1. Blog Posting Schema
+  // 1. Blog Posting Schema (Google "News" Rich Result)
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: article.title,
     description: article.excerpt,
-    image: imageUrl,
+    image: imageUrl ? [imageUrl] : [],
     datePublished: new Date(article.date).toISOString(),
     dateModified: article.updatedAt
       ? new Date(article.updatedAt).toISOString()
       : new Date(article.date).toISOString(),
     author: {
-      "@type": "Person",
+      "@type": "Person", // Link to Team page if possible
       name: article.author,
+      url: `${SITE_URL}/#about`,
     },
     publisher: {
       "@type": "Organization",
-      name: "Aifais",
+      name: "AIFAIS",
       logo: {
         "@type": "ImageObject",
         url: `${SITE_URL}/logo_official.png`,
@@ -151,7 +144,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Blog",
+        name: "Kennisbank",
         item: `${SITE_URL}/news`,
       },
       {
@@ -165,7 +158,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
 
   return (
     <>
-      {/* Schema Data (Cleaned up) */}
+      {/* Schemas */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
@@ -175,9 +168,9 @@ export default async function NewsArticlePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      {/* Navigation Header */}
+      {/* Navigation Header (Consistent UI) */}
       <nav
-        className="bg-black py-4 border-b border-gray-800 sticky top-0 z-50 backdrop-blur-md bg-opacity-80"
+        className="bg-black py-4 border-b border-gray-800 sticky top-0 z-40 backdrop-blur-md bg-opacity-80"
         aria-label="Breadcrumb"
       >
         <div className="container mx-auto px-6 max-w-4xl">
@@ -190,20 +183,43 @@ export default async function NewsArticlePage({ params }: PageProps) {
                 Home
               </Link>
             </li>
-            <li className="text-gray-600" aria-hidden="true">
-              /
+            <li className="text-gray-600 flex items-center">
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
             </li>
             <li>
-              {/* ✅ FIXED: Changed div to Link so users can actually click 'Blog' */}
               <Link
                 href="/news"
                 className="text-gray-400 hover:text-purple-400 transition"
               >
-                Blog
+                Kennisbank
               </Link>
             </li>
-            <li className="text-gray-600" aria-hidden="true">
-              /
+            <li className="text-gray-600 flex items-center">
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
             </li>
             <li
               className="text-white font-medium truncate max-w-[150px] sm:max-w-xs md:max-w-none"
@@ -215,7 +231,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
         </div>
       </nav>
 
-      {/* Content */}
+      {/* Client Logic (TOC, Progress, Interactive Elements) */}
       <ClientWrapper
         article={article}
         slug={slug}

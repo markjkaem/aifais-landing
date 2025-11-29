@@ -559,42 +559,68 @@ export default function HeaderMockup() {
         </div>
       )}
 
-      {/* Desktop Mega Menu - News (Unchanged Structure, just data) */}
+      {/* Desktop Mega Menu - News (UPDATED) */}
       {openDropdown === "news" && (
         <div className="hidden lg:block w-full bg-zinc-900/98 backdrop-blur-xl border-b border-white/20 shadow-2xl py-8 animate-slideDown">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 gap-8">
-            <div className="col-span-2 grid grid-cols-2 gap-4">
-              {news
-                .filter((item) => item.id < 5)
-                .map((blog) => (
-                  <Link
-                    key={blog.slug}
-                    href={getLocalizedPath(`/news/${blog.slug}`)}
-                    className="group p-4 rounded-xl hover:bg-white/5 transition border border-transparent hover:border-white/10"
-                    onClick={closeAll}
-                  >
-                    <h3 className="text-white font-semibold mb-1 group-hover:text-purple-400 transition">
-                      {blog.title}
-                    </h3>
-                    <p className="text-sm text-gray-400 line-clamp-2">
-                      {blog.excerpt}
-                    </p>
-                  </Link>
-                ))}
+            <div className="col-span-2">
+              {/* Header for list */}
+              <h4 className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-4 px-4">
+                Nieuwste Artikelen
+              </h4>
+
+              <div className="grid grid-cols-2 gap-4">
+                {news
+                  .filter((item) => item.id < 5)
+                  .map((blog) => (
+                    <Link
+                      key={blog.slug}
+                      href={getLocalizedPath(`/news/${blog.slug}`)}
+                      className="group p-4 rounded-xl hover:bg-white/5 transition border border-transparent hover:border-white/10"
+                      onClick={closeAll}
+                    >
+                      <h3 className="text-white font-semibold mb-1 group-hover:text-purple-400 transition line-clamp-1">
+                        {blog.title}
+                      </h3>
+                      <p className="text-sm text-gray-400 line-clamp-2">
+                        {blog.excerpt}
+                      </p>
+                    </Link>
+                  ))}
+              </div>
+
+              {/* ✅ NEW: Link to Overview Page */}
+              <div className="mt-4 px-4">
+                <Link
+                  href={getLocalizedPath("/news")}
+                  className="text-purple-400 text-sm font-semibold hover:text-white transition flex items-center gap-1"
+                  onClick={closeAll}
+                >
+                  Bekijk Kennisbank →
+                </Link>
+              </div>
             </div>
+
+            {/* Featured Box (Right Side) */}
             <div className="flex items-start">
-              <div className="bg-gradient-to-br from-purple-900/20 to-purple-700/10 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-500/50 transition cursor-pointer">
+              <div className="bg-gradient-to-br from-purple-900/20 to-purple-700/10 border border-purple-500/30 rounded-2xl p-6 hover:border-purple-500/50 transition cursor-pointer w-full">
                 <Image
                   src="/lesson.jpg"
                   alt="Event Preview"
                   width={300}
                   height={180}
-                  className="rounded-lg object-cover mb-4"
+                  className="rounded-lg object-cover mb-4 w-full h-40"
                 />
                 <p className="font-semibold text-lg text-white mb-2">
                   {tEvent("title")}
                 </p>
-                <p className="text-sm text-gray-400">{tEvent("subtitle")}</p>
+                <Link
+                  href={getLocalizedPath("/contact")}
+                  onClick={closeAll}
+                  className="text-sm text-purple-400 hover:text-white transition"
+                >
+                  Inschrijven →
+                </Link>
               </div>
             </div>
           </div>
