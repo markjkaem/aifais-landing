@@ -4,34 +4,40 @@
 
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image"; // ✅ Added for Core Web Vitals
 import { notFound } from "next/navigation";
 import { projects } from "../data";
 
-// ✅ DYNAMIC METADATA (per project)
+// ✅ DYNAMIC METADATA
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const slug = (await params).slug;
+  const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
     return {
       title: "Project Niet Gevonden | AIFAIS",
+      robots: { index: false, follow: false },
     };
   }
 
   return {
     title: `${project.title} | Bedrijfsautomatisering Case | AIFAIS`,
-    description: `${project.description} Bekijk hoe we dit automatiseerden voor een Nederlands MKB-bedrijf.`,
+    description: `Case Study: ${project.description.substring(
+      0,
+      120
+    )}... Bekijk de resultaten en ROI voor dit Nederlandse MKB-bedrijf.`,
 
     keywords: [
       "automatisering case study",
       project.title,
-      "automatisering voorbeeld",
+      "n8n voorbeeld", // Added specific tech keyword
       "bedrijfsautomatisering resultaten",
       "mkb automatisering",
+      ...(project.tags || []), // Include project tags as keywords
     ],
 
     openGraph: {
@@ -39,6 +45,8 @@ export async function generateMetadata({
       description: project.description,
       url: `https://aifais.com/portfolio/${slug}`,
       type: "article",
+      locale: "nl_NL",
+      siteName: "AIFAIS",
       images: [
         {
           url: `https://aifais.com${project.image}`,
@@ -54,20 +62,16 @@ export async function generateMetadata({
       title: `${project.title} | Automatisering Case Study`,
       description: project.description,
       images: [`https://aifais.com${project.image}`],
+      creator: "@aifais",
     },
 
     alternates: {
       canonical: `https://aifais.com/portfolio/${slug}`,
     },
-
-    robots: {
-      index: true,
-      follow: true,
-    },
   };
 }
 
-// ✅ GENERATE STATIC PARAMS (voor static generation)
+// ✅ GENERATE STATIC PARAMS
 export function generateStaticParams() {
   return projects.map((project) => ({
     slug: project.slug,
@@ -79,85 +83,100 @@ export default async function PortfolioItemPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const slug = (await params).slug;
+  const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
 
-  // ✅ 404 if project not found
   if (!project) {
     notFound();
   }
 
-  // ✅ Find related projects (same category or random 3)
-  const relatedProjects = projects.filter((p) => p.slug !== slug).slice(0, 3);
+  // ✅ Find related projects (Prefer same category, fallback to random)
+  const relatedProjects = projects
+    .filter(
+      (p) =>
+        p.slug !== slug &&
+        (p.category === project.category || !project.category)
+    )
+    .slice(0, 3);
+
+  // If we don't have enough related by category, fill with others
+  if (relatedProjects.length < 3) {
+    const others = projects
+      .filter((p) => p.slug !== slug && !relatedProjects.includes(p))
+      .slice(0, 3 - relatedProjects.length);
+    relatedProjects.push(...others);
+  }
+
+  // Schema: Article
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: project.title,
+    description: project.description,
+    image: `https://aifais.com${project.image}`,
+    datePublished: project.date || new Date().toISOString(),
+    // ✅ SEO: Google likes to know when content was last updated
+    dateModified: project.date || new Date().toISOString(),
+    author: {
+      "@type": "Organization", // Ideally link to a Person (Mark/Faissal) if data allows
+      name: "AIFAIS",
+      url: "https://aifais.com",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "AIFAIS",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://aifais.com/logo_official.png",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://aifais.com/portfolio/${slug}`,
+    },
+  };
+
+  // Schema: Breadcrumb
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://aifais.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Portfolio",
+        item: "https://aifais.com/portfolio",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.title,
+        item: `https://aifais.com/portfolio/${slug}`,
+      },
+    ],
+  };
 
   return (
     <>
-      {/* ✅ SCHEMA.ORG - CASE STUDY */}
+      {/* JSON-LD Schemas */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: project.title,
-            description: project.description,
-            image: `https://aifais.com${project.image}`,
-            datePublished: project.date || new Date().toISOString(),
-            author: {
-              "@type": "Organization",
-              name: "AIFAIS",
-              "@id": "https://aifais.com/#organization",
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "AIFAIS",
-              logo: {
-                "@type": "ImageObject",
-                url: "https://aifais.com/logo_official.png",
-              },
-            },
-            mainEntityOfPage: {
-              "@type": "WebPage",
-              "@id": `https://aifais.com/portfolio/${slug}`,
-            },
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
-
-      {/* ✅ BREADCRUMBS SCHEMA */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://aifais.com",
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Portfolio",
-                item: "https://aifais.com/portfolio",
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: project.title,
-                item: `https://aifais.com/portfolio/${slug}`,
-              },
-            ],
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      {/* ✅ BREADCRUMBS UI */}
+      {/* ✅ BREADCRUMBS UI (Optimized separators) */}
       <nav
-        className="bg-black py-4 border-b border-gray-800"
+        className="bg-black py-4 border-b border-gray-800 sticky top-0 z-40 backdrop-blur-md bg-opacity-80"
         aria-label="Breadcrumb"
       >
         <div className="container mx-auto px-6 max-w-6xl">
@@ -170,7 +189,21 @@ export default async function PortfolioItemPage({
                 Home
               </Link>
             </li>
-            <li className="text-gray-600">/</li>
+            <li className="text-gray-600">
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </li>
             <li>
               <Link
                 href="/portfolio"
@@ -179,8 +212,24 @@ export default async function PortfolioItemPage({
                 Portfolio
               </Link>
             </li>
-            <li className="text-gray-600">/</li>
-            <li className="text-white font-medium">{project.title}</li>
+            <li className="text-gray-600">
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </li>
+            <li className="text-white font-medium truncate max-w-[200px] sm:max-w-none">
+              {project.title}
+            </li>
           </ol>
         </div>
       </nav>
@@ -191,12 +240,12 @@ export default async function PortfolioItemPage({
           <header className="text-center mb-12">
             {/* Category Badge */}
             {project.category && (
-              <span className="inline-block px-4 py-2 bg-purple-600/20 text-purple-400 rounded-full text-sm font-semibold mb-6">
+              <span className="inline-block px-4 py-2 bg-purple-600/20 text-purple-400 border border-purple-500/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
                 {project.category}
               </span>
             )}
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-tight">
               {project.title}
             </h1>
 
@@ -209,7 +258,7 @@ export default async function PortfolioItemPage({
               {project.readTime && (
                 <span className="flex items-center gap-2">
                   <svg
-                    className="w-4 h-4"
+                    className="w-4 h-4 text-purple-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -227,7 +276,7 @@ export default async function PortfolioItemPage({
               {project.date && (
                 <span className="flex items-center gap-2">
                   <svg
-                    className="w-4 h-4"
+                    className="w-4 h-4 text-purple-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -248,53 +297,60 @@ export default async function PortfolioItemPage({
             </div>
           </header>
 
-          {/* Hero Image */}
-          <div className="relative rounded-2xl overflow-hidden border border-gray-800 shadow-2xl">
-            <img
+          {/* Hero Image (Optimized) */}
+          <div className="relative rounded-2xl overflow-hidden border border-gray-800 shadow-2xl bg-gray-900 aspect-video">
+            {/* ✅ SEO: Use Next/Image for LCP Optimization */}
+            <Image
               src={project.image}
               alt={`${project.title} - bedrijfsautomatisering case study`}
-              className="w-full h-[400px] md:h-[500px] object-cover"
-              loading="eager"
-              width={1200}
-              height={500}
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
             />
           </div>
         </div>
       </section>
 
-      {/* ✅ RESULTS SECTION (if available) */}
+      {/* ✅ RESULTS SECTION (High Trust Signals) */}
       {project.results && (
         <section className="py-16 bg-black">
           <div className="container mx-auto px-6 max-w-5xl">
-            <h2 className="text-3xl font-bold text-center mb-12">
-              Behaalde Resultaten
+            <h2 className="text-2xl font-bold text-center mb-10 text-white">
+              <span className="border-b-2 border-purple-500 pb-2">
+                Behaalde Resultaten
+              </span>
             </h2>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6">
               {project.results.timeSaved && (
-                <div className="bg-gradient-to-br from-purple-900/40 to-gray-800 border border-purple-500/30 rounded-2xl p-8 text-center">
-                  <div className="text-5xl font-bold text-purple-400 mb-3">
+                <div className="bg-gradient-to-br from-purple-900/30 to-gray-900 border border-purple-500/30 rounded-2xl p-8 text-center hover:border-purple-500/50 transition duration-300">
+                  <div className="text-4xl lg:text-5xl font-bold text-purple-400 mb-2">
                     {project.results.timeSaved}
                   </div>
-                  <p className="text-gray-300 font-medium">Tijd Bespaard</p>
+                  <p className="text-gray-400 font-medium text-sm uppercase tracking-wide">
+                    Tijd Bespaard
+                  </p>
                 </div>
               )}
 
               {project.results.roiMonths && (
-                <div className="bg-gradient-to-br from-green-900/40 to-gray-800 border border-green-500/30 rounded-2xl p-8 text-center">
-                  <div className="text-5xl font-bold text-green-400 mb-3">
-                    {project.results.roiMonths} maanden
+                <div className="bg-gradient-to-br from-green-900/20 to-gray-900 border border-green-500/30 rounded-2xl p-8 text-center hover:border-green-500/50 transition duration-300">
+                  <div className="text-4xl lg:text-5xl font-bold text-green-400 mb-2">
+                    {project.results.roiMonths} mnd
                   </div>
-                  <p className="text-gray-300 font-medium">ROI Periode</p>
+                  <p className="text-gray-400 font-medium text-sm uppercase tracking-wide">
+                    ROI Periode
+                  </p>
                 </div>
               )}
 
               {project.results.costSaving && (
-                <div className="bg-gradient-to-br from-blue-900/40 to-gray-800 border border-blue-500/30 rounded-2xl p-8 text-center">
-                  <div className="text-5xl font-bold text-blue-400 mb-3">
+                <div className="bg-gradient-to-br from-blue-900/20 to-gray-900 border border-blue-500/30 rounded-2xl p-8 text-center hover:border-blue-500/50 transition duration-300">
+                  <div className="text-4xl lg:text-5xl font-bold text-blue-400 mb-2">
                     {project.results.costSaving}
                   </div>
-                  <p className="text-gray-300 font-medium">
+                  <p className="text-gray-400 font-medium text-sm uppercase tracking-wide">
                     Jaarlijkse Besparing
                   </p>
                 </div>
@@ -308,37 +364,40 @@ export default async function PortfolioItemPage({
       <article className="py-16 bg-black">
         <div className="container mx-auto px-6 max-w-4xl">
           {/* Details/Features */}
-          <section className="prose prose-invert prose-lg max-w-none">
-            <h2 className="text-3xl font-bold mb-6">
-              Belangrijkste Features & Impact
+          <section className="max-w-none">
+            <h2 className="text-3xl font-bold mb-8 text-white">
+              De Oplossing & Impact
             </h2>
 
-            <ul className="space-y-4 text-gray-300">
-              {project.details.map((detail, idx) => (
+            <ul className="space-y-4">
+              {project.details.map((detail: string, idx: number) => (
                 <li
                   key={idx}
-                  className="flex items-start gap-3 bg-gray-900/40 border border-gray-800 rounded-xl p-4 hover:border-purple-500/50 transition"
+                  className="flex items-start gap-4 bg-gray-900/30 border border-gray-800/60 rounded-xl p-5 hover:border-purple-500/30 transition group"
                 >
-                  <span className="flex-shrink-0 w-6 h-6 bg-purple-600/20 rounded-full flex items-center justify-center text-purple-400 text-sm font-bold mt-0.5">
+                  <span className="flex-shrink-0 w-8 h-8 bg-purple-600/10 rounded-full flex items-center justify-center text-purple-400 text-sm font-bold mt-0.5 group-hover:bg-purple-600/20 group-hover:text-purple-300 transition-colors">
                     {idx + 1}
                   </span>
-                  <span className="leading-relaxed">{detail}</span>
+                  <span className="text-gray-300 leading-relaxed text-lg">
+                    {detail}
+                  </span>
                 </li>
               ))}
             </ul>
           </section>
 
-          {/* Tags (if available) */}
+          {/* Tags (Internal Linking Opportunities) */}
           {project.tags && project.tags.length > 0 && (
-            <section className="mt-12 pt-12 border-t border-gray-800">
-              <h3 className="text-xl font-bold mb-4">
+            <section className="mt-16 pt-12 border-t border-gray-800">
+              <h3 className="text-lg font-bold mb-6 text-gray-400 uppercase tracking-wider text-sm">
                 Gebruikte Technologieën
               </h3>
               <div className="flex flex-wrap gap-3">
-                {project.tags.map((tag) => (
+                {project.tags.map((tag: string) => (
+                  // Note: Ideally, wrap this in a Link to /diensten/technologie/[tag] if the page exists
                   <span
                     key={tag}
-                    className="px-4 py-2 bg-gray-800 border border-gray-700 text-gray-300 rounded-lg hover:border-purple-500 hover:text-purple-400 transition text-sm font-medium"
+                    className="px-4 py-2 bg-gray-900 border border-gray-700 text-gray-300 rounded-lg hover:border-purple-500 hover:text-purple-400 transition text-sm font-medium cursor-default"
                   >
                     {tag}
                   </span>
@@ -347,24 +406,29 @@ export default async function PortfolioItemPage({
             </section>
           )}
 
-          {/* Testimonial (if available) */}
+          {/* Testimonial */}
           {project.testimonial && (
-            <section className="mt-12">
-              <blockquote className="bg-gradient-to-br from-purple-900/20 to-gray-900/40 border border-purple-500/30 rounded-2xl p-8 md:p-10">
-                <p className="text-xl md:text-2xl text-gray-200 italic leading-relaxed mb-6">
-                  "{project.testimonial.quote}"
+            <section className="mt-16">
+              <blockquote className="bg-gradient-to-br from-purple-900/10 to-gray-900/40 border border-purple-500/20 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                {/* Quote Icon */}
+                <div className="absolute top-6 left-8 text-purple-600/20 text-8xl font-serif leading-none select-none">
+                  "
+                </div>
+
+                <p className="relative z-10 text-xl md:text-2xl text-gray-200 italic leading-relaxed mb-8 text-center md:text-left">
+                  {project.testimonial.quote}
                 </p>
-                <footer className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-purple-600/20 rounded-full flex items-center justify-center text-purple-400 font-bold text-xl">
+                <footer className="flex items-center justify-center md:justify-start gap-5 relative z-10 border-t border-gray-800 pt-6">
+                  <div className="w-14 h-14 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg">
                     {project.testimonial.author.charAt(0)}
                   </div>
                   <div>
-                    <p className="font-semibold text-white">
+                    <cite className="not-italic font-bold text-white text-lg block">
                       {project.testimonial.author}
-                    </p>
-                    <p className="text-sm text-gray-400">
+                    </cite>
+                    <span className="text-sm text-purple-400 font-medium">
                       {project.testimonial.role}
-                    </p>
+                    </span>
                   </div>
                 </footer>
               </blockquote>
@@ -375,9 +439,9 @@ export default async function PortfolioItemPage({
 
       {/* ✅ RELATED PROJECTS */}
       {relatedProjects.length > 0 && (
-        <section className="py-16 bg-black">
+        <section className="py-20 bg-gray-950 border-t border-gray-900">
           <div className="container mx-auto px-6 max-w-6xl">
-            <h2 className="text-3xl font-bold mb-10 text-center">
+            <h2 className="text-2xl font-bold mb-10 text-white flex items-center justify-center gap-3">
               Meer Projecten
             </h2>
 
@@ -386,34 +450,54 @@ export default async function PortfolioItemPage({
                 <Link
                   key={related.slug}
                   href={`/portfolio/${related.slug}`}
-                  className="group rounded-2xl overflow-hidden border border-gray-700 bg-gray-950 hover:shadow-xl hover:border-purple-500/50 transition-all"
+                  className="group flex flex-col h-full bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-purple-500/50 hover:shadow-2xl transition-all duration-300"
                 >
-                  <img
-                    src={related.image}
-                    alt={related.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                    loading="lazy"
-                    width={400}
-                    height={192}
-                  />
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2 group-hover:text-purple-400 transition">
+                  <div className="relative h-48 overflow-hidden">
+                    {/* ✅ SEO: Optimized Image */}
+                    <Image
+                      src={related.image}
+                      alt={related.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+                  </div>
+
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-lg font-bold mb-2 text-white group-hover:text-purple-400 transition-colors">
                       {related.title}
                     </h3>
-                    <p className="text-gray-400 text-sm line-clamp-2">
+                    <p className="text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
                       {related.description}
                     </p>
+                    <span className="text-xs text-purple-400 font-semibold uppercase tracking-wider flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                      Bekijk Case{" "}
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </span>
                   </div>
                 </Link>
               ))}
             </div>
 
-            <div className="text-center mt-10">
+            <div className="text-center mt-12">
               <Link
                 href="/portfolio"
-                className="inline-block px-6 py-3 border border-purple-500 text-purple-400 rounded-xl hover:bg-purple-500 hover:text-black transition font-semibold"
+                className="inline-block px-8 py-3 border border-gray-700 bg-gray-900 text-gray-300 rounded-xl hover:border-purple-500 hover:text-white transition font-medium"
               >
-                Bekijk Alle Projecten
+                Terug naar Overzicht
               </Link>
             </div>
           </div>
@@ -421,13 +505,18 @@ export default async function PortfolioItemPage({
       )}
 
       {/* ✅ CTA SECTION */}
-      <section className="py-24 bg-gradient-to-b from-black to-gray-950 text-center">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Klaar Voor Jouw Eigen{" "}
-            <span className="text-purple-400">Automatisering Succes</span>?
+      <section className="py-24 bg-gradient-to-b from-black to-purple-950/20 text-center relative overflow-hidden">
+        {/* Background Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="container mx-auto px-6 max-w-4xl relative z-10">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
+            Klaar Voor Jouw Eigen <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+              Automatisering Succes?
+            </span>
           </h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
             Net als dit project kunnen we jouw bedrijf helpen 40+ uur per maand
             te besparen. Plan een gratis haalbaarheidscheck.
           </p>
@@ -435,19 +524,19 @@ export default async function PortfolioItemPage({
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/quickscan"
-              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-400 text-black font-bold rounded-xl hover:scale-105 transition-transform shadow-lg"
+              className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
             >
               Bereken Mijn Besparing →
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 border border-purple-500 text-purple-400 font-semibold rounded-xl hover:bg-purple-500 hover:text-black transition"
+              className="px-8 py-4 border border-gray-700 bg-gray-900/50 text-white font-semibold rounded-xl hover:bg-gray-800 transition hover:border-gray-500 backdrop-blur-sm"
             >
               Plan een Gesprek
             </Link>
           </div>
 
-          <p className="text-sm text-gray-500 mt-8">
+          <p className="text-xs text-gray-500 mt-8 uppercase tracking-widest">
             Reactie binnen 24 uur • Geen verplichtingen • Gratis consult
           </p>
         </div>

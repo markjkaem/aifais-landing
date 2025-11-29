@@ -1,20 +1,12 @@
 "use client";
 // ========================================
-// FILE: app/HomeClient.tsx - VOLLEDIG AANGEPAST
+// FILE: app/HomeClient.tsx - SEO GEOPTIMALISEERD
 // ========================================
 
 import Image from "next/image";
 import Link from "next/link";
 import { Space_Grotesk } from "next/font/google";
-import {
-  JSXElementConstructor,
-  Key,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
-  useRef,
-  useState,
-} from "react";
+import { useRef, useState } from "react";
 import { projects } from "./portfolio/data";
 import FAQSection from "../Components/FAQSection";
 
@@ -33,6 +25,17 @@ const h1 = Space_Grotesk({
   weight: "700",
   subsets: ["latin"],
 });
+
+// ✅ REUSABLE SVG FOR LINKEDIN (E-E-A-T)
+const LinkedInIcon = () => (
+  <svg
+    className="w-6 h-6 text-gray-400 group-hover:text-blue-500 transition-colors"
+    fill="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+  </svg>
+);
 
 export default function HomeClient() {
   const bgClass = "bg-black";
@@ -70,7 +73,7 @@ export default function HomeClient() {
             loop
             muted
             playsInline
-            title="Bedrijfsautomatisering in actie"
+            title="Bedrijfsprocessen automatiseren met AI" // ✅ Improved title
             aria-label="Achtergrond video van automatisering code"
             className="w-full h-full object-cover brightness-[0.35] contrast-125 saturate-150 scale-105"
           >
@@ -117,16 +120,17 @@ export default function HomeClient() {
               Bedrijfsautomatisering Nederland
             </p>
 
-            {/* Main Headline - Improved hierarchy */}
+            {/* Main Headline - H1 Optimization */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
               <span className="text-white block">
-                Bespaar{" "}
+                Procesautomatisering voor MKB:
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-300 to-yellow-300 animate-gradient">
-                  40+ Uur Per Week
+                  {" "}
+                  Bespaar 40+ Uur
                 </span>
               </span>
               <span className="text-gray-300 block mt-2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
-                Met Slimme Automatisering
+                Wekelijks met Slimme AI
               </span>
             </h1>
 
@@ -361,7 +365,7 @@ export default function HomeClient() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-2/3 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 animate-bounce">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center gap-2 animate-bounce">
           <span className="text-xs text-gray-400 uppercase tracking-wider">
             Scroll
           </span>
@@ -384,46 +388,76 @@ export default function HomeClient() {
       {/* PARTNERS / LOGO'S */}
       <section aria-label="Onze integraties en partners" className="py-12">
         <div className="w-full justify-center flex md:gap-32 gap-6 flex-wrap">
-          <img
-            src="/logo-1.webp"
-            alt="AIFAIS partner - automatisering specialist"
-            width={160}
-            height={60}
-            loading="lazy"
-            className="md:w-40 w-14 object-contain h-auto opacity-50 invert"
-          />
-          <img
-            src="/google.svg"
-            alt="Google Workspace integratie voor automatisering"
-            width={160}
-            height={60}
-            loading="lazy"
-            className="md:w-40 object-contain w-14 h-auto opacity-50 grayscale"
-          />
-          <img
-            src="/n8n.svg"
-            alt="Automatisering platform"
-            width={160}
-            height={60}
-            loading="lazy"
-            className="object-contain md:w-40 w-14 h-auto opacity-50 grayscale invert"
-          />
-          <img
-            src="/openai.svg"
-            alt="OpenAI GPT integratie in automatisering"
-            width={160}
-            height={60}
-            loading="lazy"
-            className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert"
-          />
-          <img
-            src="/claude.svg"
-            alt="Claude AI integratie voor slimme automatisering"
-            width={160}
-            height={60}
-            loading="lazy"
-            className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert"
-          />
+          <Link
+            href="/diensten/integraties/exact-online"
+            aria-label="Exact Online integratie"
+            className="group"
+          >
+            <img
+              src="/logo-1.webp"
+              alt="Exact Online bedrijfsautomatisering integratie" // ✅ Improved Alt Text
+              width={160}
+              height={60}
+              loading="lazy"
+              className="md:w-40 w-14 object-contain h-auto opacity-50 invert group-hover:opacity-100 transition-opacity"
+            />
+          </Link>
+          <Link
+            href="/diensten/integraties/google-workspace"
+            aria-label="Google Workspace integratie"
+            className="group"
+          >
+            <img
+              src="/google.svg"
+              alt="Google Workspace integratie voor automatisering"
+              width={160}
+              height={60}
+              loading="lazy"
+              className="md:w-40 object-contain w-14 h-auto opacity-50 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all"
+            />
+          </Link>
+          <Link
+            href="/diensten/technologie/n8n"
+            aria-label="n8n low-code automatisering"
+            className="group"
+          >
+            <img
+              src="/n8n.svg"
+              alt="n8n low-code workflow automatisering platform" // ✅ Improved Alt Text
+              width={160}
+              height={60}
+              loading="lazy"
+              className="object-contain md:w-40 w-14 h-auto opacity-50 grayscale invert group-hover:opacity-100 group-hover:grayscale-0 transition-all"
+            />
+          </Link>
+          <Link
+            href="/diensten/technologie/openai-gpt"
+            aria-label="OpenAI GPT integratie"
+            className="group"
+          >
+            <img
+              src="/openai.svg"
+              alt="OpenAI GPT integratie in slimme automatisering" // ✅ Improved Alt Text
+              width={160}
+              height={60}
+              loading="lazy"
+              className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert group-hover:opacity-100 transition-opacity"
+            />
+          </Link>
+          <Link
+            href="/diensten/technologie/anthropic-claude"
+            aria-label="Claude AI integratie"
+            className="group"
+          >
+            <img
+              src="/claude.svg"
+              alt="Claude AI integratie voor slimme automatisering"
+              width={160}
+              height={60}
+              loading="lazy"
+              className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert group-hover:opacity-100 transition-opacity"
+            />
+          </Link>
         </div>
       </section>
 
@@ -446,12 +480,13 @@ export default function HomeClient() {
                 ⚡ BEWEZEN RESULTATEN
               </span>
             </div>
+            {/* H2 Optimization */}
             <h2
               id="cases-heading"
               className="text-4xl md:text-5xl font-bold mb-4"
             >
               <span className="bg-gradient-to-r from-white via-purple-300 to-amber-400 bg-clip-text text-transparent">
-                Automatiseringen Die Écht Werken
+                Succesvolle Procesautomatisering Case Studies
               </span>
             </h2>
             <p className="text-gray-400 text-xl max-w-3xl mx-auto">
@@ -480,7 +515,7 @@ export default function HomeClient() {
                 <div className="relative overflow-hidden h-56 bg-zinc-950">
                   <Image
                     src={project.image}
-                    alt={`${project.title} - bedrijfsautomatisering`}
+                    alt={`${project.title} - bedrijfsautomatisering case studie`} // ✅ Improved Alt Text
                     width={400}
                     height={224}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -513,11 +548,12 @@ export default function HomeClient() {
                     {project.description}
                   </p>
 
-                  {/* CTA Link */}
+                  {/* CTA Link - Optimized Anchor Text */}
                   <Link
                     href={`/portfolio/${project.slug}`}
                     className="inline-flex items-center gap-2 text-purple-400 font-semibold hover:text-purple-300 transition-colors group/link"
-                    aria-label={`Bekijk ${project.title} case study`}
+                    // ✅ Optimized Anchor Text for internal linking
+                    aria-label={`Bekijk de ${project.title} Automatisering Case`}
                   >
                     <span>Bekijk Case Study</span>
                     <svg
@@ -628,9 +664,10 @@ export default function HomeClient() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
+            {/* H2 Optimization */}
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               <span className="bg-gradient-to-r from-purple-400 via-white to-amber-400 bg-clip-text text-transparent">
-                Over Ons
+                Onze Experts in MKB Automatisering
               </span>
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
@@ -654,7 +691,7 @@ export default function HomeClient() {
                     <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-purple-500/20 group-hover:ring-purple-500/50 transition-all duration-300">
                       <Image
                         src="/mark.png"
-                        alt="Mark - Co-founder AIFAIS"
+                        alt="Mark - Co-founder AIFAIS, Technical Expert"
                         width={192}
                         height={192}
                         className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-300"
@@ -682,12 +719,23 @@ export default function HomeClient() {
                         Software Development
                       </span>
                       <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
-                        Automatisering Expert
+                        Nocode/Lowcode Specialist
                       </span>
                       <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
                         AI Integration
                       </span>
                     </div>
+
+                    {/* E-E-A-T LINK */}
+                    <Link
+                      href="https://linkedin.com/in/mark-profiellink"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn profiel Mark"
+                      className="mt-4 inline-flex items-center gap-2 group"
+                    >
+                      <LinkedInIcon />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -705,7 +753,7 @@ export default function HomeClient() {
                     <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-purple-500/20 group-hover:ring-purple-500/50 transition-all duration-300">
                       <Image
                         src="/faissal.png"
-                        alt="Faissal - Co-founder AIFAIS"
+                        alt="Faissal - Co-founder AIFAIS, Business Development"
                         width={192}
                         height={192}
                         className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-300"
@@ -721,7 +769,7 @@ export default function HomeClient() {
                       Faissal
                     </h3>
                     <p className="text-purple-400 font-semibold mb-4">
-                      Co-founder & Business Development
+                      Co-founder & Process Design
                     </p>
                     <p className="text-gray-400 leading-relaxed mb-6">
                       Na jaren ondernemerschap weet ik hoe het is om vast te
@@ -742,6 +790,17 @@ export default function HomeClient() {
                         Growth Strategy
                       </span>
                     </div>
+
+                    {/* E-E-A-T LINK */}
+                    <Link
+                      href="https://linkedin.com/in/faissal-profiellink"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn profiel Faissal"
+                      className="mt-4 inline-flex items-center gap-2 group"
+                    >
+                      <LinkedInIcon />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -779,12 +838,10 @@ export default function HomeClient() {
 
       {/* AFSLUITENDE CTA */}
       <section className="relative py-24 bg-black overflow-hidden">
-        {/* Background effects */}
+        {/* Background effects and grid remain */}
         <div className="absolute inset-0 bg-gradient-to-b from-purple-950/10 via-transparent to-purple-950/10" />
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-600/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-3xl" />
-
-        {/* Animated grid background */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(147,51,234,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(147,51,234,0.03)_1px,transparent_1px)] bg-[size:72px_72px]" />
 
         <div className="relative container mx-auto px-6 max-w-5xl">
@@ -803,6 +860,7 @@ export default function HomeClient() {
               </div>
 
               {/* Heading */}
+              {/* H2 Optimization */}
               <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
                 <span className="bg-gradient-to-r from-white via-purple-300 to-amber-400 bg-clip-text text-transparent">
                   Klaar Om 40+ Uur Per Maand
@@ -821,7 +879,7 @@ export default function HomeClient() {
                 kan betekenen.
               </p>
 
-              {/* Benefits Grid */}
+              {/* Benefits Grid (Process steps) */}
               <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto">
                 {/* Benefit 1 */}
                 <div className="group relative bg-zinc-950/50 border border-zinc-800 rounded-xl p-6 hover:border-purple-500/50 transition-all duration-300">
