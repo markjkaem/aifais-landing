@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "automatisering specialist inhuren",
     "n8n consultant contact",
     "bedrijfsautomatisering offerte aanvragen",
-    "automatisering gouda",
+    "automatisering nederland",
     "gratis quickscan aanvragen",
   ],
 
