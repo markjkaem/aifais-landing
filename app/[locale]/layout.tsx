@@ -8,7 +8,7 @@ import Footer from "../Components/Footer";
 import HeaderMockup from "../Components/Header";
 import { notFound } from "next/navigation";
 import { locales } from "@/i18n";
-import CookieBanner from "../Components/CookieBanner"; // 👈 Import cookie banner
+import CookieBanner from "../Components/CookieBanner";
 import ExitIntentPopup from "../Components/ExitIntentPopup";
 import AIChatbot from "../Components/Aichatbot";
 import Script from "next/script";
@@ -22,65 +22,67 @@ const anton = Inter({
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>; // ✅ params is a Promise
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params; // ✅ AWAIT here
+  const { locale } = await params;
   const isNL = locale === "nl";
 
   return {
     title: isNL
-      ? "n8n Workflow Automatisering Nederland | Bespaar 40+ Uur/Week | Aifais"
-      : "n8n Workflow Automation Netherlands | Save 40+ Hours/Week | Aifais",
+      ? "Bedrijfsautomatisering Nederland | Bespaar 40+ Uur/Week | AIFAIS"
+      : "Business Automation Netherlands | Save 40+ Hours/Week | AIFAIS",
     description: isNL
-      ? "n8n workflow automatisering specialist voor Nederlandse MKB-bedrijven. Bespaar 40+ uur per week door repetitieve taken te automatiseren. Vanaf €2.500, live binnen 2 weken."
-      : "n8n workflow automation specialist for Dutch SME companies. Save 40+ hours per week by automating repetitive tasks. From €2,500, live within 2 weeks.",
+      ? "Automatiseer bedrijfsprocessen voor MKB. Bespaar 40+ uur per week door repetitieve taken te automatiseren. Geen programmeerkennis nodig. Vanaf €2.500, live binnen 2 weken."
+      : "Automate business processes for SME. Save 40+ hours per week by automating repetitive tasks. No programming required. From €2,500, live within 2 weeks.",
 
     keywords: isNL
       ? [
-          "n8n automatisering",
-          "workflow automatisering Nederland",
-          "n8n specialist",
-          "bedrijfsprocessen automatiseren",
-          "n8n consultant Nederland",
-          "automatisering MKB",
-          "handmatig werk automatiseren",
-          "n8n workflows bouwen",
+          "bedrijfsautomatisering",
+          "processen automatiseren",
+          "tijd besparen automatisering",
+          "automatisering mkb",
+          "handmatige taken automatiseren",
+          "repetitieve taken automatisch",
+          "administratie automatiseren",
+          "bedrijfsprocessen digitaliseren",
+          "automatisering kleine bedrijven",
+          "automatisering zonder programmeren",
         ]
       : [
-          "n8n automation",
-          "workflow automation Netherlands",
-          "n8n specialist",
+          "business automation",
+          "process automation Netherlands",
+          "automate processes",
           "business process automation",
-          "n8n consultant Netherlands",
+          "automation consultant Netherlands",
           "SME automation",
           "automate manual work",
-          "build n8n workflows",
+          "administrative automation",
         ],
 
-    authors: [{ name: "Aifais" }],
-    creator: "Aifais",
-    publisher: "Aifais",
+    authors: [{ name: "AIFAIS" }],
+    creator: "AIFAIS",
+    publisher: "AIFAIS",
     category: "Business Services",
 
     openGraph: {
       type: "website",
       locale: isNL ? "nl_NL" : "en_US",
       url: `https://aifais.com${locale === "nl" ? "" : "/en"}`,
-      siteName: "Aifais - n8n Workflow Automatisering",
+      siteName: "AIFAIS - Bedrijfsautomatisering Nederland",
       title: isNL
-        ? "n8n Workflow Automatisering Nederland | Bespaar 40+ Uur/Week"
-        : "n8n Workflow Automation Netherlands | Save 40+ Hours/Week",
+        ? "Bedrijfsautomatisering Nederland | Bespaar 40+ Uur/Week"
+        : "Business Automation Netherlands | Save 40+ Hours/Week",
       description: isNL
-        ? "Specialist in n8n workflow automatisering voor Nederlandse MKB-bedrijven. Bespaar tijd, voorkom fouten, schaal zonder extra personeel."
-        : "Specialist in n8n workflow automation for Dutch SME companies. Save time, prevent errors, scale without extra staff.",
+        ? "Automatiseer handmatig werk voor MKB bedrijven. Bespaar tijd, voorkom fouten, schaal zonder extra personeel."
+        : "Automate manual work for SME companies. Save time, prevent errors, scale without extra staff.",
       images: [
         {
           url: "https://aifais.com/og-image.jpg",
           width: 1200,
           height: 630,
           alt: isNL
-            ? "Aifais n8n Workflow Automatisering - Bespaar 40+ uur per week"
-            : "Aifais n8n Workflow Automation - Save 40+ hours per week",
+            ? "AIFAIS Bedrijfsautomatisering - Bespaar 40+ uur per week"
+            : "AIFAIS Business Automation - Save 40+ hours per week",
         },
       ],
     },
@@ -88,11 +90,11 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: isNL
-        ? "n8n Workflow Automatisering Nederland | Bespaar 40+ Uur/Week"
-        : "n8n Workflow Automation Netherlands | Save 40+ Hours/Week",
+        ? "Bedrijfsautomatisering Nederland | Bespaar 40+ Uur/Week"
+        : "Business Automation Netherlands | Save 40+ Hours/Week",
       description: isNL
-        ? "Specialist in n8n workflow automatisering voor Nederlandse MKB-bedrijven. Live binnen 2 weken, vanaf €2.500."
-        : "Specialist in n8n workflow automation for Dutch SME companies. Live within 2 weeks, from €2,500.",
+        ? "Automatiseer handmatig werk voor MKB. Stop met repetitieve taken. Live binnen 2 weken, vanaf €2.500."
+        : "Automate manual work for SME. Stop repetitive tasks. Live within 2 weeks, from €2,500.",
       images: ["https://aifais.com/og-image.jpg"],
       creator: "@aifais",
     },
@@ -121,11 +123,11 @@ export async function generateMetadata({
       },
     },
 
-    applicationName: "Aifais",
+    applicationName: "AIFAIS",
     appleWebApp: {
       capable: true,
       statusBarStyle: "black-translucent",
-      title: "Aifais",
+      title: "AIFAIS",
     },
 
     metadataBase: new URL("https://aifais.com"),
@@ -143,11 +145,11 @@ export function generateStaticParams() {
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>; // ✅ params is a Promise
+  params: Promise<{ locale: string }>;
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await params; // ✅ AWAIT params
+  const { locale } = await params;
 
   // ✅ Check if locale is valid
   if (!locales.includes(locale as any)) {
@@ -230,12 +232,12 @@ export default async function LocaleLayout({ children, params }: Props) {
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "@id": "https://aifais.com/#organization",
-              name: "Aifais",
-              alternateName: "Aifais - n8n Workflow Automatisering",
+              name: "AIFAIS",
+              alternateName: "AIFAIS - Bedrijfsautomatisering Nederland",
               description:
                 locale === "nl"
-                  ? "n8n workflow automatisering specialist voor Nederlandse MKB-bedrijven. Specialist in het automatiseren van bedrijfsprocessen."
-                  : "n8n workflow automation specialist for Dutch SME companies. Specialist in automating business processes.",
+                  ? "Specialist in bedrijfsautomatisering voor Nederlandse MKB-bedrijven. Automatiseer repetitieve taken en bespaar 40+ uur per week."
+                  : "Specialist in business automation for Dutch SME companies. Automate repetitive tasks and save 40+ hours per week.",
               url: "https://aifais.com",
               telephone: "+31-6 18424470",
               email: "info@aifais.com",
@@ -284,11 +286,11 @@ export default async function LocaleLayout({ children, params }: Props) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
-              name: "Aifais - n8n Workflow Automatisering",
+              name: "AIFAIS - Bedrijfsautomatisering voor MKB",
               description:
                 locale === "nl"
-                  ? "Wij automatiseren repetitieve bedrijfsprocessen met n8n workflows. Bespaar 40+ uur per week voor Nederlandse MKB-bedrijven."
-                  : "We automate repetitive business processes with n8n workflows. Save 40+ hours per week for Dutch SME companies.",
+                  ? "Wij automatiseren repetitieve bedrijfsprocessen. Bespaar 40+ uur per week voor Nederlandse MKB-bedrijven. Geen programmeerkennis nodig."
+                  : "We automate repetitive business processes. Save 40+ hours per week for Dutch SME companies. No programming required.",
               url: "https://aifais.com",
               priceRange: "€€€",
               areaServed: {
@@ -296,9 +298,9 @@ export default async function LocaleLayout({ children, params }: Props) {
                 name: "Nederland",
               },
               serviceType: [
-                "Workflow Automatisering",
-                "n8n Implementatie",
-                "Bedrijfsproces Automatisering",
+                "Bedrijfsautomatisering",
+                "Proces Automatisering",
+                "Administratie Automatisering",
                 "AI Automatisering",
               ],
               provider: {
@@ -339,7 +341,8 @@ export default async function LocaleLayout({ children, params }: Props) {
             }),
           }}
         />
-        {/* 👇 MOVE MAILCHIMP SCRIPT HERE - BEFORE CLOSING BODY TAG */}
+
+        {/* Mailchimp Connected Site Script */}
         <Script
           id="mcjs"
           strategy="afterInteractive"
@@ -371,9 +374,9 @@ export default async function LocaleLayout({ children, params }: Props) {
           <HeaderMockup />
           {children}
           <Footer />
-          <CookieBanner /> {/* 👈 Cookie banner at the bottom */}
+          <CookieBanner />
           <ExitIntentPopup />
-          <AIChatbot /> {/* 👈 Voeg dit toe */}
+          <AIChatbot />
         </NextIntlClientProvider>
       </body>
     </html>

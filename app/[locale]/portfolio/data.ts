@@ -1,6 +1,6 @@
 // ========================================
 // FILE: app/portfolio/data.ts
-// UPDATED WITH 6 NEW STRATEGIC CASE STUDIES
+// VOLLEDIG AANGEPAST NAAR NEDERLANDS
 // ========================================
 
 export interface Project {
@@ -34,19 +34,19 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: "email-reply-ai-agent",
-    title: "Email Reply AI Agent",
+    title: "AI Email Beantwoording Systeem",
     image: "/emailagent.png",
     description:
-      "Automated email response agent leveraging a vector database of customer interactions to provide context-aware, real-time replies at scale.",
+      "Geautomatiseerd emailbeantwoording systeem dat gebruik maakt van een kennisbank van eerdere klantinteracties om context-bewuste, real-time antwoorden te genereren op schaal.",
     details: [
-      "Integrated with a vector database (e.g., Pinecone or Weaviate) to understand prior conversations.",
-      "Automatically drafts accurate and on-brand replies to customer emails.",
-      "Continuously learns from past responses and CRM data.",
-      "Reduced manual inbox handling time by 80%.",
+      "Geïntegreerd met een kennisbank (Pinecone of Weaviate) om eerdere gesprekken te begrijpen.",
+      "Maakt automatisch accurate en merkconforme antwoorden op klant-emails.",
+      "Leert continu van eerdere antwoorden en CRM-data.",
+      "Handmatige inbox-tijd met 80% verminderd.",
     ],
     
-    category: "Customer Support Automation",
-    tags: ["n8n", "OpenAI", "Pinecone", "Gmail", "Vector Database", "AI Agent"],
+    category: "Klantenservice Automatisering",
+    tags: ["AI Agent", "OpenAI", "Pinecone", "Gmail", "Kennisbank", "Email Automatisering"],
     readTime: 6,
     date: "2024-10-15",
     
@@ -66,19 +66,19 @@ export const projects: Project[] = [
   
   {
     slug: "sales-lead-automation",
-    title: "Sales Lead Automation",
+    title: "Sales Lead Automatisering",
     image: "/sales-agent.webp",
     description:
-      "n8n workflow that gathers, qualifies, and enriches leads across multiple platforms, automatically updating CRM and notifying sales teams.",
+      "Geautomatiseerd systeem dat leads verzamelt, kwalificeert en verrijkt over meerdere platformen, automatisch het CRM bijwerkt en sales teams notificeert.",
     details: [
-      "Connects LinkedIn, website forms, and email campaigns into one unified lead stream.",
-      "Uses enrichment APIs (Clearbit / Apollo) for firmographic and intent data.",
-      "Scores leads based on relevance and triggers Slack or email alerts.",
-      "Fully syncs with HubSpot, Pipedrive, or Notion CRM databases.",
+      "Verbindt LinkedIn, website formulieren en email campagnes in één uniforme leadstroom.",
+      "Gebruikt verrijkings-API's (Clearbit / Apollo) voor bedrijfsdata en intentiegegevens.",
+      "Scoort leads op relevantie en triggert Slack of email alerts.",
+      "Synchroniseert volledig met HubSpot, Pipedrive of Notion CRM databases.",
     ],
     
     category: "Lead Automatisering",
-    tags: ["n8n", "HubSpot", "LinkedIn", "Clearbit", "Apollo", "Slack", "CRM"],
+    tags: ["Lead Generation", "HubSpot", "LinkedIn", "Clearbit", "Apollo", "Slack", "CRM"],
     readTime: 7,
     date: "2024-09-22",
     
@@ -99,19 +99,19 @@ export const projects: Project[] = [
   
   {
     slug: "support-ticket-summarizer",
-    title: "Support Ticket Summarizer",
+    title: "Support Ticket Samenvatting Systeem",
     image: "/support-agent.png",
     description:
-      "AI-powered summarization workflow that condenses large support threads and provides actionable insights for support agents.",
+      "AI-gedreven samenvattingssysteem dat grote support threads condenseert en bruikbare inzichten geeft aan support medewerkers.",
     details: [
-      "Automatically summarizes customer support tickets from Zendesk or Intercom.",
-      "Highlights key issues, tone, and sentiment in a structured summary.",
-      "Stores summaries in a vector database for long-term retrieval.",
-      "Reduced average response time by 35%.",
+      "Vat automatisch klantenservice tickets samen van Zendesk of Intercom.",
+      "Benadrukt kernproblemen, toon en sentiment in een gestructureerde samenvatting.",
+      "Slaat samenvattingen op in een kennisbank voor lange-termijn opslag.",
+      "Gemiddelde reactietijd met 35% verminderd.",
     ],
     
-    category: "Customer Support Automation",
-    tags: ["n8n", "Zendesk", "Intercom", "OpenAI", "Sentiment Analysis", "Vector DB"],
+    category: "Klantenservice Automatisering",
+    tags: ["Support Automatisering", "Zendesk", "Intercom", "OpenAI", "Sentiment Analyse", "Kennisbank"],
     readTime: 5,
     date: "2024-11-08",
     
@@ -131,19 +131,19 @@ export const projects: Project[] = [
   
   {
     slug: "dynamic-marketing-content-generator",
-    title: "Dynamic Marketing Content Generator",
+    title: "Dynamische Marketing Content Generator",
     image: "/marketing-agent.png",
     description:
-      "Generates personalized marketing emails and social posts based on customer behavior and segmentation, fully automated through n8n workflows.",
+      "Genereert gepersonaliseerde marketing emails en social posts op basis van klantgedrag en segmentatie, volledig geautomatiseerd.",
     details: [
-      "Pulls user data from CRM, analytics, and campaign tools.",
-      "Uses AI prompts to craft custom marketing messages for each segment.",
-      "Auto-posts approved content to LinkedIn, email, and Slack.",
-      "Increased engagement rates by 42% on average.",
+      "Haalt gebruikersdata op uit CRM, analytics en campagne tools.",
+      "Gebruikt AI prompts om custom marketing berichten te maken voor elk segment.",
+      "Post automatisch goedgekeurde content naar LinkedIn, email en Slack.",
+      "Engagement rates gemiddeld met 42% verhoogd.",
     ],
     
     category: "Marketing Automatisering",
-    tags: ["n8n", "OpenAI", "Mailchimp", "LinkedIn", "Google Analytics", "Segmentation"],
+    tags: ["Content Generatie", "OpenAI", "Mailchimp", "LinkedIn", "Google Analytics", "Segmentatie"],
     readTime: 6,
     date: "2024-08-14",
     
@@ -163,19 +163,19 @@ export const projects: Project[] = [
   
   {
     slug: "data-pipeline-and-reporting-automation",
-    title: "Data Pipeline & Reporting Automation",
+    title: "Data Pipeline & Rapportage Automatisering",
     image: "/data-agent.png",
     description:
-      "End-to-end automation for collecting, transforming, and visualizing business data, reducing manual reporting time by 70%.",
+      "End-to-end automatisering voor het verzamelen, transformeren en visualiseren van bedrijfsdata, met 70% minder handmatige rapportage tijd.",
     details: [
-      "Aggregates data from multiple APIs, databases, and spreadsheets.",
-      "Cleans and normalizes data automatically using n8n transformations.",
-      "Pushes results into dashboards (Google Data Studio, Power BI, or Notion).",
-      "Reduced manual report generation from hours to minutes.",
+      "Verzamelt data van meerdere API's, databases en spreadsheets.",
+      "Schoont en normaliseert data automatisch met transformaties.",
+      "Pusht resultaten naar dashboards (Google Data Studio, Power BI of Notion).",
+      "Handmatige rapportage van uren naar minuten teruggebracht.",
     ],
     
     category: "Data & Rapportage Automatisering",
-    tags: ["n8n", "Google Sheets", "Power BI", "Google Data Studio", "API Integration", "ETL"],
+    tags: ["Data Pipeline", "Google Sheets", "Power BI", "Google Data Studio", "API Integratie", "ETL"],
     readTime: 8,
     date: "2024-07-19",
     
@@ -196,19 +196,19 @@ export const projects: Project[] = [
   
   {
     slug: "inventory-forecasting-agent",
-    title: "Inventory Forecasting Agent",
+    title: "Voorraad Voorspelling Systeem",
     image: "/forecasting-agent.png",
     description:
-      "Predictive AI agent that integrates sales data and seasonal trends to optimize inventory management automatically.",
+      "Voorspellend AI-systeem dat verkoopdata en seizoenstrends integreert om voorraadbeheer automatisch te optimaliseren.",
     details: [
-      "Combines real-time sales data with external market trends.",
-      "Uses AI models to predict stock levels and reorder points.",
-      "Automatically alerts procurement teams when thresholds are met.",
-      "Decreased overstocking by 25% and stockouts by 40%.",
+      "Combineert real-time verkoopdata met externe markttrends.",
+      "Gebruikt AI-modellen om voorraadniveaus en herbestelpunten te voorspellen.",
+      "Waarschuwt inkoop teams automatisch wanneer drempels worden bereikt.",
+      "Overvoorraad met 25% verminderd en stockouts met 40% verminderd.",
     ],
     
     category: "Voorspellende Automatisering",
-    tags: ["n8n", "Machine Learning", "Forecasting", "ERP Integration", "Slack", "AI Predictions"],
+    tags: ["Machine Learning", "Voorspelling", "ERP Integratie", "Slack", "AI Voorspellingen", "Voorraadbeheer"],
     readTime: 7,
     date: "2024-06-11",
     
@@ -227,25 +227,25 @@ export const projects: Project[] = [
   },
 
   // ========================================
-  // 🆕 NEW CASE STUDIES (6 ADDED)
+  // 🆕 NIEUWE CASE STUDIES (6 TOEGEVOEGD)
   // ========================================
 
   {
     slug: "recruitment-screening-automation",
-    title: "Recruitment Screening Automation",
+    title: "Recruitment Screening Automatisering",
     image: "/recruitment-agent.png",
     description:
-      "AI-powered candidate screening system that analyzes CVs, matches job requirements, and schedules interviews automatically.",
+      "AI-gedreven kandidaat screening systeem dat CV's analyseert, functie-eisen matcht en interviews automatisch inplant.",
     details: [
-      "Automatically extracts and scores CV data against job descriptions using AI.",
-      "Integrates with LinkedIn, Indeed, and recruitment platforms.",
-      "Sends personalized rejection/invitation emails based on fit score.",
-      "Auto-schedules interviews via Calendly integration with top candidates.",
-      "Reduced time-to-hire by 55% and screening workload by 90%.",
+      "Extraheert en scoort automatisch CV-data tegen functieomschrijvingen met AI.",
+      "Integreert met LinkedIn, Indeed en recruitment platformen.",
+      "Stuurt gepersonaliseerde afwijzings/uitnodigings emails op basis van fit score.",
+      "Plant automatisch interviews via Calendly integratie met top kandidaten.",
+      "Time-to-hire met 55% verminderd en screening workload met 90% verminderd.",
     ],
     
     category: "HR & Recruitment Automatisering",
-    tags: ["n8n", "OpenAI", "LinkedIn", "Calendly", "CV Parsing", "ATS Integration", "Recruitment"],
+    tags: ["Recruitment", "OpenAI", "LinkedIn", "Calendly", "CV Analyse", "ATS Integratie", "HR Automatisering"],
     readTime: 6,
     date: "2024-10-28",
     
@@ -265,20 +265,20 @@ export const projects: Project[] = [
 
   {
     slug: "meeting-notes-action-items-agent",
-    title: "Meeting Notes & Action Items Agent",
+    title: "Meeting Notities & Actie Items Agent",
     image: "/meeting-agent.png",
     description:
-      "Automatically transcribes meetings, generates summaries, extracts action items, and assigns tasks to team members.",
+      "Transcribeert automatisch meetings, genereert samenvattingen, extraheert actie items en wijst taken toe aan teamleden.",
     details: [
-      "Integrates with Google Meet, Zoom, and Microsoft Teams for auto-transcription.",
-      "Uses AI to identify key decisions, action items, and deadlines.",
-      "Automatically creates tasks in Asana, Monday.com, or Notion.",
-      "Sends personalized follow-up emails to attendees with their action items.",
-      "Eliminated 8 uur/week of manual note-taking and follow-ups.",
+      "Integreert met Google Meet, Zoom en Microsoft Teams voor auto-transcriptie.",
+      "Gebruikt AI om belangrijke beslissingen, actie items en deadlines te identificeren.",
+      "Maakt automatisch taken aan in Asana, Monday.com of Notion.",
+      "Stuurt gepersonaliseerde follow-up emails naar deelnemers met hun actie items.",
+      "8 uur/week aan handmatige notities en follow-ups geëlimineerd.",
     ],
     
     category: "Productiviteits Automatisering",
-    tags: ["n8n", "OpenAI", "Whisper", "Google Meet", "Zoom", "Asana", "Notion", "Task Management"],
+    tags: ["Meeting Automatisering", "OpenAI", "Whisper", "Google Meet", "Zoom", "Asana", "Notion", "Taakbeheer"],
     readTime: 5,
     date: "2024-09-15",
     
@@ -298,20 +298,20 @@ export const projects: Project[] = [
 
   {
     slug: "invoice-payment-reminder-automation",
-    title: "Invoice & Payment Reminder Automation",
+    title: "Factuur & Betalingsherinnering Automatisering",
     image: "/invoice-agent.png",
     description:
-      "Automated invoicing and payment follow-up system that reduces outstanding invoices by 60% and improves cash flow.",
+      "Geautomatiseerd facturatie en betalings follow-up systeem dat onbetaalde facturen met 60% vermindert en cashflow verbetert.",
     details: [
-      "Generates and sends invoices automatically based on project completion or milestones.",
-      "Sends personalized payment reminders at 7, 14, and 30-day intervals.",
-      "Escalates overdue invoices to management with full payment history.",
-      "Integrates with Exact, Moneybird, and QuickBooks.",
-      "Reduced Days Sales Outstanding (DSO) from 45 to 18 dagen.",
+      "Genereert en verstuurt automatisch facturen op basis van projectafronding of mijlpalen.",
+      "Stuurt gepersonaliseerde betalingsherinneringen op 7, 14 en 30-dagen intervallen.",
+      "Escaleert achterstallige facturen naar management met volledige betalingshistorie.",
+      "Integreert met Exact, Moneybird en QuickBooks.",
+      "Days Sales Outstanding (DSO) teruggebracht van 45 naar 18 dagen.",
     ],
     
     category: "Financiële Automatisering",
-    tags: ["n8n", "Exact", "Moneybird", "QuickBooks", "Payment Reminders", "Cash Flow", "Invoicing"],
+    tags: ["Facturatie", "Exact", "Moneybird", "QuickBooks", "Betalingsherinneringen", "Cashflow", "Financiën"],
     readTime: 5,
     date: "2024-08-22",
     
@@ -332,20 +332,20 @@ export const projects: Project[] = [
 
   {
     slug: "social-media-content-scheduler",
-    title: "Social Media Content Scheduler & Analytics",
+    title: "Social Media Content Planner & Analytics",
     image: "/social-agent.png",
     description:
-      "AI-powered social media automation that plans, creates, schedules, and analyzes posts across multiple platforms.",
+      "AI-gedreven social media automatisering die posts plant, creëert, inroostert en analyseert over meerdere platformen.",
     details: [
-      "Generates platform-optimized content variations (LinkedIn, Instagram, Twitter) from one source.",
-      "Uses AI to suggest best posting times based on audience engagement data.",
-      "Auto-schedules posts to Buffer, Hootsuite, or native platform APIs.",
-      "Tracks performance metrics and generates weekly insight reports.",
-      "Increased social media output by 400% with same team size.",
+      "Genereert platform-geoptimaliseerde content variaties (LinkedIn, Instagram, Twitter) van één bron.",
+      "Gebruikt AI om beste posttijden voor te stellen op basis van audience engagement data.",
+      "Plant automatisch posts naar Buffer, Hootsuite of native platform API's.",
+      "Volgt performance metrics en genereert wekelijkse inzicht rapporten.",
+      "Social media output met 400% verhoogd met zelfde teamgrootte.",
     ],
     
     category: "Social Media Automatisering",
-    tags: ["n8n", "OpenAI", "Buffer", "LinkedIn", "Instagram", "Twitter", "Analytics", "Content Creation"],
+    tags: ["Social Media", "OpenAI", "Buffer", "LinkedIn", "Instagram", "Twitter", "Analytics", "Content Creatie"],
     readTime: 6,
     date: "2024-07-30",
     
@@ -365,20 +365,20 @@ export const projects: Project[] = [
 
   {
     slug: "customer-onboarding-automation",
-    title: "Customer Onboarding Automation",
+    title: "Klant Onboarding Automatisering",
     image: "/onboarding-agent.png",
     description:
-      "End-to-end customer onboarding workflow that reduces setup time by 70% and improves customer satisfaction scores.",
+      "End-to-end klant onboarding proces dat setup tijd met 70% vermindert en klanttevredenheid scores verbetert.",
     details: [
-      "Triggers personalized welcome sequences upon new customer signup.",
-      "Automatically provisions accounts, sends credentials, and schedules kickoff calls.",
-      "Delivers step-by-step onboarding content via email and in-app messages.",
-      "Tracks onboarding progress and alerts CSM team when customers stall.",
-      "Reduced customer onboarding time from 14 days to 4 days on average.",
+      "Triggert gepersonaliseerde welkomstreeksen bij nieuwe klant aanmelding.",
+      "Maakt automatisch accounts aan, verstuurt credentials en plant kickoff calls.",
+      "Levert stapsgewijze onboarding content via email en in-app berichten.",
+      "Volgt onboarding voortgang en waarschuwt CSM team wanneer klanten vastlopen.",
+      "Klant onboarding tijd teruggebracht van 14 dagen naar 4 dagen gemiddeld.",
     ],
     
     category: "Customer Success Automatisering",
-    tags: ["n8n", "Intercom", "HubSpot", "Calendly", "Customer Success", "Onboarding", "Email Automation"],
+    tags: ["Onboarding", "Intercom", "HubSpot", "Calendly", "Customer Success", "Email Automatisering", "Klantbeleving"],
     readTime: 6,
     date: "2024-11-12",
     
@@ -398,27 +398,27 @@ export const projects: Project[] = [
 
   {
     slug: "contract-renewal-management",
-    title: "Contract Renewal Management System",
+    title: "Contract Verlenging Management Systeem",
     image: "/contract-agent.png",
     description:
-      "Proactive contract management automation that prevents revenue leakage and improves renewal rates by 28%.",
+      "Proactief contract management automatisering die revenue lekkage voorkomt en verlenging rates met 28% verbetert.",
     details: [
-      "Monitors all customer contracts and triggers renewal workflows 90/60/30 days before expiration.",
-      "Sends personalized renewal offers based on usage data and customer health scores.",
-      "Escalates at-risk renewals to account managers with full customer context.",
-      "Auto-generates renewal contracts and DocuSign workflows.",
-      "Increased contract renewal rate from 68% to 96%.",
+      "Monitort alle klantcontracten en triggert verlenging processen 90/60/30 dagen voor afloop.",
+      "Stuurt gepersonaliseerde verlengingsaanbiedingen op basis van gebruiksdata en customer health scores.",
+      "Escaleert risico-verlenging naar account managers met volledige klant context.",
+      "Genereert automatisch verlenging contracten en DocuSign processen.",
+      "Contract verlenging rate verhoogd van 68% naar 96%.",
     ],
     
     category: "Revenue Operations Automatisering",
-    tags: ["n8n", "Salesforce", "HubSpot", "DocuSign", "Contract Management", "Revenue Retention", "Customer Success"],
+    tags: ["Contract Beheer", "Salesforce", "HubSpot", "DocuSign", "Revenue Retention", "Customer Success", "Account Management"],
     readTime: 7,
     date: "2024-06-25",
     
     results: {
       timeSaved: "10 uur/week",
       roiMonths: 1,
-      costSaving: "€120.000/jaar (saved revenue)",
+      costSaving: "€120.000/jaar (behouden omzet)",
       improvement: "28% hogere renewal rate (68%→96%)"
     },
     

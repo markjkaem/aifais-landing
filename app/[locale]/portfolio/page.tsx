@@ -5,42 +5,42 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { projects } from "./data";
-import Image from "next/image";
 
 // ✅ SEO METADATA
 export const metadata: Metadata = {
-  title: "Portfolio | n8n Workflow Automatisering Cases | Aifais",
+  title: "Portfolio | Bedrijfsautomatisering Cases | AIFAIS",
   description:
-    "Bekijk onze succesvolle n8n workflow automatisering projecten voor Nederlandse MKB-bedrijven. Van lead-automatisering tot data-integratie. Bewezen resultaten.",
+    "Bekijk onze succesvolle automatisering projecten voor Nederlandse MKB-bedrijven. Van lead-automatisering tot data-integratie. Bewezen resultaten.",
 
   keywords: [
-    "n8n portfolio",
-    "workflow automatisering voorbeelden",
+    "automatisering portfolio",
+    "automatisering voorbeelden",
     "automatisering cases",
-    "n8n projecten Nederland",
+    "bedrijfsautomatisering projecten Nederland",
     "bedrijfsautomatisering voorbeelden",
+    "mkb automatisering cases",
   ],
 
   openGraph: {
-    title: "Portfolio | n8n Workflow Automatisering Cases | Aifais",
+    title: "Portfolio | Bedrijfsautomatisering Cases | AIFAIS",
     description:
-      "Bekijk onze succesvolle workflow automatisering projecten voor Nederlandse MKB-bedrijven.",
+      "Bekijk onze succesvolle automatisering projecten voor Nederlandse MKB-bedrijven.",
     url: "https://aifais.com/portfolio",
     type: "website",
     images: [
       {
-        url: "https://aifais.com/og-portfolio.jpg", // ✅ MAAK DEZE IMAGE (optioneel)
+        url: "https://aifais.com/og-portfolio.jpg",
         width: 1200,
         height: 630,
-        alt: "Aifais Portfolio - n8n Workflow Automatisering Cases",
+        alt: "AIFAIS Portfolio - Bedrijfsautomatisering Cases",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Portfolio | n8n Workflow Automatisering Cases",
-    description: "Bekijk onze succesvolle workflow automatisering projecten.",
+    title: "Portfolio | Bedrijfsautomatisering Cases",
+    description: "Bekijk onze succesvolle automatisering projecten.",
     images: ["https://aifais.com/og-portfolio.jpg"],
   },
 
@@ -64,13 +64,13 @@ export default function Portfolio() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Portfolio - n8n Workflow Automatisering Cases",
+            name: "Portfolio - Bedrijfsautomatisering Cases",
             description:
-              "Overzicht van succesvolle workflow automatisering projecten",
+              "Overzicht van succesvolle automatisering projecten voor MKB bedrijven",
             url: "https://aifais.com/portfolio",
             provider: {
               "@type": "Organization",
-              name: "Aifais",
+              name: "AIFAIS",
               "@id": "https://aifais.com/#organization",
             },
             hasPart: projects.map((project) => ({
@@ -90,8 +90,7 @@ export default function Portfolio() {
           <header className="max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Portfolio: Succesvolle{" "}
-              <span className="text-purple-400">n8n Workflow</span>{" "}
-              Automatiseringen
+              <span className="text-purple-400">Automatisering</span> Projecten
             </h1>
             <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
               Ontdek hoe we Nederlandse MKB-bedrijven helpen met het
@@ -130,22 +129,16 @@ export default function Portfolio() {
                 className="group rounded-2xl overflow-hidden border border-gray-700 bg-gray-950 hover:shadow-2xl hover:border-purple-500/50 transition-all duration-300"
               >
                 <Link href={`/portfolio/${project.slug}`}>
-                  {/* ✅ IMPROVED: Image with Next.js Image component (if you want optimization) */}
+                  {/* ✅ IMPROVED: Image */}
                   <div className="relative h-56 overflow-hidden bg-gray-800">
                     <img
                       src={project.image}
-                      alt={`${project.title} - n8n workflow automatisering case study`}
+                      alt={`${project.title} - bedrijfsautomatisering case study`}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       loading="lazy"
                       width={400}
                       height={224}
                     />
-                    {/* ✅ NEW: Category Badge (if you have categories in data) */}
-                    {/* {project.category && (
-                      <span className="absolute top-4 left-4 px-3 py-1 bg-purple-600/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
-                        {project.category}
-                      </span>
-                    )} */}
                   </div>
 
                   <div className="p-6">
@@ -156,31 +149,10 @@ export default function Portfolio() {
                       {project.description}
                     </p>
 
-                    {/* ✅ NEW: Tags (if you have them in data) */}
-                    {/* {project.tags && (
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded-md"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )} */}
-
                     <div className="flex items-center justify-between pt-4 border-t border-gray-800">
                       <span className="text-purple-400 font-semibold group-hover:underline">
                         Bekijk Case →
                       </span>
-
-                      {/* ✅ NEW: Read time (if you have it) */}
-                      {/* {project.readTime && (
-                        <span className="text-gray-500 text-sm">
-                          {project.readTime} min lezen
-                        </span>
-                      )} */}
                     </div>
                   </div>
                 </Link>
@@ -198,25 +170,6 @@ export default function Portfolio() {
           )}
         </div>
       </section>
-
-      {/* ✅ NEW: Categories/Filters Section (if you add categories later) */}
-      {/* <section className="py-16 bg-gray-950">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <h2 className="text-2xl font-bold mb-6 text-center">
-            Filteren op Type Automatisering
-          </h2>
-          <div className="flex flex-wrap gap-3 justify-center">
-            {['Alle', 'Lead Automatisering', 'Data Integratie', 'Rapportage', 'CRM'].map((cat) => (
-              <button
-                key={cat}
-                className="px-6 py-3 bg-gray-900 border border-gray-700 rounded-xl hover:border-purple-500 hover:text-purple-400 transition"
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section> */}
 
       {/* ✅ IMPROVED: CTA Section */}
       <section className="py-24 bg-gradient-to-b from-gray-950 to-black text-center">
@@ -251,7 +204,6 @@ export default function Portfolio() {
               Vertrouwd door 50+ Nederlandse bedrijven
             </p>
             <div className="flex flex-wrap gap-6 justify-center items-center opacity-50 grayscale">
-              {/* Add client logos here if you have them */}
               <img
                 src="/logo-1.webp"
                 alt="Client logo"
@@ -261,12 +213,11 @@ export default function Portfolio() {
               />
               <img
                 src="/n8n.svg"
-                alt="n8n platform"
+                alt="Automatisering platform"
                 width={100}
                 height={40}
                 className="h-8 object-contain invert"
               />
-              {/* Add more logos */}
             </div>
           </div>
         </div>

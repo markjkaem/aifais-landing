@@ -259,11 +259,11 @@ export default function QuickScanClient() {
       <div className="max-w-3xl mx-auto space-y-6">
         <header className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-yellow-400 to-purple-400 bg-clip-text text-transparent">
-            Gratis Automatisering Quickscan
+            Gratis Automatisering QuickScan
           </h1>
           <p className="text-lg md:text-2xl text-gray-200 mb-3 font-medium">
             Ontdek in 2 minuten hoeveel tijd en geld jouw bedrijf kan besparen
-            met AI workflow automatisering
+            met slimme automatisering
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-300">
             <span className="flex items-center gap-2">

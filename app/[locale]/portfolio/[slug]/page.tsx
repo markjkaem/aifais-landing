@@ -18,23 +18,24 @@ export async function generateMetadata({
 
   if (!project) {
     return {
-      title: "Project Niet Gevonden | Aifais",
+      title: "Project Niet Gevonden | AIFAIS",
     };
   }
 
   return {
-    title: `${project.title} | n8n Workflow Automatisering Case | Aifais`,
-    description: `${project.description} Bekijk hoe we dit automatiseerden met n8n voor een Nederlands MKB-bedrijf.`,
+    title: `${project.title} | Bedrijfsautomatisering Case | AIFAIS`,
+    description: `${project.description} Bekijk hoe we dit automatiseerden voor een Nederlands MKB-bedrijf.`,
 
     keywords: [
-      "n8n case study",
+      "automatisering case study",
       project.title,
-      "workflow automatisering voorbeeld",
+      "automatisering voorbeeld",
       "bedrijfsautomatisering resultaten",
+      "mkb automatisering",
     ],
 
     openGraph: {
-      title: `${project.title} | n8n Case Study`,
+      title: `${project.title} | Automatisering Case Study`,
       description: project.description,
       url: `https://aifais.com/portfolio/${slug}`,
       type: "article",
@@ -43,14 +44,14 @@ export async function generateMetadata({
           url: `https://aifais.com${project.image}`,
           width: 1200,
           height: 630,
-          alt: `${project.title} - n8n workflow automatisering case`,
+          alt: `${project.title} - bedrijfsautomatisering case`,
         },
       ],
     },
 
     twitter: {
       card: "summary_large_image",
-      title: `${project.title} | n8n Case Study`,
+      title: `${project.title} | Automatisering Case Study`,
       description: project.description,
       images: [`https://aifais.com${project.image}`],
     },
@@ -104,12 +105,12 @@ export default async function PortfolioItemPage({
             datePublished: project.date || new Date().toISOString(),
             author: {
               "@type": "Organization",
-              name: "Aifais",
+              name: "AIFAIS",
               "@id": "https://aifais.com/#organization",
             },
             publisher: {
               "@type": "Organization",
-              name: "Aifais",
+              name: "AIFAIS",
               logo: {
                 "@type": "ImageObject",
                 url: "https://aifais.com/logo_official.png",
@@ -251,7 +252,7 @@ export default async function PortfolioItemPage({
           <div className="relative rounded-2xl overflow-hidden border border-gray-800 shadow-2xl">
             <img
               src={project.image}
-              alt={`${project.title} - n8n workflow automatisering case study`}
+              alt={`${project.title} - bedrijfsautomatisering case study`}
               className="w-full h-[400px] md:h-[500px] object-cover"
               loading="eager"
               width={1200}
