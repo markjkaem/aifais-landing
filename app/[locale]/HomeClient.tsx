@@ -1,8 +1,7 @@
+"use client";
 // ========================================
 // FILE: app/HomeClient.tsx - VOLLEDIG AANGEPAST
 // ========================================
-
-"use client";
 
 import Image from "next/image";
 import Link from "next/link";
