@@ -189,6 +189,7 @@ const OrganizationSchema = () => {
       "@type": "Country",
       name: "Nederland",
     },
+    priceRange: "€2500 - €5000+",
     // ✅ IMPROVEMENT: Added Address and corrected ContactPoint
     address: {
       "@type": "PostalAddress",
