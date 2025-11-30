@@ -11,9 +11,10 @@ import { news } from "../[locale]/news/data";
 // ✅ NEW: Define Service Links for Navigation & Search
 const serviceLinks = [
   {
-    title: "Workflow Automatisering",
-    slug: "/diensten/workflow-automatisering",
-    description: "Koppel systemen en elimineer handwerk (n8n/Make).",
+    title: "Next-gen telefonische assistenten",
+    slug: "/diensten/human-parity-voice",
+    description:
+      "Vervang frustrerende keuzemenu's door vloeiende, menselijke conversaties.",
     icon: (
       <svg
         className="w-5 h-5"
@@ -31,9 +32,10 @@ const serviceLinks = [
     ),
   },
   {
-    title: "AI Integraties",
-    slug: "/diensten/ai-integratie",
-    description: "Slimme chatbots en processen met ChatGPT/Claude.",
+    title: "Chat met uw bedrijfsdata.",
+    slug: "/diensten/enterprise-brain-rag",
+    description:
+      "Maak uw institutionele kennis direct toegankelijk. Wij implementeren Retrieval-Augmented Generation (RAG) systemen die uw interne documenten indexeren. Medewerkers of klanten kunnen vragen stellen in natuurlijke taal en krijgen antwoorden die direct, controleerbaar geciteerd zijn uit uw bronmateriaal.",
     icon: (
       <svg
         className="w-5 h-5"
@@ -51,9 +53,49 @@ const serviceLinks = [
     ),
   },
   {
+    title: "AI & Slimme Bedrijfsprocessen",
+    slug: "/diensten/ai-integratie",
+    description: "Zet Kunstmatige Intelligentie aan het werk.",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+        />
+      </svg>
+    ),
+  },
+  {
     title: "Administratie",
     slug: "/diensten/administratieve-automatisering",
     description: "Facturatie, HR en rapportages op automatische piloot.",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Workflow Automatisering",
+    slug: "/diensten/workflow-automatisering",
+    description: "Laat je systemen met elkaar praten.",
     icon: (
       <svg
         className="w-5 h-5"
