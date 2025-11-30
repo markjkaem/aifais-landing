@@ -63,8 +63,8 @@ export default function AGVPage() {
                 contact@aifais.com
               </a>
             </p>
-            <p>KvK: 27199999</p>
-            <p>BTW: NL000099998B57</p>
+            {/* <p>KvK: 27199999</p>
+            <p>BTW: NL000099998B57</p> */}
           </div>
         </section>
 

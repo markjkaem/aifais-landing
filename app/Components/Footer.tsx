@@ -148,12 +148,12 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <h3 className="font-bold text-white text-base">Bedrijfsgegevens</h3>
           <div className="flex flex-col gap-2 text-gray-400">
-            <p>
+            {/* <p>
               KvK: <span className="text-gray-300">27199999</span>
             </p>
             <p>
               BTW: <span className="text-gray-300">NL000099998B57</span>
-            </p>
+            </p> */}
           </div>
 
           <div className="mt-4 pt-4 border-t border-gray-800 flex flex-col gap-2">
