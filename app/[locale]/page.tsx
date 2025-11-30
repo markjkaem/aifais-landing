@@ -182,7 +182,7 @@ const OrganizationSchema = () => {
     "@id": `${BASE_URL}/#organization`,
     name: "AIFAIS Bedrijfsautomatisering",
     url: BASE_URL,
-    logo: `${BASE_URL}/logo_official.svg`, // ✅ IMPROVEMENT: Assume a specific logo path
+    logo: `${BASE_URL}/logo_official.png`, // ✅ IMPROVEMENT: Assume a specific logo path
     description:
       "Specialist in bedrijfsautomatisering en AI-integraties voor het MKB in Nederland.",
     areaServed: {

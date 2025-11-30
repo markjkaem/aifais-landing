@@ -231,11 +231,11 @@ export default function HeaderMockup() {
           className="flex-shrink-0"
         >
           <Image
-            className="invert w-14 hover:scale-105 transition-transform"
+            className="invert w-32 hover:scale-105 transition-transform"
             src="/logo_official.png"
             alt="Aifais Logo"
-            width={200}
-            height={200}
+            width={400}
+            height={400}
           />
         </Link>
 
