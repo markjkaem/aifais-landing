@@ -404,16 +404,16 @@ export default function HomeClient() {
           </Link>
           <Link
             href="/diensten"
-            aria-label="Google Workspace integratie"
+            aria-label="Google Gemini AI integratie"
             className="group"
           >
             <img
-              src="/google.svg"
-              alt="Google Workspace integratie voor automatisering"
+              src="/gemini.png"
+              alt="Google Gemini AI integratie"
               width={160}
               height={60}
               loading="lazy"
-              className="md:w-40 object-contain w-14 h-auto opacity-50 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all"
+              className="md:w-40 w-14 object-contain h-auto invert opacity-50 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all"
             />
           </Link>
           <Link
