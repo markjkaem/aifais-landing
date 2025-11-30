@@ -390,12 +390,12 @@ export default function HomeClient() {
         <div className="w-full justify-center items-center flex md:gap-32 gap-6 flex-wrap">
           <Link
             href="/diensten"
-            aria-label="Nextjs website integratie"
+            aria-label="Pinecone vector database integratie"
             className="group"
           >
             <img
-              src="/logo-1.webp"
-              alt="Nextjs website integratie" // ✅ Improved Alt Text
+              src="/pinecone.svg"
+              alt="Pinecone vector database integratie" // ✅ Improved Alt Text
               width={160}
               height={60}
               loading="lazy"
