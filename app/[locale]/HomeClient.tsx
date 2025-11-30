@@ -387,15 +387,15 @@ export default function HomeClient() {
 
       {/* PARTNERS / LOGO'S */}
       <section aria-label="Onze integraties en partners" className="py-12">
-        <div className="w-full justify-center flex md:gap-32 gap-6 flex-wrap">
+        <div className="w-full justify-center items-center flex md:gap-32 gap-6 flex-wrap">
           <Link
-            href="/diensten/integraties/exact-online"
-            aria-label="Exact Online integratie"
+            href="/diensten"
+            aria-label="Nextjs website integratie"
             className="group"
           >
             <img
               src="/logo-1.webp"
-              alt="Exact Online bedrijfsautomatisering integratie" // ✅ Improved Alt Text
+              alt="Nextjs website integratie" // ✅ Improved Alt Text
               width={160}
               height={60}
               loading="lazy"
@@ -403,7 +403,7 @@ export default function HomeClient() {
             />
           </Link>
           <Link
-            href="/diensten/integraties/google-workspace"
+            href="/diensten"
             aria-label="Google Workspace integratie"
             className="group"
           >
@@ -417,7 +417,7 @@ export default function HomeClient() {
             />
           </Link>
           <Link
-            href="/diensten/technologie/n8n"
+            href="/diensten"
             aria-label="n8n low-code automatisering"
             className="group"
           >
@@ -431,7 +431,7 @@ export default function HomeClient() {
             />
           </Link>
           <Link
-            href="/diensten/technologie/openai-gpt"
+            href="/diensten"
             aria-label="OpenAI GPT integratie"
             className="group"
           >
@@ -445,7 +445,7 @@ export default function HomeClient() {
             />
           </Link>
           <Link
-            href="/diensten/technologie/anthropic-claude"
+            href="/diensten"
             aria-label="Claude AI integratie"
             className="group"
           >
