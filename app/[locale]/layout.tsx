@@ -222,7 +222,7 @@ export default async function LocaleLayout({ children, params }: Props) {
               image: `${BASE_URL}/logo_official.png`,
               logo: `${BASE_URL}/logo_official.png`,
               sameAs: [
-                "https://www.linkedin.com/company/aifais",
+                "https://www.linkedin.com/company/aifais-automatisering",
                 TWITTER_CREATOR,
               ],
               aggregateRating: {

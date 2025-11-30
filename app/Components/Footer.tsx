@@ -171,7 +171,7 @@ export default function Footer() {
           {/* LinkedIn Icon */}
           <div className="flex gap-4 mt-2">
             <a
-              href="https://linkedin.com/company/aifais"
+              href="https://www.linkedin.com/company/aifais-automatisering"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white transition"
