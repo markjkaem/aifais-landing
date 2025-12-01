@@ -6,7 +6,7 @@ const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY || "",
 });
 
-const stripe = new Stripe(process.env.STRIPE_PRIVATE_TEST_KEY!);
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY!);
 
 export async function POST(req: NextRequest) {
   try {
