@@ -7,6 +7,7 @@ import {
   ArrowRight,
   CheckCircle2,
   Lock,
+  PenTool, // ✅ Nieuw icoon voor de Factuur Maker
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -46,7 +47,7 @@ export default function ToolsPage() {
 
         {/* --- GRID --- */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* TOOL 1: Factuur Scanner */}
+          {/* TOOL 1: Factuur Scanner (LIVE) */}
           <Link
             href="/tools/factuur-scanner"
             className="group relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-1 overflow-hidden hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1"
@@ -71,7 +72,32 @@ export default function ToolsPage() {
             </div>
           </Link>
 
-          {/* TOOL 2: Coming Soon */}
+          {/* TOOL 2: Factuur Maker (NIEUW & GRATIS) */}
+          <Link
+            href="/tools/factuur-aanmaken"
+            className="group relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-1 overflow-hidden hover:border-indigo-500/50 transition-all duration-300 hover:-translate-y-1"
+          >
+            <div className="relative bg-[#111] rounded-[22px] p-6 h-full flex flex-col">
+              <div className="w-12 h-12 bg-indigo-900/30 rounded-xl flex items-center justify-center mb-4 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                <PenTool className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Factuur Maker</h3>
+              <p className="text-gray-400 text-sm mb-6 flex-1">
+                Maak gratis professionele PDF facturen. Snel, simpel en zonder
+                account.
+              </p>
+              <div className="flex items-center justify-between border-t border-white/5 pt-4 mt-auto">
+                <span className="text-xs font-mono text-blue-400 bg-blue-900/20 px-2 py-1 rounded">
+                  GRATIS
+                </span>
+                <span className="text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all text-blue-400">
+                  Open Tool <ArrowRight className="w-4 h-4" />
+                </span>
+              </div>
+            </div>
+          </Link>
+
+          {/* TOOL 3: Incasso (Coming Soon) */}
           <div className="relative bg-[#0A0A0A] border border-white/5 rounded-3xl p-6 opacity-60">
             <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mb-4 text-gray-500">
               <Scale className="w-6 h-6" />
@@ -87,7 +113,7 @@ export default function ToolsPage() {
             </span>
           </div>
 
-          {/* TOOL 3: Coming Soon */}
+          {/* TOOL 4: Offerte (Coming Soon) */}
           <div className="relative bg-[#0A0A0A] border border-white/5 rounded-3xl p-6 opacity-60">
             <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mb-4 text-gray-500">
               <Mail className="w-6 h-6" />
