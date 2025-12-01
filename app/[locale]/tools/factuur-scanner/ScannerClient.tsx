@@ -21,9 +21,9 @@ import {
 
 // CHECK JE LINKS!
 const LINKS = {
-  SINGLE: process.env.STRIPE_LINK_SINGLE || "",
-  BATCH_10: process.env.STRIPE_LINK_BATCH10 || "",
-  BATCH_20: process.env.STRIPE_LINK_BATCH20 || "",
+  SINGLE: process.env.NEXT_PUBLIC_STRIPE_LINK_SINGLE || "",
+  BATCH_10: process.env.NEXT_PUBLIC_STRIPE_LINK_BATCH10 || "",
+  BATCH_20: process.env.NEXT_PUBLIC_STRIPE_LINK_BATCH20 || "",
 };
 
 interface ScannedItem {
