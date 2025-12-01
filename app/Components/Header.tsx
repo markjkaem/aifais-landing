@@ -214,6 +214,11 @@ export default function HeaderMockup() {
     },
     {
       type: "page",
+      title: locale === "nl" ? "Tools" : "Tools",
+      slug: "/tools",
+    },
+    {
+      type: "page",
       title: locale === "nl" ? "Contact" : "Contact",
       slug: "/contact",
     },
@@ -342,7 +347,13 @@ export default function HeaderMockup() {
           >
             {t("about")}
           </Link>
-
+          <Link
+            href={getLocalizedPath("/tools")}
+            className="hover:text-purple-400 transition"
+            onClick={closeAll}
+          >
+            {t("tools")}
+          </Link>
           <Link
             href={getLocalizedPath("/contact")}
             className="hover:text-purple-400 transition"
@@ -755,7 +766,13 @@ export default function HeaderMockup() {
           >
             {t("about")}
           </Link>
-
+          <Link
+            href={getLocalizedPath("/tools")}
+            className="block py-3 hover:text-purple-400 transition font-semibold"
+            onClick={closeAll}
+          >
+            {t("tools")}
+          </Link>
           <Link
             href={getLocalizedPath("/contact")}
             className="block py-3 hover:text-purple-400 transition font-semibold"

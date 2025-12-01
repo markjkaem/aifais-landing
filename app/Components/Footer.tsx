@@ -96,22 +96,22 @@ export default function Footer() {
           <h3 className="font-bold text-white text-base">Onze Diensten</h3>
           <nav className="flex flex-col gap-3">
             <Link
-              href="/diensten/workflow-automatisering"
+              href="/diensten/email-reply-ai-agent"
               className="hover:text-purple-400 transition"
             >
-              Workflow Automatisering
+              AI Email Beantwoording Systeem
             </Link>
             <Link
-              href="/diensten/ai-integratie"
+              href="/diensten/sales-lead-automation"
               className="hover:text-purple-400 transition"
             >
-              AI & ChatGPT Integraties
+              Sales Lead Automatisering
             </Link>
             <Link
-              href="/diensten/administratieve-automatisering"
+              href="/diensten/support-ticket-samenvatting-systeem"
               className="hover:text-purple-400 transition"
             >
-              Administratie Automatiseren
+              Support Ticket Samenvatting Systeem
             </Link>
             <Link
               href="/diensten"
@@ -137,6 +137,9 @@ export default function Footer() {
             </Link>
             <Link href="/#about" className="hover:text-purple-400 transition">
               Over Ons
+            </Link>
+            <Link href="/tools" className="hover:text-purple-400 transition">
+              Tools
             </Link>
             <Link href="/contact" className="hover:text-purple-400 transition">
               Contact & Advies

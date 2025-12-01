@@ -188,7 +188,7 @@ export async function POST(req: NextRequest) {
         "anthropic-beta": "prompt-caching-2024-07-31",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        model: process.env.CLAUDE_API_MODEL || "",
         max_tokens: 400, // ✅ Reduced from 1000 to save costs
         system: [
           {

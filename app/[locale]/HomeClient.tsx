@@ -9,6 +9,7 @@ import { Space_Grotesk } from "next/font/google";
 import { useRef, useState } from "react";
 import { projects } from "./portfolio/data";
 import FAQSection from "../Components/FAQSection";
+import ToolsTeaser from "../Components/ToolsTeaser";
 
 interface CasesProps {
   projects: Array<{
@@ -653,6 +654,8 @@ export default function HomeClient() {
           </div>
         </div>
       </section>
+
+      <ToolsTeaser />
 
       {/* ABOUT US SECTION */}
       <section id="about" className="relative py-24 bg-black overflow-hidden">
