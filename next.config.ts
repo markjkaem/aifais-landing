@@ -4,10 +4,12 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 const nextConfig = {
-  // Je bestaande config blijft staan...
-  
   async rewrites() {
     return [
+      {
+        source: '/actions.json',
+        destination: '/api/actions/actions.json',
+      },
       {
         source: '/.well-known/actions.json',
         destination: '/api/actions/actions.json',
