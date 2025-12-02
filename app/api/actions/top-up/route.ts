@@ -22,7 +22,7 @@ export async function OPTIONS() {
 }
 
 export async function GET(req: NextRequest) {
-  const iconUrl = "https://aifais.com/og-scanner.jpg"; 
+  const iconUrl = "https://aifais.com/logo_official.png"; 
   const payload = {
     icon: iconUrl,
     label: "Koop 5 Credits",
