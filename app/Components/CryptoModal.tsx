@@ -1,144 +1,283 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { createQR, encodeURL, findReference } from "@solana/pay";
-import { Connection, Keypair, PublicKey, clusterApiUrl } from "@solana/web3.js";
-import BigNumber from "bignumber.js";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { QRCodeSVG } from "qrcode.react";
+import { X, CheckCircle2, Loader2, ExternalLink, Copy } from "lucide-react";
+import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 
 interface CryptoModalProps {
   priceInSol: number;
+  scansAmount: number;
   label: string;
-  onSuccess: (signature: string) => void;
   onClose: () => void;
+  onSuccess: (signature: string, reference: string) => void;
 }
 
 export default function CryptoModal({
   priceInSol,
+  scansAmount,
   label,
-  onSuccess,
   onClose,
+  onSuccess,
 }: CryptoModalProps) {
-  const qrRef = useRef<HTMLDivElement>(null);
-  const [reference, setReference] = useState<PublicKey | null>(null);
-  const [status, setStatus] = useState<"pending" | "confirmed">("pending");
+  const [solanaPayUrl, setSolanaPayUrl] = useState<string>("");
+  const [referenceKey, setReferenceKey] = useState<string>("");
+  const [isPolling, setIsPolling] = useState(false);
+  const [isPaid, setIsPaid] = useState(false);
+  const [transactionSignature, setTransactionSignature] = useState<string>("");
+  const [copied, setCopied] = useState(false);
+  const [startTime] = useState<number>(Date.now()); // ✅ Timestamp wanneer modal opent
+  const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // CONFIGURATIE
-  const recipient = new PublicKey(process.env.NEXT_PUBLIC_SOLANA_WALLET!);
-  const amount = new BigNumber(priceInSol);
-  const memo = `Scan Payment: ${label}`;
-
-  // --- DE HARDE GRENZEN ---
-  const QR_SIZE = 240;
-
-  // 1. Genereer Payment Link & QR
+  // ✅ Genereer de Solana Pay URL bij mount
   useEffect(() => {
-    const ref = Keypair.generate().publicKey;
-    setReference(ref);
-
-    const url = encodeURL({
-      recipient,
-      amount,
-      reference: ref,
-      label: "AI Scanner",
-      message: label,
-      memo,
-    });
-
-    const qr = createQR(url, QR_SIZE, "white");
-
-    if (qrRef.current) {
-      qrRef.current.innerHTML = "";
-      qr.append(qrRef.current);
-    }
-  }, [priceInSol, label]);
-
-  // 2. Luister naar de Blockchain
-  useEffect(() => {
-    if (!reference) return;
-
-    const connection = new Connection(
-      process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta")
-    );
-
-    const interval = setInterval(async () => {
-      try {
-        const signatureInfo = await findReference(connection, reference, {
-          finality: "confirmed",
-        });
-
-        if (signatureInfo.signature) {
-          clearInterval(interval);
-          setStatus("confirmed");
-
-          setTimeout(() => {
-            onSuccess(signatureInfo.signature);
-          }, 1500);
-        }
-      } catch (e) {
-        // Polling...
+    const generatePaymentUrl = () => {
+      const recipient = process.env.NEXT_PUBLIC_SOLANA_WALLET;
+      if (!recipient) {
+        console.error("NEXT_PUBLIC_SOLANA_WALLET niet geconfigureerd");
+        return;
       }
-    }, 2000);
 
-    return () => clearInterval(interval);
-  }, [reference]);
+      // Genereer unieke reference key (deze wordt later gebruikt voor verificatie)
+      const reference = PublicKey.unique().toString();
+      setReferenceKey(reference);
+
+      // Bouw de Solana Pay URL volgens spec:
+      // solana:<recipient>?amount=<amount>&reference=<reference>&label=<label>&message=<message>
+      const params = new URLSearchParams({
+        amount: priceInSol.toString(),
+        reference: reference,
+        label: `AIFAIS - ${label}`,
+        message: `Koop ${scansAmount} scan credits`,
+      });
+
+      const payUrl = `solana:${recipient}?${params.toString()}`;
+      setSolanaPayUrl(payUrl);
+    };
+
+    generatePaymentUrl();
+  }, [priceInSol, label, scansAmount]);
+
+  // ✅ Poll de blockchain voor de transactie
+  useEffect(() => {
+    if (!referenceKey || isPaid) return;
+
+    const pollForTransaction = async () => {
+      try {
+        const connection = new Connection(
+          process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta")
+        );
+        const referencePublicKey = new PublicKey(referenceKey);
+
+        // Zoek transacties met deze reference key
+        const signatures = await connection.getSignaturesForAddress(
+          referencePublicKey,
+          { limit: 5 } // Haal laatste 5 op
+        );
+
+        if (signatures.length > 0) {
+          // ✅ FILTER: Alleen transacties NA modal opening
+          const recentSignatures = signatures.filter((sig) => {
+            const txTime = (sig.blockTime || 0) * 1000; // Blockchain tijd in ms
+            return txTime > startTime; // Moet NA modal opening zijn
+          });
+
+          if (recentSignatures.length === 0) {
+            // Nog geen nieuwe transactie gevonden
+            return;
+          }
+
+          const signature = recentSignatures[0].signature;
+
+          // Verifieer dat de transactie succesvol was
+          const tx = await connection.getTransaction(signature, {
+            maxSupportedTransactionVersion: 0,
+          });
+
+          if (!tx || tx.meta?.err) {
+            // Transactie bestaat niet of is gefaald
+            return;
+          }
+
+          // ✅ Extra check: Verifieer dat het juiste bedrag is betaald
+          const recipientKey = new PublicKey(
+            process.env.NEXT_PUBLIC_SOLANA_WALLET!
+          );
+          const accountKeys = tx.transaction.message.getAccountKeys();
+          const recipientIndex = accountKeys.staticAccountKeys.findIndex(
+            (key) => key.equals(recipientKey)
+          );
+
+          if (recipientIndex === -1) {
+            console.warn("Recipient niet gevonden in transactie");
+            return;
+          }
+
+          const postBalance = tx.meta?.postBalances[recipientIndex] || 0;
+          const preBalance = tx.meta?.preBalances[recipientIndex] || 0;
+          const amountReceivedLamports = postBalance - preBalance;
+          const amountReceivedSol = amountReceivedLamports / 1e9;
+
+          // Check of het bedrag klopt (met 10% marge voor fees)
+          const minExpected = priceInSol * 0.9;
+          if (amountReceivedSol < minExpected) {
+            console.warn(
+              `Bedrag te laag: verwacht ${priceInSol}, ontvangen ${amountReceivedSol}`
+            );
+            return;
+          }
+
+          // ✅ Alles klopt! Betaling gevonden en geverifieerd
+          setIsPaid(true);
+          setTransactionSignature(signature);
+          setIsPolling(false);
+
+          // Stop polling
+          if (pollingIntervalRef.current) {
+            clearInterval(pollingIntervalRef.current);
+          }
+
+          // Wacht 2 seconden en redirect
+          setTimeout(() => {
+            onSuccess(signature, referenceKey);
+          }, 2000);
+        }
+      } catch (error) {
+        console.error("Polling error:", error);
+        // Continue polling bij errors
+      }
+    };
+
+    // Start polling na 5 seconden (gebruiker moet eerst QR scannen)
+    const startPollingTimeout = setTimeout(() => {
+      setIsPolling(true);
+      pollForTransaction(); // Eerste check meteen
+
+      // Poll elke 3 seconden
+      pollingIntervalRef.current = setInterval(pollForTransaction, 3000);
+    }, 5000);
+
+    // Cleanup
+    return () => {
+      clearTimeout(startPollingTimeout);
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
+    };
+  }, [referenceKey, isPaid, onSuccess, startTime, priceInSol]);
+
+  const copyToClipboard = () => {
+    if (solanaPayUrl) {
+      navigator.clipboard.writeText(solanaPayUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const viewOnExplorer = () => {
+    if (transactionSignature) {
+      window.open(
+        `https://explorer.solana.com/tx/${transactionSignature}?cluster=mainnet`,
+        "_blank"
+      );
+    }
+  };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-in fade-in duration-300">
-      <div className="bg-[#111] border border-white/10 rounded-3xl p-8 max-w-sm w-full relative shadow-2xl flex flex-col items-center">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-white transition"
-        >
-          ✕
-        </button>
+    <div className="absolute inset-0 z-50 bg-black/95 flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-200">
+      <div className="w-full max-w-md bg-[#0A0A0A] border border-white/10 rounded-2xl p-8 relative">
+        {/* Close button */}
+        {!isPaid && (
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-500 hover:text-white transition"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
 
-        <div className="text-center space-y-2 mb-4">
-          <h3 className="text-xl font-bold text-white">Betaal met Solana</h3>
-          <p className="text-gray-400 text-xs">
-            Scan met je telefoon of wallet.
-          </p>
-        </div>
-
-        {/* QR Container */}
-        <div className="relative mb-6">
-          <div
-            ref={qrRef}
-            className={`bg-white rounded-xl overflow-hidden flex items-center justify-center transition-all duration-500`}
-            style={{
-              width: `${QR_SIZE}px`,
-              height: `${QR_SIZE}px`,
-            }}
-          ></div>
-
-          {status === "confirmed" && (
-            <div className="absolute inset-0 flex items-center justify-center animate-in zoom-in duration-300">
-              <div className="bg-green-500 rounded-full p-4 shadow-[0_0_50px_rgba(34,197,94,0.6)]">
-                <CheckCircle2 className="w-10 h-10 text-white" />
+        {/* Success state */}
+        {isPaid ? (
+          <div className="text-center">
+            <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-500/20">
+              <CheckCircle2 className="w-8 h-8 text-green-500" />
+            </div>
+            <h3 className="text-white font-bold text-xl mb-2">
+              Betaling Ontvangen! 🎉
+            </h3>
+            <p className="text-gray-400 text-sm mb-6">
+              Je wordt doorgestuurd naar de scanner...
+            </p>
+            {transactionSignature && (
+              <button
+                onClick={viewOnExplorer}
+                className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-2 justify-center mx-auto"
+              >
+                Bekijk transactie
+                <ExternalLink className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        ) : (
+          <>
+            {/* Header */}
+            <div className="text-center mb-6">
+              <h3 className="text-white font-bold text-lg mb-1">
+                Solana Pay - {label}
+              </h3>
+              <div className="text-3xl font-bold text-[#14F195] font-mono mb-2">
+                {priceInSol} SOL
               </div>
+              <p className="text-gray-500 text-xs">
+                Scan de QR-code met je Solana wallet
+              </p>
             </div>
-          )}
-        </div>
 
-        <div className="w-full bg-white/5 rounded-lg p-3 flex justify-between items-center text-xs border border-white/5 mb-4">
-          <span className="text-gray-400">Totaal:</span>
-          <span className="font-mono text-white font-bold tracking-wider">
-            {amount.toString()} SOL
-          </span>
-        </div>
+            {/* QR Code */}
+            {solanaPayUrl ? (
+              <div className="bg-white p-4 rounded-xl mx-auto w-fit mb-6">
+                <QRCodeSVG
+                  value={solanaPayUrl}
+                  size={240}
+                  level="H"
+                  includeMargin={true}
+                />
+              </div>
+            ) : (
+              <div className="bg-white/5 h-64 rounded-xl flex items-center justify-center mb-6">
+                <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+              </div>
+            )}
 
-        <div className="text-center h-6">
-          {status === "pending" ? (
-            <div className="flex items-center justify-center gap-2 text-xs text-blue-400 animate-pulse">
-              <Loader2 className="w-3 h-3 animate-spin" /> Wachten op
-              betaling...
-            </div>
-          ) : (
-            <span className="text-green-400 text-sm font-bold">
-              Betaling Succesvol!
-            </span>
-          )}
-        </div>
+            {/* Polling status */}
+            {isPolling && (
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 mb-4 flex items-center gap-3">
+                <Loader2 className="w-4 h-4 animate-spin text-blue-400" />
+                <span className="text-blue-400 text-sm">
+                  Wachten op betaling...
+                </span>
+              </div>
+            )}
+
+            {/* Copy button */}
+            <button
+              onClick={copyToClipboard}
+              className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 text-white text-sm font-medium flex items-center justify-center gap-2 transition mb-4"
+            >
+              {copied ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4 text-green-400" />
+                  Gekopieerd!
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4" />
+                  Kopieer Payment Link
+                </>
+              )}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

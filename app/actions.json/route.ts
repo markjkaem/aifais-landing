@@ -4,8 +4,8 @@ export const GET = async () => {
   const payload = {
     rules: [
       {
-        pathPattern: "/tools/factuur-scanner", 
-        apiPath: "/api/actions/top-up", // ✅ Relatieve path
+        pathPattern: "/tools/factuur-scanner",
+        apiPath: "/api/actions/top-up",
       },
     ],
   };

@@ -8,7 +8,6 @@ import {
   Lock,
   ScanLine,
   AlertTriangle,
-  Plus,
   Trash2,
   Copy,
   ClipboardCheck,
@@ -20,7 +19,7 @@ import {
   CreditCard,
   Coins,
 } from "lucide-react";
-import CryptoModal from "@/app/Components/CryptoModal"; // Pas pad aan indien nodig
+import CryptoModal from "@/app/Components/CryptoModal";
 
 // --- CONFIG ---
 const STRIPE_LINKS = {
@@ -101,27 +100,55 @@ export default function ScannerClient() {
     const verify = async () => {
       if (typeof window === "undefined") return;
       const params = new URLSearchParams(window.location.search);
+      const signature = params.get("signature");
+      const reference = params.get("reference");
       const sid = params.get("session_id");
 
-      if (!sid) {
-        setIsVerifying(false);
+      // ✅ PRIORITEIT 1: Check Solana betaling
+      if (signature && reference) {
+        try {
+          const res = await fetch(
+            `/api/verify-solana?signature=${signature}&reference=${reference}`
+          );
+          const data = await res.json();
+
+          if (data.valid) {
+            setHasPaid(true);
+            setSessionId(`SOL-${signature}`);
+            setMaxScans(data.maxScans || 1);
+          } else {
+            setError(data.error || "Solana verificatie mislukt");
+          }
+        } catch (e) {
+          console.error(e);
+          setError("Kon Solana transactie niet verifiëren");
+        } finally {
+          setIsVerifying(false);
+        }
         return;
       }
 
-      try {
-        const res = await fetch(`/api/verify-session?session_id=${sid}`);
-        const data = await res.json();
+      // ✅ PRIORITEIT 2: Check Stripe session
+      if (sid) {
+        try {
+          const res = await fetch(`/api/verify-session?session_id=${sid}`);
+          const data = await res.json();
 
-        if (data.valid) {
-          setHasPaid(true);
-          setSessionId(sid);
-          setMaxScans(data.maxScans || 1);
+          if (data.valid) {
+            setHasPaid(true);
+            setSessionId(sid);
+            setMaxScans(data.maxScans || 1);
+          }
+        } catch (e) {
+          console.error(e);
+        } finally {
+          setIsVerifying(false);
         }
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsVerifying(false);
+        return;
       }
+
+      // Geen betaling gevonden
+      setIsVerifying(false);
     };
     verify();
   }, []);
@@ -138,8 +165,9 @@ export default function ScannerClient() {
   };
 
   const handleCryptoSuccess = (signature: string) => {
-    const solSessionId = `SOL-${signature}`;
-    window.location.href = `?session_id=${solSessionId}`;
+    // ✅ Redirect met signature parameter
+    // Reference wordt verwacht in de response van Solana Pay
+    window.location.href = `?signature=${signature}`;
   };
 
   const handleFullReset = () => {
@@ -229,22 +257,17 @@ export default function ScannerClient() {
           body: JSON.stringify({ base64Image: base64, mimeType, sessionId }),
         });
 
-        const data = await res.json(); // Eerst de data lezen
+        const data = await res.json();
 
-        // CHECK 1: Is er een 403 error?
         if (res.status === 403) {
-          // Toon de specifieke fout van de server (bijv: "Transactie niet gevonden")
-          // in plaats van de hardcoded "Limiet bereikt" tekst.
           setError(data.error || "Sessie limiet bereikt.");
-          break; // Stop de batch
+          break;
         }
 
         if (!res.ok) {
           console.error(`Fout:`, data.error);
-          // Optioneel: toon error ook voor andere status codes
           setError(data.error || "Er ging iets mis");
         } else {
-          // Succes logica...
           const dataWithId = { ...data, id: Date.now().toString() + i };
           setBatchList((prev) => [...prev, dataWithId]);
           processedIndices.push(i);
@@ -384,6 +407,7 @@ export default function ScannerClient() {
               setShowPaymentChoice(false);
             }}
             onSuccess={handleCryptoSuccess}
+            scansAmount={0}
           />
         )}
 
