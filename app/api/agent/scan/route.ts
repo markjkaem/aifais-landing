@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
 
     // 3. Scan the invoice
     const msg = await anthropic.messages.create({
-      model: "claude-3-5-sonnet-20241022",
+      model: "claude-4-sonnet-20250514",
       max_tokens: 2048,
       messages: [
         {
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
             },
             {
               type: "text",
-              text: `Extract invoice data to JSON. Fields: leverancier, factuurdatum (YYYY-MM-DD), factuurnummer, totaal_incl (number), kvk_nummer.`
+              text: `Extract invoice data to JSON. Fields: supplier, invoice date (YYYY-MM-DD), invoice number, total_incl (number), vat number`
             }
           ],
         }
