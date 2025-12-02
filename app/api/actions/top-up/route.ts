@@ -24,7 +24,7 @@ export async function OPTIONS() {
 
 // 2. GET: De Wallet vraagt "Wat is dit?" (Toont het plaatje + knop)
 export async function GET(req: NextRequest) {
-  const iconUrl = "https://aifais.com/og-scanner.jpg"; 
+  const iconUrl = "https://aifais.com/logo_official.png"; 
 
   const payload = {
     icon: iconUrl,
