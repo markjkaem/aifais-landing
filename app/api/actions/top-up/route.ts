@@ -33,23 +33,23 @@ export async function GET(req: NextRequest) {
     icon: iconUrl,
     label: "Koop Credits",
     title: "Aifais Factuur Scanner",
-    description: "Laat AI je boekhouding doen. Koop scan-credits met Solana.",
+    description: "Laat AI je boekhouding doen. Koop scan-credits met Solana. Agents: use /api/agent/scan endpoint after payment.",
     links: {
       actions: [
         {
           label: `${prices.SINGLE.scans} Scan (${prices.SINGLE.priceSol.toFixed(4)} SOL)`,
           href: `${baseUrl}/api/actions/top-up?package=SINGLE`,
-          type: "transaction"
+          type: "external-link"
         },
         {
           label: `${prices.BATCH_10.scans} Scans (${prices.BATCH_10.priceSol.toFixed(4)} SOL)`,
           href: `${baseUrl}/api/actions/top-up?package=BATCH_10`,
-          type: "transaction"
+          type: "external-link"
         },
         {
           label: `${prices.BATCH_20.scans} Scans (${prices.BATCH_20.priceSol.toFixed(4)} SOL)`,
           href: `${baseUrl}/api/actions/top-up?package=BATCH_20`,
-          type: "transaction"
+          type: "external-link"
         },
       ],
     },
@@ -139,6 +139,28 @@ export async function POST(req: NextRequest) {
         .serialize({ requireAllSignatures: false })
         .toString("base64"),
       message: `Bedankt! Je ontvangt ${scansAmount} scan credits.`,
+      // ✅ Action chaining: redirect naar success page na betaling
+      links: {
+        next: {
+          type: "inline",
+          action: {
+            type: "completed",
+            icon: "https://aifais.com/logo_official.png",
+            label: "Ga naar Scanner",
+            title: "Credits toegevoegd!",
+            description: `Je hebt ${scansAmount} scan credits ontvangen. Klik hieronder om naar de scanner te gaan.`,
+            links: {
+              actions: [
+                {
+                  label: "Open Scanner",
+                  href: `${req.nextUrl.origin}/tools/factuur-scanner?ref=blink`,
+                  type: "external-link"
+                }
+              ]
+            }
+          }
+        }
+      }
     };
 
     return NextResponse.json(payload, { headers: ACTIONS_CORS_HEADERS });
