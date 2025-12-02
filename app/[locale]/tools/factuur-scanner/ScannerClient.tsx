@@ -157,7 +157,7 @@ export default function ScannerClient() {
       if (signature && reference) {
         try {
           const res = await fetch(
-            `/api/verify-solana?signature=${signature}&reference=${reference}`
+            `/api/solana/verify-solana?signature=${signature}&reference=${reference}`
           );
           const data = await res.json();
 
@@ -180,7 +180,9 @@ export default function ScannerClient() {
       // ✅ PRIORITEIT 2: Check Stripe session
       if (sid) {
         try {
-          const res = await fetch(`/api/verify-session?session_id=${sid}`);
+          const res = await fetch(
+            `/api/stripe/verify-session?session_id=${sid}`
+          );
           const data = await res.json();
 
           if (data.valid) {
@@ -299,7 +301,7 @@ export default function ScannerClient() {
       try {
         const { base64, mimeType } = await processFile(file);
 
-        const res = await fetch("/api/scan", {
+        const res = await fetch("/api/tools/invoice-scan", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ base64Image: base64, mimeType, sessionId }),

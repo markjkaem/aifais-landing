@@ -66,7 +66,7 @@ export default function AIChatbot() {
 
     try {
       // Save to Mailchimp
-      const response = await fetch("/api/chatbot-email", {
+      const response = await fetch("/api/chat/email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name }),
@@ -124,7 +124,7 @@ export default function AIChatbot() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/chatbot", {
+      const response = await fetch("/api/chat/chatbot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
