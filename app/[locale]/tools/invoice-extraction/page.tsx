@@ -23,13 +23,13 @@ export const metadata: Metadata = {
     title: "AI Factuur Scanner | Direct van PDF naar Excel",
     description:
       "Stop met overtypen. Sleep je factuur hierheen en krijg direct de data in Excel formaat.",
-    url: `${BASE_URL}/tools/factuur-scanner`,
+    url: `${BASE_URL}/tools/invoice-extraction`,
     siteName: "AIFAIS Tools",
     locale: "nl_NL",
     type: "website",
   },
   alternates: {
-    canonical: `${BASE_URL}/tools/factuur-scanner`,
+    canonical: `${BASE_URL}/tools/invoice-extraction`,
   },
 };
 

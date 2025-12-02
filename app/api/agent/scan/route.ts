@@ -1,5 +1,5 @@
 // app/api/agent/scan/route.ts
-// API endpoint voor AI agents om direct facturen te scannen na betaling
+// API endpoint for AI agents to directly scan invoices after payment
 
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
@@ -12,7 +12,7 @@ const anthropic = new Anthropic({
 
 export async function POST(req: NextRequest) {
   try {
-    // ✅ Actions spec: account komt uit het body (van de vorige POST)
+    // ✅ Actions spec: account comes from the body (from the previous POST)
     const { account, signature, invoiceBase64, mimeType } = await req.json();
 
     if (!signature) {
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 1. Verifieer de Solana betaling
+    // 1. Verify the Solana payment
     const rpcUrl = process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta");
     const connection = new Connection(rpcUrl, "confirmed");
     
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2. Check betaald bedrag
+    // 2. Check paid amount
     const myWallet = new PublicKey(process.env.NEXT_PUBLIC_SOLANA_WALLET!);
     const accountKeys = tx.transaction.message.getAccountKeys();
     const recipientIndex = accountKeys.staticAccountKeys.findIndex((key) =>
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 3. Scan de factuur
+    // 3. Scan the invoice
     const msg = await anthropic.messages.create({
       model: "claude-3-5-sonnet-20241022",
       max_tokens: 2048,

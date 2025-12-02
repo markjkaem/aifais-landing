@@ -11,7 +11,7 @@ import {
 import { calculatePackagePrices, PACKAGE_CONFIG } from "@/utils/solana-pricing";
 import { ACTIONS_CORS_HEADERS, ActionGetResponse } from "@solana/actions";
 
-// ✅ Override met correcte headers voor Actions spec 2.2.1
+// ✅ Override with correct headers for Actions spec 2.2.1
 const CORS_HEADERS = {
   ...ACTIONS_CORS_HEADERS,
   "X-Action-Version": "2.2.1",
@@ -26,21 +26,21 @@ export async function OPTIONS() {
   });
 }
 
-// GET: Wallet vraagt "Wat is dit?" - Dynamische prijzen!
+// GET: Wallet asks "What is this?" - Dynamic pricing!
 export async function GET(req: NextRequest) {
   const iconUrl = "https://aifais.com/logo_official.png";
   
-  // ✅ Haal actuele prijzen op
+  // ✅ Fetch current prices
   const prices = await calculatePackagePrices();
   
-  // ✅ Bepaal de base URL (localhost of productie)
+  // ✅ Determine base URL (localhost or production)
   const baseUrl = req.nextUrl.origin;
   
   const payload: ActionGetResponse = {
     icon: iconUrl,
-    label: "Koop Credits",
-    title: "Aifais Factuur Scanner",
-    description: "Laat AI je boekhouding doen. Koop scan-credits met Solana. Agents: use /api/agent/scan endpoint after payment.",
+    label: "Buy Credits",
+    title: "Aifais Invoice Scanner",
+    description: "Let AI do your bookkeeping. Buy scan credits with Solana. Agents: use /api/agent/scan endpoint after payment.",
     links: {
       actions: [
         {
@@ -65,13 +65,13 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(payload, { headers: CORS_HEADERS });
 }
 
-// POST: Gebruiker klikt op knop
+// POST: User clicks button
 export async function POST(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const packageParam = searchParams.get("package") as keyof typeof PACKAGE_CONFIG | null;
     
-    // Fallback naar oude amount/scans parameters voor backwards compatibility
+    // Fallback to old amount/scans parameters for backwards compatibility
     const amountParam = searchParams.get("amount");
     const scansParam = searchParams.get("scans");
     
@@ -80,28 +80,28 @@ export async function POST(req: NextRequest) {
 
     if (!account) {
       return NextResponse.json(
-        { error: "Geen wallet account gevonden" },
+        { error: "No wallet account found" },
         { status: 400, headers: CORS_HEADERS }
       );
     }
 
-    // ✅ Bepaal prijs en aantal scans
+    // ✅ Determine price and number of scans
     let solAmount: number;
     let scansAmount: number;
 
     if (packageParam && packageParam in PACKAGE_CONFIG) {
-      // Nieuwe methode: gebruik package parameter
+      // New method: use package parameter
       const prices = await calculatePackagePrices();
       const selectedPackage = prices[packageParam];
       solAmount = selectedPackage.priceSol;
       scansAmount = selectedPackage.scans;
     } else if (amountParam && scansParam) {
-      // Oude methode: gebruik directe amount/scans (backwards compatibility)
+      // Old method: use direct amount/scans (backwards compatibility)
       solAmount = parseFloat(amountParam);
       scansAmount = parseInt(scansParam);
     } else {
       return NextResponse.json(
-        { error: "Geen geldig pakket of bedrag opgegeven" },
+        { error: "No valid package or amount specified" },
         { status: 400, headers: CORS_HEADERS }
       );
     }
@@ -113,12 +113,12 @@ export async function POST(req: NextRequest) {
       process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta")
     );
 
-    // ✅ Genereer unieke reference key
+    // ✅ Generate unique reference key
     const reference = Keypair.generate().publicKey;
 
     const transaction = new Transaction();
 
-    // Hoofdtransactie: betaling naar AIFAIS wallet
+    // Main transaction: payment to AIFAIS wallet
     transaction.add(
       SystemProgram.transfer({
         fromPubkey: sender,
@@ -127,7 +127,7 @@ export async function POST(req: NextRequest) {
       })
     );
 
-    // Reference transfer (0 lamports) voor tracking
+    // Reference transfer (0 lamports) for tracking
     transaction.add(
       SystemProgram.transfer({
         fromPubkey: sender,
@@ -145,8 +145,8 @@ export async function POST(req: NextRequest) {
       transaction: transaction
         .serialize({ requireAllSignatures: false })
         .toString("base64"),
-      message: `Bedankt! Je ontvangt ${scansAmount} scan credits.`,
-      // ✅ Action chaining: vertel agent waar naartoe
+      message: `Thank you! You will receive ${scansAmount} scan credits.`,
+      // ✅ Action chaining: tell agent where to go
       links: {
         next: {
           type: "post",
@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Transaction creation error:", error);
     return NextResponse.json(
-      { error: "Transactie mislukt" },
+      { error: "Transaction failed" },
       { status: 500, headers: CORS_HEADERS }
     );
   }

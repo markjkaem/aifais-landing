@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/news", // ✅ Ensure this is here
     "/contact",
     "/tools",
-    "/tools/factuur-scanner", // ✅ Added: The scanner we built
+    "/tools/invoice-extraction", // ✅ Added: The scanner we built
     "/quickscan",
     "/#about", // Note: Hash links technically aren't separate sitemap pages, but '/over-ons' would be if it existed.
     "/privacy",

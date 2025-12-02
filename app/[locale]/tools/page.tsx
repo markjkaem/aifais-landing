@@ -49,7 +49,7 @@ export default function ToolsPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* TOOL 1: Factuur Scanner (LIVE) */}
           <Link
-            href="/tools/factuur-scanner"
+            href="/tools/invoice-extraction"
             className="group relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-1 overflow-hidden hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1"
           >
             <div className="relative bg-[#111] rounded-[22px] p-6 h-full flex flex-col">
@@ -74,7 +74,7 @@ export default function ToolsPage() {
 
           {/* TOOL 2: Factuur Maker (NIEUW & GRATIS) */}
           <Link
-            href="/tools/factuur-aanmaken"
+            href="/tools/invoice-extraction"
             className="group relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-1 overflow-hidden hover:border-indigo-500/50 transition-all duration-300 hover:-translate-y-1"
           >
             <div className="relative bg-[#111] rounded-[22px] p-6 h-full flex flex-col">

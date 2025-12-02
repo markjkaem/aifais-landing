@@ -12,7 +12,7 @@ export const GET = async () => {
   const payload: ActionsJson = {
     rules: [
       {
-        pathPattern: "/tools/factuur-scanner",
+        pathPattern: "/tools/invoice-extraction",
         apiPath: "/api/actions/top-up",
       },
     ],

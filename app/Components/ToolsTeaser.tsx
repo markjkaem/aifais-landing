@@ -45,7 +45,7 @@ export default function ToolsTeaser() {
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
-                  href="/tools/factuur-scanner"
+                  href="/tools/invoice-extraction"
                   className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:-translate-y-1"
                 >
                   <Zap className="w-4 h-4 fill-black" />
