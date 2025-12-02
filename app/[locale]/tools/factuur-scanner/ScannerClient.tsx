@@ -17,13 +17,40 @@ import {
   Package,
   Layers,
   X,
+  CreditCard,
+  Coins,
 } from "lucide-react";
+import CryptoModal from "@/app/Components/CryptoModal"; // Pas pad aan indien nodig
 
-// CHECK JE LINKS!
-const LINKS = {
+// --- CONFIG ---
+const STRIPE_LINKS = {
   SINGLE: process.env.NEXT_PUBLIC_STRIPE_LINK_SINGLE || "",
   BATCH_10: process.env.NEXT_PUBLIC_STRIPE_LINK_BATCH10 || "",
   BATCH_20: process.env.NEXT_PUBLIC_STRIPE_LINK_BATCH20 || "",
+};
+
+const PRICING = {
+  SINGLE: {
+    id: "single",
+    name: "Losse Scan",
+    scans: 1,
+    priceEur: 0.5,
+    priceSol: 0.003,
+  },
+  BATCH_10: {
+    id: "batch10",
+    name: "10 Scans",
+    scans: 10,
+    priceEur: 2.5,
+    priceSol: 0.015,
+  },
+  BATCH_20: {
+    id: "batch20",
+    name: "20 Scans",
+    scans: 20,
+    priceEur: 4.0,
+    priceSol: 0.025,
+  },
 };
 
 interface ScannedItem {
@@ -40,15 +67,18 @@ export default function ScannerClient() {
   const [hasPaid, setHasPaid] = useState(false);
   const [isVerifying, setIsVerifying] = useState(true);
   const [sessionId, setSessionId] = useState<string | null>(null);
-
-  // Aangepast: Geen 'remaining', maar 'max'
   const [maxScans, setMaxScans] = useState<number>(0);
+
+  const [selectedPackage, setSelectedPackage] = useState<
+    keyof typeof PRICING | null
+  >(null);
+  const [showPaymentChoice, setShowPaymentChoice] = useState(false);
+  const [showCryptoModal, setShowCryptoModal] = useState(false);
 
   const [filesQueue, setFilesQueue] = useState<File[]>([]);
   const [isScanning, setIsScanning] = useState(false);
   const [currentScanIndex, setCurrentScanIndex] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
-
   const [batchList, setBatchList] = useState<ScannedItem[]>([]);
   const [copied, setCopied] = useState(false);
 
@@ -82,8 +112,6 @@ export default function ScannerClient() {
         const res = await fetch(`/api/verify-session?session_id=${sid}`);
         const data = await res.json();
 
-        // Als data.valid false is (bv omdat user refreshed heeft na 1 scan),
-        // dan blijft hasPaid false en ziet hij de paywall. Correct.
         if (data.valid) {
           setHasPaid(true);
           setSessionId(sid);
@@ -98,39 +126,39 @@ export default function ScannerClient() {
     verify();
   }, []);
 
-  // --- LOGICA ---
+  // --- HANDLERS ---
+  const handlePackageSelect = (pkgKey: keyof typeof PRICING) => {
+    setSelectedPackage(pkgKey);
+    setShowPaymentChoice(true);
+  };
+
+  const handleStripePay = () => {
+    if (!selectedPackage) return;
+    window.location.href = STRIPE_LINKS[selectedPackage];
+  };
+
+  const handleCryptoSuccess = (signature: string) => {
+    const solSessionId = `SOL-${signature}`;
+    window.location.href = `?session_id=${solSessionId}`;
+  };
 
   const handleFullReset = () => {
     if (typeof window !== "undefined") {
-      // Verwijder sessie ID uit URL -> User moet opnieuw betalen
       window.history.pushState({}, "", window.location.pathname);
-      window.location.reload(); // Harde reload om state schoon te vegen
+      window.location.reload();
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const newFiles = Array.from(e.target.files);
-
-      // Check Max Cap
       if (filesQueue.length + newFiles.length > maxScans) {
         setError(`Dit pakket heeft een limiet van ${maxScans} bestanden.`);
       } else {
         setError(null);
       }
-
-      // Voeg toe (user mag zelf deleten als het te veel is)
       setFilesQueue((prev) => [...prev, ...newFiles]);
     }
-  };
-
-  const removeFileFromQueue = (index: number) => {
-    setFilesQueue((prev) => prev.filter((_, i) => i !== index));
-    setError(null);
-  };
-
-  const handleDeleteFromBatch = (indexToRemove: number) => {
-    setBatchList((prev) => prev.filter((_, index) => index !== indexToRemove));
   };
 
   const processFile = async (
@@ -171,14 +199,11 @@ export default function ScannerClient() {
     });
   };
 
-  // --- BATCH PROCESS ---
   const handleBatchScan = async () => {
     if (filesQueue.length === 0 || !sessionId) return;
-
-    // Harde limiet check vooraf
     if (filesQueue.length > maxScans) {
       setError(
-        `Je mag maximaal ${maxScans} bestanden scannen in deze sessie. Verwijder er ${
+        `Je mag maximaal ${maxScans} bestanden scannen. Verwijder er ${
           filesQueue.length - maxScans
         }.`
       );
@@ -195,7 +220,6 @@ export default function ScannerClient() {
     for (let i = 0; i < queueToProcess.length; i++) {
       setCurrentScanIndex(i + 1);
       const file = queueToProcess[i];
-
       try {
         const { base64, mimeType } = await processFile(file);
 
@@ -205,17 +229,22 @@ export default function ScannerClient() {
           body: JSON.stringify({ base64Image: base64, mimeType, sessionId }),
         });
 
-        // Als server zegt: 403 -> Limiet bereikt (of sessie ongeldig)
-        if (res.status === 403) {
-          setError("Sessie limiet bereikt.");
-          break;
-        }
+        const data = await res.json(); // Eerst de data lezen
 
-        const data = await res.json();
+        // CHECK 1: Is er een 403 error?
+        if (res.status === 403) {
+          // Toon de specifieke fout van de server (bijv: "Transactie niet gevonden")
+          // in plaats van de hardcoded "Limiet bereikt" tekst.
+          setError(data.error || "Sessie limiet bereikt.");
+          break; // Stop de batch
+        }
 
         if (!res.ok) {
           console.error(`Fout:`, data.error);
+          // Optioneel: toon error ook voor andere status codes
+          setError(data.error || "Er ging iets mis");
         } else {
+          // Succes logica...
           const dataWithId = { ...data, id: Date.now().toString() + i };
           setBatchList((prev) => [...prev, dataWithId]);
           processedIndices.push(i);
@@ -223,10 +252,8 @@ export default function ScannerClient() {
       } catch (err) {
         console.error(err);
       }
-
       await new Promise((r) => setTimeout(r, 500));
     }
-
     setFilesQueue((prev) =>
       prev.filter((_, idx) => !processedIndices.includes(idx))
     );
@@ -234,7 +261,10 @@ export default function ScannerClient() {
     setCurrentScanIndex(0);
   };
 
-  // --- EXPORT (Ongewijzigd) ---
+  const handleDeleteFromBatch = (indexToRemove: number) => {
+    setBatchList((prev) => prev.filter((_, index) => index !== indexToRemove));
+  };
+
   const downloadBatchCSV = () => {
     if (batchList.length === 0) return;
     const allKeys = Array.from(new Set(batchList.flatMap(Object.keys)));
@@ -289,7 +319,7 @@ export default function ScannerClient() {
       <div className="w-full max-w-xl h-64 flex flex-col items-center justify-center border border-white/10 rounded-3xl bg-black/50 backdrop-blur-md">
         <Loader2 className="w-8 h-8 animate-spin text-blue-500 mb-4" />
         <p className="text-gray-400 text-sm font-medium">
-          Sessie controleren...
+          Beveiliging controleren...
         </p>
       </div>
     );
@@ -298,15 +328,72 @@ export default function ScannerClient() {
   return (
     <div className="w-full max-w-2xl relative">
       <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[2rem] blur-2xl opacity-20 pointer-events-none" />
-      <div className="relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 shadow-2xl overflow-hidden">
-        {/* Header */}
+      <div className="relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 shadow-2xl overflow-hidden min-h-[500px]">
+        {/* Payment Modal */}
+        {showPaymentChoice && selectedPackage && !showCryptoModal && (
+          <div className="absolute inset-0 z-40 bg-black/95 flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-200">
+            <div className="w-full max-w-sm">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-white font-bold text-lg">
+                  Kies betaalmethode
+                </h3>
+                <button
+                  onClick={() => setShowPaymentChoice(false)}
+                  className="text-gray-500 hover:text-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="space-y-3">
+                <button
+                  onClick={handleStripePay}
+                  className="w-full bg-white text-black font-bold py-4 rounded-xl hover:bg-gray-100 transition flex items-center justify-between px-6 group"
+                >
+                  <div className="flex items-center gap-3">
+                    <CreditCard className="w-5 h-5" />
+                    <span>iDEAL / Card</span>
+                  </div>
+                  <span className="text-gray-500 text-sm group-hover:text-black">
+                    € {PRICING[selectedPackage].priceEur.toFixed(2)}
+                  </span>
+                </button>
+                <button
+                  onClick={() => setShowCryptoModal(true)}
+                  className="w-full bg-[#14F195]/10 border border-[#14F195]/50 text-[#14F195] font-bold py-4 rounded-xl hover:bg-[#14F195]/20 transition flex items-center justify-between px-6"
+                >
+                  <div className="flex items-center gap-3">
+                    <Coins className="w-5 h-5" />
+                    <span>Solana Pay</span>
+                  </div>
+                  <span className="text-[#14F195] text-sm font-mono">
+                    {PRICING[selectedPackage].priceSol} SOL
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Crypto QR */}
+        {showCryptoModal && selectedPackage && (
+          <CryptoModal
+            priceInSol={PRICING[selectedPackage].priceSol}
+            label={PRICING[selectedPackage].name}
+            onClose={() => {
+              setShowCryptoModal(false);
+              setShowPaymentChoice(false);
+            }}
+            onSuccess={handleCryptoSuccess}
+          />
+        )}
+
+        {/* --- CONTENT --- */}
         {hasPaid && (
           <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
             <div className="flex items-center gap-2 text-green-400 bg-green-900/20 px-3 py-1 rounded-full text-xs font-medium border border-green-900/50">
               <CheckCircle2 className="w-3 h-3" />
               <span>Sessie Geopend</span>
             </div>
-            {/* Hier tonen we nu de CAP, niet het saldo */}
             <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">
               Max {maxScans} scans
             </div>
@@ -314,7 +401,6 @@ export default function ScannerClient() {
         )}
 
         {!hasPaid ? (
-          // --- PAYWALL ---
           <div className="text-center py-4">
             <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-blue-500/20">
               <Lock className="w-8 h-8 text-blue-500" />
@@ -323,43 +409,52 @@ export default function ScannerClient() {
               Kies je pakket
             </h2>
             <p className="text-gray-400 mb-8 max-w-sm mx-auto">
-              Upload alles in één keer. Pagina verlaten = Sessie voorbij.
+              Upload alles in één keer. Stripe & Crypto geaccepteerd.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Knoppen blijven hetzelfde */}
               <button
-                onClick={() => (window.location.href = LINKS.SINGLE)}
-                className="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-4 text-left"
+                onClick={() => handlePackageSelect("SINGLE")}
+                className="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-4 text-left transition"
               >
-                <div className="text-blue-400 text-xs font-bold mb-2">
-                  LOSSE SCAN
+                <div className="text-blue-400 text-xs font-bold mb-2 flex items-center gap-2">
+                  <Zap className="w-3 h-3" /> LOSSE SCAN
                 </div>
                 <div className="text-xl font-bold text-white">€ 0,50</div>
+                <div className="text-[10px] text-gray-500 font-mono mt-1">
+                  ~{PRICING.SINGLE.priceSol} SOL
+                </div>
               </button>
               <button
-                onClick={() => (window.location.href = LINKS.BATCH_10)}
-                className="bg-blue-600 hover:bg-blue-500 border border-blue-400 rounded-xl p-4 text-left shadow-lg"
+                onClick={() => handlePackageSelect("BATCH_10")}
+                className="relative bg-blue-600 hover:bg-blue-500 border border-blue-400 rounded-xl p-4 text-left shadow-lg"
               >
-                <div className="text-blue-100 text-xs font-bold mb-2">
-                  10 SCANS (BATCH)
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-blue-600 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  POPULAIR
+                </div>
+                <div className="text-blue-100 text-xs font-bold mb-2 flex items-center gap-2">
+                  <Package className="w-3 h-3" /> 10 SCANS
                 </div>
                 <div className="text-xl font-bold text-white">€ 2,50</div>
+                <div className="text-[10px] text-blue-200 font-mono mt-1">
+                  ~{PRICING.BATCH_10.priceSol} SOL
+                </div>
               </button>
               <button
-                onClick={() => (window.location.href = LINKS.BATCH_20)}
-                className="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-4 text-left"
+                onClick={() => handlePackageSelect("BATCH_20")}
+                className="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-4 text-left transition"
               >
-                <div className="text-purple-400 text-xs font-bold mb-2">
-                  20 SCANS (BATCH)
+                <div className="text-purple-400 text-xs font-bold mb-2 flex items-center gap-2">
+                  <Layers className="w-3 h-3" /> 20 SCANS
                 </div>
                 <div className="text-xl font-bold text-white">€ 4,00</div>
+                <div className="text-[10px] text-gray-500 font-mono mt-1">
+                  ~{PRICING.BATCH_20.priceSol} SOL
+                </div>
               </button>
             </div>
           </div>
         ) : (
-          // --- TOOL ---
           <div className="space-y-6">
-            {/* Upload Zone (Verdwijnt tijdens scannen) */}
             {!isScanning && (
               <div className="relative group animate-in fade-in duration-300">
                 <input
@@ -392,7 +487,6 @@ export default function ScannerClient() {
                 </div>
               </div>
             )}
-
             {error && (
               <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-xl text-sm flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 shrink-0" />
@@ -400,7 +494,6 @@ export default function ScannerClient() {
               </div>
             )}
 
-            {/* Queue & Acties */}
             {filesQueue.length > 0 && (
               <div className="space-y-3">
                 <div className="flex justify-between items-center text-xs text-gray-400 px-1">
@@ -415,8 +508,6 @@ export default function ScannerClient() {
                     Alles wissen
                   </button>
                 </div>
-
-                {/* Start Knop */}
                 <button
                   onClick={handleBatchScan}
                   disabled={isScanning || filesQueue.length > maxScans}
@@ -439,7 +530,6 @@ export default function ScannerClient() {
               </div>
             )}
 
-            {/* Resultaten */}
             {batchList.length > 0 && (
               <div className="border-t border-white/10 pt-6 mt-6">
                 <div className="flex items-center justify-between mb-4">
@@ -510,7 +600,6 @@ export default function ScannerClient() {
               </div>
             )}
 
-            {/* Einde Sessie UI: Als queue leeg is en batch klaar */}
             {hasPaid &&
               batchList.length > 0 &&
               !isScanning &&
