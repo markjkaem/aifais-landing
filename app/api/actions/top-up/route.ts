@@ -8,6 +8,7 @@ import {
   LAMPORTS_PER_SOL,
   Keypair,
 } from "@solana/web3.js";
+import { calculatePackagePrices, PACKAGE_CONFIG } from "@/utils/solana-pricing";
 
 const defaultHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -22,9 +23,13 @@ export async function OPTIONS() {
   return new NextResponse(null, { headers: defaultHeaders });
 }
 
-// GET: Wallet vraagt "Wat is dit?"
+// GET: Wallet vraagt "Wat is dit?" - Dynamische prijzen!
 export async function GET(req: NextRequest) {
   const iconUrl = "https://aifais.com/logo_official.png";
+  
+  // ✅ Haal actuele prijzen op
+  const prices = await calculatePackagePrices();
+  
   const payload = {
     icon: iconUrl,
     label: "Koop Credits",
@@ -33,16 +38,16 @@ export async function GET(req: NextRequest) {
     links: {
       actions: [
         {
-          label: "1 Scan (0.003 SOL)",
-          href: "/api/actions/top-up?amount=0.003&scans=1",
+          label: `${prices.SINGLE.scans} Scan (${prices.SINGLE.priceSol.toFixed(4)} SOL)`,
+          href: `/api/actions/top-up?package=SINGLE`,
         },
         {
-          label: "10 Scans (0.015 SOL)",
-          href: "/api/actions/top-up?amount=0.015&scans=10",
+          label: `${prices.BATCH_10.scans} Scans (${prices.BATCH_10.priceSol.toFixed(4)} SOL)`,
+          href: `/api/actions/top-up?package=BATCH_10`,
         },
         {
-          label: "20 Scans (0.025 SOL)",
-          href: "/api/actions/top-up?amount=0.025&scans=20",
+          label: `${prices.BATCH_20.scans} Scans (${prices.BATCH_20.priceSol.toFixed(4)} SOL)`,
+          href: `/api/actions/top-up?package=BATCH_20`,
         },
       ],
     },
@@ -54,8 +59,11 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const amountParam = searchParams.get("amount") || "0.003";
-    const scansParam = searchParams.get("scans") || "1";
+    const packageParam = searchParams.get("package") as keyof typeof PACKAGE_CONFIG | null;
+    
+    // Fallback naar oude amount/scans parameters voor backwards compatibility
+    const amountParam = searchParams.get("amount");
+    const scansParam = searchParams.get("scans");
     
     const body = await req.json();
     const { account } = body;
@@ -67,10 +75,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ✅ Bepaal prijs en aantal scans
+    let solAmount: number;
+    let scansAmount: number;
+
+    if (packageParam && packageParam in PACKAGE_CONFIG) {
+      // Nieuwe methode: gebruik package parameter
+      const prices = await calculatePackagePrices();
+      const selectedPackage = prices[packageParam];
+      solAmount = selectedPackage.priceSol;
+      scansAmount = selectedPackage.scans;
+    } else if (amountParam && scansParam) {
+      // Oude methode: gebruik directe amount/scans (backwards compatibility)
+      solAmount = parseFloat(amountParam);
+      scansAmount = parseInt(scansParam);
+    } else {
+      return NextResponse.json(
+        { error: "Geen geldig pakket of bedrag opgegeven" },
+        { status: 400, headers: defaultHeaders }
+      );
+    }
+
     const sender = new PublicKey(account);
     const recipient = new PublicKey(process.env.NEXT_PUBLIC_SOLANA_WALLET!);
 
-    const connection = new Connection(clusterApiUrl("mainnet-beta"));
+    const connection = new Connection(
+      process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta")
+    );
 
     // ✅ Genereer unieke reference key
     const reference = Keypair.generate().publicKey;
@@ -82,7 +113,7 @@ export async function POST(req: NextRequest) {
       SystemProgram.transfer({
         fromPubkey: sender,
         toPubkey: recipient,
-        lamports: parseFloat(amountParam) * LAMPORTS_PER_SOL,
+        lamports: Math.round(solAmount * LAMPORTS_PER_SOL),
       })
     );
 
@@ -104,7 +135,7 @@ export async function POST(req: NextRequest) {
       transaction: transaction
         .serialize({ requireAllSignatures: false })
         .toString("base64"),
-      message: `Bedankt! Je ontvangt ${scansParam} scan credits.`,
+      message: `Bedankt! Je ontvangt ${scansAmount} scan credits.`,
       reference: reference.toString(),
     };
 
