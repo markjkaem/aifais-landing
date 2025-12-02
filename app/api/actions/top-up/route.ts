@@ -5,7 +5,8 @@ import {
   SystemProgram, 
   Transaction, 
   clusterApiUrl, 
-  LAMPORTS_PER_SOL 
+  LAMPORTS_PER_SOL, 
+  Keypair
 } from "@solana/web3.js";
 
 // ✅ FIX: Deze headers zijn verplicht voor de Solana Action specificatie.
