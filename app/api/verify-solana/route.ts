@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
+import { getScansForAmount } from "@/utils/solana-pricing";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -18,8 +19,11 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // Verbind met Solana devnet
-    const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
+    // Verbind met Solana mainnet
+    const connection = new Connection(
+      process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta"),
+      "confirmed"
+    );
     
     // Haal de transactie op
     const tx = await connection.getTransaction(signature, {
@@ -75,21 +79,13 @@ export async function GET(req: NextRequest) {
     const amountReceivedLamports = postBalance - preBalance;
     const amountReceivedSol = amountReceivedLamports / 1e9;
 
-    // Bepaal hoeveel scans op basis van betaald bedrag
-    let maxScans = 1;
-    if (amountReceivedSol >= 0.024) {
-      // 20 scans pakket (0.025 SOL met kleine marge)
-      maxScans = 20;
-    } else if (amountReceivedSol >= 0.014) {
-      // 10 scans pakket (0.015 SOL met kleine marge)
-      maxScans = 10;
-    } else if (amountReceivedSol >= 0.002) {
-      // 1 scan pakket (0.003 SOL met kleine marge)
-      maxScans = 1;
-    } else {
+    // ✅ Gebruik dynamische pricing om scans te bepalen
+    const maxScans = await getScansForAmount(amountReceivedSol);
+
+    if (maxScans === 0) {
       return NextResponse.json({
         valid: false,
-        error: `Betaald bedrag te laag: ${amountReceivedSol} SOL`,
+        error: `Betaald bedrag komt niet overeen met een pakket: ${amountReceivedSol.toFixed(4)} SOL`,
       });
     }
 

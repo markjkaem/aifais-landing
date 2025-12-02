@@ -7,6 +7,7 @@ import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 
 interface CryptoModalProps {
   priceInSol: number;
+  priceInEur: number; // ✅ Toegevoegd voor backend verificatie
   scansAmount: number;
   label: string;
   onClose: () => void;
@@ -15,6 +16,7 @@ interface CryptoModalProps {
 
 export default function CryptoModal({
   priceInSol,
+  priceInEur,
   scansAmount,
   label,
   onClose,
@@ -34,7 +36,7 @@ export default function CryptoModal({
     const generatePaymentUrl = () => {
       const recipient = process.env.NEXT_PUBLIC_SOLANA_WALLET;
       if (!recipient) {
-        console.error("NEXT_PUBLIC_SOLANA_WALLET niet geconfigureerd");
+        console.error("❌ NEXT_PUBLIC_SOLANA_WALLET niet geconfigureerd");
         return;
       }
 
@@ -53,6 +55,14 @@ export default function CryptoModal({
 
       const payUrl = `solana:${recipient}?${params.toString()}`;
       setSolanaPayUrl(payUrl);
+
+      // ✅ Debug logging
+      console.log("🔗 Solana Pay URL gegenereerd:", {
+        recipient,
+        amount: priceInSol,
+        reference,
+        fullUrl: payUrl,
+      });
     };
 
     generatePaymentUrl();
@@ -177,7 +187,7 @@ export default function CryptoModal({
   const viewOnExplorer = () => {
     if (transactionSignature) {
       window.open(
-        `https://explorer.solana.com/tx/${transactionSignature}?cluster=mainnet`,
+        `https://explorer.solana.com/tx/${transactionSignature}`,
         "_blank"
       );
     }
@@ -235,14 +245,25 @@ export default function CryptoModal({
 
             {/* QR Code */}
             {solanaPayUrl ? (
-              <div className="bg-white p-4 rounded-xl mx-auto w-fit mb-6">
-                <QRCodeSVG
-                  value={solanaPayUrl}
-                  size={240}
-                  level="H"
-                  includeMargin={true}
-                />
-              </div>
+              <>
+                <div className="bg-white p-4 rounded-xl mx-auto w-fit mb-4">
+                  <QRCodeSVG
+                    value={solanaPayUrl}
+                    size={240}
+                    level="H"
+                    includeMargin={true}
+                  />
+                </div>
+                {/* ✅ Debug: Manual link voor testen */}
+                <a
+                  href={solanaPayUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-blue-400 hover:text-blue-300 underline mb-6 block text-center"
+                >
+                  Open in wallet (debug link)
+                </a>
+              </>
             ) : (
               <div className="bg-white/5 h-64 rounded-xl flex items-center justify-center mb-6">
                 <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
@@ -276,6 +297,16 @@ export default function CryptoModal({
                 </>
               )}
             </button>
+
+            {/* Instructions */}
+            <div className="bg-white/5 rounded-xl p-4 space-y-2 text-xs text-gray-400">
+              <p className="font-bold text-white">Hoe te betalen:</p>
+              <ol className="list-decimal list-inside space-y-1">
+                <li>Open Phantom, Backpack of andere Solana wallet</li>
+                <li>Scan de QR-code of gebruik de payment link</li>
+                <li>Bevestig de transactie</li>
+              </ol>
+            </div>
           </>
         )}
       </div>

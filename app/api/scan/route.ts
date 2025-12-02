@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import Stripe from "stripe";
-import { Connection, clusterApiUrl } from "@solana/web3.js";
+import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
+import { getScansForAmount } from "@/utils/solana-pricing";
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY || "",
@@ -36,9 +37,8 @@ export async function POST(req: NextRequest) {
             const rpcUrl = process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta");
             const connection = new Connection(rpcUrl, "confirmed");
             
-            const tx = await connection.getParsedTransaction(signature, { 
+            const tx = await connection.getTransaction(signature, { 
                 maxSupportedTransactionVersion: 0,
-                commitment: "confirmed" 
             });
 
             if (!tx) {
@@ -46,29 +46,43 @@ export async function POST(req: NextRequest) {
                 return NextResponse.json({ error: "Transactie niet gevonden (wacht even...)" }, { status: 403 });
             }
 
-            // C. Check bedrag
-            let paidLamports = 0;
-            const myWallet = process.env.NEXT_PUBLIC_SOLANA_WALLET; 
+            // C. Check bedrag en bepaal scans via dynamische pricing
+            const myWallet = new PublicKey(process.env.NEXT_PUBLIC_SOLANA_WALLET!);
+            const accountKeys = tx.transaction.message.getAccountKeys();
+            const recipientIndex = accountKeys.staticAccountKeys.findIndex((key) =>
+              key.equals(myWallet)
+            );
 
-            tx.transaction.message.instructions.forEach((inst: any) => {
-                if (inst.parsed?.type === "transfer" && inst.parsed.info.destination === myWallet) {
-                    paidLamports += inst.parsed.info.lamports;
-                }
-            });
+            if (recipientIndex === -1) {
+                console.error("   ❌ Betaling niet naar onze wallet");
+                return NextResponse.json({ error: "Ongeldige transactie" }, { status: 403 });
+            }
 
-            console.log(`   - Betaald bedrag: ${paidLamports} lamports`);
+            const postBalance = tx.meta?.postBalances[recipientIndex] || 0;
+            const preBalance = tx.meta?.preBalances[recipientIndex] || 0;
+            const paidLamports = postBalance - preBalance;
+            const paidSol = paidLamports / 1e9;
 
-            if (paidLamports >= 20_000_000) maxScans = 20;
-            else if (paidLamports >= 10_000_000) maxScans = 10;
-            else if (paidLamports >= 2_000_000) maxScans = 1;
-            else return NextResponse.json({ error: "Betaling te laag." }, { status: 403 });
+            console.log(`   - Betaald bedrag: ${paidLamports} lamports (${paidSol.toFixed(6)} SOL)`);
+
+            // ✅ Gebruik dynamische pricing om scans te bepalen
+            maxScans = await getScansForAmount(paidSol);
+
+            if (maxScans === 0) {
+                console.error("   ❌ Betaald bedrag komt niet overeen met een pakket");
+                return NextResponse.json({ 
+                    error: `Betaling te laag of ongeldig: ${paidSol.toFixed(6)} SOL` 
+                }, { status: 403 });
+            }
 
             console.log(`   - Max scans toegestaan: ${maxScans}`);
 
             // D. Check Limiet
             if (scansCompleted >= maxScans) {
                 console.warn("   ⛔ LIMIET BEREIKT");
-                return NextResponse.json({ error: `Limiet bereikt (${scansCompleted}/${maxScans} verbruikt).` }, { status: 403 });
+                return NextResponse.json({ 
+                    error: `Limiet bereikt (${scansCompleted}/${maxScans} verbruikt).` 
+                }, { status: 403 });
             }
 
         } catch (e) {
@@ -79,9 +93,12 @@ export async function POST(req: NextRequest) {
     } else {
         // === STRIPE LOGICA ===
         const session = await stripe.checkout.sessions.retrieve(sessionId);
-        if (session.payment_status !== "paid") return NextResponse.json({ error: "Niet betaald." }, { status: 403 });
+        if (session.payment_status !== "paid") {
+            return NextResponse.json({ error: "Niet betaald." }, { status: 403 });
+        }
         
         const amount = session.amount_total || 0;
+        if (amount === 50) maxScans = 1;
         if (amount === 250) maxScans = 10;
         if (amount === 400) maxScans = 20;
         

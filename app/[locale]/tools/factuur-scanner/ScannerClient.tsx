@@ -28,29 +28,32 @@ const STRIPE_LINKS = {
   BATCH_20: process.env.NEXT_PUBLIC_STRIPE_LINK_BATCH20 || "",
 };
 
-const PRICING = {
+// ✅ Type voor dynamische prijzen
+interface PricingData {
   SINGLE: {
-    id: "single",
-    name: "Losse Scan",
-    scans: 1,
-    priceEur: 0.5,
-    priceSol: 0.003,
-  },
+    id: string;
+    name: string;
+    scans: number;
+    priceEur: number;
+    priceSol: number;
+  };
   BATCH_10: {
-    id: "batch10",
-    name: "10 Scans",
-    scans: 10,
-    priceEur: 2.5,
-    priceSol: 0.015,
-  },
+    id: string;
+    name: string;
+    scans: number;
+    priceEur: number;
+    priceSol: number;
+  };
   BATCH_20: {
-    id: "batch20",
-    name: "20 Scans",
-    scans: 20,
-    priceEur: 4.0,
-    priceSol: 0.025,
-  },
-};
+    id: string;
+    name: string;
+    scans: number;
+    priceEur: number;
+    priceSol: number;
+  };
+  solPriceEur: number;
+  lastUpdated: string;
+}
 
 interface ScannedItem {
   id: string;
@@ -63,13 +66,17 @@ interface ScannedItem {
 }
 
 export default function ScannerClient() {
+  // ✅ Dynamische prijzen state
+  const [pricing, setPricing] = useState<PricingData | null>(null);
+  const [pricesLoading, setPricesLoading] = useState(true);
+
   const [hasPaid, setHasPaid] = useState(false);
   const [isVerifying, setIsVerifying] = useState(true);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [maxScans, setMaxScans] = useState<number>(0);
 
   const [selectedPackage, setSelectedPackage] = useState<
-    keyof typeof PRICING | null
+    "SINGLE" | "BATCH_10" | "BATCH_20" | null
   >(null);
   const [showPaymentChoice, setShowPaymentChoice] = useState(false);
   const [showCryptoModal, setShowCryptoModal] = useState(false);
@@ -80,6 +87,48 @@ export default function ScannerClient() {
   const [error, setError] = useState<string | null>(null);
   const [batchList, setBatchList] = useState<ScannedItem[]>([]);
   const [copied, setCopied] = useState(false);
+
+  // ✅ Haal dynamische prijzen op
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const response = await fetch("/api/solana/get-prices");
+        const data = await response.json();
+        setPricing(data);
+      } catch (error) {
+        console.error("Failed to fetch prices:", error);
+        // Fallback naar vaste prijzen
+        setPricing({
+          SINGLE: {
+            id: "single",
+            name: "Losse Scan",
+            scans: 1,
+            priceEur: 0.5,
+            priceSol: 0.003,
+          },
+          BATCH_10: {
+            id: "batch10",
+            name: "10 Scans",
+            scans: 10,
+            priceEur: 2.5,
+            priceSol: 0.015,
+          },
+          BATCH_20: {
+            id: "batch20",
+            name: "20 Scans",
+            scans: 20,
+            priceEur: 4.0,
+            priceSol: 0.025,
+          },
+          solPriceEur: 216.5,
+          lastUpdated: new Date().toISOString(),
+        });
+      } finally {
+        setPricesLoading(false);
+      }
+    };
+    fetchPrices();
+  }, []);
 
   // --- INIT & VERIFY ---
   useEffect(() => {
@@ -154,7 +203,7 @@ export default function ScannerClient() {
   }, []);
 
   // --- HANDLERS ---
-  const handlePackageSelect = (pkgKey: keyof typeof PRICING) => {
+  const handlePackageSelect = (pkgKey: "SINGLE" | "BATCH_10" | "BATCH_20") => {
     setSelectedPackage(pkgKey);
     setShowPaymentChoice(true);
   };
@@ -164,10 +213,9 @@ export default function ScannerClient() {
     window.location.href = STRIPE_LINKS[selectedPackage];
   };
 
-  const handleCryptoSuccess = (signature: string) => {
-    // ✅ Redirect met signature parameter
-    // Reference wordt verwacht in de response van Solana Pay
-    window.location.href = `?signature=${signature}`;
+  const handleCryptoSuccess = (signature: string, reference: string) => {
+    // ✅ Redirect met beide parameters
+    window.location.href = `?signature=${signature}&reference=${reference}`;
   };
 
   const handleFullReset = () => {
@@ -337,12 +385,24 @@ export default function ScannerClient() {
   };
 
   // --- RENDER ---
-  if (isVerifying) {
+  if (isVerifying || pricesLoading) {
     return (
       <div className="w-full max-w-xl h-64 flex flex-col items-center justify-center border border-white/10 rounded-3xl bg-black/50 backdrop-blur-md">
         <Loader2 className="w-8 h-8 animate-spin text-blue-500 mb-4" />
         <p className="text-gray-400 text-sm font-medium">
-          Beveiliging controleren...
+          {pricesLoading ? "Prijzen ophalen..." : "Beveiliging controleren..."}
+        </p>
+      </div>
+    );
+  }
+
+  // Safety check
+  if (!pricing) {
+    return (
+      <div className="w-full max-w-xl h-64 flex flex-col items-center justify-center border border-white/10 rounded-3xl bg-black/50 backdrop-blur-md">
+        <AlertTriangle className="w-8 h-8 text-red-500 mb-4" />
+        <p className="text-red-400 text-sm font-medium">
+          Kon prijzen niet ophalen. Probeer het later opnieuw.
         </p>
       </div>
     );
@@ -377,7 +437,7 @@ export default function ScannerClient() {
                     <span>iDEAL / Card</span>
                   </div>
                   <span className="text-gray-500 text-sm group-hover:text-black">
-                    € {PRICING[selectedPackage].priceEur.toFixed(2)}
+                    € {pricing[selectedPackage].priceEur.toFixed(2)}
                   </span>
                 </button>
                 <button
@@ -389,7 +449,7 @@ export default function ScannerClient() {
                     <span>Solana Pay</span>
                   </div>
                   <span className="text-[#14F195] text-sm font-mono">
-                    {PRICING[selectedPackage].priceSol} SOL
+                    {pricing[selectedPackage].priceSol.toFixed(4)} SOL
                   </span>
                 </button>
               </div>
@@ -400,14 +460,15 @@ export default function ScannerClient() {
         {/* Crypto QR */}
         {showCryptoModal && selectedPackage && (
           <CryptoModal
-            priceInSol={PRICING[selectedPackage].priceSol}
-            label={PRICING[selectedPackage].name}
+            priceInSol={pricing[selectedPackage].priceSol}
+            scansAmount={pricing[selectedPackage].scans}
+            label={pricing[selectedPackage].name}
             onClose={() => {
               setShowCryptoModal(false);
               setShowPaymentChoice(false);
             }}
             onSuccess={handleCryptoSuccess}
-            scansAmount={0}
+            priceInEur={0}
           />
         )}
 
@@ -443,9 +504,11 @@ export default function ScannerClient() {
                 <div className="text-blue-400 text-xs font-bold mb-2 flex items-center gap-2">
                   <Zap className="w-3 h-3" /> LOSSE SCAN
                 </div>
-                <div className="text-xl font-bold text-white">€ 0,50</div>
+                <div className="text-xl font-bold text-white">
+                  € {pricing.SINGLE.priceEur.toFixed(2)}
+                </div>
                 <div className="text-[10px] text-gray-500 font-mono mt-1">
-                  ~{PRICING.SINGLE.priceSol} SOL
+                  ~{pricing.SINGLE.priceSol.toFixed(4)} SOL
                 </div>
               </button>
               <button
@@ -458,9 +521,11 @@ export default function ScannerClient() {
                 <div className="text-blue-100 text-xs font-bold mb-2 flex items-center gap-2">
                   <Package className="w-3 h-3" /> 10 SCANS
                 </div>
-                <div className="text-xl font-bold text-white">€ 2,50</div>
+                <div className="text-xl font-bold text-white">
+                  € {pricing.BATCH_10.priceEur.toFixed(2)}
+                </div>
                 <div className="text-[10px] text-blue-200 font-mono mt-1">
-                  ~{PRICING.BATCH_10.priceSol} SOL
+                  ~{pricing.BATCH_10.priceSol.toFixed(4)} SOL
                 </div>
               </button>
               <button
@@ -470,9 +535,11 @@ export default function ScannerClient() {
                 <div className="text-purple-400 text-xs font-bold mb-2 flex items-center gap-2">
                   <Layers className="w-3 h-3" /> 20 SCANS
                 </div>
-                <div className="text-xl font-bold text-white">€ 4,00</div>
+                <div className="text-xl font-bold text-white">
+                  € {pricing.BATCH_20.priceEur.toFixed(2)}
+                </div>
                 <div className="text-[10px] text-gray-500 font-mono mt-1">
-                  ~{PRICING.BATCH_20.priceSol} SOL
+                  ~{pricing.BATCH_20.priceSol.toFixed(4)} SOL
                 </div>
               </button>
             </div>
