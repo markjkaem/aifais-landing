@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     const sender = new PublicKey(account);
     const recipient = new PublicKey(process.env.NEXT_PUBLIC_SOLANA_WALLET!); 
     
-    const connection = new Connection(clusterApiUrl('mainnet-beta'));
+    const connection = new Connection(clusterApiUrl('devnet'));
     
     // ✅ Genereer een unieke reference
     const reference = Keypair.generate().publicKey;
