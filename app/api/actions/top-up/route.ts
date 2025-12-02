@@ -46,17 +46,17 @@ export async function GET(req: NextRequest) {
         {
           label: `${prices.SINGLE.scans} Scan (${prices.SINGLE.priceSol.toFixed(4)} SOL)`,
           href: `${baseUrl}/api/actions/top-up?package=SINGLE`,
-          type: "external-link"
+          type: "post"
         },
         {
           label: `${prices.BATCH_10.scans} Scans (${prices.BATCH_10.priceSol.toFixed(4)} SOL)`,
           href: `${baseUrl}/api/actions/top-up?package=BATCH_10`,
-          type: "external-link"
+          type: "post"
         },
         {
           label: `${prices.BATCH_20.scans} Scans (${prices.BATCH_20.priceSol.toFixed(4)} SOL)`,
           href: `${baseUrl}/api/actions/top-up?package=BATCH_20`,
-          type: "external-link"
+          type: "post"
         },
       ],
     },
@@ -146,26 +146,11 @@ export async function POST(req: NextRequest) {
         .serialize({ requireAllSignatures: false })
         .toString("base64"),
       message: `Bedankt! Je ontvangt ${scansAmount} scan credits.`,
-      // ✅ Action chaining: redirect naar success page na betaling
+      // ✅ Action chaining: vertel agent waar naartoe
       links: {
         next: {
-          type: "inline",
-          action: {
-            type: "completed",
-            icon: "https://aifais.com/logo_official.png",
-            label: "Ga naar Scanner",
-            title: "Credits toegevoegd!",
-            description: `Je hebt ${scansAmount} scan credits ontvangen. Klik hieronder om naar de scanner te gaan.`,
-            links: {
-              actions: [
-                {
-                  label: "Open Scanner",
-                  href: `${req.nextUrl.origin}/tools/factuur-scanner?ref=blink`,
-                  type: "external-link"
-                }
-              ]
-            }
-          }
+          type: "post",
+          href: `${req.nextUrl.origin}/api/agent/scan`,
         }
       }
     };
