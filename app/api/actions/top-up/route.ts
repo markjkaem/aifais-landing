@@ -11,11 +11,18 @@ import {
 import { calculatePackagePrices, PACKAGE_CONFIG } from "@/utils/solana-pricing";
 import { ACTIONS_CORS_HEADERS, ActionGetResponse } from "@solana/actions";
 
+// ✅ Override met correcte headers voor Actions spec 2.2.1
+const CORS_HEADERS = {
+  ...ACTIONS_CORS_HEADERS,
+  "X-Action-Version": "2.2.1",
+  "X-Blockchain-Ids": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+};
+
 // OPTIONS: Preflight request - CRITICAL for CORS!
 export async function OPTIONS() {
   return new NextResponse(null, { 
     status: 200,
-    headers: ACTIONS_CORS_HEADERS 
+    headers: CORS_HEADERS 
   });
 }
 
@@ -55,7 +62,7 @@ export async function GET(req: NextRequest) {
     },
   };
   
-  return NextResponse.json(payload, { headers: ACTIONS_CORS_HEADERS });
+  return NextResponse.json(payload, { headers: CORS_HEADERS });
 }
 
 // POST: Gebruiker klikt op knop
@@ -74,7 +81,7 @@ export async function POST(req: NextRequest) {
     if (!account) {
       return NextResponse.json(
         { error: "Geen wallet account gevonden" },
-        { status: 400, headers: ACTIONS_CORS_HEADERS }
+        { status: 400, headers: CORS_HEADERS }
       );
     }
 
@@ -95,7 +102,7 @@ export async function POST(req: NextRequest) {
     } else {
       return NextResponse.json(
         { error: "Geen geldig pakket of bedrag opgegeven" },
-        { status: 400, headers: ACTIONS_CORS_HEADERS }
+        { status: 400, headers: CORS_HEADERS }
       );
     }
 
@@ -163,12 +170,12 @@ export async function POST(req: NextRequest) {
       }
     };
 
-    return NextResponse.json(payload, { headers: ACTIONS_CORS_HEADERS });
+    return NextResponse.json(payload, { headers: CORS_HEADERS });
   } catch (error) {
     console.error("Transaction creation error:", error);
     return NextResponse.json(
       { error: "Transactie mislukt" },
-      { status: 500, headers: ACTIONS_CORS_HEADERS }
+      { status: 500, headers: CORS_HEADERS }
     );
   }
 }

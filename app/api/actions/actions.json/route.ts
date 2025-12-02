@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { ACTIONS_CORS_HEADERS, ActionsJson } from "@solana/actions";
 
+// ✅ Override met correcte headers voor Actions spec 2.2.1
+const CORS_HEADERS = {
+  ...ACTIONS_CORS_HEADERS,
+  "X-Action-Version": "2.2.1",
+  "X-Blockchain-Ids": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+};
+
 export const GET = async () => {
   const payload: ActionsJson = {
     rules: [
@@ -12,7 +19,7 @@ export const GET = async () => {
   };
 
   return NextResponse.json(payload, {
-    headers: ACTIONS_CORS_HEADERS,
+    headers: CORS_HEADERS,
   });
 };
 
