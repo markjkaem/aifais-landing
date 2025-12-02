@@ -30,6 +30,9 @@ export async function GET(req: NextRequest) {
   // ✅ Haal actuele prijzen op
   const prices = await calculatePackagePrices();
   
+  // ✅ Bepaal de base URL (localhost of productie)
+  const baseUrl = req.nextUrl.origin;
+  
   const payload = {
     icon: iconUrl,
     label: "Koop Credits",
@@ -39,15 +42,15 @@ export async function GET(req: NextRequest) {
       actions: [
         {
           label: `${prices.SINGLE.scans} Scan (${prices.SINGLE.priceSol.toFixed(4)} SOL)`,
-          href: `/api/actions/top-up?package=SINGLE`,
+          href: `${baseUrl}/api/actions/top-up?package=SINGLE`,
         },
         {
           label: `${prices.BATCH_10.scans} Scans (${prices.BATCH_10.priceSol.toFixed(4)} SOL)`,
-          href: `/api/actions/top-up?package=BATCH_10`,
+          href: `${baseUrl}/api/actions/top-up?package=BATCH_10`,
         },
         {
           label: `${prices.BATCH_20.scans} Scans (${prices.BATCH_20.priceSol.toFixed(4)} SOL)`,
-          href: `/api/actions/top-up?package=BATCH_20`,
+          href: `${baseUrl}/api/actions/top-up?package=BATCH_20`,
         },
       ],
     },
