@@ -8,19 +8,19 @@ import {
   LAMPORTS_PER_SOL 
 } from "@solana/web3.js";
 
-// Nieuwe, uitgebreide headers met de vereiste X-Action velden
-const headers = {
+// ✅ FIX: Deze headers zijn verplicht voor de Solana Action specificatie.
+// We voegen ze direct toe aan de respons om zeker te zijn.
+const defaultHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization, Accept-Encoding",
-  // ✅ FIX: Deze headers zijn verplicht voor de Solana Action specificatie
   "X-Action-Version": "1.0",
   "X-Blockchain-Ids": "solana", 
 };
 
 // 1. OPTIONS: De browser vraagt eerst of hij mag praten
 export async function OPTIONS() {
-  return new NextResponse(null, { headers });
+  return new NextResponse(null, { headers: defaultHeaders });
 }
 
 // 2. GET: De Wallet vraagt "Wat is dit?" (Toont het plaatje + knop)
@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
     },
   };
 
-  return NextResponse.json(payload, { headers });
+  return NextResponse.json(payload, { headers: defaultHeaders });
 }
 
 // 3. POST: De Gebruiker klikt op de knop (Maakt de transactie)
@@ -54,11 +54,10 @@ export async function POST(req: NextRequest) {
     const { account } = body; // Het wallet adres van de gebruiker
 
     if (!account) {
-      return NextResponse.json({ error: "Geen wallet account gevonden" }, { status: 400, headers });
+      return NextResponse.json({ error: "Geen wallet account gevonden" }, { status: 400, headers: defaultHeaders });
     }
 
     const sender = new PublicKey(account);
-    // HIER MOET JOUW WALLET STAAN (uit .env.local)
     const recipient = new PublicKey(process.env.NEXT_PUBLIC_SOLANA_WALLET!); 
     
     const connection = new Connection(
@@ -77,8 +76,7 @@ export async function POST(req: NextRequest) {
     );
 
     transaction.feePayer = sender;
-    // Blokhash moet vers zijn
-    transaction.recentBlockhash = (await connection.getLatestBlockhash('finalized')).blockhash; 
+    transaction.recentBlockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
 
     // Stuur de ongetekende transactie terug zodat de gebruiker kan tekenen
     const payload = {
@@ -86,10 +84,10 @@ export async function POST(req: NextRequest) {
       message: "Bedankt! Je credits worden bijgeschreven.",
     };
 
-    return NextResponse.json(payload, { headers });
+    return NextResponse.json(payload, { headers: defaultHeaders });
 
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "Transactie mislukt" }, { status: 500, headers });
+    return NextResponse.json({ error: "Transactie mislukt" }, { status: 500, headers: defaultHeaders });
   }
 }
