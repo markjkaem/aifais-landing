@@ -3,7 +3,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { Connection, clusterApiUrl } from "@solana/web3.js";
+import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
+import { getScansForAmount } from "@/utils/solana-pricing";
 
 const anthropic = new Anthropic({
   apiKey: process.env.CLAUDE_API_KEY || "",
@@ -11,7 +12,15 @@ const anthropic = new Anthropic({
 
 export async function POST(req: NextRequest) {
   try {
-    const { signature, invoiceBase64, mimeType } = await req.json();
+    // ✅ Actions spec: account komt uit het body (van de vorige POST)
+    const { account, signature, invoiceBase64, mimeType } = await req.json();
+
+    if (!signature) {
+      return NextResponse.json(
+        { error: "Missing transaction signature" },
+        { status: 400 }
+      );
+    }
 
     // 1. Verifieer de Solana betaling
     const rpcUrl = process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta");
@@ -28,7 +37,35 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2. Scan de factuur
+    // 2. Check betaald bedrag
+    const myWallet = new PublicKey(process.env.NEXT_PUBLIC_SOLANA_WALLET!);
+    const accountKeys = tx.transaction.message.getAccountKeys();
+    const recipientIndex = accountKeys.staticAccountKeys.findIndex((key) =>
+      key.equals(myWallet)
+    );
+
+    if (recipientIndex === -1) {
+      return NextResponse.json(
+        { error: "Payment not to correct wallet" },
+        { status: 403 }
+      );
+    }
+
+    const postBalance = tx.meta?.postBalances[recipientIndex] || 0;
+    const preBalance = tx.meta?.preBalances[recipientIndex] || 0;
+    const paidLamports = postBalance - preBalance;
+    const paidSol = paidLamports / 1e9;
+
+    const maxScans = await getScansForAmount(paidSol);
+
+    if (maxScans === 0) {
+      return NextResponse.json(
+        { error: `Payment amount (${paidSol.toFixed(6)} SOL) doesn't match any package` },
+        { status: 403 }
+      );
+    }
+
+    // 3. Scan de factuur
     const msg = await anthropic.messages.create({
       model: "claude-3-5-sonnet-20241022",
       max_tokens: 2048,
@@ -67,6 +104,7 @@ export async function POST(req: NextRequest) {
       success: true,
       data: result,
       creditsUsed: 1,
+      creditsRemaining: maxScans - 1,
     });
 
   } catch (error: any) {
