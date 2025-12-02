@@ -9,7 +9,6 @@ import {
 } from "@solana/web3.js";
 
 // ✅ FIX: Deze headers zijn verplicht voor de Solana Action specificatie.
-// We voegen ze direct toe aan de respons om zeker te zijn.
 const defaultHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
@@ -25,7 +24,7 @@ export async function OPTIONS() {
 
 // 2. GET: De Wallet vraagt "Wat is dit?" (Toont het plaatje + knop)
 export async function GET(req: NextRequest) {
-  const iconUrl = "https://aifais.com/og-scanner.jpg"; // Zorg dat dit plaatje bestaat!
+  const iconUrl = "https://aifais.com/og-scanner.jpg"; 
 
   const payload = {
     icon: iconUrl,
@@ -36,7 +35,8 @@ export async function GET(req: NextRequest) {
       actions: [
         {
           label: "Koop 5 Credits (0.02 SOL)",
-          href: "/api/actions/top-up?amount=0.02", // De link die de POST aanroept
+          // Pas de href aan naar de volledige pad
+          href: "https://aifais.com/api/actions/top-up?amount=0.02", 
         },
       ],
     },
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const amountParam = searchParams.get("amount") || "0.02";
     const body = await req.json();
-    const { account } = body; // Het wallet adres van de gebruiker
+    const { account } = body; 
 
     if (!account) {
       return NextResponse.json({ error: "Geen wallet account gevonden" }, { status: 400, headers: defaultHeaders });
@@ -60,9 +60,8 @@ export async function POST(req: NextRequest) {
     const sender = new PublicKey(account);
     const recipient = new PublicKey(process.env.NEXT_PUBLIC_SOLANA_WALLET!); 
     
-    const connection = new Connection(
-        process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta")
-    );
+    // Gebruik mainnet-beta, want testnet support is vaak onbetrouwbaar voor Blinks
+    const connection = new Connection(clusterApiUrl('mainnet-beta'));
 
     // Bouw de transactie
     const transaction = new Transaction();
@@ -76,7 +75,8 @@ export async function POST(req: NextRequest) {
     );
 
     transaction.feePayer = sender;
-    transaction.recentBlockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
+    // Gebruik de laatste finalized blockhash
+    transaction.recentBlockhash = (await connection.getLatestBlockhash('finalized')).blockhash; 
 
     // Stuur de ongetekende transactie terug zodat de gebruiker kan tekenen
     const payload = {
