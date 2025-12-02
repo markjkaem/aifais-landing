@@ -66,6 +66,10 @@ export async function POST(req: NextRequest) {
     // Bouw de transactie
     const transaction = new Transaction();
     
+    // FIX: Genereer een unieke sleutel (referentie) voor deze transactie
+    // Dit is nodig voor de frontend om te 'luisteren' naar de betaling
+    const uniqueReference = Keypair.generate().publicKey; 
+
     transaction.add(
       SystemProgram.transfer({
         fromPubkey: sender,
@@ -73,6 +77,18 @@ export async function POST(req: NextRequest) {
         lamports: parseFloat(amountParam) * LAMPORTS_PER_SOL,
       })
     );
+    
+    // FIX: Voeg de reference toe aan de transactie
+    // Dit is het "bestelnummer" op de blockchain
+    // We versturen de reference als data in een aparte instructie
+    transaction.add(
+        SystemProgram.transfer({
+            fromPubkey: sender,
+            toPubkey: uniqueReference,
+            lamports: 0, // 0 Lamports, puur voor de data
+        })
+    );
+
 
     transaction.feePayer = sender;
     // Gebruik de laatste finalized blockhash
@@ -82,6 +98,8 @@ export async function POST(req: NextRequest) {
     const payload = {
       transaction: transaction.serialize({ requireAllSignatures: false }).toString("base64"),
       message: "Bedankt! Je credits worden bijgeschreven.",
+      // FIX: Stuur de unieke referentie mee terug. De frontend moet hierop luisteren.
+      reference: uniqueReference.toString(), 
     };
 
     return NextResponse.json(payload, { headers: defaultHeaders });
