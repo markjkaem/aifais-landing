@@ -9,18 +9,14 @@ import {
   Keypair,
 } from "@solana/web3.js";
 import { calculatePackagePrices, PACKAGE_CONFIG } from "@/utils/solana-pricing";
+import { ACTIONS_CORS_HEADERS, ActionGetResponse } from "@solana/actions";
 
-const defaultHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization, Content-Encoding, Accept-Encoding",
-  "X-Action-Version": "2.2.1",
-  "X-Blockchain-Ids": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
-};
-
-// OPTIONS: Preflight request
+// OPTIONS: Preflight request - CRITICAL for CORS!
 export async function OPTIONS() {
-  return new NextResponse(null, { headers: defaultHeaders });
+  return new NextResponse(null, { 
+    status: 200,
+    headers: ACTIONS_CORS_HEADERS 
+  });
 }
 
 // GET: Wallet vraagt "Wat is dit?" - Dynamische prijzen!
@@ -33,7 +29,7 @@ export async function GET(req: NextRequest) {
   // ✅ Bepaal de base URL (localhost of productie)
   const baseUrl = req.nextUrl.origin;
   
-  const payload = {
+  const payload: ActionGetResponse = {
     icon: iconUrl,
     label: "Koop Credits",
     title: "Aifais Factuur Scanner",
@@ -43,19 +39,23 @@ export async function GET(req: NextRequest) {
         {
           label: `${prices.SINGLE.scans} Scan (${prices.SINGLE.priceSol.toFixed(4)} SOL)`,
           href: `${baseUrl}/api/actions/top-up?package=SINGLE`,
+          type: "transaction"
         },
         {
           label: `${prices.BATCH_10.scans} Scans (${prices.BATCH_10.priceSol.toFixed(4)} SOL)`,
           href: `${baseUrl}/api/actions/top-up?package=BATCH_10`,
+          type: "transaction"
         },
         {
           label: `${prices.BATCH_20.scans} Scans (${prices.BATCH_20.priceSol.toFixed(4)} SOL)`,
           href: `${baseUrl}/api/actions/top-up?package=BATCH_20`,
+          type: "transaction"
         },
       ],
     },
   };
-  return NextResponse.json(payload, { headers: defaultHeaders });
+  
+  return NextResponse.json(payload, { headers: ACTIONS_CORS_HEADERS });
 }
 
 // POST: Gebruiker klikt op knop
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
     if (!account) {
       return NextResponse.json(
         { error: "Geen wallet account gevonden" },
-        { status: 400, headers: defaultHeaders }
+        { status: 400, headers: ACTIONS_CORS_HEADERS }
       );
     }
 
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
     } else {
       return NextResponse.json(
         { error: "Geen geldig pakket of bedrag opgegeven" },
-        { status: 400, headers: defaultHeaders }
+        { status: 400, headers: ACTIONS_CORS_HEADERS }
       );
     }
 
@@ -139,15 +139,14 @@ export async function POST(req: NextRequest) {
         .serialize({ requireAllSignatures: false })
         .toString("base64"),
       message: `Bedankt! Je ontvangt ${scansAmount} scan credits.`,
-      reference: reference.toString(),
     };
 
-    return NextResponse.json(payload, { headers: defaultHeaders });
+    return NextResponse.json(payload, { headers: ACTIONS_CORS_HEADERS });
   } catch (error) {
     console.error("Transaction creation error:", error);
     return NextResponse.json(
       { error: "Transactie mislukt" },
-      { status: 500, headers: defaultHeaders }
+      { status: 500, headers: ACTIONS_CORS_HEADERS }
     );
   }
 }
