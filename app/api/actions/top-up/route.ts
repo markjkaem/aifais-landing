@@ -12,10 +12,10 @@ import { calculatePackagePrices, PACKAGE_CONFIG } from "@/utils/solana-pricing";
 
 const defaultHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization, Accept-Encoding",
-  "X-Action-Version": "1.0",
-  "X-Blockchain-Ids": "solana",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, Content-Encoding, Accept-Encoding",
+  "X-Action-Version": "2.2.1",
+  "X-Blockchain-Ids": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
 };
 
 // OPTIONS: Preflight request
