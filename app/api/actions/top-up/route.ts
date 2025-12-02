@@ -8,11 +8,14 @@ import {
   LAMPORTS_PER_SOL 
 } from "@solana/web3.js";
 
-// CORS Headers zijn verplicht voor Blinks, anders blokkeert de browser het
+// Nieuwe, uitgebreide headers met de vereiste X-Action velden
 const headers = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization, Accept-Encoding",
+  // ✅ FIX: Deze headers zijn verplicht voor de Solana Action specificatie
+  "X-Action-Version": "1.0",
+  "X-Blockchain-Ids": "solana", 
 };
 
 // 1. OPTIONS: De browser vraagt eerst of hij mag praten
@@ -74,7 +77,8 @@ export async function POST(req: NextRequest) {
     );
 
     transaction.feePayer = sender;
-    transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+    // Blokhash moet vers zijn
+    transaction.recentBlockhash = (await connection.getLatestBlockhash('finalized')).blockhash; 
 
     // Stuur de ongetekende transactie terug zodat de gebruiker kan tekenen
     const payload = {
