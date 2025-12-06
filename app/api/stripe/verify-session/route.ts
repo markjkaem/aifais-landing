@@ -60,7 +60,7 @@ export async function GET(req: NextRequest) {
           let maxScans = 1;
           if (paidLamports >= 20_000_000) maxScans = 20;      // > 0.02 SOL
           else if (paidLamports >= 10_000_000) maxScans = 10; // > 0.01 SOL
-          else if (paidLamports >= 2_000_000) maxScans = 1;   // > 0.002 SOL (jouw test bedrag was 0.003, dus dit klopt)
+          else if (paidLamports >= 900_000) maxScans = 1;   // > 0.001 SOL (jouw test bedrag was 0.003, dus dit klopt)
           
           console.log("✅ Toegang verleend voor:", maxScans, "scans");
           return NextResponse.json({ valid: true, maxScans });

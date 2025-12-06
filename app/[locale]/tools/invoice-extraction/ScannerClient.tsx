@@ -5,132 +5,55 @@ import {
   FileText,
   CheckCircle2,
   Loader2,
-  Lock,
-  ScanLine,
   AlertTriangle,
-  Trash2,
-  Copy,
-  ClipboardCheck,
-  Download,
   Zap,
-  Package,
-  Layers,
   X,
-  CreditCard,
   Coins,
+  ArrowRight,
+  CreditCard,
+  Code,
 } from "lucide-react";
 import CryptoModal from "@/app/Components/CryptoModal";
 
 // --- CONFIG ---
-const STRIPE_LINKS = {
-  SINGLE: process.env.NEXT_PUBLIC_STRIPE_LINK_SINGLE || "",
-  BATCH_10: process.env.NEXT_PUBLIC_STRIPE_LINK_BATCH10 || "",
-  BATCH_20: process.env.NEXT_PUBLIC_STRIPE_LINK_BATCH20 || "",
+// Vul hier je Stripe Payment Link in voor 1 scan
+const STRIPE_LINK_SINGLE =
+  process.env.NEXT_PUBLIC_STRIPE_LINK_SINGLE ||
+  "https://buy.stripe.com/test_...";
+
+const SCAN_CONFIG = {
+  priceSol: 0.001,
+  priceEur: 0.5,
+  name: "AI Factuur Scan",
 };
 
-// ✅ Type voor dynamische prijzen
-interface PricingData {
-  SINGLE: {
-    id: string;
-    name: string;
-    scans: number;
-    priceEur: number;
-    priceSol: number;
-  };
-  BATCH_10: {
-    id: string;
-    name: string;
-    scans: number;
-    priceEur: number;
-    priceSol: number;
-  };
-  BATCH_20: {
-    id: string;
-    name: string;
-    scans: number;
-    priceEur: number;
-    priceSol: number;
-  };
-  solPriceEur: number;
-  lastUpdated: string;
-}
-
-interface ScannedItem {
-  id: string;
-  leverancier: string;
-  factuurdatum: string;
-  totaal_incl: number;
-  factuurnummer: string;
-  kvk_nummer: string;
+interface ScanResult {
+  supplier_name?: string;
+  invoice_date?: string;
+  total_amount?: number;
+  invoice_number?: string;
+  currency?: string;
+  vat_amount?: number;
   [key: string]: any;
 }
 
 export default function ScannerClient() {
-  // ✅ Dynamische prijzen state
-  const [pricing, setPricing] = useState<PricingData | null>(null);
-  const [pricesLoading, setPricesLoading] = useState(true);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const [hasPaid, setHasPaid] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(true);
-  const [sessionId, setSessionId] = useState<string | null>(null);
-  const [maxScans, setMaxScans] = useState<number>(0);
-
-  const [selectedPackage, setSelectedPackage] = useState<
-    "SINGLE" | "BATCH_10" | "BATCH_20" | null
-  >(null);
-  const [showPaymentChoice, setShowPaymentChoice] = useState(false);
-  const [showCryptoModal, setShowCryptoModal] = useState(false);
-
-  const [filesQueue, setFilesQueue] = useState<File[]>([]);
+  // State
   const [isScanning, setIsScanning] = useState(false);
-  const [currentScanIndex, setCurrentScanIndex] = useState<number>(0);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showCryptoQR, setShowCryptoQR] = useState(false);
+
+  const [scanResult, setScanResult] = useState<ScanResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [batchList, setBatchList] = useState<ScannedItem[]>([]);
-  const [copied, setCopied] = useState(false);
+  const [paymentProof, setPaymentProof] = useState<{
+    type: "crypto" | "stripe";
+    id: string;
+  } | null>(null);
 
-  // ✅ Haal dynamische prijzen op
-  useEffect(() => {
-    const fetchPrices = async () => {
-      try {
-        const response = await fetch("/api/solana/get-prices");
-        const data = await response.json();
-        setPricing(data);
-      } catch (error) {
-        console.error("Failed to fetch prices:", error);
-        // Fallback naar vaste prijzen
-        setPricing({
-          SINGLE: {
-            id: "single",
-            name: "Losse Scan",
-            scans: 1,
-            priceEur: 0.5,
-            priceSol: 0.003,
-          },
-          BATCH_10: {
-            id: "batch10",
-            name: "10 Scans",
-            scans: 10,
-            priceEur: 2.5,
-            priceSol: 0.015,
-          },
-          BATCH_20: {
-            id: "batch20",
-            name: "20 Scans",
-            scans: 20,
-            priceEur: 4.0,
-            priceSol: 0.025,
-          },
-          solPriceEur: 216.5,
-          lastUpdated: new Date().toISOString(),
-        });
-      } finally {
-        setPricesLoading(false);
-      }
-    };
-    fetchPrices();
-  }, []);
-
-  // --- INIT & VERIFY ---
+  // --- INIT PDF WORKER ---
   useEffect(() => {
     const initPdfWorker = async () => {
       if (typeof window !== "undefined") {
@@ -145,570 +68,355 @@ export default function ScannerClient() {
     initPdfWorker();
   }, []);
 
+  // --- STRIPE RETURN HANDLER ---
+  // Checkt of de gebruiker terugkomt van Stripe
   useEffect(() => {
-    const verify = async () => {
-      if (typeof window === "undefined") return;
-      const params = new URLSearchParams(window.location.search);
-      const signature = params.get("signature");
-      const reference = params.get("reference");
-      const sid = params.get("session_id");
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
 
-      // ✅ PRIORITEIT 1: Check Solana betaling
-      if (signature && reference) {
-        try {
-          const res = await fetch(
-            `/api/solana/verify-solana?signature=${signature}&reference=${reference}`
-          );
-          const data = await res.json();
-
-          if (data.valid) {
-            setHasPaid(true);
-            setSessionId(`SOL-${signature}`);
-            setMaxScans(data.maxScans || 1);
-          } else {
-            setError(data.error || "Solana verificatie mislukt");
-          }
-        } catch (e) {
-          console.error(e);
-          setError("Kon Solana transactie niet verifiëren");
-        } finally {
-          setIsVerifying(false);
-        }
-        return;
-      }
-
-      // ✅ PRIORITEIT 2: Check Stripe session
-      if (sid) {
-        try {
-          const res = await fetch(
-            `/api/stripe/verify-session?session_id=${sid}`
-          );
-          const data = await res.json();
-
-          if (data.valid) {
-            setHasPaid(true);
-            setSessionId(sid);
-            setMaxScans(data.maxScans || 1);
-          }
-        } catch (e) {
-          console.error(e);
-        } finally {
-          setIsVerifying(false);
-        }
-        return;
-      }
-
-      // Geen betaling gevonden
-      setIsVerifying(false);
-    };
-    verify();
+    if (sessionId) {
+      // We hebben betaald via Stripe!
+      setPaymentProof({ type: "stripe", id: sessionId });
+      // Haal de params weg uit de URL voor netheid
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   }, []);
 
-  // --- HANDLERS ---
-  const handlePackageSelect = (pkgKey: "SINGLE" | "BATCH_10" | "BATCH_20") => {
-    setSelectedPackage(pkgKey);
-    setShowPaymentChoice(true);
-  };
-
-  const handleStripePay = () => {
-    if (!selectedPackage) return;
-    window.location.href = STRIPE_LINKS[selectedPackage];
-  };
-
-  const handleCryptoSuccess = (signature: string, reference: string) => {
-    // ✅ Redirect met beide parameters
-    window.location.href = `?signature=${signature}&reference=${reference}`;
-  };
-
-  const handleFullReset = () => {
-    if (typeof window !== "undefined") {
-      window.history.pushState({}, "", window.location.pathname);
-      window.location.reload();
-    }
-  };
-
+  // --- BESTAND LOGICA ---
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const newFiles = Array.from(e.target.files);
-      if (filesQueue.length + newFiles.length > maxScans) {
-        setError(`Dit pakket heeft een limiet van ${maxScans} bestanden.`);
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+      setScanResult(null);
+      setError(null);
+
+      // Reset payment proof NIET als het Stripe is (want die page reload is net geweest)
+      // Maar wel als je een nieuw bestand kiest na een scan.
+      if (scanResult) setPaymentProof(null);
+
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e) => setPreviewUrl(e.target?.result as string);
+        reader.readAsDataURL(file);
       } else {
-        setError(null);
+        setPreviewUrl(null);
       }
-      setFilesQueue((prev) => [...prev, ...newFiles]);
     }
   };
 
-  const processFile = async (
+  const convertFileToBase64 = async (
     file: File
   ): Promise<{ base64: string; mimeType: string }> => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        if (file.type === "application/pdf") {
-          const pdfjs = await import("pdfjs-dist");
-          const uri = URL.createObjectURL(file);
-          const loadingTask = pdfjs.getDocument(uri);
-          const pdf = await loadingTask.promise;
-          const page = await pdf.getPage(1);
-          const viewport = page.getViewport({ scale: 2.0 });
-          const canvas = document.createElement("canvas");
-          const context = canvas.getContext("2d");
-          if (!context) throw new Error("Canvas context failed");
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-          await page.render({ canvasContext: context, viewport, canvas })
-            .promise;
-          const dataUrl = canvas.toDataURL("image/png");
-          resolve({ base64: dataUrl.split(",")[1], mimeType: "image/png" });
-        } else if (file.type.startsWith("image/")) {
-          const reader = new FileReader();
-          reader.onload = () =>
-            resolve({
-              base64: (reader.result as string).split(",")[1],
-              mimeType: file.type,
-            });
-          reader.readAsDataURL(file);
-        } else {
-          reject("Niet ondersteund.");
-        }
-      } catch (e: any) {
-        reject(e.message);
-      }
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () =>
+        resolve({
+          base64: (reader.result as string).split(",")[1],
+          mimeType:
+            file.type === "application/pdf" ? "application/pdf" : file.type,
+        });
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
     });
   };
 
-  const handleBatchScan = async () => {
-    if (filesQueue.length === 0 || !sessionId) return;
-    if (filesQueue.length > maxScans) {
-      setError(
-        `Je mag maximaal ${maxScans} bestanden scannen. Verwijder er ${
-          filesQueue.length - maxScans
-        }.`
-      );
-      return;
+  // --- SCAN LOGICA ---
+  const handleCryptoSuccess = async (signature: string) => {
+    setShowCryptoQR(false);
+    setShowPaymentModal(false);
+    setPaymentProof({ type: "crypto", id: signature });
+    await performScan({ type: "crypto", id: signature });
+  };
+
+  // Deze wordt aangeroepen als er al een Stripe ID is (bij page load)
+  const handleStripeContinue = async () => {
+    if (paymentProof && paymentProof.type === "stripe") {
+      await performScan(paymentProof);
     }
+  };
+
+  const performScan = async (proof: {
+    type: "crypto" | "stripe";
+    id: string;
+  }) => {
+    if (!selectedFile) return;
 
     setIsScanning(true);
     setError(null);
-    setCurrentScanIndex(0);
 
-    const queueToProcess = [...filesQueue];
-    const processedIndices: number[] = [];
+    try {
+      const { base64, mimeType } = await convertFileToBase64(selectedFile);
 
-    for (let i = 0; i < queueToProcess.length; i++) {
-      setCurrentScanIndex(i + 1);
-      const file = queueToProcess[i];
-      try {
-        const { base64, mimeType } = await processFile(file);
+      // Stuur naar de Backend
+      const response = await fetch("/api/agent/scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          // We sturen OF een signature (Crypto) OF een sessionId (Stripe)
+          signature: proof.type === "crypto" ? proof.id : undefined,
+          stripeSessionId: proof.type === "stripe" ? proof.id : undefined,
+          invoiceBase64: base64,
+          mimeType: mimeType,
+        }),
+      });
 
-        const res = await fetch("/api/tools/invoice-scan", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ base64Image: base64, mimeType, sessionId }),
-        });
+      const data = await response.json();
 
-        const data = await res.json();
-
-        if (res.status === 403) {
-          setError(data.error || "Sessie limiet bereikt.");
-          break;
-        }
-
-        if (!res.ok) {
-          console.error(`Fout:`, data.error);
-          setError(data.error || "Er ging iets mis");
-        } else {
-          const dataWithId = { ...data, id: Date.now().toString() + i };
-          setBatchList((prev) => [...prev, dataWithId]);
-          processedIndices.push(i);
-        }
-      } catch (err) {
-        console.error(err);
+      if (!response.ok) {
+        throw new Error(data.error || "Scan failed");
       }
-      await new Promise((r) => setTimeout(r, 500));
+
+      setScanResult(data.data);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Er is iets misgegaan bij het scannen.");
+    } finally {
+      setIsScanning(false);
     }
-    setFilesQueue((prev) =>
-      prev.filter((_, idx) => !processedIndices.includes(idx))
-    );
-    setIsScanning(false);
-    setCurrentScanIndex(0);
   };
 
-  const handleDeleteFromBatch = (indexToRemove: number) => {
-    setBatchList((prev) => prev.filter((_, index) => index !== indexToRemove));
+  const reset = () => {
+    setSelectedFile(null);
+    setScanResult(null);
+    setPaymentProof(null);
+    setPreviewUrl(null);
   };
-
-  const downloadBatchCSV = () => {
-    if (batchList.length === 0) return;
-    const allKeys = Array.from(new Set(batchList.flatMap(Object.keys)));
-    const headers = allKeys.filter((k) => k !== "id").join(",");
-    const rows = batchList
-      .map((item) =>
-        allKeys
-          .filter((k) => k !== "id")
-          .map((key) => {
-            const val = item[key];
-            return typeof val === "string" && val.includes(",")
-              ? `"${val}"`
-              : val || "";
-          })
-          .join(",")
-      )
-      .join("\n");
-    const link = document.createElement("a");
-    link.setAttribute(
-      "href",
-      encodeURI("data:text/csv;charset=utf-8," + headers + "\n" + rows)
-    );
-    link.setAttribute(
-      "download",
-      `batch_export_${new Date().toISOString().slice(0, 10)}.csv`
-    );
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const copyToClipboard = () => {
-    if (batchList.length === 0) return;
-    const headers = ["Leverancier", "Datum", "Totaal", "Factuurnr", "KvK"];
-    const rows = batchList
-      .map(
-        (item) =>
-          `${item.leverancier}\t${item.factuurdatum}\t${item.totaal_incl
-            ?.toFixed(2)
-            .replace(".", ",")}\t${item.factuurnummer}\t${item.kvk_nummer}`
-      )
-      .join("\n");
-    navigator.clipboard.writeText(headers.join("\t") + "\n" + rows).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  };
-
-  // --- RENDER ---
-  if (isVerifying || pricesLoading) {
-    return (
-      <div className="w-full max-w-xl h-64 flex flex-col items-center justify-center border border-white/10 rounded-3xl bg-black/50 backdrop-blur-md">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-500 mb-4" />
-        <p className="text-gray-400 text-sm font-medium">
-          {pricesLoading ? "Prijzen ophalen..." : "Beveiliging controleren..."}
-        </p>
-      </div>
-    );
-  }
-
-  // Safety check
-  if (!pricing) {
-    return (
-      <div className="w-full max-w-xl h-64 flex flex-col items-center justify-center border border-white/10 rounded-3xl bg-black/50 backdrop-blur-md">
-        <AlertTriangle className="w-8 h-8 text-red-500 mb-4" />
-        <p className="text-red-400 text-sm font-medium">
-          Kon prijzen niet ophalen. Probeer het later opnieuw.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="w-full max-w-2xl relative">
       <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[2rem] blur-2xl opacity-20 pointer-events-none" />
-      <div className="relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 shadow-2xl overflow-hidden min-h-[500px]">
-        {/* Payment Modal */}
-        {showPaymentChoice && selectedPackage && !showCryptoModal && (
-          <div className="absolute inset-0 z-40 bg-black/95 flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-200">
-            <div className="w-full max-w-sm">
+      <div className="relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 shadow-2xl overflow-hidden min-h-[400px]">
+        {/* PAYMENT MODAL (KEUZE) */}
+        {showPaymentModal && !showCryptoQR && (
+          <div className="absolute inset-0 z-50 bg-black/90 flex items-center justify-center p-4 animate-in fade-in">
+            <div className="bg-[#111] border border-white/10 rounded-2xl p-6 w-full max-w-sm">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-white font-bold text-lg">
-                  Kies betaalmethode
-                </h3>
-                <button
-                  onClick={() => setShowPaymentChoice(false)}
-                  className="text-gray-500 hover:text-white"
-                >
-                  <X className="w-5 h-5" />
+                <h3 className="text-white font-bold">Kies betaalmethode</h3>
+                <button onClick={() => setShowPaymentModal(false)}>
+                  <X className="text-gray-500 hover:text-white" />
                 </button>
               </div>
-              <div className="space-y-3">
-                <button
-                  onClick={handleStripePay}
-                  className="w-full bg-white text-black font-bold py-4 rounded-xl hover:bg-gray-100 transition flex items-center justify-between px-6 group"
-                >
-                  <div className="flex items-center gap-3">
-                    <CreditCard className="w-5 h-5" />
-                    <span>iDEAL / Card</span>
-                  </div>
-                  <span className="text-gray-500 text-sm group-hover:text-black">
-                    € {pricing[selectedPackage].priceEur.toFixed(2)}
-                  </span>
-                </button>
-                <button
-                  onClick={() => setShowCryptoModal(true)}
-                  className="w-full bg-[#14F195]/10 border border-[#14F195]/50 text-[#14F195] font-bold py-4 rounded-xl hover:bg-[#14F195]/20 transition flex items-center justify-between px-6"
-                >
-                  <div className="flex items-center gap-3">
-                    <Coins className="w-5 h-5" />
-                    <span>Solana Pay</span>
-                  </div>
-                  <span className="text-[#14F195] text-sm font-mono">
-                    {pricing[selectedPackage].priceSol.toFixed(4)} SOL
-                  </span>
-                </button>
-              </div>
+
+              <button
+                onClick={() => (window.location.href = STRIPE_LINK_SINGLE)}
+                className="w-full bg-white hover:bg-gray-100 text-black font-bold py-4 rounded-xl flex items-center justify-between px-4 mb-3 transition"
+              >
+                <div className="flex items-center gap-3">
+                  <CreditCard className="w-5 h-5" /> iDEAL / Card
+                </div>
+                <span>€ {SCAN_CONFIG.priceEur.toFixed(2)}</span>
+              </button>
+
+              <button
+                onClick={() => setShowCryptoQR(true)}
+                className="w-full bg-[#14F195]/10 border border-[#14F195]/50 hover:bg-[#14F195]/20 text-[#14F195] font-bold py-4 rounded-xl flex items-center justify-between px-4 transition"
+              >
+                <div className="flex items-center gap-3">
+                  <Coins className="w-5 h-5" /> Solana Pay
+                </div>
+                <span>{SCAN_CONFIG.priceSol} SOL</span>
+              </button>
             </div>
           </div>
         )}
 
-        {/* Crypto QR */}
-        {showCryptoModal && selectedPackage && (
+        {/* CRYPTO MODAL */}
+        {showCryptoQR && (
           <CryptoModal
-            priceInSol={pricing[selectedPackage].priceSol}
-            scansAmount={pricing[selectedPackage].scans}
-            label={pricing[selectedPackage].name}
+            priceInSol={SCAN_CONFIG.priceSol}
+            scansAmount={1}
+            label={SCAN_CONFIG.name}
             onClose={() => {
-              setShowCryptoModal(false);
-              setShowPaymentChoice(false);
+              setShowCryptoQR(false);
+              setShowPaymentModal(false);
             }}
             onSuccess={handleCryptoSuccess}
             priceInEur={0}
           />
         )}
 
-        {/* --- CONTENT --- */}
-        {hasPaid && (
-          <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-            <div className="flex items-center gap-2 text-green-400 bg-green-900/20 px-3 py-1 rounded-full text-xs font-medium border border-green-900/50">
-              <CheckCircle2 className="w-3 h-3" />
-              <span>Sessie Geopend</span>
+        {/* HEADER */}
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-600/20 rounded-xl flex items-center justify-center border border-blue-500/30">
+              <Zap className="w-5 h-5 text-blue-400" />
             </div>
-            <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-              Max {maxScans} scans
+            AI Invoice Scanner
+          </h2>
+          {scanResult && (
+            <button
+              onClick={reset}
+              className="text-xs text-gray-500 hover:text-white"
+            >
+              Nieuw
+            </button>
+          )}
+        </div>
+
+        {/* --- STATE 1: UPLOAD --- */}
+        {!selectedFile && (
+          <div className="animate-in fade-in duration-300">
+            {/* 🔥 NIEUW: Melding als er betaald is maar bestand weg is */}
+            {paymentProof && (
+              <div className="mb-6 bg-green-500/10 border border-green-500/20 p-4 rounded-xl flex items-center gap-3">
+                <CheckCircle2 className="w-6 h-6 text-green-400 shrink-0" />
+                <div>
+                  <h3 className="text-green-400 font-bold text-sm">
+                    Betaling Succesvol!
+                  </h3>
+                  <p className="text-gray-400 text-xs">
+                    Door de beveiliging van je browser moeten we je vragen het
+                    bestand nog één keer te selecteren.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div className="relative group cursor-pointer">
+              <input
+                type="file"
+                onChange={handleFileChange}
+                accept="image/*, application/pdf"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              />
+
+              <div
+                className={`h-64 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center transition-all duration-300 ${
+                  paymentProof
+                    ? "border-green-500/50 bg-green-900/5" // Groene gloed als betaald is
+                    : "border-white/10 group-hover:border-blue-500/50 group-hover:bg-blue-900/5"
+                }`}
+              >
+                {paymentProof ? (
+                  <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-4">
+                    <FileText className="w-8 h-8 text-green-400" />
+                  </div>
+                ) : (
+                  <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                    <FileText className="w-8 h-8 text-gray-400 group-hover:text-blue-400" />
+                  </div>
+                )}
+
+                <p className="text-gray-300 font-medium">
+                  {paymentProof
+                    ? "Selecteer bestand om te starten"
+                    : "Sleep je factuur hierheen"}
+                </p>
+                <p className="text-xs text-gray-500 mt-2">PDF, JPG of PNG</p>
+              </div>
             </div>
+
+            {/* Verberg de prijzen als er al betaald is */}
+            {!paymentProof && (
+              <div className="mt-6 flex items-center justify-center gap-6 text-xs text-gray-500">
+                <div className="flex items-center gap-2">
+                  <Coins className="w-4 h-4 text-[#14F195]" />
+                  Pay-per-scan ({SCAN_CONFIG.priceSol} SOL)
+                </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-yellow-400" />
+                  Powered by Claude 3.5 Sonnet
+                </div>
+              </div>
+            )}
           </div>
         )}
 
-        {!hasPaid ? (
-          <div className="text-center py-4">
-            <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-blue-500/20">
-              <Lock className="w-8 h-8 text-blue-500" />
-            </div>
-            <h2 className="text-2xl font-bold text-white mb-2">
-              Kies je pakket
-            </h2>
-            <p className="text-gray-400 mb-8 max-w-sm mx-auto">
-              Upload alles in één keer. Stripe & Crypto geaccepteerd.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <button
-                onClick={() => handlePackageSelect("SINGLE")}
-                className="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-4 text-left transition"
-              >
-                <div className="text-blue-400 text-xs font-bold mb-2 flex items-center gap-2">
-                  <Zap className="w-3 h-3" /> LOSSE SCAN
-                </div>
-                <div className="text-xl font-bold text-white">
-                  € {pricing.SINGLE.priceEur.toFixed(2)}
-                </div>
-                <div className="text-[10px] text-gray-500 font-mono mt-1">
-                  ~{pricing.SINGLE.priceSol.toFixed(4)} SOL
-                </div>
-              </button>
-              <button
-                onClick={() => handlePackageSelect("BATCH_10")}
-                className="relative bg-blue-600 hover:bg-blue-500 border border-blue-400 rounded-xl p-4 text-left shadow-lg"
-              >
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-blue-600 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                  POPULAIR
-                </div>
-                <div className="text-blue-100 text-xs font-bold mb-2 flex items-center gap-2">
-                  <Package className="w-3 h-3" /> 10 SCANS
-                </div>
-                <div className="text-xl font-bold text-white">
-                  € {pricing.BATCH_10.priceEur.toFixed(2)}
-                </div>
-                <div className="text-[10px] text-blue-200 font-mono mt-1">
-                  ~{pricing.BATCH_10.priceSol.toFixed(4)} SOL
-                </div>
-              </button>
-              <button
-                onClick={() => handlePackageSelect("BATCH_20")}
-                className="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-4 text-left transition"
-              >
-                <div className="text-purple-400 text-xs font-bold mb-2 flex items-center gap-2">
-                  <Layers className="w-3 h-3" /> 20 SCANS
-                </div>
-                <div className="text-xl font-bold text-white">
-                  € {pricing.BATCH_20.priceEur.toFixed(2)}
-                </div>
-                <div className="text-[10px] text-gray-500 font-mono mt-1">
-                  ~{pricing.BATCH_20.priceSol.toFixed(4)} SOL
-                </div>
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {!isScanning && (
-              <div className="relative group animate-in fade-in duration-300">
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  multiple
-                  accept="image/*, application/pdf"
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                />
-                <div
-                  className={`h-40 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center transition-all duration-300 ${
-                    filesQueue.length > 0
-                      ? "border-blue-500/50 bg-blue-900/10"
-                      : "border-white/10 hover:border-white/30 hover:bg-white/5"
-                  }`}
-                >
-                  <div className="text-center">
-                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <FileText className="w-5 h-5 text-white" />
-                    </div>
-                    <p className="font-medium text-sm text-gray-300">
-                      {filesQueue.length > 0
-                        ? "Klik om meer toe te voegen"
-                        : "Selecteer Batch Bestanden"}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Max {maxScans} bestanden in deze sessie.
-                    </p>
-                  </div>
-                </div>
+        {/* --- STATE 2: PREVIEW & ACTION --- */}
+        {selectedFile && !scanResult && (
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
+            <div className="bg-white/5 rounded-2xl p-4 border border-white/10 mb-6 flex items-center gap-4">
+              <div className="w-12 h-12 bg-black/50 rounded-lg flex items-center justify-center overflow-hidden">
+                {previewUrl ? (
+                  <img
+                    src={previewUrl}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <FileText className="text-gray-400" />
+                )}
               </div>
-            )}
+              <div className="flex-1 min-w-0">
+                <p className="text-white font-medium truncate">
+                  {selectedFile.name}
+                </p>
+              </div>
+              <button
+                onClick={() => setSelectedFile(null)}
+                disabled={isScanning}
+              >
+                <X className="w-5 h-5 text-gray-400 hover:text-white" />
+              </button>
+            </div>
+
             {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-xl text-sm flex items-start gap-3">
+              <div className="mb-6 bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 shrink-0" />
-                <span>{error}</span>
+                <span className="text-sm">{error}</span>
               </div>
             )}
 
-            {filesQueue.length > 0 && (
-              <div className="space-y-3">
-                <div className="flex justify-between items-center text-xs text-gray-400 px-1">
-                  <span>
-                    Geselecteerd: {filesQueue.length} / {maxScans}
-                  </span>
-                  <button
-                    onClick={() => setFilesQueue([])}
-                    disabled={isScanning}
-                    className="hover:text-white"
-                  >
-                    Alles wissen
-                  </button>
-                </div>
-                <button
-                  onClick={handleBatchScan}
-                  disabled={isScanning || filesQueue.length > maxScans}
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-3 rounded-xl hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20"
-                >
-                  {isScanning ? (
-                    <>
-                      <Loader2 className="animate-spin w-5 h-5" />
-                      <span>
-                        Verwerken ({currentScanIndex}/{filesQueue.length})...
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <ScanLine className="w-5 h-5" />
-                      Start Batch Verwerking
-                    </>
-                  )}
-                </button>
-              </div>
+            {/* ACTIE KNOPPEN */}
+            {!paymentProof ? (
+              <button
+                onClick={() => setShowPaymentModal(true)}
+                disabled={isScanning}
+                className="w-full bg-white hover:bg-gray-200 text-black font-bold text-lg py-4 rounded-xl transition flex items-center justify-center gap-3"
+              >
+                <span>Scan & Pay</span>
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            ) : (
+              /* Er is al betaald (bijv terug van Stripe) */
+              <button
+                onClick={
+                  paymentProof.type === "stripe"
+                    ? handleStripeContinue
+                    : () => {}
+                }
+                disabled={isScanning}
+                className="w-full bg-[#14F195] hover:bg-[#10c479] text-black font-bold text-lg py-4 rounded-xl transition flex items-center justify-center gap-3"
+              >
+                {isScanning ? (
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                ) : (
+                  <span>Betaling ontvangen! Start Scan</span>
+                )}
+              </button>
             )}
 
-            {batchList.length > 0 && (
-              <div className="border-t border-white/10 pt-6 mt-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-white font-semibold">
-                    Resultaten ({batchList.length})
-                  </h3>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={copyToClipboard}
-                      className="flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs text-gray-300 transition"
-                    >
-                      {copied ? (
-                        <ClipboardCheck className="w-3 h-3 text-green-400" />
-                      ) : (
-                        <Copy className="w-3 h-3" />
-                      )}
-                      {copied ? "Gekopieerd!" : "Kopieer"}
-                    </button>
-                    <button
-                      onClick={downloadBatchCSV}
-                      className="flex items-center gap-2 px-3 py-2 bg-white text-black font-bold rounded-lg text-xs hover:bg-gray-200 transition"
-                    >
-                      <Download className="w-3 h-3" />
-                      CSV
-                    </button>
-                  </div>
-                </div>
-                <div className="bg-white/5 rounded-xl overflow-hidden border border-white/10">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs">
-                      <thead className="bg-white/5 text-gray-400">
-                        <tr>
-                          <th className="p-3">Lev.</th>
-                          <th className="p-3">Datum</th>
-                          <th className="p-3">Totaal</th>
-                          <th className="p-3"></th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-white/5">
-                        {batchList.map((item, idx) => (
-                          <tr
-                            key={idx}
-                            className="group hover:bg-white/5 transition"
-                          >
-                            <td className="p-3 text-white">
-                              {item.leverancier}
-                            </td>
-                            <td className="p-3 text-gray-400">
-                              {item.factuurdatum}
-                            </td>
-                            <td className="p-3 text-green-400">
-                              €{item.totaal_incl?.toFixed(2)}
-                            </td>
-                            <td className="p-3 text-right">
-                              <button
-                                onClick={() => handleDeleteFromBatch(idx)}
-                                className="text-gray-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+            {!paymentProof && (
+              <p className="text-center text-xs text-gray-500 mt-4">
+                iDEAL, Creditcard & Solana geaccepteerd.
+              </p>
             )}
+          </div>
+        )}
 
-            {hasPaid &&
-              batchList.length > 0 &&
-              !isScanning &&
-              filesQueue.length === 0 && (
-                <div className="text-center pt-8 pb-4">
-                  <p className="text-gray-500 text-xs mb-2">
-                    Klaar met deze sessie? Download je data.
-                  </p>
-                  <button
-                    onClick={handleFullReset}
-                    className="text-red-400 hover:text-red-300 text-sm font-medium"
-                  >
-                    Sluit Sessie (Data wordt gewist)
-                  </button>
-                </div>
-              )}
+        {/* --- STATE 3: RESULT --- */}
+        {scanResult && (
+          <div className="animate-in zoom-in-95 duration-300">
+            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 mb-6 flex items-center gap-3">
+              <CheckCircle2 className="w-6 h-6 text-green-400" />
+              <div>
+                <h3 className="text-green-400 font-bold">Scan Succesvol!</h3>
+                <p className="text-xs text-green-400/70">
+                  Betaald via:{" "}
+                  {paymentProof?.type === "crypto" ? "Solana" : "Stripe"}
+                </p>
+              </div>
+            </div>
+            <div className="bg-black/50 rounded-xl border border-white/10 p-4 relative">
+              <pre className="text-xs font-mono text-blue-300 overflow-x-auto">
+                {JSON.stringify(scanResult, null, 2)}
+              </pre>
+            </div>
+            <button
+              onClick={reset}
+              className="w-full mt-6 bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-xl transition"
+            >
+              Volgende Factuur
+            </button>
           </div>
         )}
       </div>

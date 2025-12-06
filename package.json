@@ -15,6 +15,7 @@
     "@solana/web3.js": "^1.98.4",
     "bignumber.js": "^9.3.1",
     "framer-motion": "^12.23.24",
+    "ioredis": "^5.8.2",
     "jspdf": "^3.0.4",
     "jspdf-autotable": "^5.0.2",
     "lucide-react": "^0.555.0",
@@ -29,7 +30,8 @@
     "react-icons": "^5.5.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
-    "stripe": "^20.0.0"
+    "stripe": "^20.0.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
