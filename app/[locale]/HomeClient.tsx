@@ -1057,6 +1057,130 @@ export default function HomeClient() {
         </div>
       </section>
 
+      {/* HOE WE WERKEN */}
+      <section className="relative py-24 bg-black overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" />
+        <div className="absolute top-1/3 left-0 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 right-0 w-80 h-80 bg-amber-600/5 rounded-full blur-3xl" />
+
+        <div className="relative container mx-auto px-6 max-w-4xl">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <div className="inline-block mb-4 px-4 py-2 bg-purple-950/30 border border-purple-500/30 rounded-full">
+              <span className="text-purple-300 text-sm font-semibold tracking-wide">
+                ☕ ONZE AANPAK
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-white via-purple-300 to-amber-400 bg-clip-text text-transparent">
+                Hoe We Werken
+              </span>
+            </h2>
+          </div>
+
+          {/* Content blocks */}
+          <div className="space-y-12">
+            {/* Block 1 - Kennismaking */}
+            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-purple-500/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-purple-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative flex gap-6">
+                <div className="flex-shrink-0 w-14 h-14 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                  <span className="text-3xl">☕</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-3">
+                    Het begint met een gesprek
+                  </h3>
+                  <p className="text-gray-300 leading-relaxed">
+                    We komen langs, drinken een koffie en stellen veel vragen.
+                    Welke taken kosten jullie de meeste tijd? Wat zijn de
+                    vervelende klusjes die steeds terugkomen? En waar zou die
+                    tijd eigenlijk naartoe moeten gaan? We willen je bedrijf
+                    echt snappen, pas dan kunnen we iets bouwen dat werkt.{" "}
+                    <span className="text-purple-300 font-semibold">
+                      Deze kennismaking kost je niks.
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Block 2 - Plan */}
+            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-purple-500/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-purple-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative flex gap-6">
+                <div className="flex-shrink-0 w-14 h-14 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                  <span className="text-3xl">📋</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-3">
+                    Een concreet plan
+                  </h3>
+                  <p className="text-gray-300 leading-relaxed">
+                    Daarna maken we een plan. Concreet: dit kunnen we
+                    automatiseren, dit levert het op, dit kost het.{" "}
+                    <span className="text-white font-semibold">
+                      Geen verplichtingen, geen kleine lettertjes.
+                    </span>{" "}
+                    Vind je het niks? Dan schudden we handen en gaan we allebei
+                    verder.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Block 3 - Uitvoering */}
+            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-purple-500/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-purple-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative flex gap-6">
+                <div className="flex-shrink-0 w-14 h-14 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                  <span className="text-3xl">🚀</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-3">
+                    Wij bouwen, jij ziet resultaat
+                  </h3>
+                  <p className="text-gray-300 leading-relaxed">
+                    Maar zeg je ja, dan gaan we aan de slag. Je betaalt de helft
+                    vooraf, wij bouwen. Bij oplevering, als alles werkt zoals
+                    afgesproken, volgt de rest. En mocht het onverhoopt niet
+                    doen wat we beloofd hebben?{" "}
+                    <span className="text-amber-400 font-semibold">
+                      Dan krijg je je geld terug.
+                    </span>{" "}
+                    Wij geloven in wat we maken.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="mt-12 text-center">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-purple-500/50 text-white font-semibold rounded-xl hover:bg-purple-500/10 hover:border-purple-400 transition-all duration-300"
+            >
+              <span>Plan een koffie-moment</span>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <FAQSection />
     </main>
