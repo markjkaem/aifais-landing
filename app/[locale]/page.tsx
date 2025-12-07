@@ -1,33 +1,51 @@
 import { Metadata } from "next";
 import HomeClient from "./HomeClient";
-import { useTranslations } from "next-intl"; // Keep for consistency
+import { useTranslations } from "next-intl";
 
 // --- 1. DEFINITIONS AND CONSTANTS ---
 const BASE_URL = "https://aifais.com";
-const OG_IMAGE_URL = `${BASE_URL}/og-image.jpg`;
+// Ensure this image exists in your public folder
+const OG_IMAGE_URL = "/og-image.jpg";
 
 // --- 2. SEO METADATA (Optimized for MKB/ROI) ---
 export const metadata: Metadata = {
-  // ✅ IMPROVEMENT: Increased MKB keyword density in Title
-  title: "AI & Procesautomatisering voor MKB | Bespaar 40+ Uur/Week | AIFAIS",
+  // ✅ FIX: Define metadataBase to resolve relative URLs for OG images
+  metadataBase: new URL(BASE_URL),
+
+  title: {
+    default:
+      "AI & Procesautomatisering voor MKB | Bespaar 40+ Uur/Week | AIFAIS",
+    template: "%s | AIFAIS",
+  },
   description:
     "Automatiseer repetitieve taken en bedrijfsprocessen voor MKB. Bespaar direct 40+ uur per week. Geen programmeerkennis nodig. Vanaf €2.500, live binnen 2 weken.",
 
-  // Keywords are fine for legacy tracking
   keywords: [
     "bedrijfsautomatisering",
-    "procesautomatisering mkb", // Added highly relevant variation
+    "procesautomatisering mkb",
     "tijd besparen automatisering",
     "automatisering mkb",
-    "handmatige taken automatiseren",
-    "repetitieve taken automatisch",
+    "workflow management software", // Added high volume keyword
     "administratie automatiseren",
     "bedrijfsprocessen digitaliseren",
     "automatisering kleine bedrijven",
-    "automatisering zonder programmeren",
+    "zapier specialist nederland", // Specific intent
+    "make.com expert", // Specific intent
   ],
 
-  // OpenGraph (Social Media Previews) - Fine, uses new title
+  // ✅ FIX: Explicit robots tag
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
   openGraph: {
     title: "AI & Procesautomatisering voor MKB | Bespaar 40+ Uur/Week",
     description:
@@ -46,24 +64,31 @@ export const metadata: Metadata = {
     ],
   },
 
-  // Twitter Cards - Fine
   twitter: {
     card: "summary_large_image",
     title: "AI & Procesautomatisering voor MKB | Bespaar 40+ Uur/Week",
     description:
       "Automatiseer handmatig werk voor MKB. Stop met repetitieve taken. Live binnen 2 weken, vanaf €2.500.",
     images: [OG_IMAGE_URL],
-    creator: "@aifais", // ✅ Improvement: Added creator handle (if applicable)
+    // creator: "@aifais", // Uncomment if you have a Twitter handle
   },
 
   alternates: {
     canonical: BASE_URL,
+    // ✅ TIP: If you have English pages, enable this:
+    // languages: {
+    //   'en-US': '/en',
+    //   'nl-NL': '/nl',
+    // },
   },
+
+  // verification: {
+  //   google: "YOUR_GOOGLE_VERIFICATION_TOKEN",
+  // },
 };
 
 // --- 3. SCHEMA COMPONENTS (Optimized for Rich Snippets & E-E-A-T) ---
 
-// Component for FAQ Schema (Slightly reduced redundancy and optimized answer for speed promise)
 const FAQSchema = () => {
   const faqData = {
     "@context": "https://schema.org",
@@ -71,11 +96,9 @@ const FAQSchema = () => {
     mainEntity: [
       {
         "@type": "Question",
-        // ✅ Refined question to focus on end-to-end speed
         name: "Wat is de doorlooptijd van intake tot livegang van de automatisering?",
         acceptedAnswer: {
           "@type": "Answer",
-          // ✅ Refined answer to emphasize speed (matching title promise) and clarity
           text: "Gemiddeld 2 weken van intake tot livegang. Simpele automatiseringen zijn vaak al binnen 1 week live. Het proces omvat intake, bouwen, testen, en training.",
         },
       },
@@ -103,14 +126,6 @@ const FAQSchema = () => {
           text: "Ja. We koppelen met 400+ tools zoals Google Workspace, Excel, HubSpot, Exact Online, Salesforce, Slack, en meer.",
         },
       },
-      {
-        "@type": "Question",
-        name: "Wat als het niet werkt zoals verwacht?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "We bieden 30 dagen gratis support na livegang. Daarna optionele onderhoudscontracten vanaf €200/maand.",
-        },
-      },
     ],
   };
 
@@ -122,7 +137,6 @@ const FAQSchema = () => {
   );
 };
 
-// Component for Service Schema (Anchors the pricing and service type)
 const ServiceSchema = () => {
   const serviceData = {
     "@context": "https://schema.org",
@@ -148,7 +162,7 @@ const ServiceSchema = () => {
             description:
               "Automatiseer repetitieve taken zoals offertes, administratie, facturatie en rapportages. Bespaar direct 40+ uur per week.",
           },
-          price: "2500",
+          price: "2500.00",
           priceCurrency: "EUR",
         },
         {
@@ -159,7 +173,7 @@ const ServiceSchema = () => {
             description:
               "Geavanceerde automatisering met meerdere systemen, complexe beslissingslogica en AI-integraties.",
           },
-          price: "5000",
+          price: "5000.00",
           priceCurrency: "EUR",
         },
       ],
@@ -174,7 +188,6 @@ const ServiceSchema = () => {
   );
 };
 
-// Component for Organization Schema (Crucial for E-E-A-T/Local SEO)
 const OrganizationSchema = () => {
   const orgData = {
     "@context": "https://schema.org",
@@ -182,7 +195,8 @@ const OrganizationSchema = () => {
     "@id": `${BASE_URL}/#organization`,
     name: "AIFAIS Bedrijfsautomatisering",
     url: BASE_URL,
-    logo: `${BASE_URL}/logo_official.png`, // ✅ IMPROVEMENT: Assume a specific logo path
+    logo: `${BASE_URL}/logo-official.png`,
+    image: `${BASE_URL}/og-image.jpg`, // Added Image property
     description:
       "Specialist in bedrijfsautomatisering en AI-integraties voor het MKB in Nederland.",
     areaServed: {
@@ -190,25 +204,25 @@ const OrganizationSchema = () => {
       name: "Nederland",
     },
     priceRange: "€2500 - €5000+",
-    // ✅ IMPROVEMENT: Added Address and corrected ContactPoint
     address: {
       "@type": "PostalAddress",
       streetAddress: "Groningenweg 8",
       addressLocality: "Gouda",
-      addressRegion: "ZH",
-      postalCode: "2802 PV",
+      addressRegion: "Zuid-Holland",
+      postalCode: "2803 PV",
       addressCountry: "NL",
     },
+    // ✅ FIX: Contact info is crucial for Local SEO trust
     contactPoint: {
       "@type": "ContactPoint",
-
-      contactType: "Sales",
+      telephone: "+31 6 1842 4470",
+      email: "contact@aifais.com",
+      contactType: "customer service",
       areaServed: "NL",
-      availableLanguage: "Dutch",
+      availableLanguage: ["Dutch", "English"],
     },
     sameAs: [
-      "https://www.linkedin.com/company/aifais-automatisering",
-      // Add other social profiles like Twitter/X or Facebook here
+      "https://www.linkedin.com/company/aifais", // Verify this URL
     ],
   };
 
