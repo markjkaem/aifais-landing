@@ -131,7 +131,7 @@ export default async function ServiceDetailPage({
   };
 
   return (
-    <main className="bg-[#fbfff1] text-gray-900 min-h-screen">
+    <main className="bg-white text-gray-900 min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -178,7 +178,7 @@ export default async function ServiceDetailPage({
       </section>
 
       {/* --- BENEFITS & FEATURES (Light Theme) --- */}
-      <section className="py-20 bg-[#fbfff1]">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-2 gap-16 items-start">
             {/* Left: Features */}
@@ -270,7 +270,7 @@ export default async function ServiceDetailPage({
       </section>
 
       {/* --- CTA (Light Theme) --- */}
-      <section className="py-24 bg-gradient-to-b from-[#fbfff1] to-white text-center border-t border-gray-200">
+      <section className="py-24 bg-gradient-to-b from-white to-white text-center border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Niet zeker of dit bij jou past?

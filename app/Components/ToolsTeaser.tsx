@@ -12,7 +12,7 @@ import {
 
 export default function ToolsTeaser() {
   return (
-    <section className="py-32 bg-[#fbfff1] relative overflow-hidden">
+    <section className="py-32 bg-white relative overflow-hidden">
       {/* Achtergrond Sfeerlicht (Glows - Light Mode) */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-[#3066be]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />

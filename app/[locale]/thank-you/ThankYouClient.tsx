@@ -16,7 +16,7 @@ export default function ThankYouClient() {
 
   return (
     <>
-      <div className="min-h-screen bg-[#fbfff1] text-gray-900 flex flex-col items-center justify-center p-6 md:p-10">
+      <div className="min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center p-6 md:p-10">
         <article className="max-w-2xl w-full text-center space-y-8">
           {/* Success Icon */}
           <div className="mx-auto w-24 h-24 rounded-full bg-[#3066be]/10 flex items-center justify-center border border-[#3066be]/20 shadow-lg shadow-[#3066be]/10">

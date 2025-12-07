@@ -171,7 +171,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
 
       {/* Navigation Header (Consistent Light UI) */}
       <nav
-        className="bg-[#fbfff1]/95 py-4 border-b border-gray-200 sticky top-0 z-40 backdrop-blur-md"
+        className="bg-white/95 py-4 border-b border-gray-200 sticky top-0 z-40 backdrop-blur-md"
         aria-label="Breadcrumb"
       >
         <div className="container mx-auto px-6 max-w-4xl">
@@ -322,7 +322,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
       </div>
 
       {/* Client Logic (Content Rendering & Sidebar) */}
-      <div className="bg-[#fbfff1]">
+      <div className="bg-white">
         <ClientWrapper
           article={article}
           slug={slug}
@@ -345,7 +345,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
                 <Link
                   key={related.slug}
                   href={`/news/${related.slug}`}
-                  className="group flex flex-col h-full bg-[#fbfff1] rounded-2xl overflow-hidden border border-gray-200 hover:border-[#3066be]/30 hover:shadow-lg transition-all duration-300"
+                  className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-[#3066be]/30 hover:shadow-lg transition-all duration-300"
                 >
                   {related.image && (
                     <div className="relative h-48 overflow-hidden">
@@ -400,7 +400,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
       )}
 
       {/* ✅ CTA SECTION (Light Theme) */}
-      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#fbfff1] to-white border-t border-gray-200">
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-white to-white border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl relative z-10 text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
             Klaar Voor Jouw Eigen{" "}

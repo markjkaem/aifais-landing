@@ -62,7 +62,7 @@ const ToolSchema = () => {
 // --- 4. SERVER COMPONENT RENDER ---
 export default function FactuurScannerPage() {
   return (
-    <div className="min-h-screen bg-[#fbfff1] font-sans relative flex flex-col items-center justify-center p-6 overflow-hidden text-gray-900">
+    <div className="min-h-screen bg-white font-sans relative flex flex-col items-center justify-center p-6 overflow-hidden text-gray-900">
       <ToolSchema />
 
       {/* 1. Grid Background Effect (Light Mode) */}

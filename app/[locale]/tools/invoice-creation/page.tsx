@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function FactuurMakerPage() {
   return (
-    <div className="min-h-screen bg-[#fbfff1] font-sans relative flex flex-col items-center justify-center p-6 overflow-hidden text-gray-900">
+    <div className="min-h-screen bg-white font-sans relative flex flex-col items-center justify-center p-6 overflow-hidden text-gray-900">
       {/* Background Effects (Light Mode) */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#3066be10_1px,transparent_1px),linear-gradient(to_bottom,#3066be10_1px,transparent_1px)] bg-[size:24px_24px]"></div>
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3066be]/5 rounded-full blur-[120px] pointer-events-none"></div>

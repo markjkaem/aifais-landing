@@ -86,7 +86,7 @@ export default function ServicesPage() {
   };
 
   return (
-    <main className="bg-[#fbfff1] text-gray-900 min-h-screen">
+    <main className="bg-white text-gray-900 min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema) }}
@@ -117,7 +117,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ✅ SERVICES GRID (Light Theme) */}
-      <section className="py-16 md:py-24 bg-[#fbfff1]">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-8">
             {/* Service 1: Workflows */}
@@ -217,7 +217,7 @@ export default function ServicesPage() {
                 </li>
               </ul>
               <Link
-                href="/diensten/ai-integraties"
+                href="/diensten/ai-integratie"
                 className="text-purple-600 font-bold border-b border-purple-200 pb-1 hover:border-purple-600 hover:text-purple-800 transition flex items-center gap-2 w-fit"
               >
                 Ontdek AI Kansen <span className="text-lg">→</span>
@@ -338,7 +338,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ✅ CTA SECTION (Light Theme Gradient) */}
-      <section className="py-24 bg-gradient-to-b from-[#fbfff1] to-white text-center border-t border-gray-200">
+      <section className="py-24 bg-gradient-to-b from-white to-white text-center border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900">
             Klaar Om Je Bedrijf Te <br />

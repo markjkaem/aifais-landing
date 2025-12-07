@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function ToolsPage() {
   return (
-    <div className="min-h-screen bg-[#fbfff1] font-sans text-gray-900 relative overflow-hidden">
+    <div className="min-h-screen bg-white font-sans text-gray-900 relative overflow-hidden">
       {/* Achtergrond (Light Mode) */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#3066be10_1px,transparent_1px),linear-gradient(to_bottom,#3066be10_1px,transparent_1px)] bg-[size:24px_24px]"></div>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#3066be]/5 rounded-full blur-[100px] pointer-events-none"></div>

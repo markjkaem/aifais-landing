@@ -173,7 +173,7 @@ export default async function PortfolioItemPage({
 
       {/* ✅ BREADCRUMBS UI (Light Theme) */}
       <nav
-        className="bg-[#fbfff1]/95 py-4 border-b border-gray-200 sticky top-0 z-40 backdrop-blur-md"
+        className="bg-white/95 py-4 border-b border-gray-200 sticky top-0 z-40 backdrop-blur-md"
         aria-label="Breadcrumb"
       >
         <div className="container mx-auto px-6 max-w-6xl">
@@ -307,7 +307,7 @@ export default async function PortfolioItemPage({
 
       {/* ✅ RESULTS SECTION (Light Theme) */}
       {project.results && (
-        <section className="py-16 bg-[#fbfff1]">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-6 max-w-5xl">
             <h2 className="text-2xl font-bold text-center mb-10 text-gray-900">
               <span className="border-b-2 border-[#3066be] pb-2">
@@ -401,7 +401,7 @@ export default async function PortfolioItemPage({
           {/* Testimonial */}
           {project.testimonial && (
             <section className="mt-16">
-              <blockquote className="bg-[#fbfff1] border border-[#3066be]/20 rounded-3xl p-8 md:p-12 relative overflow-hidden shadow-sm">
+              <blockquote className="bg-white border border-[#3066be]/20 rounded-3xl p-8 md:p-12 relative overflow-hidden shadow-sm">
                 {/* Quote Icon */}
                 <div className="absolute top-6 left-8 text-[#3066be]/10 text-8xl font-serif leading-none select-none">
                   "
@@ -431,7 +431,7 @@ export default async function PortfolioItemPage({
 
       {/* ✅ RELATED PROJECTS (Light Theme) */}
       {relatedProjects.length > 0 && (
-        <section className="py-20 bg-[#fbfff1] border-t border-gray-200">
+        <section className="py-20 bg-white border-t border-gray-200">
           <div className="container mx-auto px-6 max-w-6xl">
             <h2 className="text-2xl font-bold mb-10 text-gray-900 flex items-center justify-center gap-3">
               Meer Projecten
@@ -496,7 +496,7 @@ export default async function PortfolioItemPage({
       )}
 
       {/* ✅ CTA SECTION (Light Theme) */}
-      <section className="py-24 bg-gradient-to-b from-white to-[#fbfff1] text-center relative overflow-hidden border-t border-gray-200">
+      <section className="py-24 bg-gradient-to-b from-white to-white text-center relative overflow-hidden border-t border-gray-200">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#3066be]/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-4xl relative z-10">

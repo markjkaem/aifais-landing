@@ -62,7 +62,7 @@ export default function NewsIndexPage() {
   };
 
   return (
-    <main className="bg-[#fbfff1] min-h-screen text-gray-900">
+    <main className="bg-white min-h-screen text-gray-900">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
@@ -91,7 +91,7 @@ export default function NewsIndexPage() {
       </section>
 
       {/* ✅ ARTICLES GRID (Light Theme) */}
-      <section className="py-16 md:py-24 bg-[#fbfff1] min-h-screen">
+      <section className="py-16 md:py-24 bg-white min-h-screen">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {news.map((article) => (

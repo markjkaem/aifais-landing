@@ -275,7 +275,7 @@ export default function HeaderMockup() {
 
   return (
     <header
-      className={`w-full bg-[#fbfff1]/95 backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300 ${
+      className={`w-full bg-white/95 backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
@@ -484,7 +484,7 @@ export default function HeaderMockup() {
 
       {/* Search Overlay */}
       {searchOpen && (
-        <div className="absolute top-full left-0 right-0 bg-[#fbfff1]/98 backdrop-blur-xl border-b border-gray-200 shadow-xl animate-slideDown">
+        <div className="absolute top-full left-0 right-0 bg-white/98 backdrop-blur-xl border-b border-gray-200 shadow-xl animate-slideDown">
           <div className="max-w-3xl mx-auto px-6 py-6">
             <div className="relative">
               <svg
@@ -683,7 +683,7 @@ export default function HeaderMockup() {
 
       {/* MOBILE MENU */}
       {mobileOpen && (
-        <div className="lg:hidden bg-[#fbfff1] border-t border-gray-200 px-6 py-6 space-y-4 text-gray-800 text-base max-h-[80vh] overflow-y-auto animate-slideDown shadow-2xl">
+        <div className="lg:hidden bg-white border-t border-gray-200 px-6 py-6 space-y-4 text-gray-800 text-base max-h-[80vh] overflow-y-auto animate-slideDown shadow-2xl">
           {/* Mobile Search */}
           <div className="pb-4 border-b border-gray-200">
             <input

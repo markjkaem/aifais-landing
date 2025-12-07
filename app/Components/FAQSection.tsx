@@ -52,7 +52,7 @@ export default function FAQSection() {
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="relative py-24 bg-[#fbfff1] overflow-hidden border-t border-gray-200"
+      className="relative py-24 bg-white overflow-hidden border-t border-gray-200"
     >
       {/* Background effects (Light Mode) */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />

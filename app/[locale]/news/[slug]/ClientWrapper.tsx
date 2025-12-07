@@ -249,7 +249,7 @@ export function ClientWrapper({
       <div className="relative">
         <TableOfContents content={article.content} />
 
-        <article className="pb-12 md:pb-20 bg-[#fbfff1] min-h-screen">
+        <article className="pb-12 md:pb-20 bg-white min-h-screen">
           <div className="max-w-3xl px-6 mx-auto">
             {/* Markdown Content */}
             <div className="prose prose-lg prose-gray max-w-none">

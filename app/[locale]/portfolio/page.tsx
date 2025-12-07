@@ -86,7 +86,7 @@ export default function Portfolio() {
   };
 
   return (
-    <main className="bg-[#fbfff1] min-h-screen text-gray-900">
+    <main className="bg-white min-h-screen text-gray-900">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(portfolioSchema) }}
@@ -145,7 +145,7 @@ export default function Portfolio() {
       </section>
 
       {/* ✅ PROJECTS GRID (Light Theme) */}
-      <section className="py-16 md:py-24 bg-[#fbfff1] min-h-screen">
+      <section className="py-16 md:py-24 bg-white min-h-screen">
         <div className="container mx-auto px-6 max-w-6xl">
           {projects.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -241,7 +241,7 @@ export default function Portfolio() {
       </section>
 
       {/* ✅ CTA SECTION (Light Theme) */}
-      <section className="py-24 bg-gradient-to-b from-[#fbfff1] to-white text-center relative overflow-hidden border-t border-gray-200">
+      <section className="py-24 bg-gradient-to-b from-white to-white text-center relative overflow-hidden border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900">
             Jouw Bedrijf Ook In{" "}

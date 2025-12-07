@@ -98,7 +98,7 @@ export default function QuickScanPage() {
   };
 
   return (
-    <main className="bg-[#fbfff1] min-h-screen text-gray-900">
+    <main className="bg-white min-h-screen text-gray-900">
       {/* Schemas */}
       <script
         type="application/ld+json"
