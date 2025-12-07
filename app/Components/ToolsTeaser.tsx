@@ -7,41 +7,58 @@ import {
   FileText,
   Scale,
   Mail,
+  Cpu,
 } from "lucide-react";
 
 export default function ToolsTeaser() {
   return (
     <section className="py-32 bg-black relative overflow-hidden">
       {/* Achtergrond Sfeerlicht (Glows) */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-gray-900/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-gray-900/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* De 'Glass' Card */}
         <div className="relative bg-[#0A0A0A] border border-white/10 rounded-[32px] p-8 md:p-16 overflow-hidden group">
           {/* Subtiele gradient overlay op hover */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-500/5 via-transparent to-gray-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* LINKER KANT: De Pitch */}
             <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-500/10 border border-gray-500/20 text-gray-400 text-xs font-bold uppercase tracking-wider shadow-[0_0_10px_rgba(59,130,246,0.2)]">
-                <Sparkles className="w-3 h-3 fill-current" />
-                Aifais Self-Service
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-bold uppercase tracking-wider shadow-[0_0_10px_rgba(168,85,247,0.2)]">
+                <Cpu className="w-3 h-3" />
+                Live Tech Demo
               </div>
 
               <h2 className="text-4xl md:text-6xl font-bold text-white leading-[1.1] tracking-tight">
-                Geen zin in <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 via-indigo-400 to-gray-500">
-                  dure consultants?
+                Ervaar de kracht van <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-white">
+                  Headless Agents
                 </span>
               </h2>
 
               <p className="text-gray-400 text-lg leading-relaxed max-w-md">
-                Soms heb je geen groot traject nodig, maar gewoon een snelle
-                oplossing. Gebruik onze krachtige AI-tools om taken direct zelf
-                op te lossen.
+                Geen praatjes, maar werkende code. Probeer onze{" "}
+                <strong>autonome factuurscanner</strong>. Volledig aangedreven
+                door Solana Blinks, X402 betalingen en het MCP protocol.
               </p>
+
+              {/* Tech Badges */}
+              <div className="flex flex-wrap gap-2">
+                <span className="px-2 py-1 bg-zinc-800 border border-zinc-700 rounded text-[10px] text-gray-400 font-mono">
+                  SOLANA
+                </span>
+                <span className="px-2 py-1 bg-zinc-800 border border-zinc-700 rounded text-[10px] text-gray-400 font-mono">
+                  X402
+                </span>
+                <span className="px-2 py-1 bg-zinc-800 border border-zinc-700 rounded text-[10px] text-gray-400 font-mono">
+                  MCP
+                </span>
+                <span className="px-2 py-1 bg-zinc-800 border border-zinc-700 rounded text-[10px] text-gray-400 font-mono">
+                  AI
+                </span>
+              </div>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
@@ -49,7 +66,7 @@ export default function ToolsTeaser() {
                   className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:-translate-y-1"
                 >
                   <Zap className="w-4 h-4 fill-black" />
-                  Probeer Scanner
+                  Start Agent
                 </Link>
                 <Link
                   href="/tools"
@@ -68,10 +85,10 @@ export default function ToolsTeaser() {
                 <div className="flex items-center justify-between mb-8 pb-6 border-b border-white/5">
                   <div>
                     <h4 className="text-white font-bold text-lg">
-                      Direct Beschikbaar
+                      Active Agents
                     </h4>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Geen account nodig • Betaal per gebruik
+                    <p className="text-xs text-gray-500 mt-1 font-mono">
+                      Status: ONLINE • Network: SOLANA
                     </p>
                   </div>
                   <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center animate-pulse">
@@ -81,20 +98,30 @@ export default function ToolsTeaser() {
 
                 <div className="space-y-4">
                   {/* Item 1 */}
-                  <div className="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-gray-500/30 transition-colors">
-                    <div className="w-10 h-10 rounded-lg bg-gray-500/20 flex items-center justify-center shrink-0 text-gray-400">
-                      <FileText className="w-5 h-5" />
+                  <Link
+                    href="/tools/invoice-extraction"
+                    className="block group/item"
+                  >
+                    <div className="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/5 group-hover/item:border-purple-500/50 transition-colors cursor-pointer">
+                      <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center shrink-0 text-purple-400">
+                        <FileText className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-white font-medium text-sm group-hover/item:text-purple-300 transition-colors">
+                          Invoice Extraction Agent
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          OCR + Validatie + JSON Export
+                        </p>
+                      </div>
+                      <div className="ml-auto flex items-center gap-2">
+                        <span className="text-[10px] bg-zinc-800 px-1.5 py-0.5 rounded text-gray-400 font-mono">
+                          0.001 SOL
+                        </span>
+                        <ArrowRight className="w-4 h-4 text-gray-600 group-hover/item:text-purple-400 -translate-x-2 group-hover/item:translate-x-0 transition-all opacity-0 group-hover/item:opacity-100" />
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-white font-medium text-sm">
-                        Factuur naar Excel
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Extractie met KvK & BTW check
-                      </p>
-                    </div>
-                    <Check className="w-4 h-4 text-green-500 ml-auto" />
-                  </div>
+                  </Link>
 
                   {/* Item 2 */}
                   <div className="flex items-center gap-4 p-3 rounded-xl border border-transparent opacity-60">
@@ -103,27 +130,33 @@ export default function ToolsTeaser() {
                     </div>
                     <div>
                       <p className="text-white font-medium text-sm">
-                        Juridische Brief
+                        Legal Review Agent
                       </p>
                       <p className="text-xs text-gray-500">
-                        Binnenkort beschikbaar
+                        Contract analyse & risico check
                       </p>
                     </div>
+                    <span className="ml-auto text-[10px] border border-gray-700 px-1.5 py-0.5 rounded text-gray-600 font-mono">
+                      SOON
+                    </span>
                   </div>
 
                   {/* Item 3 */}
                   <div className="flex items-center gap-4 p-3 rounded-xl border border-transparent opacity-60">
-                    <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center shrink-0 text-orange-400">
+                    <div className="w-10 h-10 rounded-lg bg-gray-500/10 flex items-center justify-center shrink-0 text-gray-400">
                       <Mail className="w-5 h-5" />
                     </div>
                     <div>
                       <p className="text-white font-medium text-sm">
-                        Offerte AI
+                        Email Triage Agent
                       </p>
                       <p className="text-xs text-gray-500">
-                        Binnenkort beschikbaar
+                        Inbox sorteren & auto-reply
                       </p>
                     </div>
+                    <span className="ml-auto text-[10px] border border-gray-700 px-1.5 py-0.5 rounded text-gray-600 font-mono">
+                      SOON
+                    </span>
                   </div>
                 </div>
               </div>

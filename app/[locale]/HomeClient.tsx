@@ -1,36 +1,26 @@
 "use client";
 // ========================================
-// FILE: app/HomeClient.tsx - SEO GEOPTIMALISEERD
+// FILE: app/HomeClient.tsx - MKB "JIP EN JANNEKE" EDITIE
 // ========================================
 
 import Image from "next/image";
 import Link from "next/link";
 import { Space_Grotesk } from "next/font/google";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { projects } from "./portfolio/data";
 import FAQSection from "../Components/FAQSection";
 import ToolsTeaser from "../Components/ToolsTeaser";
 
-interface CasesProps {
-  projects: Array<{
-    slug: string;
-    image: string;
-    title: string;
-    description: string;
-    tag?: string;
-    savings?: string;
-  }>;
-}
-
+// Fonts
 const h1 = Space_Grotesk({
-  weight: "700",
-  subsets: ["latin"],
+  weight: "500",
+  subsets: ["vietnamese"],
 });
 
-// ✅ REUSABLE SVG FOR LINKEDIN (E-E-A-T)
+// Icons
 const LinkedInIcon = () => (
   <svg
-    className="w-6 h-6 text-gray-400 group-hover:text-gray-500 transition-colors"
+    className="w-6 h-6 text-gray-400 group-hover:text-blue-500 transition-colors"
     fill="currentColor"
     viewBox="0 0 24 24"
   >
@@ -38,35 +28,28 @@ const LinkedInIcon = () => (
   </svg>
 );
 
+const EmailIcon = () => (
+  <svg
+    className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+    />
+  </svg>
+);
+
 export default function HomeClient() {
-  const bgClass = "bg-black";
-  const textClass = "text-white";
-  const accentColor = "text-gray-500";
-
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
-
-  const toggleMute = () => {
-    if (!videoRef.current) return;
-
-    if (isMuted) {
-      videoRef.current.muted = false;
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    } else {
-      videoRef.current.muted = true;
-    }
-
-    setIsMuted(!isMuted);
-  };
-
   return (
-    <main
-      className={`${bgClass} ${textClass} min-h-screen transition-colors duration-500`}
-    >
-      {/* HERO */}
+    <main className="bg-black text-white min-h-screen transition-colors duration-500">
+      {/* ================= HERO SECTION ================= */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Achtergrondvideo met gradient overlay */}
+        {/* Background Video */}
         <div className="absolute inset-0 w-full h-full">
           <video
             src="/coding.mp4"
@@ -74,201 +57,83 @@ export default function HomeClient() {
             loop
             muted
             playsInline
-            title="Bedrijfsprocessen automatiseren met AI" // ✅ Improved title
-            aria-label="Achtergrond video van automatisering code"
-            className="w-full h-full object-cover brightness-[0.35] contrast-125 saturate-150 scale-105"
-          >
-            <p>
-              Je browser ondersteunt geen video. Bekijk onze diensten hieronder.
-            </p>
-          </video>
-          {/* Multi-layer gradient for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-gray-900/30" />
+            className="w-full h-full object-cover brightness-[0.3] contrast-125 saturate-0 scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-purple-900/20" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
         </div>
 
-        {/* Animated background particles/grid (optional) */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.1),transparent_50%)]" />
-        </div>
-
-        {/* Glass side panels - improved */}
-        <div
-          className="absolute inset-y-0 left-0 w-[100px] lg:w-[140px] bg-gradient-to-r from-black/80 via-black/60 to-transparent backdrop-blur-md border-r border-white/5 hidden md:block"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute inset-y-0 right-0 w-[100px] lg:w-[140px] bg-gradient-to-l from-black/80 via-black/60 to-transparent backdrop-blur-md border-l border-white/5 hidden md:block"
-          aria-hidden="true"
-        />
-
-        {/* Main Content Container */}
+        {/* Content */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-4">
           <div className="max-w-4xl">
-            {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-500/10 border border-gray-500/20 rounded-full mb-6 backdrop-blur-sm">
+            {/* Tech Badge - Simpeler */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900/50 border border-gray-700 rounded-full mb-8 backdrop-blur-md cursor-default">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gray-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-gray-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
               </span>
-              <span className="text-sm text-gray-300 font-medium">
-                🇳🇱 Specialist in Nederlandse MKB Automatisering
+              <span className="text-xs md:text-sm text-gray-300 font-mono tracking-wide">
+                NIEUW: INTELLIGENTE AUTOMATISERING
               </span>
             </div>
 
-            {/* Eyebrow */}
-            <p className="text-gray-400 font-semibold text-base md:text-lg mb-4 tracking-wide uppercase">
-              Bedrijfsautomatisering Nederland
-            </p>
-
-            {/* Main Headline - H1 Optimization */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
-              <span className="text-white block">
-                Procesautomatisering voor MKB:
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 via-gray-300 to-yellow-300 animate-gradient">
-                  {" "}
-                  Bespaar 40+ Uur
-                </span>
+            {/* Main Headline - MKB Vriendelijk */}
+            <h1
+              className={`${h1.className} text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.1] mb-6`}
+            >
+              <span className="text-white block">Neem je eerste</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-amber-300 animate-gradient block">
+                Digitale Werknemer
               </span>
-              <span className="text-gray-300 block mt-2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
-                Wekelijks met Slimme AI
-              </span>
+              <span className="text-white block">aan.</span>
             </h1>
 
-            {/* Subheadline - More compelling */}
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed mb-8 max-w-3xl">
-              Stop met handmatig werk. Automatiseer repetitieve processen – van
-              offertes versturen tot administratie.
-              <span className="text-white font-semibold">
-                {" "}
-                Bespaar kosten, voorkom fouten, en schaal zonder nieuwe
-                medewerkers. Geen programmeerkennis nodig.
+            {/* Subheadline - Probleem & Oplossing */}
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-400 leading-relaxed mb-10 max-w-2xl">
+              Stop met het verspillen van tijd aan saai klikwerk. Wij bouwen
+              slimme software die{" "}
+              <strong className="text-white">zelfstandig taken uitvoert</strong>
+              . Van facturen inboeken tot mails beantwoorden.
+              <span className="block mt-2 text-white font-medium">
+                Nooit ziek. Werkt 24/7. Geen loonbelasting.
               </span>
             </p>
 
-            {/* Social Proof Stats - NEW */}
-            <div className="flex flex-wrap gap-6 md:gap-8 mb-8 pb-8 border-b border-white/10">
-              <div className="flex flex-col">
-                <div className="text-3xl md:text-4xl font-bold text-white">
-                  40+
+            {/* Stats / Tech Specs - Vertaald naar Business Value */}
+            <div className="flex flex-wrap gap-8 md:gap-12 mb-10 pb-10 border-b border-white/10 font-mono">
+              <div>
+                <div className="text-2xl md:text-3xl font-bold text-white">
+                  24/7
                 </div>
-                <div className="text-sm text-gray-400">Uur bespaard/week</div>
+                <div className="text-xs text-gray-500 uppercase tracking-widest mt-1">
+                  Beschikbaar
+                </div>
               </div>
-              <div className="flex flex-col">
-                <div className="text-3xl md:text-4xl font-bold text-white">
-                  2 weken
+              <div>
+                <div className="text-2xl md:text-3xl font-bold text-white">
+                  €0,00
                 </div>
-                <div className="text-sm text-gray-400">Tot implementatie</div>
+                <div className="text-xs text-gray-500 uppercase tracking-widest mt-1">
+                  Vaste lasten
+                </div>
               </div>
-              <div className="flex flex-col">
-                <div className="text-3xl md:text-4xl font-bold text-white">
-                  3 mnd
+              <div>
+                <div className="text-2xl md:text-3xl font-bold text-white">
+                  100%
                 </div>
-                <div className="text-sm text-gray-400">Gemiddelde ROI</div>
-              </div>
-              <div className="flex flex-col">
-                <div className="text-3xl md:text-4xl font-bold text-white">
-                  95%
+                <div className="text-xs text-gray-500 uppercase tracking-widest mt-1">
+                  Foutloos
                 </div>
-                <div className="text-sm text-gray-400">Minder fouten</div>
               </div>
             </div>
 
-            {/* Benefits List - Improved design */}
-            <ul className="grid sm:grid-cols-2 gap-3 mb-8">
-              <li className="flex items-start gap-3 text-gray-200">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5">
-                  <svg
-                    className="w-4 h-4 text-green-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-                <span className="text-base md:text-lg">
-                  <strong className="text-white">Binnen 2 weken</strong>{" "}
-                  operationeel
-                </span>
-              </li>
-              <li className="flex items-start gap-3 text-gray-200">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5">
-                  <svg
-                    className="w-4 h-4 text-green-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-                <span className="text-base md:text-lg">
-                  <strong className="text-white">Geen programmeren</strong>{" "}
-                  nodig
-                </span>
-              </li>
-              <li className="flex items-start gap-3 text-gray-200">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5">
-                  <svg
-                    className="w-4 h-4 text-green-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-                <span className="text-base md:text-lg">
-                  <strong className="text-white">400+ integraties</strong>{" "}
-                  beschikbaar
-                </span>
-              </li>
-              <li className="flex items-start gap-3 text-gray-200">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5">
-                  <svg
-                    className="w-4 h-4 text-green-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-                <span className="text-base md:text-lg">
-                  <strong className="text-white">100% data-eigendom</strong>{" "}
-                  gegarandeerd
-                </span>
-              </li>
-            </ul>
-
-            {/* CTA Buttons - Improved design */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-6">
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/quickscan"
-                className="group relative px-8 py-4 bg-gradient-to-r from-gray-600 to-gray-500 text-white font-bold rounded-xl hover:from-gray-500 hover:to-gray-400 transition-all duration-300 shadow-2xl shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 flex items-center justify-center gap-2"
+                className="group relative px-8 py-4 bg-white text-black font-bold text-lg rounded-full hover:bg-gray-200 transition-all duration-300 flex items-center justify-center gap-3"
               >
-                <span>Bereken Jouw Besparing</span>
+                <span>Bereken je Winst</span>
                 <svg
                   className="w-5 h-5 group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -279,253 +144,212 @@ export default function HomeClient() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
               </Link>
-
               <Link
-                href="#cases"
-                className="px-8 py-4 border-2 border-gray-600 rounded-xl text-white font-semibold hover:border-gray-400 hover:bg-gray-400/10 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm"
+                href="#demo"
+                className="px-8 py-4 border border-white/20 rounded-full text-white font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center backdrop-blur-sm"
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
-                </svg>
-                <span>Bekijk Voorbeelden</span>
+                Hoe werkt het?
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Trust indicators */}
-            <div className="flex flex-wrap items-center gap-6">
-              <div className="flex items-center gap-2 text-sm text-gray-400">
-                <svg
-                  className="w-5 h-5 text-green-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span>Gratis haalbaarheidscheck</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-400">
-                <svg
-                  className="w-5 h-5 text-green-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <span>Reactie binnen 24 uur</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-400">
-                <svg
-                  className="w-5 h-5 text-green-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <span>Geen verplichtingen</span>
+      {/* ================= UITLEG SECTIE (Jip en Janneke) ================= */}
+      <section className="py-24 bg-zinc-950 border-y border-white/5">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            {/* Text Content */}
+            <div>
+              <h2
+                className={`${h1.className} text-3xl md:text-5xl font-bold mb-6`}
+              >
+                Software die <span className="text-purple-300">doet</span>,
+                <br />
+                niet software die{" "}
+                <span className="text-gray-300 line-through decoration-gray-100">
+                  wacht
+                </span>
+                .
+              </h2>
+              <p className="text-gray-400 text-lg mb-6 leading-relaxed">
+                De meeste software (zoals je boekhoudpakket of CRM) is dom. Het
+                zit te wachten tot <strong>jij</strong> op de knoppen drukt.
+              </p>
+              <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+                Wij bouwen <strong>Agenten</strong>. Zie dit als digitale robots
+                die jouw software besturen. Ze lezen je mail, openen bijlagen,
+                begrijpen de inhoud en zetten het in je systeem. Zonder dat jij
+                iets hoeft te doen.
+              </p>
+
+              <ul className="space-y-4 font-medium">
+                <li className="flex items-center gap-4">
+                  <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
+                    ✓
+                  </div>
+                  <span className="text-gray-200">
+                    Koppelbaar met alles (Mail, Excel, Exact, Stripe)
+                  </span>
+                </li>
+                <li className="flex items-center gap-4">
+                  <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
+                    ✓
+                  </div>
+                  <span className="text-gray-200">
+                    Betaal per uitgevoerde taak (Micro-betalingen)
+                  </span>
+                </li>
+                <li className="flex items-center gap-4">
+                  <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 border border-green-500/20">
+                    ✓
+                  </div>
+                  <span className="text-gray-200">
+                    Slimmer dan standaard automatisering (AI)
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Visual: Vergelijking Oud vs Nieuw */}
+            <div className="relative w-full bg-gradient-to-br from-zinc-900 to-black rounded-3xl border border-zinc-800 p-8 flex flex-col justify-center items-center overflow-hidden">
+              <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20"></div>
+
+              <div className="z-10 grid gap-6 w-full">
+                {/* OUDE MANIER */}
+                <div className="p-4 rounded-xl border border-red-900/30 bg-red-900/10 opacity-50">
+                  <span className="text-xs text-red-400 font-bold uppercase mb-2 block">
+                    De Oude Manier
+                  </span>
+                  <div className="flex items-center gap-3 text-gray-400 text-sm">
+                    <span>📩 Mail</span> → <span>👀 Jij leest</span> →{" "}
+                    <span>⌨️ Jij typt</span> → <span>💾 Systeem</span>
+                  </div>
+                </div>
+
+                {/* PIJL */}
+                <div className="flex justify-center">
+                  <svg
+                    className="w-6 h-6 text-gray-600 animate-bounce"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                    />
+                  </svg>
+                </div>
+
+                {/* AIFAIS MANIER */}
+                <div className="p-6 rounded-xl border border-green-500/50 bg-green-900/10 shadow-lg shadow-green-900/20">
+                  <span className="text-xs text-green-400 font-bold uppercase mb-2 block">
+                    De AIFAIS Manier
+                  </span>
+                  <div className="flex items-center justify-between text-white font-medium">
+                    <span className="flex flex-col items-center gap-1">
+                      <span className="text-2xl">📩</span>
+                      <span className="text-xs text-gray-500">Mail</span>
+                    </span>
+
+                    {/* Animated Processing Line */}
+                    <div className="flex-1 mx-4 h-1 bg-gray-800 rounded overflow-hidden relative">
+                      <div className="absolute inset-0 bg-green-500 w-1/2 animate-[shimmer_2s_infinite]"></div>
+                    </div>
+
+                    <span className="flex flex-col items-center gap-1">
+                      <div className="bg-white text-black text-xs font-bold px-2 py-1 rounded">
+                        AI Agent
+                      </div>
+                    </span>
+
+                    <div className="flex-1 mx-4 h-1 bg-gray-800 rounded overflow-hidden relative">
+                      <div className="absolute inset-0 bg-green-500 w-1/2 animate-[shimmer_2s_infinite_0.5s]"></div>
+                    </div>
+
+                    <span className="flex flex-col items-center gap-1">
+                      <span className="text-2xl">💾</span>
+                      <span className="text-xs text-gray-500">Klaar</span>
+                    </span>
+                  </div>
+                  <div className="mt-4 text-center text-xs text-green-400 bg-green-900/20 py-1 rounded">
+                    Jij doet helemaal niks.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* PARTNERS / LOGO'S */}
-      <section aria-label="Onze integraties en partners" className="py-12">
-        <div className="w-full justify-center items-center flex md:gap-32 gap-6 flex-wrap">
-          <Link
-            href="/diensten"
-            aria-label="Pinecone vector database integratie"
-            className="group"
-          >
-            <img
-              src="/pinecone.svg"
-              alt="Pinecone vector database integratie" // ✅ Improved Alt Text
-              width={160}
-              height={60}
-              loading="lazy"
-              className="md:w-40 w-14 object-contain h-auto opacity-50 invert group-hover:opacity-100 transition-opacity"
-            />
-          </Link>
-          <Link
-            href="/diensten"
-            aria-label="Google Gemini AI integratie"
-            className="group"
-          >
-            <img
-              src="/gemini.png"
-              alt="Google Gemini AI integratie"
-              width={160}
-              height={60}
-              loading="lazy"
-              className="md:w-40 w-14 object-contain h-auto invert opacity-50 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all"
-            />
-          </Link>
+      {/* ================= DEMO SECTION ================= */}
+      <div id="demo" className="scroll-mt-24">
+        {/* Your ToolsTeaser likely contains the functional invoice scanner */}
+        <ToolsTeaser />
+      </div>
 
-          <Link
-            href="/diensten"
-            aria-label="OpenAI GPT integratie"
-            className="group"
-          >
-            <img
-              src="/openai.svg"
-              alt="OpenAI GPT integratie in slimme automatisering" // ✅ Improved Alt Text
-              width={160}
-              height={60}
-              loading="lazy"
-              className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert group-hover:opacity-100 transition-opacity"
-            />
-          </Link>
-          <Link
-            href="/diensten"
-            aria-label="Claude AI integratie"
-            className="group"
-          >
-            <img
-              src="/claude.svg"
-              alt="Claude AI integratie voor slimme automatisering"
-              width={160}
-              height={60}
-              loading="lazy"
-              className="md:w-40 w-14 object-contain h-auto grayscale opacity-50 invert group-hover:opacity-100 transition-opacity"
-            />
-          </Link>
-        </div>
-      </section>
-
-      {/* DIENSTEN / PROJECTEN */}
-      <section
-        id="cases"
-        aria-labelledby="cases-heading"
-        className="relative py-24 bg-black overflow-hidden"
-      >
-        {/* Background effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950/5 to-transparent" />
-        <div className="absolute top-1/2 left-0 w-96 h-96 bg-gray-600/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 right-0 w-96 h-96 bg-amber-600/5 rounded-full blur-3xl" />
-
+      {/* ================= CASES / VOORBEELDEN ================= */}
+      <section id="cases" className="relative py-24 bg-zinc-950">
         <div className="relative container mx-auto px-6 max-w-7xl">
-          {/* Header */}
           <header className="text-center mb-16">
-            <div className="inline-block mb-4 px-4 py-2 bg-gray-950/30 border border-gray-500/30 rounded-full">
-              <span className="text-gray-300 text-sm font-semibold tracking-wide">
-                ⚡ BEWEZEN RESULTATEN
+            <div className="inline-block mb-4 px-4 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-full">
+              <span className="text-purple-300 text-xs font-bold tracking-widest uppercase">
+                Praktijkvoorbeelden
               </span>
             </div>
-            {/* H2 Optimization */}
             <h2
-              id="cases-heading"
-              className="text-4xl md:text-5xl font-bold mb-4"
+              className={`${h1.className} text-4xl md:text-5xl font-bold mb-4 text-white`}
             >
-              <span className="bg-gradient-to-r from-white via-gray-300 to-amber-400 bg-clip-text text-transparent">
-                Succesvolle Procesautomatisering Case Studies
-              </span>
+              Wat kan een Digitale Werknemer?
             </h2>
-            <p className="text-gray-400 text-xl max-w-3xl mx-auto">
-              Deze automatiseringen draaien succesvol bij{" "}
-              <span className="text-white font-semibold">
-                50+ Nederlandse bedrijven
-              </span>{" "}
-              en besparen gemiddeld{" "}
-              <span className="text-gray-400 font-semibold">
-                40+ uur per week
-              </span>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Hier zijn een paar voorbeelden van taken die wij nu al volledig
+              geautomatiseerd hebben voor andere bedrijven.
             </p>
           </header>
 
-          {/* Cases Grid */}
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {projects.slice(0, 3).map((project: any) => (
               <article
                 key={project.slug}
-                className="group relative rounded-2xl overflow-hidden border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 hover:border-gray-500/50 transition-all duration-300"
+                className="group relative bg-black border border-zinc-800 rounded-3xl overflow-hidden hover:border-zinc-600 transition-all duration-500"
               >
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-b from-gray-600/0 via-gray-600/5 to-gray-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                {/* Image */}
-                <div className="relative overflow-hidden h-56 bg-zinc-950">
+                <div className="aspect-video relative overflow-hidden bg-zinc-900">
                   <Image
                     src={project.image}
-                    alt={`${project.title} - bedrijfsautomatisering case studie`} // ✅ Improved Alt Text
-                    width={400}
-                    height={224}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
                   />
-
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent opacity-60" />
-
-                  {/* Tag badge */}
-                  {project.tag && (
-                    <div className="absolute top-4 left-4 px-3 py-1 bg-gray-600/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
-                      {project.tag}
-                    </div>
-                  )}
-
-                  {/* Savings badge */}
-                  {project.savings && (
-                    <div className="absolute top-4 right-4 px-3 py-1 bg-amber-500/90 backdrop-blur-sm text-black text-xs font-bold rounded-full">
-                      {project.savings}
-                    </div>
-                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+                  {/* Tag die MKB begrijpt */}
+                  <div className="absolute top-4 left-4 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold rounded-full">
+                    Bespaart 12u/week
+                  </div>
                 </div>
 
-                {/* Content */}
-                <div className="relative p-6">
-                  <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-gray-300 transition-colors">
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-gray-400 leading-relaxed mb-4 line-clamp-3">
+                  <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
                     {project.description}
                   </p>
 
-                  {/* CTA Link - Optimized Anchor Text */}
                   <Link
                     href={`/portfolio/${project.slug}`}
-                    className="inline-flex items-center gap-2 text-gray-400 font-semibold hover:text-gray-300 transition-colors group/link"
-                    // ✅ Optimized Anchor Text for internal linking
-                    aria-label={`Bekijk de ${project.title} Automatisering Case`}
+                    className="inline-flex items-center gap-2 text-white font-medium hover:gap-4 transition-all duration-300"
                   >
-                    <span>Bekijk Case Study</span>
+                    <span>Bekijk deze case</span>
                     <svg
-                      className="w-5 h-5 group-hover/link:translate-x-1 transition-transform"
+                      className="w-4 h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -539,610 +363,197 @@ export default function HomeClient() {
                     </svg>
                   </Link>
                 </div>
-
-                {/* Decorative corner gradient */}
-                <div className="absolute -bottom-16 -right-16 w-32 h-32 bg-gradient-to-br from-gray-600/20 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </article>
             ))}
           </div>
-
-          {/* Stats Bar */}
-          <div className="mb-16 p-8 bg-gradient-to-r from-gray-950/20 via-zinc-900/50 to-gray-950/20 border border-gray-500/20 rounded-2xl backdrop-blur-sm">
-            <div className="grid grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent mb-2">
-                  50+
-                </div>
-                <div className="text-gray-400 text-sm">
-                  Actieve Automatiseringen
-                </div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent mb-2">
-                  2.000+
-                </div>
-                <div className="text-gray-400 text-sm">Uur Bespaard/Maand</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold bg-gradient-to-r from-white to-amber-400 bg-clip-text text-transparent mb-2">
-                  98%
-                </div>
-                <div className="text-gray-400 text-sm">Klanttevredenheid</div>
-              </div>
-            </div>
-          </div>
-
-          {/* CTA Section */}
-          <div className="text-center">
-            <p className="text-gray-400 mb-6 text-lg">
-              Benieuwd wat automatisering voor jouw bedrijf kan betekenen?
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                href="/portfolio"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-gray-500/50 text-white font-semibold rounded-lg hover:bg-gray-500/10 hover:border-gray-400 transition-all duration-300"
-              >
-                <span>Bekijk Alle Cases</span>
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </Link>
-
-              <Link
-                href="/quickscan"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-gray-500/25 hover:shadow-gray-500/50"
-              >
-                <span>Start Gratis Quickscan</span>
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
 
-      <ToolsTeaser />
-
-      {/* ABOUT US SECTION */}
-      <section id="about" className="relative py-24 bg-black overflow-hidden">
-        {/* Background gradient effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/10 via-transparent to-amber-900/5" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gray-600/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
+      {/* ================= TEAM (Vertrouwen) ================= */}
+      <section
+        id="about"
+        className="relative py-24 bg-black border-t border-white/5"
+      >
+        <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            {/* H2 Optimization */}
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-gray-400 via-white to-amber-400 bg-clip-text text-transparent">
-                Onze Experts in MKB Automatisering
-              </span>
+            <h2
+              className={`${h1.className} text-4xl md:text-5xl font-bold mb-6 text-white`}
+            >
+              Wie bouwt dit?
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Wij zijn Mark en Faissal, specialisten in bedrijfsautomatisering
-              voor MKB. Ons doel: bedrijven helpen 40+ uur per week te besparen
-              door slimme automatisering.
+              Wij zijn Mark en Faissal. Geen consultants die uurtje-factuurtje
+              schrijven, maar bouwers die oplossingen leveren.
             </p>
           </div>
 
-          {/* Team Members */}
-          <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Mark */}
-            <div className="group relative">
-              <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-2xl p-8 border border-zinc-800 hover:border-gray-500/50 transition-all duration-300">
-                {/* Gradient border effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-600/0 via-gray-600/10 to-pink-600/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div className="relative">
-                  {/* Photo */}
-                  <div className="mb-6 relative">
-                    <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-gray-500/20 group-hover:ring-gray-500/50 transition-all duration-300">
-                      <Image
-                        src="/mark.png"
-                        alt="Mark - Co-founder AIFAIS, Technical Expert"
-                        width={192}
-                        height={192}
-                        className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-300"
-                      />
-                    </div>
-                    {/* Decorative gradient circle */}
-                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-gray-600 via-white to-amber-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
-                  </div>
-
-                  {/* Info */}
-                  <div className="text-center">
-                    <h3 className="text-2xl font-bold text-white mb-2">Mark</h3>
-                    <p className="text-gray-400 font-semibold mb-4">
-                      Co-founder & Technical Expert
-                    </p>
-                    <p className="text-gray-400 leading-relaxed mb-6">
-                      Begonnen als software engineer heb ik jarenlang bedrijven
-                      geholpen hun processen te digitaliseren. Mijn missie is om
-                      automatisering toegankelijk te maken voor elk bedrijf.
-                    </p>
-
-                    {/* Skills/Tags */}
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
-                        Software Development
-                      </span>
-                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
-                        Nocode/Lowcode Specialist
-                      </span>
-                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
-                        AI Integration
-                      </span>
-                    </div>
-
-                    {/* E-E-A-T LINK */}
-                    <Link
-                      href="https://www.linkedin.com/in/mark-v-898408309/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn profiel Mark"
-                      className="mt-4 inline-flex items-center gap-2 group"
-                    >
-                      <LinkedInIcon />
-                    </Link>
-                  </div>
+            <div className="group bg-zinc-900/50 rounded-3xl p-8 border border-zinc-800 hover:bg-zinc-900 transition-all duration-300">
+              <div className="flex items-center gap-6 mb-6">
+                <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-zinc-700 group-hover:border-purple-500 transition-colors">
+                  <Image
+                    src="/mark.png"
+                    alt="Mark"
+                    fill
+                    className="object-cover grayscale group-hover:grayscale-0 transition-all"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Mark</h3>
+                  <p className="text-purple-400 font-mono text-sm">
+                    Technische Realisatie
+                  </p>
                 </div>
               </div>
-            </div>
-
-            {/* Faisal */}
-            <div className="group relative">
-              <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-2xl p-8 border border-zinc-800 hover:border-gray-500/50 transition-all duration-300">
-                {/* Gradient border effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-600/0 via-white/5 to-amber-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div className="relative">
-                  {/* Photo */}
-                  <div className="mb-6 relative">
-                    <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-gray-500/20 group-hover:ring-gray-500/50 transition-all duration-300">
-                      <Image
-                        src="/faissal.png"
-                        alt="Faissal - Co-founder AIFAIS, Business Development"
-                        width={192}
-                        height={192}
-                        className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-300"
-                      />
-                    </div>
-                    {/* Decorative gradient circle */}
-                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-gray-600 via-white to-amber-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
-                  </div>
-
-                  {/* Info */}
-                  <div className="text-center">
-                    <h3 className="text-2xl font-bold text-white mb-2">
-                      Faissal
-                    </h3>
-                    <p className="text-gray-400 font-semibold mb-4">
-                      Co-founder & Process Design
-                    </p>
-                    <p className="text-gray-400 leading-relaxed mb-6">
-                      Na jaren ondernemerschap weet ik hoe het is om vast te
-                      zitten in repetitieve taken. Bij AIFAIS vertaal ik die
-                      frustratie naar concrete oplossingen die bedrijven écht
-                      helpen groeien.
-                    </p>
-
-                    {/* Skills/Tags */}
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
-                        Process Design
-                      </span>
-                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
-                        Customer Success
-                      </span>
-                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
-                        Growth Strategy
-                      </span>
-                    </div>
-
-                    {/* ✅ REPLACEMENT: Direct Email Icon instead of LinkedIn */}
-                    <a
-                      href="mailto:faissal@aifais.com"
-                      className="mt-4 inline-flex items-center gap-2 group text-gray-400 hover:text-white transition-colors"
-                      aria-label="Stuur Faissal een email"
-                    >
-                      <svg
-                        className="w-6 h-6 group-hover:text-gray-400 transition-colors"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom CTA */}
-          <div className="mt-16 text-center">
-            <p className="text-gray-400 mb-6">
-              Wil je kennismaken en ontdekken hoe wij jouw bedrijf kunnen
-              helpen?
-            </p>
-            <Link
-              href="/quickscan"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-500 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-gray-500/25 hover:shadow-gray-500/50 hover:scale-105"
-            >
-              Start Gratis Quickscan
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              <p className="text-gray-400 leading-relaxed mb-6">
+                Ik zorg dat de techniek werkt. Dat de koppelingen veilig zijn,
+                dat de AI doet wat hij moet doen, en dat de betalingen kloppen.
+                Geen blabla, gewoon werkende code.
+              </p>
+              <Link
+                href="https://www.linkedin.com/in/mark-v-898408309/"
+                target="_blank"
+                className="text-gray-500 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* AFSLUITENDE CTA */}
-      <section className="relative py-24 bg-black overflow-hidden">
-        {/* Background effects and grid remain */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-950/10 via-transparent to-gray-950/10" />
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gray-600/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-3xl" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(147,51,234,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(147,51,234,0.03)_1px,transparent_1px)] bg-[size:72px_72px]" />
-
-        <div className="relative container mx-auto px-6 max-w-5xl">
-          {/* Main content card */}
-          <div className="relative bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-xl border border-gray-500/20 rounded-3xl p-12 shadow-2xl">
-            {/* Decorative corner accents */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-gray-600/30 to-transparent rounded-tl-3xl blur-2xl" />
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-amber-600/20 to-transparent rounded-br-3xl blur-2xl" />
-
-            <div className="relative text-center">
-              {/* Badge */}
-              <div className="inline-block mb-6 px-4 py-2 bg-gray-950/50 border border-gray-500/30 rounded-full">
-                <span className="text-gray-300 text-sm font-semibold tracking-wide">
-                  🚀 GRATIS HAALBAARHEIDSCHECK
-                </span>
-              </div>
-
-              {/* Heading */}
-              {/* H2 Optimization */}
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-white via-gray-300 to-amber-400 bg-clip-text text-transparent">
-                  Klaar Om 40+ Uur Per Maand
-                </span>
-                <br />
-                <span className="text-white">Terug Te Winnen?</span>
-              </h2>
-
-              {/* Description */}
-              <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-                We beginnen met een{" "}
-                <span className="text-white font-semibold">
-                  gratis 30-minuten gesprek
-                </span>{" "}
-                waarin we precies uitzoeken wat automatisering voor jouw bedrijf
-                kan betekenen.
-              </p>
-
-              {/* Benefits Grid (Process steps) */}
-              <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto">
-                {/* Benefit 1 */}
-                <div className="group relative bg-zinc-950/50 border border-zinc-800 rounded-xl p-6 hover:border-gray-500/50 transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="relative">
-                    <div className="w-12 h-12 bg-gray-600/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                      <span className="text-2xl">🎯</span>
-                    </div>
-                    <h3 className="text-white font-semibold mb-2">Analyse</h3>
-                    <p className="text-gray-400 text-sm">
-                      Jouw grootste tijdvreters in kaart brengen
-                    </p>
-                  </div>
-                </div>
-
-                {/* Benefit 2 */}
-                <div className="group relative bg-zinc-950/50 border border-zinc-800 rounded-xl p-6 hover:border-gray-500/50 transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="relative">
-                    <div className="w-12 h-12 bg-gray-600/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                      <span className="text-2xl">⚡</span>
-                    </div>
-                    <h3 className="text-white font-semibold mb-2">
-                      Quick Wins
-                    </h3>
-                    <p className="text-gray-400 text-sm">
-                      2-3 taken die direct te automatiseren zijn
-                    </p>
-                  </div>
-                </div>
-
-                {/* Benefit 3 */}
-                <div className="group relative bg-zinc-950/50 border border-zinc-800 rounded-xl p-6 hover:border-gray-500/50 transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="relative">
-                    <div className="w-12 h-12 bg-gray-600/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                      <span className="text-2xl">💰</span>
-                    </div>
-                    <h3 className="text-white font-semibold mb-2">
-                      ROI Berekening
-                    </h3>
-                    <p className="text-gray-400 text-sm">
-                      Concrete inschatting van investering vs. besparing
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Trust elements */}
-              <div className="mb-8 flex items-center justify-center gap-8 text-gray-400 text-sm flex-wrap">
-                <div className="flex items-center gap-2">
-                  <svg
-                    className="w-5 h-5 text-green-400"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span>Geen verplichtingen</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <svg
-                    className="w-5 h-5 text-green-400"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span>Geen sales pressure</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <svg
-                    className="w-5 h-5 text-green-400"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span>Gewoon eerlijk advies</span>
-                </div>
-              </div>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link
-                  href="/quickscan"
-                  className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-bold text-lg rounded-xl hover:scale-105 transition-all duration-300 shadow-2xl shadow-gray-500/30 hover:shadow-gray-500/50"
-                >
-                  <span>Start Gratis Quickscan</span>
-                  <svg
-                    className="w-6 h-6 group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </svg>
-                </Link>
-
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-gray-500/50 text-white font-semibold rounded-xl hover:bg-gray-500/10 hover:border-gray-400 transition-all duration-300"
-                >
-                  <span>Plan een Gesprek</span>
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                    />
-                  </svg>
-                </Link>
-              </div>
-
-              {/* Social proof mini */}
-              <p className="mt-8 text-gray-400 text-sm">
-                <span className="text-gray-300 font-semibold">
-                  50+ bedrijven
-                </span>{" "}
-                gingen je voor en besparen nu gemiddeld{" "}
-                <span className="text-gray-300 font-semibold">
-                  40+ uur per maand
-                </span>
-              </p>
+                <LinkedInIcon /> Connect op LinkedIn
+              </Link>
             </div>
-          </div>
 
-          {/* Bottom decorative element */}
-          <div className="mt-12 text-center">
-            <div className="inline-flex items-center gap-2 text-gray-500 text-sm">
-              <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 border-2 border-black" />
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-500 to-gray-700 border-2 border-black" />
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 border-2 border-black" />
+            {/* Faissal */}
+            <div className="group bg-zinc-900/50 rounded-3xl p-8 border border-zinc-800 hover:bg-zinc-900 transition-all duration-300">
+              <div className="flex items-center gap-6 mb-6">
+                <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-zinc-700 group-hover:border-purple-500 transition-colors">
+                  <Image
+                    src="/faissal.png"
+                    alt="Faissal"
+                    fill
+                    className="object-cover grayscale group-hover:grayscale-0 transition-all"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">Faissal</h3>
+                  <p className="text-purple-400 font-mono text-sm">
+                    Proces & Strategie
+                  </p>
+                </div>
               </div>
-              <span>Sluit je aan bij 50+ tevreden klanten</span>
+              <p className="text-gray-400 leading-relaxed mb-6">
+                Ik kijk naar jouw bedrijfsprocessen. Waar zitten de knelpunten?
+                Wat kan sneller? Ik vertaal jouw probleem naar een opdracht voor
+                onze digitale werknemers.
+              </p>
+              <a
+                href="mailto:faissal@aifais.com"
+                className="text-gray-500 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium"
+              >
+                <EmailIcon /> Stuur een email
+              </a>
             </div>
           </div>
         </div>
       </section>
-
-      {/* HOE WE WERKEN */}
+      {/* ================= PROCESS (3 Steps) ================= */}
       <section className="relative py-24 bg-black overflow-hidden">
-        {/* Background effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950/5 to-transparent" />
-        <div className="absolute top-1/3 left-0 w-80 h-80 bg-gray-600/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-0 w-80 h-80 bg-amber-600/5 rounded-full blur-3xl" />
-
-        <div className="relative container mx-auto px-6 max-w-4xl">
-          {/* Header */}
+        <div className="container mx-auto px-6 max-w-4xl">
           <div className="text-center mb-16">
-            <div className="inline-block mb-4 px-4 py-2 bg-gray-950/30 border border-gray-500/30 rounded-full">
-              <span className="text-gray-300 text-sm font-semibold tracking-wide">
-                ☕ ONZE AANPAK
-              </span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-white via-gray-300 to-amber-400 bg-clip-text text-transparent">
-                Hoe We Werken
-              </span>
+            <h2
+              className={`${h1.className} text-3xl md:text-4xl font-bold mb-4 text-white`}
+            >
+              De 3 Stappen naar Autonomie
             </h2>
           </div>
 
-          {/* Content blocks */}
-          <div className="space-y-12">
-            {/* Block 1 - Kennismaking */}
-            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-gray-500/30 transition-all duration-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative flex gap-6">
-                <div className="flex-shrink-0 w-14 h-14 bg-gray-600/20 rounded-xl flex items-center justify-center">
-                  <span className="text-3xl">☕</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-3">
-                    Het begint met een gesprek
+          <div className="space-y-6 relative">
+            {/* Connecting Line */}
+            <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-zinc-800 md:left-1/2 md:-ml-px"></div>
+
+            {/* Step 1 */}
+            <div className="relative flex md:justify-end items-center md:flex-row flex-row-reverse gap-8">
+              <div className="hidden md:block w-1/2"></div>
+              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-black border-4 border-purple-500 rounded-full z-10"></div>
+              <div className="w-full md:w-1/2 pl-16 md:pl-12">
+                <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
+                  <div className="text-purple-400 text-xs font-bold uppercase mb-2">
+                    Stap 01
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    Proces Mapping
                   </h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    We komen langs, drinken een koffie en stellen veel vragen.
-                    Welke taken kosten jullie de meeste tijd? Wat zijn de
-                    vervelende klusjes die steeds terugkomen? En waar zou die
-                    tijd eigenlijk naartoe moeten gaan? We willen je bedrijf
-                    echt snappen, pas dan kunnen we iets bouwen dat werkt.{" "}
-                    <span className="text-gray-300 font-semibold">
-                      Deze kennismaking kost je niks.
-                    </span>
+                  <p className="text-gray-400 text-sm">
+                    We analyseren niet alleen wat je doet, maar waarom. We
+                    breken processen af tot logica voor de AI.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Block 2 - Plan */}
-            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-gray-500/30 transition-all duration-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative flex gap-6">
-                <div className="flex-shrink-0 w-14 h-14 bg-gray-600/20 rounded-xl flex items-center justify-center">
-                  <span className="text-3xl">📋</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-3">
-                    Een concreet plan
+            {/* Step 2 */}
+            <div className="relative flex md:justify-start items-center gap-8">
+              <div className="w-full md:w-1/2 pl-16 md:pr-12 md:pl-0 md:text-right">
+                <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
+                  <div className="text-blue-400 text-xs font-bold uppercase mb-2">
+                    Stap 02
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    Agent Configuratie (MCP)
                   </h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    Daarna maken we een plan. Concreet: dit kunnen we
-                    automatiseren, dit levert het op, dit kost het.{" "}
-                    <span className="text-white font-semibold">
-                      Geen verplichtingen, geen kleine lettertjes.
-                    </span>{" "}
-                    Vind je het niks? Dan schudden we handen en gaan we allebei
-                    verder.
+                  <p className="text-gray-400 text-sm">
+                    We bouwen de tools en koppelingen. Jouw AI krijgt "handjes"
+                    om bestanden te lezen en betalingen te doen.
                   </p>
                 </div>
               </div>
+              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-black border-4 border-blue-500 rounded-full z-10"></div>
+              <div className="hidden md:block w-1/2"></div>
             </div>
 
-            {/* Block 3 - Uitvoering */}
-            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-gray-500/30 transition-all duration-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative flex gap-6">
-                <div className="flex-shrink-0 w-14 h-14 bg-gray-600/20 rounded-xl flex items-center justify-center">
-                  <span className="text-3xl">🚀</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-3">
-                    Wij bouwen, jij ziet resultaat
+            {/* Step 3 */}
+            <div className="relative flex md:justify-end items-center md:flex-row flex-row-reverse gap-8">
+              <div className="hidden md:block w-1/2"></div>
+              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-black border-4 border-green-500 rounded-full z-10"></div>
+              <div className="w-full md:w-1/2 pl-16 md:pl-12">
+                <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
+                  <div className="text-green-400 text-xs font-bold uppercase mb-2">
+                    Stap 03
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    Autonome Uitvoering
                   </h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    Maar zeg je ja, dan gaan we aan de slag. Je betaalt de helft
-                    vooraf, wij bouwen. Bij oplevering, als alles werkt zoals
-                    afgesproken, volgt de rest. En mocht het onverhoopt niet
-                    doen wat we beloofd hebben?{" "}
-                    <span className="text-amber-400 font-semibold">
-                      Dan krijg je je geld terug.
-                    </span>{" "}
-                    Wij geloven in wat we maken.
+                  <p className="text-gray-400 text-sm">
+                    We zetten de agent live. Hij werkt 24/7, schaalt oneindig en
+                    kost alleen geld als hij resultaat levert.
                   </p>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Bottom CTA */}
-          <div className="mt-12 text-center">
+        </div>
+      </section>
+      {/* ================= FINAL CTA ================= */}
+      <section className="relative py-24 bg-gradient-to-b from-black to-zinc-900 border-t border-white/5">
+        <div className="container mx-auto px-6 text-center">
+          <h2
+            className={`${h1.className} text-4xl md:text-6xl font-bold text-white mb-8`}
+          >
+            Start vandaag met besparen.
+          </h2>
+          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+            Geen lang sales-traject. Geen verplichtingen. Plan een kort gesprek
+            en we vertellen je direct of (en hoeveel) je kunt automatiseren.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link
+              href="/quickscan"
+              className="px-10 py-5 bg-white text-black font-bold text-lg rounded-full hover:bg-gray-200 transition-all shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_-10px_rgba(255,255,255,0.5)]"
+            >
+              Gratis Quickscan
+            </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-gray-500/50 text-white font-semibold rounded-xl hover:bg-gray-500/10 hover:border-gray-400 transition-all duration-300"
+              className="px-10 py-5 border border-zinc-700 text-white font-medium rounded-full hover:bg-zinc-800 transition-all"
             >
-              <span>Plan een koffie-moment</span>
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
+              Neem Contact Op
             </Link>
           </div>
         </div>

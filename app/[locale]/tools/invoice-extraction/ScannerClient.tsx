@@ -315,7 +315,7 @@ export default function ScannerClient() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Zap className="w-4 h-4 text-yellow-400" />
-                  Powered by Claude 3.5 Sonnet
+                  Powered by Claude 4.5 Opus
                 </div>
               </div>
             )}
