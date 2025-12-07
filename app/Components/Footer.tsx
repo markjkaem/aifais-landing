@@ -1,5 +1,5 @@
 // ========================================
-// FILE: app/Components/Footer.tsx
+// FILE: app/Components/Footer.tsx - LIGHT THEME
 // ========================================
 
 import Link from "next/link";
@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer
-      className="text-gray-300 bg-black mt-12 border-t border-gray-900"
+      className="text-gray-600 bg-[#fbfff1]  border-t border-gray-200"
       itemScope
       itemType="https://schema.org/Organization"
     >
@@ -16,19 +16,19 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <Link href="/" className="inline-block" itemProp="url">
             <span
-              className="font-bold text-2xl text-white tracking-tight"
+              className="font-bold text-2xl text-gray-900 tracking-tight"
               itemProp="name"
             >
               AIFAIS
             </span>
           </Link>
-          <p className="text-gray-400 leading-relaxed">
+          <p className="text-gray-500 leading-relaxed">
             Specialist in bedrijfsautomatisering en AI-integraties voor het
             Nederlandse MKB.
           </p>
 
           <address
-            className="not-italic mt-2 flex flex-col gap-1"
+            className="not-italic mt-2 flex flex-col gap-1 text-gray-700"
             itemProp="address"
             itemScope
             itemType="https://schema.org/PostalAddress"
@@ -41,7 +41,7 @@ export default function Footer() {
             <span itemProp="addressCountry" className="hidden">
               NL
             </span>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-400 mt-1">
               Gevestigd in Zuid-Holland
             </p>
           </address>
@@ -50,11 +50,11 @@ export default function Footer() {
           <div className="flex flex-col gap-2 mt-2">
             <a
               href="mailto:info@aifais.com"
-              className="hover:text-gray-400 transition flex items-center gap-2"
+              className="hover:text-[#3066be] transition flex items-center gap-2 text-gray-700"
               itemProp="email"
             >
               <svg
-                className="w-4 h-4"
+                className="w-4 h-4 text-[#3066be]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -70,11 +70,11 @@ export default function Footer() {
             </a>
             <a
               href="tel:+31618424470"
-              className="hover:text-gray-400 transition flex items-center gap-2"
+              className="hover:text-[#3066be] transition flex items-center gap-2 text-gray-700"
               itemProp="telephone"
             >
               <svg
-                className="w-4 h-4"
+                className="w-4 h-4 text-[#3066be]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -93,29 +93,29 @@ export default function Footer() {
 
         {/* COL 2: Services */}
         <div className="flex flex-col gap-4">
-          <h3 className="font-bold text-white text-base">Onze Diensten</h3>
+          <h3 className="font-bold text-gray-900 text-base">Onze Diensten</h3>
           <nav className="flex flex-col gap-3">
             <Link
               href="/diensten/email-reply-ai-agent"
-              className="hover:text-gray-400 transition"
+              className="hover:text-[#3066be] transition text-gray-600"
             >
               AI Email Beantwoording Systeem
             </Link>
             <Link
               href="/diensten/sales-lead-automation"
-              className="hover:text-gray-400 transition"
+              className="hover:text-[#3066be] transition text-gray-600"
             >
               Sales Lead Automatisering
             </Link>
             <Link
               href="/diensten/support-ticket-samenvatting-systeem"
-              className="hover:text-gray-400 transition"
+              className="hover:text-[#3066be] transition text-gray-600"
             >
               Support Ticket Samenvatting Systeem
             </Link>
             <Link
               href="/diensten"
-              className="text-gray-400 hover:text-gray-300 transition font-medium mt-2 text-xs uppercase tracking-wider"
+              className="text-[#3066be] hover:text-[#234a8c] transition font-medium mt-2 text-xs uppercase tracking-wider"
             >
               Bekijk alle diensten →
             </Link>
@@ -124,21 +124,36 @@ export default function Footer() {
 
         {/* COL 3: Quick Links */}
         <div className="flex flex-col gap-4">
-          <h3 className="font-bold text-white text-base">Navigatie</h3>
+          <h3 className="font-bold text-gray-900 text-base">Navigatie</h3>
           <nav className="flex flex-col gap-3">
-            <Link href="/portfolio" className="hover:text-gray-400 transition">
+            <Link
+              href="/portfolio"
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
               Portfolio & Cases
             </Link>
-            <Link href="/news" className="hover:text-gray-400 transition">
+            <Link
+              href="/news"
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
               Kennisbank & Nieuws
             </Link>
-            <Link href="/#about" className="hover:text-gray-400 transition">
+            <Link
+              href="/#about"
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
               Over Ons
             </Link>
-            <Link href="/tools" className="hover:text-gray-400 transition">
+            <Link
+              href="/tools"
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
               Tools
             </Link>
-            <Link href="/contact" className="hover:text-gray-400 transition">
+            <Link
+              href="/contact"
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
               Contact & Advies
             </Link>
           </nav>
@@ -146,23 +161,28 @@ export default function Footer() {
 
         {/* COL 4: Legal & Trust */}
         <div className="flex flex-col gap-4">
-          <h3 className="font-bold text-white text-base">Bedrijfsgegevens</h3>
-          <div className="flex flex-col gap-2 text-gray-400">
+          <h3 className="font-bold text-gray-900 text-base">
+            Bedrijfsgegevens
+          </h3>
+          <div className="flex flex-col gap-2 text-gray-500">
             {/* <p>
-              KvK: <span className="text-gray-300">27199999</span>
+              KvK: <span className="text-gray-700">27199999</span>
             </p>
             <p>
-              BTW: <span className="text-gray-300">NL000099998B57</span>
+              BTW: <span className="text-gray-700">NL000099998B57</span>
             </p> */}
           </div>
 
-          <div className="mt-4 pt-4 border-t border-gray-800 flex flex-col gap-2">
-            <Link href="/agv" className="hover:text-white transition text-xs">
+          <div className="mt-4 pt-4 border-t border-gray-200 flex flex-col gap-2">
+            <Link
+              href="/agv"
+              className="hover:text-[#3066be] transition text-xs text-gray-600"
+            >
               Algemene Voorwaarden
             </Link>
             <Link
               href="/privacy"
-              className="hover:text-white transition text-xs"
+              className="hover:text-[#3066be] transition text-xs text-gray-600"
             >
               Privacy & Cookie Policy
             </Link>
@@ -174,7 +194,7 @@ export default function Footer() {
               href="https://www.linkedin.com/company/aifais-automatisering"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition"
+              className="text-gray-400 hover:text-[#3066be] transition"
               aria-label="Volg ons op LinkedIn"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -186,7 +206,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-900 bg-black py-6">
+      <div className="border-t border-gray-200 bg-white py-6">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
           <p>© {new Date().getFullYear()} AIFAIS. Alle rechten voorbehouden.</p>
           <div className="flex items-center gap-4">

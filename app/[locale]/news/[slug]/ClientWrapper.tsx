@@ -155,7 +155,7 @@ export function ClientWrapper({
         return (
           <h2
             id={id}
-            className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 leading-tight scroll-mt-24 border-b border-gray-100 pb-2"
+            className="text-2xl md:text-3xl font-bold text-gray-900 pt-4 mb-6 leading-tight scroll-mt-24 border-b border-gray-100 pb-2"
             {...props}
           >
             {children}

@@ -74,7 +74,6 @@ export default function HomeClient() {
                 AI-Driven Workforce
               </span>
             </div>
-
             {/* Main Headline */}
             <h1
               className={`${h1.className} text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.1] mb-6`}
@@ -86,17 +85,18 @@ export default function HomeClient() {
               </span>
               <span className="text-black block">aan.</span>
             </h1>
-
-            {/* Subheadline */}
+            {/* Subheadline */}'
+            <span className="block text-lg md:text-2xl mt-2 text-black font-bold">
+              Meer tijd. Meer winst. Minder gedoe.
+            </span>
             <p className="text-lg md:text-xl lg:text-2xl text-black leading-relaxed mb-10 max-w-2xl">
-              Meer tijd. Meer winst. Minder gedoe. Wij automatiseren de taken
-              die je tijd kosten, zodat jij je kunt focussen op wat écht
-              belangrijk is: je bedrijf laten groeien. Gratis analyse.
+              Wij automatiseren de taken die je tijd kosten, zodat jij je kunt
+              focussen op wat écht belangrijk is: je bedrijf laten groeien.
+              Gratis analyse.
               <span className="block mt-2 text-black font-bold">
                 Gratis plan. Niet goed, geld terug.
               </span>
             </p>
-
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
