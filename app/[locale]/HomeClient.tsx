@@ -140,7 +140,7 @@ export default function HomeClient() {
                 href="/quickscan"
                 className="group relative px-8 py-4 bg-[#3066be] text-white font-bold text-lg rounded-full hover:bg-[#234a8c] transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-[#3066be]/30"
               >
-                <span>Start de Sollicitatie</span>
+                <span>Doe de gratis analyse</span>
                 <svg
                   className="w-5 h-5 group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -178,7 +178,7 @@ export default function HomeClient() {
                 Software die <span className="text-[#3066be]">werkt</span>,
                 <br />
                 niet software die{" "}
-                <span className="text-gray-400 line-through decoration-red-500/50">
+                <span className="text-gray-600 line-through decoration-black">
                   wacht
                 </span>
                 .
@@ -191,8 +191,7 @@ export default function HomeClient() {
               <p className="text-gray-600 text-lg mb-8 leading-relaxed">
                 Wij bouwen intelligente agenten die zelfstandig taken oppakken.
                 Ze lezen je mail, begrijpen context, en voeren acties uit in je
-                systemen (Exact, Salesforce, Outlook). Zonder dat jij erbij
-                hoeft te zijn.
+                systemen. Zonder dat jij erbij hoeft te zijn.
               </p>
 
               <ul className="space-y-4 font-medium text-gray-700">
@@ -277,11 +276,96 @@ export default function HomeClient() {
           </div>
         </div>
       </section>
+      {/* ================= PROCESS (Light Mode) ================= */}
+      <section className="relative py-24 bg-[#fbfff1] overflow-hidden border-t border-gray-200">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <div className="text-center mb-16">
+            <h2
+              className={`${h1.className} text-3xl md:text-4xl font-bold mb-4 text-gray-900`}
+            >
+              Hoe we werken
+            </h2>
+            <p className="text-gray-600">
+              Transparant, eerlijk en zonder verrassingen.
+            </p>
+          </div>
 
-      {/* ================= DEMO SECTION ================= */}
-      <div id="demo" className="scroll-mt-24">
-        <ToolsTeaser />
-      </div>
+          <div className="space-y-6 relative">
+            {/* Connecting Line */}
+            <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-gray-200 md:left-1/2 md:-ml-px"></div>
+
+            {/* Stap 1: Kennismaking */}
+            <div className="relative flex md:justify-end items-center md:flex-row flex-row-reverse gap-8">
+              <div className="hidden md:block w-1/2"></div>
+              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-[#fbfff1] border-4 border-[#3066be] rounded-full z-10"></div>
+              <div className="w-full md:w-1/2 pl-16 md:pl-12">
+                <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                  <div className="text-[#3066be] text-xs font-bold uppercase mb-2">
+                    Stap 01
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Koffie & Kritische Vragen
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Het begint altijd met een gesprek. We drinken een koffie en
+                    stellen veel vragen: Waar verlies je tijd? Wat zijn de
+                    vervelende klusjes? We willen je bedrijf écht snappen. Deze
+                    kennismaking is volledig op onze kosten.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Stap 2: Plan */}
+            <div className="relative flex md:justify-start items-center gap-8">
+              <div className="w-full md:w-1/2 pl-16 md:pr-12 md:pl-0 md:text-right">
+                <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                  <div className="text-[#3066be] text-xs font-bold uppercase mb-2">
+                    Stap 02
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Concreet Voorstel
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Daarna maken we een plan. Concreet: <em>dit</em>{" "}
+                    automatiseren we, <em>dit</em> levert het op en <em>dit</em>{" "}
+                    kost het. Geen verplichtingen, geen kleine lettertjes. Vind
+                    je het niks? Dan schudden we handen en gaan we allebei
+                    verder.
+                  </p>
+                </div>
+              </div>
+              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-[#fbfff1] border-4 border-[#3066be] rounded-full z-10"></div>
+              <div className="hidden md:block w-1/2"></div>
+            </div>
+
+            {/* Stap 3: Bouwen & Garantie */}
+            <div className="relative flex md:justify-end items-center md:flex-row flex-row-reverse gap-8">
+              <div className="hidden md:block w-1/2"></div>
+              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-[#fbfff1] border-4 border-[#3066be] rounded-full z-10"></div>
+              <div className="w-full md:w-1/2 pl-16 md:pl-12">
+                <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                  <div className="text-[#3066be] text-xs font-bold uppercase mb-2">
+                    Stap 03
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Bouwen & Garantie
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Zeg je ja? Dan gaan we aan de slag. Je betaalt de helft
+                    vooraf, wij bouwen. Bij oplevering, als alles werkt, volgt
+                    de rest. Werkt het niet zoals beloofd?
+                    <span className="text-[#3066be] font-semibold">
+                      {" "}
+                      Dan krijg je je geld terug.
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ================= TECH STACK (Light Mode) ================= */}
       <section className="py-16 border-b border-gray-200 bg-[#fbfff1]">
@@ -487,97 +571,10 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* ================= PROCESS (Light Mode) ================= */}
-      <section className="relative py-24 bg-[#fbfff1] overflow-hidden border-t border-gray-200">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <div className="text-center mb-16">
-            <h2
-              className={`${h1.className} text-3xl md:text-4xl font-bold mb-4 text-gray-900`}
-            >
-              Hoe we werken
-            </h2>
-            <p className="text-gray-600">
-              Transparant, eerlijk en zonder verrassingen.
-            </p>
-          </div>
-
-          <div className="space-y-6 relative">
-            {/* Connecting Line */}
-            <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-gray-200 md:left-1/2 md:-ml-px"></div>
-
-            {/* Stap 1: Kennismaking */}
-            <div className="relative flex md:justify-end items-center md:flex-row flex-row-reverse gap-8">
-              <div className="hidden md:block w-1/2"></div>
-              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-[#fbfff1] border-4 border-[#3066be] rounded-full z-10"></div>
-              <div className="w-full md:w-1/2 pl-16 md:pl-12">
-                <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-[#3066be] text-xs font-bold uppercase mb-2">
-                    Stap 01
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Koffie & Kritische Vragen
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    Het begint altijd met een gesprek. We drinken een koffie en
-                    stellen veel vragen: Waar verlies je tijd? Wat zijn de
-                    vervelende klusjes? We willen je bedrijf écht snappen. Deze
-                    kennismaking is volledig op onze kosten.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Stap 2: Plan */}
-            <div className="relative flex md:justify-start items-center gap-8">
-              <div className="w-full md:w-1/2 pl-16 md:pr-12 md:pl-0 md:text-right">
-                <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-[#3066be] text-xs font-bold uppercase mb-2">
-                    Stap 02
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Concreet Voorstel
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    Daarna maken we een plan. Concreet: <em>dit</em>{" "}
-                    automatiseren we, <em>dit</em> levert het op en <em>dit</em>{" "}
-                    kost het. Geen verplichtingen, geen kleine lettertjes. Vind
-                    je het niks? Dan schudden we handen en gaan we allebei
-                    verder.
-                  </p>
-                </div>
-              </div>
-              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-[#fbfff1] border-4 border-[#3066be] rounded-full z-10"></div>
-              <div className="hidden md:block w-1/2"></div>
-            </div>
-
-            {/* Stap 3: Bouwen & Garantie */}
-            <div className="relative flex md:justify-end items-center md:flex-row flex-row-reverse gap-8">
-              <div className="hidden md:block w-1/2"></div>
-              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-[#fbfff1] border-4 border-[#3066be] rounded-full z-10"></div>
-              <div className="w-full md:w-1/2 pl-16 md:pl-12">
-                <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-[#3066be] text-xs font-bold uppercase mb-2">
-                    Stap 03
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Bouwen & Garantie
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    Zeg je ja? Dan gaan we aan de slag. Je betaalt de helft
-                    vooraf, wij bouwen. Bij oplevering, als alles werkt, volgt
-                    de rest. Werkt het niet zoals beloofd?
-                    <span className="text-[#3066be] font-semibold">
-                      {" "}
-                      Dan krijg je je geld terug.
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      {/* ================= DEMO SECTION ================= */}
+      <div id="demo" className="scroll-mt-24">
+        <ToolsTeaser />
+      </div>
       {/* ================= FINAL CTA (Light Mode) ================= */}
       <section className="relative py-24 bg-white border-t border-gray-200">
         <div className="container mx-auto px-6 text-center">

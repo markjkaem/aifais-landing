@@ -214,7 +214,7 @@ export default function QuickScanClient() {
   return (
     <div className="max-w-3xl mx-auto pb-20 px-6">
       {/* 1. SOCIAL PROOF NOTIFICATION (Popup) */}
-      {submissions.length > 0 && currentSubmission.name && (
+      {/* {submissions.length > 0 && currentSubmission.name && (
         <div
           className={`fixed top-24 right-6 z-50 transition-all duration-500 hidden md:block ${
             showNotification
@@ -249,7 +249,7 @@ export default function QuickScanClient() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* 2. STATS BAR (Trust Signals) */}
       <div className="grid grid-cols-3 gap-4 py-6 bg-zinc-900/50 rounded-2xl border border-zinc-800 mb-8">
