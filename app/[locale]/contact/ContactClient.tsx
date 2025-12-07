@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import VoiceInput from "@/app/Components/VoiceInput";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -209,29 +210,51 @@ export default function ContactClient() {
 
                   {/* Message */}
                   <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-semibold text-gray-700 mb-2"
-                    >
-                      Waar kunnen we je mee helpen?{" "}
-                      <span className="text-[#3066be]">*</span>
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      required
-                      placeholder="Bijvoorbeeld: 'Ik wil mijn factuurverwerking automatiseren...'"
-                      value={form.message}
-                      onChange={(e) => {
-                        setForm({ ...form, message: e.target.value });
-                        if (errors.message)
-                          setErrors({ ...errors, message: "" });
-                      }}
-                      rows={5}
-                      className={`w-full p-4 rounded-xl bg-gray-50 text-gray-900 border ${
-                        errors.message ? "border-red-500" : "border-gray-300"
-                      } focus:border-[#3066be] focus:outline-none focus:ring-2 focus:ring-[#3066be]/20 transition resize-none`}
-                    />
+                    {/* Message Veld met Voice Input */}
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <label
+                          htmlFor="message"
+                          className="block text-sm font-semibold text-gray-700"
+                        >
+                          Waar kunnen we je mee helpen?{" "}
+                          <span className="text-[#3066be]">*</span>
+                        </label>
+
+                        {/* 🔥 HIER ZIT DE MICROFOON KNOP */}
+                        <VoiceInput
+                          onTranscript={(text) =>
+                            setForm((prev) => ({
+                              ...prev,
+                              message:
+                                prev.message + (prev.message ? " " : "") + text,
+                            }))
+                          }
+                        />
+                      </div>
+
+                      <textarea
+                        id="message"
+                        name="message"
+                        required
+                        placeholder="Typ of spreek je bericht in..."
+                        value={form.message}
+                        onChange={(e) => {
+                          setForm({ ...form, message: e.target.value });
+                          if (errors.message)
+                            setErrors({ ...errors, message: "" });
+                        }}
+                        rows={5}
+                        className={`w-full p-4 rounded-xl bg-gray-50 text-gray-900 border ${
+                          errors.message ? "border-red-500" : "border-gray-300"
+                        } focus:border-[#3066be] focus:outline-none focus:ring-2 focus:ring-[#3066be]/20 transition resize-none`}
+                      />
+                      {errors.message && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.message}
+                        </p>
+                      )}
+                    </div>
                     {errors.message && (
                       <p className="text-red-500 text-xs mt-1">
                         {errors.message}
