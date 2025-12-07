@@ -54,18 +54,36 @@ export default function ContactClient() {
     return isValid;
   };
 
+  // In ContactClient.tsx
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (!validateForm()) return;
 
     setStatus("sending");
+
     try {
-      // Fake delay
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // ✅ DE ECHTE API CALL
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          message: form.message,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Er ging iets mis bij het versturen.");
+      }
+
       setStatus("ok");
       setForm({ name: "", email: "", phone: "", message: "" });
 
+      // Smooth scroll to success message
       setTimeout(() => {
         document.getElementById("success-message")?.scrollIntoView({
           behavior: "smooth",
@@ -73,6 +91,7 @@ export default function ContactClient() {
         });
       }, 100);
     } catch (err) {
+      console.error(err);
       setStatus("error");
     }
   }

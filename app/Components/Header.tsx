@@ -275,21 +275,6 @@ export default function HeaderMockup() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo - Assuming original logo is black, we remove the 'invert' class */}
-        <Link
-          href={getLocalizedPath("/")}
-          onClick={closeAll}
-          className="flex-shrink-0"
-        >
-          <Image
-            className="w-32 hover:scale-105 transition-transform"
-            src="/logo_official.png"
-            alt="Aifais Logo"
-            width={400}
-            height={400}
-          />
-        </Link>
-
         {/* Desktop navigation */}
         <nav className="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-600">
           <button
