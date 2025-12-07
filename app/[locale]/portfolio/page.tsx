@@ -256,10 +256,10 @@ export default function Portfolio() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/quickscan"
+              href="/contact"
               className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:bg-[#234a8c] transition-all shadow-lg hover:-translate-y-1"
             >
-              Bereken Mijn Besparing →
+              Gratis analyse gesprek →
             </Link>
             <Link
               href="/contact"

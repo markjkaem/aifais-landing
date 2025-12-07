@@ -514,10 +514,10 @@ export default async function PortfolioItemPage({
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/quickscan"
+              href="/contact"
               className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg hover:shadow-xl"
             >
-              Bereken Mijn Besparing →
+              Gratis analyse gesprek →
             </Link>
             <Link
               href="/contact"

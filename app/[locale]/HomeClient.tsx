@@ -114,12 +114,12 @@ export default function HomeClient() {
               </span>
             </p>
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col mb-2 sm:flex-row gap-4">
               <Link
-                href="/quickscan"
+                href="/contact"
                 className="group relative px-8 py-4 bg-[#3066be] text-white font-bold text-lg rounded-full hover:bg-[#234a8c] transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-[#3066be]/30"
               >
-                <span>Doe nu de gratis analyse</span>
+                <span>Plan nu de gratis analyse</span>
                 <svg
                   className="w-5 h-5 group-hover:translate-x-1 transition-transform"
                   fill="none"

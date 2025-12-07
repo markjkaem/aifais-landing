@@ -186,14 +186,14 @@ export default function NewsIndexPage() {
           </h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
             Lezen is goed, doen is beter. Ontdek binnen 2 minuten waar jouw
-            kansen liggen met onze gratis quickscan.
+            kansen liggen met onze gratis analyse.
           </p>
           <div className="flex justify-center gap-4">
             <Link
-              href="/quickscan"
+              href="/contact"
               className="px-8 py-3 bg-[#3066be] hover:bg-[#234a8c] text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg shadow-[#3066be]/20"
             >
-              Start Quickscan
+              Plan analyse gesprek
             </Link>
           </div>
         </div>
