@@ -66,7 +66,7 @@ export default function HomeClient() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-12 flex flex-col h-full justify-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 pt-4 flex flex-col h-full justify-center">
           {/* Top Bar: Badge Left, Logo Right */}
           <div className="flex w-full items-center justify-between mb-16 md:mb-24">
             {/* Left Side: Tech Badge */}
