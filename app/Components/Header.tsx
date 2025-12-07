@@ -192,6 +192,11 @@ export default function HeaderMockup() {
 
   // ✅ Search functionality
   const allSearchableContent = [
+    {
+      type: "page",
+      title: "Home",
+      slug: "/",
+    },
     // 1. New Services (High Priority)
     ...serviceLinks.map((s) => ({
       type: "service",
@@ -277,6 +282,13 @@ export default function HeaderMockup() {
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Desktop navigation */}
         <nav className="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-600">
+          <Link
+            href={getLocalizedPath("/")}
+            className="hover:text-[#3066be] transition"
+            onClick={closeAll}
+          >
+            Home
+          </Link>
           <button
             onClick={() => handleDropdownToggle("services")}
             className="hover:text-[#3066be] transition flex items-center gap-2 group"
