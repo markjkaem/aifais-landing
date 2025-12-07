@@ -158,10 +158,10 @@ export default function FAQSection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/quickscan"
+              href="/contact"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#3066be] text-white font-semibold rounded-lg hover:bg-[#234a8c] transition-all shadow-lg shadow-[#3066be]/20 hover:-translate-y-1"
             >
-              <span>Start Gratis Quickscan</span>
+              <span>Start Gratis Analyse Gesprek</span>
               <svg
                 className="w-5 h-5"
                 fill="none"

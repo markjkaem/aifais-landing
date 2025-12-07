@@ -77,6 +77,6 @@ Je hoeft niet je hele bedrijf in één week te automatiseren. Begin bij de groot
 
 Bij **Aifais** geloven we in pragmatische oplossingen. Geen dure rapporten, maar werkende workflows.
 
-**Klaar om je eerste proces te automatiseren?** Plan een gratis Quickscan en we laten je direct zien wat er mogelijk is.
+**Klaar om je eerste proces te automatiseren?** Plan een gratis analyse gesprek en we laten je direct zien wat er mogelijk is.
   `
 };

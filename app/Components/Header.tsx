@@ -464,11 +464,11 @@ export default function HeaderMockup() {
 
           {/* CTA Button */}
           <Link
-            href={getLocalizedPath("/quickscan")}
+            href={getLocalizedPath("/contact")}
             className="px-5 py-2.5 bg-[#3066be] hover:bg-[#234a8c] text-white font-semibold rounded-lg transition-all hover:scale-105 shadow-md shadow-[#3066be]/20"
             onClick={closeAll}
           >
-            Quickscan
+            Analyse Gesprek
           </Link>
         </div>
 
@@ -594,14 +594,14 @@ export default function HeaderMockup() {
             <div className="flex items-start">
               <div className="bg-gradient-to-br from-[#3066be]/5 to-blue-50 border border-[#3066be]/20 rounded-2xl p-6 hover:border-[#3066be]/40 transition cursor-pointer w-full">
                 <p className="font-semibold text-lg text-gray-900 mb-2">
-                  Gratis Quickscan
+                  Gratis analyse van jouw automatiseringskansen
                 </p>
                 <p className="text-sm text-gray-600 mb-4">
                   Ontdek binnen 2 minuten waar jouw grootste automatisering
                   kansen liggen.
                 </p>
                 <Link
-                  href={getLocalizedPath("/quickscan")}
+                  href={getLocalizedPath("/contact")}
                   onClick={closeAll}
                   className="block w-full py-2 bg-[#3066be] text-white text-center rounded-lg font-medium hover:bg-[#234a8c] transition"
                 >
@@ -783,11 +783,11 @@ export default function HeaderMockup() {
           </Link>
 
           <Link
-            href={getLocalizedPath("/quickscan")}
+            href={getLocalizedPath("/contact")}
             className="block mt-4 px-6 py-3 bg-[#3066be] text-white font-bold rounded-lg text-center active:bg-[#234a8c]"
             onClick={closeAll}
           >
-            Start Quickscan
+            Start Analyse Gesprek
           </Link>
 
           {/* Mobile languages */}

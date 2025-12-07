@@ -87,7 +87,7 @@ export default function PrivacyPage() {
             <div className="space-y-6">
               <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
                 <h3 className="text-xl font-semibold mb-3 text-gray-900">
-                  Contactformulieren & Quickscan
+                  Contactformulieren & Analyse Gesprekken
                 </h3>
                 <p className="text-gray-600 mb-3">
                   Wanneer je een formulier invult op onze website, verzamelen

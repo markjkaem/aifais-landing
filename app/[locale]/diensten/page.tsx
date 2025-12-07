@@ -353,10 +353,10 @@ export default function ServicesPage() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/quickscan"
+              href="/contact"
               className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:bg-[#234a8c] transition-all hover:-translate-y-1 shadow-lg shadow-[#3066be]/20"
             >
-              Start Gratis Quickscan →
+              Plan Mijn Gratis Analyse Gesprek →
             </Link>
             <Link
               href="/contact"

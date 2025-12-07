@@ -7,7 +7,7 @@ import ContactClient from "./ContactClient";
 
 // ✅ SEO METADATA
 export const metadata: Metadata = {
-  title: "Contact AIFAIS | Plan Je Gratis Automatisering Quickscan",
+  title: "Contact AIFAIS | Plan Je Gratis Analyse Gesprek",
   description:
     "Klaar om tijd te besparen? Neem contact op voor een gratis haalbaarheidscheck. Specialist in n8n & AI automatisering. Gevestigd in Gouda, actief in heel Nederland.",
 
@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     "n8n consultant contact",
     "bedrijfsautomatisering offerte aanvragen",
     "automatisering nederland",
-    "gratis quickscan aanvragen",
+    "gratis analyse gesprek automatisering",
   ],
 
   openGraph: {
     title: "Contact AIFAIS | Start Met Automatiseren",
     description:
-      "Plan direct een gratis consult of quickscan. Wij reageren binnen 24 uur.",
+      "Plan direct een gratis consult of analyse gesprek. Wij reageren binnen 24 uur.",
     url: "https://aifais.com/contact",
     type: "website",
     locale: "nl_NL",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Contact AIFAIS | Gratis Automatisering Consult",
-    description: "Plan direct een gratis consult of quickscan.",
+    description: "Plan direct een gratis consult of analyse gesprek.",
     images: ["https://aifais.com/og-contact.jpg"],
   },
 

@@ -142,11 +142,11 @@ export default function ExitIntentPopup() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
               <Link
-                href="/quickscan"
+                href="/contact"
                 onClick={closePopup}
                 className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-bold text-lg rounded-xl hover:scale-105 transition-all duration-300 shadow-2xl shadow-gray-500/30"
               >
-                <span>Start Gratis Quickscan</span>
+                <span>Start Gratis Analyse Gesprek</span>
                 <svg
                   className="w-6 h-6 group-hover:translate-x-1 transition-transform"
                   fill="none"

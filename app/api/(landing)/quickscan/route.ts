@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
   MMERGE9: Number(uren),            // ✅
   MMERGE10: Number(besparing),   // ✅
 },
-        tags: ['Quickscan Lead', 'Website'],
+        tags: ['Analyse gesprek Lead', 'Website'],
       };
 
       const mailchimpResponse = await fetch(
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
     });
 
     const mailBody = `
-Nieuwe Quickscan aanvraag:
+Nieuwe Analyse Gesprek aanvraag:
 
 Naam: ${naam}
 Email: ${email}
@@ -113,7 +113,7 @@ Mailchimp: ${mailchimpSuccess ? '✅ Toegevoegd' : '❌ Gefaald'}
     await transporter.sendMail({
       from: `${naam} <${email}>`,
       to: TO_EMAIL,
-      subject: `Nieuwe Quickscan aanvraag: ${naam}`,
+      subject: `Nieuwe Analyse Gesprek aanvraag: ${naam}`,
       text: mailBody,
     });
 

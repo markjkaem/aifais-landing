@@ -28,10 +28,10 @@
   ],
   "shortcuts": [
     {
-      "name": "Quickscan",
-      "short_name": "Scan",
-      "description": "Start een gratis Quickscan",
-      "url": "/quickscan",
+      "name": "analyse gesprek",
+      "short_name": "Gesprek",
+      "description": "Start een gratis analyse van jouw automatiseringsmogelijkheden",
+      "url": "/contact",
       "icons": [
         {
           "src": "/icon-quickscan-96.png",

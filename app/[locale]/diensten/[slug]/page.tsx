@@ -168,10 +168,10 @@ export default async function ServiceDetailPage({
               Vraag Advies Aan
             </Link>
             <Link
-              href="/quickscan"
+              href="/contact"
               className="px-8 py-4 border border-gray-300 bg-white text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition"
             >
-              Doe de Quickscan
+              Plan Mijn Gratis Analyse Gesprek
             </Link>
           </div>
         </div>

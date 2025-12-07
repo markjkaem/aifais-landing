@@ -3,7 +3,7 @@ import ThankYouClient from "./ThankYouClient";
 
 // ✅ SEO METADATA
 export const metadata: Metadata = {
-  title: "Bedankt voor je Aanvraag | Aifais Automatisering Quickscan",
+  title: "Bedankt voor je Aanvraag | Aifais Automatisering ",
   description:
     "We hebben je quickscan ontvangen en nemen binnen 1 werkdag contact op om jouw automatiseringsmogelijkheden te bespreken.",
 
