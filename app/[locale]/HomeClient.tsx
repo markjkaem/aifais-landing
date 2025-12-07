@@ -471,9 +471,10 @@ export default function HomeClient() {
                 </div>
               </div>
               <p className="text-gray-600 leading-relaxed mb-6">
-                Specialist in schaalbare architectuur en beveiligde integraties.
-                Ik zorg dat onze AI-oplossingen naadloos en veilig communiceren
-                met jouw bestaande systemen.
+                Techniek moet niet ingewikkeld zijn. Dat is waar Mark in
+                gelooft. Met jarenlange ervaring als software engineer weet hij
+                hoe je slimme systemen bouwt die voor iedereen bruikbaar zijn.
+                Hij is de stille kracht achter elke workflow die wij opleveren.
               </p>
               <div className="flex flex-wrap gap-2 mb-6">
                 <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">
