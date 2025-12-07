@@ -50,22 +50,13 @@ const EmailIcon = () => (
 
 export default function HomeClient() {
   return (
-    <main className="bg-[#fbfff1] text-gray-900 min-h-screen transition-colors duration-500 selection:bg-[#3066be] selection:text-white">
+    <main className="bg-[#fbfff1] text-gray-900 min-h-screen transition-colors duration-500  ">
       {/* ================= HERO SECTION ================= */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Background Video */}
         <div className="absolute inset-0 w-full h-full">
-          <video
-            src="/coding.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            // Video iets lichter gelaten omdat de rest van de site licht is,
-            // maar nog steeds donker genoeg voor witte tekst contrast
-            className="w-full h-full object-cover brightness-[0.4] contrast-125 saturate-0 scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#3066be]/40 via-black/50 to-purple-900/20" />
+          <div className="w-full h-full bg-[#3066be]/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#3066be]/40 via-[#3066be]/40 to-[#3066be]/40" />
           {/* Fade naar de lichte achtergrondkleur aan de onderkant */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#fbfff1] via-transparent to-transparent" />
         </div>
@@ -77,9 +68,9 @@ export default function HomeClient() {
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-full mb-8 backdrop-blur-md cursor-default">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3066be] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#3066be]"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0cff10]"></span>
               </span>
-              <span className="text-xs md:text-sm text-white font-mono tracking-wide uppercase">
+              <span className="text-xs md:text-sm text-black font-mono tracking-wide uppercase">
                 AI-Driven Workforce
               </span>
             </div>
@@ -88,20 +79,20 @@ export default function HomeClient() {
             <h1
               className={`${h1.className} text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.1] mb-6`}
             >
-              <span className="text-white block">Neem je eerste</span>
+              <span className="text-black block">Neem je eerste</span>
               {/* Gebruik hier een lichte blauw/wit gradient zodat het popt op de donkere video */}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6fa0ff] via-white to-[#6fa0ff] animate-gradient block">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-black to-black animate-gradient block">
                 Digitale Werknemer
               </span>
-              <span className="text-white block">aan.</span>
+              <span className="text-black block">aan.</span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-200 leading-relaxed mb-10 max-w-2xl">
+            <p className="text-lg md:text-xl lg:text-2xl text-black leading-relaxed mb-10 max-w-2xl">
               Meer tijd. Meer winst. Minder gedoe. Wij automatiseren de taken
               die je tijd kosten, zodat jij je kunt focussen op wat écht
               belangrijk is: je bedrijf laten groeien. Gratis analyse.
-              <span className="block mt-2 text-white font-medium">
+              <span className="block mt-2 text-black font-bold">
                 Gratis plan. Niet goed, geld terug.
               </span>
             </p>
