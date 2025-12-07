@@ -1,5 +1,5 @@
 // ========================================
-// FILE: app/news/page.tsx
+// FILE: app/news/page.tsx - LIGHT THEME
 // ========================================
 
 import { Metadata } from "next";
@@ -62,49 +62,49 @@ export default function NewsIndexPage() {
   };
 
   return (
-    <>
+    <main className="bg-[#fbfff1] min-h-screen text-gray-900">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
       />
 
-      {/* ✅ HERO SECTION */}
-      <section className="relative py-20 md:py-28 bg-gradient-to-b from-black via-gray-950 to-gray-950 overflow-hidden">
+      {/* ✅ HERO SECTION (Light Theme) */}
+      <section className="relative py-20 md:py-28 overflow-hidden bg-white border-b border-gray-200">
         {/* Background Effects */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gray-900/20 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#3066be]/5 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-6xl text-center relative z-10">
-          <span className="inline-block px-4 py-1.5 mb-6 border border-gray-500/30 bg-gray-500/10 text-gray-300 rounded-full text-sm font-semibold tracking-wide uppercase">
+          <span className="inline-block px-4 py-1.5 mb-6 border border-[#3066be]/20 bg-[#3066be]/5 text-[#3066be] rounded-full text-sm font-semibold tracking-wide uppercase">
             Kennisbank
           </span>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 leading-tight">
             Inzichten in <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
               Slimme Automatisering
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
             Praktische gidsen, updates over AI-technologie en tips om jouw
             bedrijf efficiënter te maken.
           </p>
         </div>
       </section>
 
-      {/* ✅ ARTICLES GRID */}
-      <section className="py-16 md:py-24 bg-gray-950 min-h-screen">
+      {/* ✅ ARTICLES GRID (Light Theme) */}
+      <section className="py-16 md:py-24 bg-[#fbfff1] min-h-screen">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {news.map((article) => (
               <article
                 key={article.slug}
-                className="group flex flex-col h-full rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:shadow-2xl hover:shadow-gray-900/10 hover:border-gray-500/50 transition-all duration-300"
+                className="group flex flex-col h-full rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl hover:shadow-[#3066be]/10 hover:border-[#3066be]/30 transition-all duration-300"
               >
                 <Link
                   href={`/news/${article.slug}`}
                   className="flex flex-col h-full"
                 >
                   {/* Image Container */}
-                  <div className="relative h-56 overflow-hidden bg-gray-800">
+                  <div className="relative h-56 overflow-hidden bg-gray-100">
                     {article.image && (
                       <Image
                         src={article.image}
@@ -114,11 +114,11 @@ export default function NewsIndexPage() {
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
 
                     {/* Category Badge */}
                     {article.category && (
-                      <div className="absolute top-4 left-4 px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-xs font-semibold text-white uppercase tracking-wider">
+                      <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-md border border-gray-200 rounded-full text-xs font-bold text-[#3066be] uppercase tracking-wider shadow-sm">
                         {article.category}
                       </div>
                     )}
@@ -126,7 +126,7 @@ export default function NewsIndexPage() {
 
                   <div className="p-6 flex flex-col flex-grow">
                     {/* Meta Data */}
-                    <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
+                    <div className="flex items-center gap-3 text-xs text-gray-500 mb-3 font-medium">
                       <time dateTime={new Date(article.date).toISOString()}>
                         {new Date(article.date).toLocaleDateString("nl-NL", {
                           day: "numeric",
@@ -138,14 +138,14 @@ export default function NewsIndexPage() {
                       <span>{article.readTime || 5} min lezen</span>
                     </div>
 
-                    <h2 className="text-xl font-bold text-white mb-3 group-hover:text-gray-400 transition-colors line-clamp-2">
+                    <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#3066be] transition-colors line-clamp-2">
                       {article.title}
                     </h2>
-                    <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
                       {article.excerpt}
                     </p>
 
-                    <div className="flex items-center text-sm font-semibold text-gray-400 group-hover:translate-x-1 transition-transform pt-4 border-t border-gray-800 mt-auto">
+                    <div className="flex items-center text-sm font-bold text-[#3066be] group-hover:translate-x-1 transition-transform pt-4 border-t border-gray-100 mt-auto">
                       Lees Artikel
                       <svg
                         className="w-4 h-4 ml-2"
@@ -169,8 +169,8 @@ export default function NewsIndexPage() {
 
           {/* Empty State / Coming Soon */}
           {news.length === 0 && (
-            <div className="text-center py-20 bg-gray-900/30 rounded-2xl border border-gray-800">
-              <p className="text-gray-400">
+            <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 shadow-sm">
+              <p className="text-gray-500">
                 Er zijn nog geen artikelen geplaatst. Kom binnenkort terug!
               </p>
             </div>
@@ -178,26 +178,26 @@ export default function NewsIndexPage() {
         </div>
       </section>
 
-      {/* ✅ NEWSLETTER / CTA */}
-      <section className="py-20 bg-black border-t border-gray-900">
+      {/* ✅ NEWSLETTER / CTA (Light Theme) */}
+      <section className="py-20 bg-white border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
             Direct aan de slag met automatiseren?
           </h2>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
             Lezen is goed, doen is beter. Ontdek binnen 2 minuten waar jouw
             kansen liggen met onze gratis quickscan.
           </p>
           <div className="flex justify-center gap-4">
             <Link
               href="/quickscan"
-              className="px-8 py-3 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform"
+              className="px-8 py-3 bg-[#3066be] hover:bg-[#234a8c] text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg shadow-[#3066be]/20"
             >
               Start Quickscan
             </Link>
           </div>
         </div>
       </section>
-    </>
+    </main>
   );
 }

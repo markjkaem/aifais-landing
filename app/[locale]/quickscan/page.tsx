@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "AIFAIS",
     images: [
       {
-        url: "https://aifais.com/og-quickscan.jpg", // Ensure this exists!
+        url: "https://aifais.com/og-quickscan.jpg",
         width: 1200,
         height: 630,
         alt: "AIFAIS Automatisering Calculator",
@@ -56,7 +56,6 @@ export const metadata: Metadata = {
 };
 
 export default function QuickScanPage() {
-  // ✅ SCHEMA 1: WebApplication (For the calculator tool)
   const appSchema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -79,7 +78,6 @@ export default function QuickScanPage() {
     },
   };
 
-  // ✅ SCHEMA 2: Breadcrumbs (For Site Structure)
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -100,7 +98,7 @@ export default function QuickScanPage() {
   };
 
   return (
-    <main className="bg-black min-h-screen">
+    <main className="bg-[#fbfff1] min-h-screen text-gray-900">
       {/* Schemas */}
       <script
         type="application/ld+json"
@@ -111,29 +109,26 @@ export default function QuickScanPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      {/* ✅ SERVER-SIDE HERO SECTION 
-        Moving the H1 out of the Client Component improves LCP (Core Web Vitals) 
-        and ensures Google reads the main topic immediately.
-      */}
+      {/* ✅ SERVER-SIDE HERO SECTION (Light Theme) */}
       <section className="relative pt-24 pb-12 px-6 overflow-hidden text-center">
         {/* Background Gradients */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gray-900/20 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#3066be]/5 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="inline-block mb-6 px-4 py-2 bg-gray-950/30 border border-gray-500/30 rounded-full">
-            <span className="text-gray-300 text-sm font-semibold tracking-wide uppercase">
+          <div className="inline-block mb-6 px-4 py-2 bg-white border border-gray-200 rounded-full shadow-sm">
+            <span className="text-[#3066be] text-sm font-semibold tracking-wide uppercase">
               ⏱️ Duurt slechts 2 minuten
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
             Bereken Jouw <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
               Automatisering Potentieel
             </span>
           </h1>
 
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Vul 5 vragen in over jouw bedrijfsprocessen en zie direct hoeveel
             uur (en euro's) je wekelijks laat liggen.
           </p>

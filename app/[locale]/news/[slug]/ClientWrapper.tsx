@@ -1,5 +1,5 @@
 // ========================================
-// FILE: app/news/[slug]/ClientWrapper.tsx
+// FILE: app/news/[slug]/ClientWrapper.tsx - LIGHT THEME
 // ========================================
 
 "use client";
@@ -41,11 +41,8 @@ const slugify = (text: string) => {
     .replace(/\-\-+/g, "-");
 };
 
-// ... (Sub-components TableOfContents, ReadingProgress, StickyRightSidebar, etc. remain the same) ...
-// (I will omit them here for brevity, but keep them in your file!)
-
 // ========================================
-// SUB-COMPONENTS (Keep these exactly as they were)
+// SUB-COMPONENTS
 // ========================================
 
 function TableOfContents({ content }: { content: string }) {
@@ -87,8 +84,9 @@ function TableOfContents({ content }: { content: string }) {
 
   return (
     <aside className="hidden xl:block fixed left-8 top-44 w-64 max-h-[calc(100vh-200px)] overflow-y-auto custom-scrollbar">
-      <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6 sticky top-32 backdrop-blur-sm">
-        <h4 className="text-xs font-bold text-gray-400 mb-4 uppercase tracking-widest">
+      {/* Light Theme TOC Box */}
+      <div className="bg-white border border-gray-200 rounded-xl p-6 sticky top-32 shadow-sm">
+        <h4 className="text-xs font-bold text-gray-500 mb-4 uppercase tracking-widest">
           Inhoudsopgave
         </h4>
         <nav>
@@ -109,8 +107,8 @@ function TableOfContents({ content }: { content: string }) {
                   }}
                   className={`block py-1.5 border-l-2 pl-3 transition-all duration-200 ${
                     activeId === heading.id
-                      ? "border-gray-500 text-gray-400 font-medium translate-x-1"
-                      : "border-gray-800 text-gray-500 hover:text-gray-300 hover:border-gray-600"
+                      ? "border-[#3066be] text-[#3066be] font-medium translate-x-1"
+                      : "border-gray-200 text-gray-500 hover:text-gray-800 hover:border-gray-300"
                   }`}
                 >
                   {heading.text}
@@ -124,8 +122,7 @@ function TableOfContents({ content }: { content: string }) {
   );
 }
 
-// ... (Include ReadingProgress, StickyRightSidebar, etc.) ...
-// START MOCK COMPONENTS (Replace with your actual components if you copy-paste this block)
+// START MOCK COMPONENTS
 function ReadingProgress() {
   return null;
 }
@@ -150,7 +147,7 @@ export function ClientWrapper({
   readTime,
   relatedArticles,
 }: ClientWrapperProps) {
-  // ✅ Markdown Configuration
+  // ✅ Markdown Configuration (Light Theme Styles)
   const markdownComponents = useMemo(
     () => ({
       h2: ({ node, children, ...props }: any) => {
@@ -158,7 +155,7 @@ export function ClientWrapper({
         return (
           <h2
             id={id}
-            className="text-2xl md:text-3xl font-bold text-white mt-12 mb-6 leading-tight scroll-mt-24"
+            className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 leading-tight scroll-mt-24 border-b border-gray-100 pb-2"
             {...props}
           >
             {children}
@@ -170,7 +167,7 @@ export function ClientWrapper({
         return (
           <h3
             id={id}
-            className="text-xl md:text-2xl font-bold text-white mt-8 mb-4 leading-snug scroll-mt-24"
+            className="text-xl md:text-2xl font-bold text-gray-900 mt-8 mb-4 leading-snug scroll-mt-24"
             {...props}
           >
             {children}
@@ -179,55 +176,55 @@ export function ClientWrapper({
       },
       h4: ({ node, ...props }: any) => (
         <h4
-          className="text-lg md:text-xl font-bold text-white mt-6 mb-3"
+          className="text-lg md:text-xl font-bold text-gray-900 mt-6 mb-3"
           {...props}
         />
       ),
       p: ({ node, ...props }: any) => (
-        <p className="text-gray-300 text-lg leading-relaxed mb-6" {...props} />
+        <p className="text-gray-700 text-lg leading-relaxed mb-6" {...props} />
       ),
       ul: ({ node, ...props }: any) => (
         <ul
-          className="list-disc ml-6 my-6 text-gray-300 space-y-2 marker:text-gray-500"
+          className="list-disc ml-6 my-6 text-gray-700 space-y-2 marker:text-[#3066be]"
           {...props}
         />
       ),
       ol: ({ node, ...props }: any) => (
         <ol
-          className="list-decimal ml-6 my-6 text-gray-300 space-y-2 marker:text-gray-500"
+          className="list-decimal ml-6 my-6 text-gray-700 space-y-2 marker:text-[#3066be] font-medium"
           {...props}
         />
       ),
       li: ({ node, ...props }: any) => (
-        <li className="text-gray-300 leading-relaxed pl-2" {...props} />
+        <li className="text-gray-700 leading-relaxed pl-2" {...props} />
       ),
       a: ({ node, href, ...props }: any) => (
         <a
           href={href}
-          className="text-gray-400 font-medium hover:text-gray-300 hover:underline decoration-gray-500/30 underline-offset-4"
+          className="text-[#3066be] font-medium hover:text-[#234a8c] hover:underline decoration-[#3066be]/30 underline-offset-4 transition-colors"
           target={href?.startsWith("http") ? "_blank" : undefined}
           rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
           {...props}
         />
       ),
       strong: ({ node, ...props }: any) => (
-        <strong className="text-white font-semibold" {...props} />
+        <strong className="text-gray-900 font-bold" {...props} />
       ),
       blockquote: ({ node, ...props }: any) => (
         <blockquote
-          className="border-l-4 border-gray-500 pl-6 py-3 my-8 italic text-gray-400 bg-gray-900/50 rounded-r-lg"
+          className="border-l-4 border-[#3066be] pl-6 py-4 my-8 italic text-gray-700 bg-[#3066be]/5 rounded-r-lg"
           {...props}
         />
       ),
       code: ({ node, inline, ...props }: any) =>
         inline ? (
           <code
-            className="text-gray-300 bg-gray-800/80 px-1.5 py-0.5 rounded text-sm font-mono border border-gray-700/50"
+            className="text-[#3066be] bg-[#3066be]/10 px-1.5 py-0.5 rounded text-sm font-mono border border-[#3066be]/20"
             {...props}
           />
         ) : (
           <code
-            className="block bg-gray-950 border border-gray-800 rounded-xl p-5 overflow-x-auto text-sm font-mono my-6 custom-scrollbar"
+            className="block bg-gray-50 border border-gray-200 rounded-xl p-5 overflow-x-auto text-sm font-mono my-6 custom-scrollbar text-gray-800"
             {...props}
           />
         ),
@@ -235,13 +232,13 @@ export function ClientWrapper({
         // eslint-disable-next-line @next/next/no-img-element
         <img
           {...props}
-          className="rounded-xl shadow-lg my-10 w-full border border-gray-800"
+          className="rounded-xl shadow-lg my-10 w-full border border-gray-100"
           loading="lazy"
           alt={props.alt || "Article Image"}
         />
       ),
       hr: ({ node, ...props }: any) => (
-        <hr className="border-gray-800 my-12" {...props} />
+        <hr className="border-gray-200 my-12" {...props} />
       ),
     }),
     []
@@ -252,12 +249,10 @@ export function ClientWrapper({
       <div className="relative">
         <TableOfContents content={article.content} />
 
-        {/* ✅ REMOVED HEADER SECTION (It is now in page.tsx) */}
-
-        <article className="pb-12 md:pb-20 bg-black min-h-screen">
+        <article className="pb-12 md:pb-20 bg-[#fbfff1] min-h-screen">
           <div className="max-w-3xl px-6 mx-auto">
             {/* Markdown Content */}
-            <div className="prose prose-lg prose-invert max-w-none">
+            <div className="prose prose-lg prose-gray max-w-none">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={markdownComponents}
@@ -268,12 +263,12 @@ export function ClientWrapper({
 
             {/* Tags */}
             {article.tags && article.tags.length > 0 && (
-              <div className="mt-16 pt-8 border-t border-gray-800">
+              <div className="mt-16 pt-8 border-t border-gray-200">
                 <div className="flex flex-wrap gap-2">
                   {article.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1.5 bg-gray-900 border border-gray-800 text-gray-400 rounded-md text-sm hover:border-gray-500 hover:text-gray-400 transition cursor-default"
+                      className="px-3 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-md text-sm hover:border-[#3066be] hover:text-[#3066be] transition cursor-default font-medium shadow-sm"
                     >
                       #{tag}
                     </span>
@@ -284,18 +279,18 @@ export function ClientWrapper({
 
             {/* Author Box */}
             {article.authorBio && (
-              <div className="mt-12 bg-gray-900/30 border border-gray-800 rounded-2xl p-8 flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">
-                <div className="flex-shrink-0 w-20 h-20 bg-gradient-to-br from-gray-600 to-gray-600 rounded-full flex items-center justify-center text-white font-bold text-3xl shadow-lg ring-4 ring-gray-900">
+              <div className="mt-12 bg-white border border-gray-200 rounded-2xl p-8 flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left shadow-sm">
+                <div className="flex-shrink-0 w-20 h-20 bg-[#3066be] rounded-full flex items-center justify-center text-white font-bold text-3xl shadow-md ring-4 ring-[#3066be]/10">
                   {article.author.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-lg mb-2 flex items-center justify-center md:justify-start gap-2">
+                  <h3 className="font-bold text-gray-900 text-lg mb-2 flex items-center justify-center md:justify-start gap-2">
                     {article.author}
-                    <span className="px-2 py-0.5 bg-gray-900/50 text-gray-300 text-[10px] uppercase tracking-wider rounded border border-gray-500/20">
+                    <span className="px-2 py-0.5 bg-[#3066be]/10 text-[#3066be] text-[10px] uppercase tracking-wider rounded border border-[#3066be]/20 font-semibold">
                       Auteur
                     </span>
                   </h3>
-                  <p className="text-gray-400 leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed">
                     {article.authorBio}
                   </p>
                 </div>
@@ -309,9 +304,6 @@ export function ClientWrapper({
 
       <FloatingShareButton article={article} slug={slug} />
       <BackToTop />
-
-      {/* REMOVED: Related Articles (Moved to page.tsx) */}
-      {/* REMOVED: CTA Section (Moved to page.tsx) */}
     </>
   );
 }

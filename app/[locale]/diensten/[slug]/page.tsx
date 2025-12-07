@@ -1,5 +1,5 @@
 // ========================================
-// FILE: app/diensten/[slug]/page.tsx
+// FILE: app/diensten/[slug]/page.tsx - LIGHT THEME
 // ========================================
 
 import { Metadata } from "next";
@@ -131,45 +131,45 @@ export default async function ServiceDetailPage({
   };
 
   return (
-    <>
+    <main className="bg-[#fbfff1] text-gray-900 min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* --- HERO --- */}
-      <section className="relative py-20 md:py-28 bg-black overflow-hidden">
+      {/* --- HERO (Light Theme) --- */}
+      <section className="relative py-20 md:py-28 bg-white overflow-hidden border-b border-gray-200">
         {/* Background gradient */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gray-900/20 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3066be]/5 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-4xl relative z-10 text-center">
           <Link
             href="/diensten"
-            className="inline-block mb-6 text-sm text-gray-400 hover:text-gray-400 transition"
+            className="inline-block mb-6 text-sm text-gray-500 hover:text-[#3066be] transition"
           >
             ← Terug naar alle diensten
           </Link>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 leading-tight">
             {service.title}
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 font-medium mb-6">
+          <p className="text-xl md:text-2xl text-[#3066be] font-medium mb-6">
             {service.subtitle}
           </p>
-          <p className="text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
             {service.description}
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform"
+              className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:bg-[#234a8c] transition-all hover:-translate-y-1 shadow-lg shadow-[#3066be]/20"
             >
               Vraag Advies Aan
             </Link>
             <Link
               href="/quickscan"
-              className="px-8 py-4 border border-gray-700 bg-gray-900/50 text-white font-semibold rounded-xl hover:bg-gray-800 transition"
+              className="px-8 py-4 border border-gray-300 bg-white text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition"
             >
               Doe de Quickscan
             </Link>
@@ -177,25 +177,25 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
-      {/* --- BENEFITS & FEATURES --- */}
-      <section className="py-20 bg-gray-950">
+      {/* --- BENEFITS & FEATURES (Light Theme) --- */}
+      <section className="py-20 bg-[#fbfff1]">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-2 gap-16 items-start">
             {/* Left: Features */}
             <div>
-              <h2 className="text-3xl font-bold text-white mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">
                 Wat we voor je doen
               </h2>
               <div className="space-y-6">
                 {service.features.map((feature, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-4 p-4 rounded-xl bg-gray-900/50 border border-gray-800"
+                    className="flex items-start gap-4 p-4 rounded-xl bg-white border border-gray-200 shadow-sm"
                   >
-                    <span className="flex-shrink-0 w-8 h-8 bg-gray-500/20 text-gray-400 rounded-full flex items-center justify-center font-bold text-sm">
+                    <span className="flex-shrink-0 w-8 h-8 bg-[#3066be]/10 text-[#3066be] rounded-full flex items-center justify-center font-bold text-sm">
                       {i + 1}
                     </span>
-                    <span className="text-gray-200 font-medium">{feature}</span>
+                    <span className="text-gray-700 font-medium">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -203,14 +203,14 @@ export default async function ServiceDetailPage({
 
             {/* Right: Benefits */}
             <div>
-              <h2 className="text-3xl font-bold text-white mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">
                 Het resultaat
               </h2>
               <ul className="space-y-4">
                 {service.benefits.map((benefit, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <svg
-                      className="w-6 h-6 text-green-400 flex-shrink-0"
+                      className="w-6 h-6 text-green-500 flex-shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -222,22 +222,22 @@ export default async function ServiceDetailPage({
                         d="M5 13l4 4L19 7"
                       />
                     </svg>
-                    <span className="text-gray-300 text-lg">{benefit}</span>
+                    <span className="text-gray-600 text-lg">{benefit}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-10 p-6 bg-gradient-to-br from-gray-900/20 to-gray-900 rounded-2xl border border-gray-500/20">
-                <h3 className="text-xl font-bold text-white mb-2">
+              <div className="mt-10 p-6 bg-white rounded-2xl border border-[#3066be]/20 shadow-md">
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
                   Klaar om te starten?
                 </h3>
-                <p className="text-gray-400 mb-4">
+                <p className="text-gray-600 mb-4">
                   Ontdek hoeveel tijd jij kunt besparen met{" "}
                   {service.title.toLowerCase()}.
                 </p>
                 <Link
                   href="/contact"
-                  className="text-gray-400 font-bold hover:text-gray-300 flex items-center gap-2"
+                  className="text-[#3066be] font-bold hover:text-[#234a8c] flex items-center gap-2"
                 >
                   Plan een gratis sessie <span aria-hidden="true">→</span>
                 </Link>
@@ -247,46 +247,46 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
-      {/* --- FAQ SECTION --- */}
-      <section className="py-20 bg-black border-t border-gray-900">
+      {/* --- FAQ SECTION (Light Theme) --- */}
+      <section className="py-20 bg-white border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-3xl">
-          <h2 className="text-3xl font-bold text-white text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
             Veelgestelde Vragen
           </h2>
           <div className="space-y-6">
             {service.faq.map((item, i) => (
               <div
                 key={i}
-                className="bg-gray-900/30 border border-gray-800 rounded-xl p-6 hover:border-gray-700 transition"
+                className="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:border-[#3066be]/30 transition"
               >
-                <h3 className="text-lg font-bold text-white mb-3">
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
                   {item.question}
                 </h3>
-                <p className="text-gray-400 leading-relaxed">{item.answer}</p>
+                <p className="text-gray-600 leading-relaxed">{item.answer}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- CTA --- */}
-      <section className="py-24 bg-gradient-to-b from-black to-gray-950/20 text-center">
+      {/* --- CTA (Light Theme) --- */}
+      <section className="py-24 bg-gradient-to-b from-[#fbfff1] to-white text-center border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Niet zeker of dit bij jou past?
           </h2>
-          <p className="text-gray-400 text-lg mb-8">
+          <p className="text-gray-600 text-lg mb-8">
             Geen probleem. Plan een vrijblijvend adviesgesprek in. We kijken
             samen naar jouw processen en geven eerlijk advies.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gray-600 hover:bg-gray-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-gray-500/25"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#3066be] hover:bg-[#234a8c] text-white font-bold rounded-xl transition-all shadow-lg shadow-[#3066be]/20 hover:-translate-y-1"
           >
             Plan Adviesgesprek
           </Link>
         </div>
       </section>
-    </>
+    </main>
   );
 }

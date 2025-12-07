@@ -1,9 +1,9 @@
 // ========================================
-// FILE: app/news/[slug]/page.tsx
+// FILE: app/news/[slug]/page.tsx - LIGHT THEME
 // ========================================
 
 import Link from "next/link";
-import Image from "next/image"; // ✅ Added for LCP optimization
+import Image from "next/image";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -169,22 +169,19 @@ export default async function NewsArticlePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      {/* Navigation Header (Consistent UI) */}
+      {/* Navigation Header (Consistent Light UI) */}
       <nav
-        className="bg-black py-4 border-b border-gray-800 sticky top-0 z-40 backdrop-blur-md bg-opacity-80"
+        className="bg-[#fbfff1]/95 py-4 border-b border-gray-200 sticky top-0 z-40 backdrop-blur-md"
         aria-label="Breadcrumb"
       >
         <div className="container mx-auto px-6 max-w-4xl">
-          <ol className="flex items-center gap-2 text-sm">
+          <ol className="flex items-center gap-2 text-sm text-gray-500">
             <li>
-              <Link
-                href="/"
-                className="text-gray-400 hover:text-gray-400 transition"
-              >
+              <Link href="/" className="hover:text-[#3066be] transition">
                 Home
               </Link>
             </li>
-            <li className="text-gray-600 flex items-center">
+            <li className="flex items-center">
               <svg
                 className="w-3 h-3"
                 fill="none"
@@ -200,14 +197,11 @@ export default async function NewsArticlePage({ params }: PageProps) {
               </svg>
             </li>
             <li>
-              <Link
-                href="/news"
-                className="text-gray-400 hover:text-gray-400 transition"
-              >
+              <Link href="/news" className="hover:text-[#3066be] transition">
                 Kennisbank
               </Link>
             </li>
-            <li className="text-gray-600 flex items-center">
+            <li className="flex items-center">
               <svg
                 className="w-3 h-3"
                 fill="none"
@@ -223,7 +217,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
               </svg>
             </li>
             <li
-              className="text-white font-medium truncate max-w-[150px] sm:max-w-xs md:max-w-none"
+              className="text-gray-900 font-medium truncate max-w-[150px] sm:max-w-xs md:max-w-none"
               aria-current="page"
             >
               {article.title}
@@ -232,43 +226,43 @@ export default async function NewsArticlePage({ params }: PageProps) {
         </div>
       </nav>
 
-      {/* ✅ SERVER-SIDE HERO (H1 & Image moved here for SEO/LCP) */}
-      <div className="bg-black pt-12 md:pt-20 pb-0">
+      {/* ✅ SERVER-SIDE HERO (Light Theme) */}
+      <div className="bg-white pt-12 md:pt-20 pb-0 border-b border-gray-100">
         <div className="max-w-3xl px-6 mx-auto">
           <header className="mb-10">
             {/* Category */}
             {article.category && (
-              <span className="inline-block px-4 py-1.5 bg-gray-600/10 text-gray-400 border border-gray-600/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+              <span className="inline-block px-4 py-1.5 bg-[#3066be]/5 text-[#3066be] border border-[#3066be]/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
                 {article.category}
               </span>
             )}
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight text-white tracking-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight text-gray-900 tracking-tight">
               {article.title}
             </h1>
 
             {/* Author & Meta */}
-            <div className="flex flex-wrap items-center gap-6 text-gray-400 text-sm pb-8 border-b border-gray-800">
+            <div className="flex flex-wrap items-center gap-6 text-gray-500 text-sm pb-8 border-b border-gray-200">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-tr from-gray-600 to-gray-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                <div className="w-10 h-10 bg-[#3066be] rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">
                   {article.author.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <span className="block text-white font-medium">
+                  <span className="block text-gray-900 font-medium">
                     {article.author}
                   </span>
-                  <span className="text-xs text-gray-500">Aifais Redactie</span>
+                  <span className="text-xs text-gray-400">Aifais Redactie</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 border-l border-gray-800 pl-4 h-8">
+              <div className="flex items-center gap-4 border-l border-gray-200 pl-4 h-8">
                 <time
                   dateTime={new Date(article.date).toISOString()}
                   className="flex items-center gap-2"
                 >
                   <svg
-                    className="w-4 h-4 text-gray-500"
+                    className="w-4 h-4 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -288,7 +282,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
                 </time>
                 <span className="flex items-center gap-2">
                   <svg
-                    className="w-4 h-4 text-gray-500"
+                    className="w-4 h-4 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -306,22 +300,21 @@ export default async function NewsArticlePage({ params }: PageProps) {
             </div>
 
             {/* Excerpt */}
-            <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mt-8 font-light">
+            <p className="text-xl md:text-2xl text-gray-600 leading-relaxed mt-8 font-light">
               {article.excerpt}
             </p>
           </header>
 
           {/* Featured Image - Optimized */}
           {article.image && (
-            <figure className="mb-12 relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-gray-600 to-gray-600 rounded-2xl opacity-20 group-hover:opacity-30 blur transition duration-500"></div>
+            <figure className="mb-12 relative group shadow-2xl rounded-xl">
               <Image
                 src={article.image}
                 alt={article.title}
                 width={1200}
                 height={630}
-                priority // ✅ Critical for Core Web Vitals
-                className="relative rounded-xl w-full object-cover shadow-2xl bg-gray-900 aspect-video border border-gray-800"
+                priority
+                className="relative rounded-xl w-full object-cover aspect-video border border-gray-200"
               />
             </figure>
           )}
@@ -329,20 +322,22 @@ export default async function NewsArticlePage({ params }: PageProps) {
       </div>
 
       {/* Client Logic (Content Rendering & Sidebar) */}
-      <ClientWrapper
-        article={article}
-        slug={slug}
-        cleanContent={cleanContent}
-        readTime={readTime}
-        relatedArticles={relatedArticles}
-      />
+      <div className="bg-[#fbfff1]">
+        <ClientWrapper
+          article={article}
+          slug={slug}
+          cleanContent={cleanContent}
+          readTime={readTime}
+          relatedArticles={relatedArticles}
+        />
+      </div>
 
-      {/* ✅ RELATED ARTICLES (Moved to Server Component for SEO & Performance) */}
+      {/* ✅ RELATED ARTICLES (Light Theme) */}
       {relatedArticles.length > 0 && (
-        <section className="py-20 bg-gray-950 border-t border-gray-900">
+        <section className="py-20 bg-white border-t border-gray-200">
           <div className="container mx-auto px-6 max-w-6xl">
-            <h2 className="text-2xl font-bold mb-10 text-white flex items-center gap-3">
-              <span className="w-1 h-8 bg-gray-600 rounded-full"></span>
+            <h2 className="text-2xl font-bold mb-10 text-gray-900 flex items-center gap-3">
+              <span className="w-1 h-8 bg-[#3066be] rounded-full"></span>
               Lees ook dit
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
@@ -350,11 +345,11 @@ export default async function NewsArticlePage({ params }: PageProps) {
                 <Link
                   key={related.slug}
                   href={`/news/${related.slug}`}
-                  className="group flex flex-col h-full bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-gray-500/50 hover:shadow-2xl hover:shadow-gray-900/10 transition-all duration-300"
+                  className="group flex flex-col h-full bg-[#fbfff1] rounded-2xl overflow-hidden border border-gray-200 hover:border-[#3066be]/30 hover:shadow-lg transition-all duration-300"
                 >
                   {related.image && (
                     <div className="relative h-48 overflow-hidden">
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition z-10" />
+                      <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition z-10" />
                       <Image
                         src={related.image}
                         alt={related.title}
@@ -365,13 +360,13 @@ export default async function NewsArticlePage({ params }: PageProps) {
                     </div>
                   )}
                   <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-lg font-bold mb-3 text-white group-hover:text-gray-400 transition line-clamp-2">
+                    <h3 className="text-lg font-bold mb-3 text-gray-900 group-hover:text-[#3066be] transition line-clamp-2">
                       {related.title}
                     </h3>
-                    <p className="text-gray-400 text-sm line-clamp-3 mb-6 flex-grow">
+                    <p className="text-gray-600 text-sm line-clamp-3 mb-6 flex-grow">
                       {related.excerpt}
                     </p>
-                    <div className="flex items-center justify-between text-xs text-gray-500 pt-4 border-t border-gray-800">
+                    <div className="flex items-center justify-between text-xs text-gray-500 pt-4 border-t border-gray-200">
                       <span>
                         {new Date(related.date).toLocaleDateString("nl-NL", {
                           month: "short",
@@ -404,18 +399,17 @@ export default async function NewsArticlePage({ params }: PageProps) {
         </section>
       )}
 
-      {/* ✅ CTA SECTION */}
-      <section className="py-24 relative overflow-hidden bg-black">
-        <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-950/20"></div>
+      {/* ✅ CTA SECTION (Light Theme) */}
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#fbfff1] to-white border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl relative z-10 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
             Klaar Voor Jouw Eigen{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
               Automatisering
             </span>
             ?
           </h2>
-          <p className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
             Net als in dit artikel beschreven, kunnen we jouw bedrijf helpen met
             workflow automatisering. Plan een gratis haalbaarheidscheck en
             ontdek jouw besparing.
@@ -423,13 +417,13 @@ export default async function NewsArticlePage({ params }: PageProps) {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/quickscan"
-              className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+              className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:bg-[#234a8c] transition-all shadow-lg hover:-translate-y-1"
             >
               Bereken Mijn Besparing →
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 border border-gray-700 bg-gray-900/50 text-white font-semibold rounded-xl hover:bg-gray-800 transition hover:border-gray-500 backdrop-blur-sm"
+              className="px-8 py-4 border border-gray-300 bg-white text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition"
             >
               Plan een Gesprek
             </Link>

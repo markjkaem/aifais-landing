@@ -59,14 +59,12 @@ export default function ContactClient() {
     if (!validateForm()) return;
 
     setStatus("sending");
-    // Simulate API call for now - replace with actual endpoint
     try {
-      // const res = await fetch("/api/contact", { ... });
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // Fake delay
+      // Fake delay
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       setStatus("ok");
       setForm({ name: "", email: "", phone: "", message: "" });
 
-      // Smooth scroll to success message
       setTimeout(() => {
         document.getElementById("success-message")?.scrollIntoView({
           behavior: "smooth",
@@ -79,12 +77,12 @@ export default function ContactClient() {
   }
 
   return (
-    <div className="relative bg-black min-h-screen py-20 px-6 overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-950/10 via-transparent to-gray-950/10" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-gray-600/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl" />
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(147,51,234,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(147,51,234,0.03)_1px,transparent_1px)] bg-[size:72px_72px]" />
+    <div className="relative bg-[#fbfff1] min-h-screen py-20 px-6 overflow-hidden text-gray-900">
+      {/* Background effects (Light Mode) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#3066be]/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(48,102,190,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(48,102,190,0.03)_1px,transparent_1px)] bg-[size:72px_72px]" />
 
       <motion.div
         className="relative max-w-7xl mx-auto"
@@ -94,17 +92,17 @@ export default function ContactClient() {
       >
         {/* Header */}
         <motion.header variants={fadeUp} className="text-center mb-16">
-          <div className="inline-block mb-4 px-4 py-2 bg-gray-950/30 border border-gray-500/30 rounded-full">
-            <span className="text-gray-300 text-sm font-semibold tracking-wide">
+          <div className="inline-block mb-4 px-4 py-2 bg-[#3066be]/10 border border-[#3066be]/20 rounded-full">
+            <span className="text-[#3066be] text-sm font-semibold tracking-wide">
               💬 GRATIS ADVIESGESPREK
             </span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-white via-gray-300 to-amber-400 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#3066be] to-purple-600">
               Klaar Om Te Starten?
             </span>
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Vul het formulier in en ontvang binnen 24 uur een concreet plan.
             Geen verplichtingen, alleen helder advies.
           </p>
@@ -113,16 +111,16 @@ export default function ContactClient() {
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* LEFT: FORM */}
           <motion.div variants={fadeUp}>
-            <div className="relative bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-xl border border-gray-500/20 rounded-3xl p-8 shadow-2xl">
+            <div className="relative bg-white border border-gray-200 rounded-3xl p-8 shadow-xl">
               {/* Decorative corner accents */}
-              <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-gray-600/30 to-transparent rounded-tl-3xl blur-2xl pointer-events-none" />
+              <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-[#3066be]/10 to-transparent rounded-tl-3xl blur-2xl pointer-events-none" />
 
               <div className="relative">
-                <h2 className="text-3xl font-bold mb-2 text-white">
+                <h2 className="text-3xl font-bold mb-2 text-gray-900">
                   Stuur Een Bericht
                 </h2>
-                <p className="text-gray-400 mb-8 text-sm">
-                  Velden met een <span className="text-gray-400">*</span> zijn
+                <p className="text-gray-500 mb-8 text-sm">
+                  Velden met een <span className="text-[#3066be]">*</span> zijn
                   verplicht.
                 </p>
 
@@ -131,9 +129,9 @@ export default function ContactClient() {
                   <div>
                     <label
                       htmlFor="name"
-                      className="block text-sm font-semibold text-gray-200 mb-2"
+                      className="block text-sm font-semibold text-gray-700 mb-2"
                     >
-                      Naam <span className="text-gray-400">*</span>
+                      Naam <span className="text-[#3066be]">*</span>
                     </label>
                     <input
                       id="name"
@@ -146,12 +144,12 @@ export default function ContactClient() {
                         setForm({ ...form, name: e.target.value });
                         if (errors.name) setErrors({ ...errors, name: "" });
                       }}
-                      className={`w-full p-4 rounded-xl bg-zinc-950/50 text-white border ${
-                        errors.name ? "border-red-500" : "border-zinc-800"
-                      } focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500/20 transition`}
+                      className={`w-full p-4 rounded-xl bg-gray-50 text-gray-900 border ${
+                        errors.name ? "border-red-500" : "border-gray-300"
+                      } focus:border-[#3066be] focus:outline-none focus:ring-2 focus:ring-[#3066be]/20 transition`}
                     />
                     {errors.name && (
-                      <p className="text-red-400 text-xs mt-1">{errors.name}</p>
+                      <p className="text-red-500 text-xs mt-1">{errors.name}</p>
                     )}
                   </div>
 
@@ -160,9 +158,9 @@ export default function ContactClient() {
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-sm font-semibold text-gray-200 mb-2"
+                        className="block text-sm font-semibold text-gray-700 mb-2"
                       >
-                        E-mailadres <span className="text-gray-400">*</span>
+                        E-mailadres <span className="text-[#3066be]">*</span>
                       </label>
                       <input
                         id="email"
@@ -175,12 +173,12 @@ export default function ContactClient() {
                           setForm({ ...form, email: e.target.value });
                           if (errors.email) setErrors({ ...errors, email: "" });
                         }}
-                        className={`w-full p-4 rounded-xl bg-zinc-950/50 text-white border ${
-                          errors.email ? "border-red-500" : "border-zinc-800"
-                        } focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500/20 transition`}
+                        className={`w-full p-4 rounded-xl bg-gray-50 text-gray-900 border ${
+                          errors.email ? "border-red-500" : "border-gray-300"
+                        } focus:border-[#3066be] focus:outline-none focus:ring-2 focus:ring-[#3066be]/20 transition`}
                       />
                       {errors.email && (
-                        <p className="text-red-400 text-xs mt-1">
+                        <p className="text-red-500 text-xs mt-1">
                           {errors.email}
                         </p>
                       )}
@@ -188,10 +186,10 @@ export default function ContactClient() {
                     <div>
                       <label
                         htmlFor="phone"
-                        className="block text-sm font-semibold text-gray-200 mb-2"
+                        className="block text-sm font-semibold text-gray-700 mb-2"
                       >
                         Telefoon{" "}
-                        <span className="text-gray-500 text-xs font-normal">
+                        <span className="text-gray-400 text-xs font-normal">
                           (Optioneel)
                         </span>
                       </label>
@@ -204,7 +202,7 @@ export default function ContactClient() {
                         onChange={(e) =>
                           setForm({ ...form, phone: e.target.value })
                         }
-                        className="w-full p-4 rounded-xl bg-zinc-950/50 text-white border border-zinc-800 focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500/20 transition"
+                        className="w-full p-4 rounded-xl bg-gray-50 text-gray-900 border border-gray-300 focus:border-[#3066be] focus:outline-none focus:ring-2 focus:ring-[#3066be]/20 transition"
                       />
                     </div>
                   </div>
@@ -213,10 +211,10 @@ export default function ContactClient() {
                   <div>
                     <label
                       htmlFor="message"
-                      className="block text-sm font-semibold text-gray-200 mb-2"
+                      className="block text-sm font-semibold text-gray-700 mb-2"
                     >
                       Waar kunnen we je mee helpen?{" "}
-                      <span className="text-gray-400">*</span>
+                      <span className="text-[#3066be]">*</span>
                     </label>
                     <textarea
                       id="message"
@@ -230,12 +228,12 @@ export default function ContactClient() {
                           setErrors({ ...errors, message: "" });
                       }}
                       rows={5}
-                      className={`w-full p-4 rounded-xl bg-zinc-950/50 text-white border ${
-                        errors.message ? "border-red-500" : "border-zinc-800"
-                      } focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500/20 transition resize-none`}
+                      className={`w-full p-4 rounded-xl bg-gray-50 text-gray-900 border ${
+                        errors.message ? "border-red-500" : "border-gray-300"
+                      } focus:border-[#3066be] focus:outline-none focus:ring-2 focus:ring-[#3066be]/20 transition resize-none`}
                     />
                     {errors.message && (
-                      <p className="text-red-400 text-xs mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.message}
                       </p>
                     )}
@@ -246,7 +244,7 @@ export default function ContactClient() {
                     <button
                       type="submit"
                       disabled={status === "sending"}
-                      className="group w-full px-8 py-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-bold text-lg rounded-xl hover:scale-[1.02] transition-all duration-300 shadow-xl shadow-gray-500/20 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                      className="group w-full px-8 py-4 bg-[#3066be] hover:bg-[#234a8c] text-white font-bold text-lg rounded-xl hover:scale-[1.02] transition-all duration-300 shadow-lg shadow-[#3066be]/20 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                     >
                       {status === "sending" ? (
                         <div className="flex items-center gap-2">
@@ -296,12 +294,12 @@ export default function ContactClient() {
                     {status === "ok" && (
                       <div
                         id="success-message"
-                        className="mt-6 p-4 bg-green-900/30 border border-green-500/30 rounded-xl flex items-center gap-3 animate-fadeIn"
+                        className="mt-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3 animate-fadeIn"
                       >
-                        <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center text-green-400">
+                        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600">
                           ✓
                         </div>
-                        <p className="text-green-300 text-sm font-medium">
+                        <p className="text-green-700 text-sm font-medium">
                           Bedankt! We hebben je bericht ontvangen en nemen
                           binnen 24 uur contact op.
                         </p>
@@ -318,47 +316,47 @@ export default function ContactClient() {
             variants={fadeUp}
             className="space-y-8 lg:sticky lg:top-32"
           >
-            {/* ✅ NEW: "Hoe het werkt" Timeline */}
-            <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-8">
-              <h3 className="text-xl font-bold text-white mb-6">
+            {/* Timeline */}
+            <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+              <h3 className="text-xl font-bold text-gray-900 mb-6">
                 Wat gebeurt er hierna?
               </h3>
               <div className="space-y-8 relative">
                 {/* Connecting Line */}
-                <div className="absolute top-2 left-3.5 bottom-6 w-0.5 bg-gray-800" />
+                <div className="absolute top-2 left-3.5 bottom-6 w-0.5 bg-gray-200" />
 
                 <div className="relative pl-10">
-                  <div className="absolute left-0 top-0 w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold text-sm ring-4 ring-black z-10">
+                  <div className="absolute left-0 top-0 w-8 h-8 bg-[#3066be] text-white rounded-full flex items-center justify-center font-bold text-sm ring-4 ring-white z-10">
                     1
                   </div>
-                  <h4 className="text-white font-semibold mb-1">
+                  <h4 className="text-gray-900 font-semibold mb-1">
                     Wij analyseren je aanvraag
                   </h4>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-gray-600">
                     Mark of Faissal kijkt persoonlijk naar je vraag om te zien
                     of we een match zijn.
                   </p>
                 </div>
                 <div className="relative pl-10">
-                  <div className="absolute left-0 top-0 w-8 h-8 bg-zinc-800 text-gray-400 rounded-full flex items-center justify-center font-bold text-sm ring-4 ring-black z-10">
+                  <div className="absolute left-0 top-0 w-8 h-8 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center font-bold text-sm ring-4 ring-white z-10 border border-gray-200">
                     2
                   </div>
-                  <h4 className="text-white font-semibold mb-1">
+                  <h4 className="text-gray-900 font-semibold mb-1">
                     Korte kennismaking
                   </h4>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-gray-600">
                     We plannen een kort gesprek (15-30 min) om je processen door
                     te nemen.
                   </p>
                 </div>
                 <div className="relative pl-10">
-                  <div className="absolute left-0 top-0 w-8 h-8 bg-zinc-800 text-gray-400 rounded-full flex items-center justify-center font-bold text-sm ring-4 ring-black z-10">
+                  <div className="absolute left-0 top-0 w-8 h-8 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center font-bold text-sm ring-4 ring-white z-10 border border-gray-200">
                     3
                   </div>
-                  <h4 className="text-white font-semibold mb-1">
+                  <h4 className="text-gray-900 font-semibold mb-1">
                     Concreet voorstel
                   </h4>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-gray-600">
                     Je ontvangt een plan van aanpak met vaste prijs en ROI
                     berekening.
                   </p>
@@ -367,48 +365,50 @@ export default function ContactClient() {
             </div>
 
             {/* Direct Contact Info */}
-            <div className="bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 border border-gray-500/20 rounded-2xl p-8">
-              <h2 className="text-xl font-bold text-white mb-6">
+            <div className="bg-[#fbfff1] border border-[#3066be]/20 rounded-2xl p-8 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-6">
                 Liever direct contact?
               </h2>
               <div className="space-y-4">
                 <a
                   href="mailto:contact@aifais.com"
-                  className="flex items-center gap-4 p-4 bg-black/40 rounded-xl border border-zinc-800 hover:border-gray-500/50 transition group"
+                  className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-[#3066be]/50 transition group shadow-sm"
                 >
-                  <div className="w-10 h-10 bg-gray-500/10 rounded-full flex items-center justify-center text-gray-400 group-hover:bg-gray-500 group-hover:text-white transition">
+                  <div className="w-10 h-10 bg-[#3066be]/10 rounded-full flex items-center justify-center text-[#3066be] group-hover:bg-[#3066be] group-hover:text-white transition">
                     ✉️
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">Mail ons</p>
-                    <p className="text-white font-medium">contact@aifais.com</p>
+                    <p className="text-gray-900 font-medium">
+                      contact@aifais.com
+                    </p>
                   </div>
                 </a>
                 <a
                   href="tel:+31618424470"
-                  className="flex items-center gap-4 p-4 bg-black/40 rounded-xl border border-zinc-800 hover:border-gray-500/50 transition group"
+                  className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-[#3066be]/50 transition group shadow-sm"
                 >
-                  <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center text-green-400 group-hover:bg-green-500 group-hover:text-white transition">
+                  <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center text-green-600 group-hover:bg-green-500 group-hover:text-white transition">
                     📞
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">Bel ons</p>
-                    <p className="text-white font-medium">+31 6 1842 4470</p>
+                    <p className="text-gray-900 font-medium">+31 6 1842 4470</p>
                   </div>
                 </a>
               </div>
             </div>
 
-            {/* Testimonial (Social Proof) */}
-            <div className="bg-gray-900/10 border border-gray-500/10 rounded-2xl p-6 italic text-gray-300 text-sm leading-relaxed">
+            {/* Testimonial */}
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 italic text-gray-600 text-sm leading-relaxed shadow-sm">
               "AIFAIS reageerde enorm snel. Binnen een week hadden we onze
               eerste workflow draaien die ons nu al 4 uur per week scheelt.
               Aanrader!"
               <div className="mt-4 flex items-center gap-3 not-italic">
-                <div className="w-8 h-8 bg-zinc-800 rounded-full flex items-center justify-center font-bold text-white text-xs">
+                <div className="w-8 h-8 bg-[#3066be] rounded-full flex items-center justify-center font-bold text-white text-xs">
                   J
                 </div>
-                <span className="text-white font-semibold text-xs">
+                <span className="text-gray-900 font-semibold text-xs">
                   Jeroen, E-commerce eigenaar
                 </span>
               </div>

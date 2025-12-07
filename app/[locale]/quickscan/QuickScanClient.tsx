@@ -32,8 +32,8 @@ export default function QuickScanClient() {
     "idle"
   );
 
-  // --- SOCIAL PROOF LOGIC (The "FOMO" Popup) ---
-  const recentSubmissionsData = recentSubmissions || []; // Fallback if empty
+  // --- SOCIAL PROOF LOGIC ---
+  const recentSubmissionsData = recentSubmissions || [];
   const [showNotification, setShowNotification] = useState(false);
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -56,11 +56,10 @@ export default function QuickScanClient() {
     return `${minutes} minuten`;
   };
 
-  // Initialize fake data logic
   useEffect(() => {
     const now = new Date();
     const currentHour = now.getHours();
-    if (currentHour >= 0 && currentHour < 7) return; // Don't show at night
+    if (currentHour >= 0 && currentHour < 7) return;
 
     if (recentSubmissionsData.length > 0) {
       const randomIndex = Math.floor(
@@ -82,7 +81,6 @@ export default function QuickScanClient() {
 
   const currentSubmission = submissions[currentIndex] || { name: "", hours: 0 };
 
-  // Update "Time Ago" text every 6 seconds
   useEffect(() => {
     if (submissions.length === 0) return;
     const timer = setInterval(() => {
@@ -93,7 +91,6 @@ export default function QuickScanClient() {
     return () => clearInterval(timer);
   }, [currentSubmission, submissions.length]);
 
-  // Rotate submissions
   useEffect(() => {
     if (submissions.length === 0) return;
     const addAndRotate = () => {
@@ -115,7 +112,7 @@ export default function QuickScanClient() {
         setShowNotification(true);
       }, 1000);
     };
-    const interval = setInterval(addAndRotate, 50000); // New notification every 50s
+    const interval = setInterval(addAndRotate, 50000);
     return () => clearInterval(interval);
   }, [submissions.length, recentSubmissionsData]);
 
@@ -153,7 +150,6 @@ export default function QuickScanClient() {
       uren: "",
     };
 
-    // Validation
     if (!formData.naam.trim()) newErrors.naam = "Vul je naam in";
     if (!formData.email.trim() || !isValidEmail(formData.email))
       newErrors.email = "Vul een geldig emailadres in";
@@ -169,7 +165,6 @@ export default function QuickScanClient() {
     setErrors(newErrors);
     if (Object.values(newErrors).some((e) => e !== "")) return;
 
-    // Calculation Logic
     const medewerkersNum = (() => {
       switch (formData.medewerkers) {
         case "1":
@@ -185,14 +180,12 @@ export default function QuickScanClient() {
       }
     })();
 
-    const besparing = formData.uren * 12 * medewerkersNum * 52; // Simple Euro calc logic? Or Hours?
-    // Assuming calculation is Eur/Year roughly? Or modify logic as needed.
+    const besparing = formData.uren * 12 * medewerkersNum * 52;
 
     setResult(besparing);
     setStatus("sending");
 
     try {
-      // ✅ Send to API (Make sure /api/quickscan exists or use /api/contact)
       const res = await fetch("/api/quickscan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -201,7 +194,6 @@ export default function QuickScanClient() {
 
       if (res.ok) {
         setStatus("ok");
-        // ✅ Redirect to Thank You page with params
         router.push(`/thank-you?besparing=${besparing}&uren=${formData.uren}`);
       } else {
         setStatus("error");
@@ -213,67 +205,31 @@ export default function QuickScanClient() {
 
   return (
     <div className="max-w-3xl mx-auto pb-20 px-6">
-      {/* 1. SOCIAL PROOF NOTIFICATION (Popup) */}
-      {/* {submissions.length > 0 && currentSubmission.name && (
-        <div
-          className={`fixed top-24 right-6 z-50 transition-all duration-500 hidden md:block ${
-            showNotification
-              ? "opacity-100 translate-x-0"
-              : "opacity-0 translate-x-10"
-          }`}
-        >
-          <div className="bg-zinc-900/90 backdrop-blur-lg border border-gray-500/30 rounded-xl p-4 shadow-2xl max-w-xs flex items-start gap-3">
-            <div className="bg-gray-600 rounded-full p-2 flex-shrink-0">
-              <svg
-                className="w-4 h-4 text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-white">
-                {currentSubmission.name}
-              </p>
-              <p className="text-xs text-gray-400">
-                berekende zojuist{" "}
-                <span className="text-gray-400 font-bold">
-                  {currentSubmission.hours} uur
-                </span>{" "}
-                besparing
-              </p>
-              <p className="text-[10px] text-gray-500 mt-1">
-                {timeAgo} geleden
-              </p>
-            </div>
-          </div>
-        </div>
-      )} */}
-
-      {/* 2. STATS BAR (Trust Signals) */}
-      <div className="grid grid-cols-3 gap-4 py-6 bg-zinc-900/50 rounded-2xl border border-zinc-800 mb-8">
+      {/* 2. STATS BAR (Trust Signals - Light Theme) */}
+      <div className="grid grid-cols-3 gap-4 py-6 bg-white rounded-2xl border border-gray-200 shadow-sm mb-8">
         <div className="text-center">
-          <p className="text-2xl md:text-3xl font-bold text-white">247</p>
+          <p className="text-2xl md:text-3xl font-bold text-gray-900">247</p>
           <p className="text-xs text-gray-500 uppercase tracking-wide mt-1">
             Scans deze maand
           </p>
         </div>
-        <div className="text-center border-x border-zinc-800">
-          <p className="text-2xl md:text-3xl font-bold text-white">42 uur</p>
+        <div className="text-center border-x border-gray-200">
+          <p className="text-2xl md:text-3xl font-bold text-gray-900">42 uur</p>
           <p className="text-xs text-gray-500 uppercase tracking-wide mt-1">
             Gem. Besparing
           </p>
         </div>
         <div className="text-center">
-          <p className="text-2xl md:text-3xl font-bold text-white">2.3 mnd</p>
+          <p className="text-2xl md:text-3xl font-bold text-gray-900">
+            2.3 mnd
+          </p>
           <p className="text-xs text-gray-500 uppercase tracking-wide mt-1">
             Gem. ROI
           </p>
         </div>
       </div>
 
-      {/* 3. CALCULATOR FORM */}
+      {/* 3. CALCULATOR FORM (Light Theme) */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -283,8 +239,8 @@ export default function QuickScanClient() {
         aria-label="Automatisering besparing calculator"
       >
         {/* Step 1: Situation */}
-        <fieldset className="space-y-6 border border-gray-500/20 rounded-2xl p-6 bg-zinc-900/30">
-          <legend className="text-xl font-bold text-white px-2 flex items-center gap-2">
+        <fieldset className="space-y-6 border border-gray-200 rounded-2xl p-6 bg-white shadow-sm">
+          <legend className="text-xl font-bold text-gray-900 px-2 flex items-center gap-2">
             <span>📊</span> Jouw Situatie
           </legend>
 
@@ -292,7 +248,7 @@ export default function QuickScanClient() {
           <div>
             <label
               htmlFor="medewerkers"
-              className="block mb-3 text-gray-300 font-medium"
+              className="block mb-3 text-gray-700 font-medium"
             >
               Hoeveel medewerkers kunnen tijd besparen?
             </label>
@@ -303,9 +259,9 @@ export default function QuickScanClient() {
               onChange={(e) =>
                 setFormData({ ...formData, medewerkers: e.target.value })
               }
-              className={`w-full p-4 rounded-xl bg-black border ${
-                errors.medewerkers ? "border-red-500" : "border-zinc-700"
-              } text-white focus:border-gray-500 focus:outline-none transition`}
+              className={`w-full p-4 rounded-xl bg-gray-50 border ${
+                errors.medewerkers ? "border-red-500" : "border-gray-300"
+              } text-gray-900 focus:border-[#3066be] focus:ring-1 focus:ring-[#3066be] focus:outline-none transition`}
             >
               <option value="">Selecteer aantal medewerkers...</option>
               <option value="1">1-5 medewerkers</option>
@@ -314,7 +270,7 @@ export default function QuickScanClient() {
               <option value="51">50+ medewerkers</option>
             </select>
             {errors.medewerkers && (
-              <p className="text-red-400 text-sm mt-2">
+              <p className="text-red-500 text-sm mt-2">
                 ⚠️ {errors.medewerkers}
               </p>
             )}
@@ -322,7 +278,7 @@ export default function QuickScanClient() {
 
           {/* Taken (Checkboxes) */}
           <div>
-            <span className="block mb-4 text-gray-300 font-medium">
+            <span className="block mb-4 text-gray-700 font-medium">
               Welke taken kosten het meest tijd? (max 3)
             </span>
             <div className="space-y-3">
@@ -331,8 +287,8 @@ export default function QuickScanClient() {
                   key={t}
                   className={`flex items-center p-4 rounded-xl cursor-pointer transition border ${
                     formData.taken.includes(t)
-                      ? "border-gray-500 bg-gray-500/10"
-                      : "border-zinc-800 hover:bg-zinc-800"
+                      ? "border-[#3066be] bg-[#3066be]/5"
+                      : "border-gray-200 hover:bg-gray-50"
                   }`}
                 >
                   <input
@@ -342,13 +298,13 @@ export default function QuickScanClient() {
                     disabled={
                       !formData.taken.includes(t) && formData.taken.length >= 3
                     }
-                    className="mr-4 accent-gray-500 w-5 h-5"
+                    className="mr-4 accent-[#3066be] w-5 h-5"
                   />
                   <span
                     className={
                       formData.taken.includes(t)
-                        ? "text-white font-medium"
-                        : "text-gray-400"
+                        ? "text-[#3066be] font-semibold"
+                        : "text-gray-600"
                     }
                   >
                     {t}
@@ -357,7 +313,7 @@ export default function QuickScanClient() {
               ))}
             </div>
             {errors.taken && (
-              <p className="text-red-400 text-sm mt-2">⚠️ {errors.taken}</p>
+              <p className="text-red-500 text-sm mt-2">⚠️ {errors.taken}</p>
             )}
           </div>
 
@@ -365,7 +321,7 @@ export default function QuickScanClient() {
           <div>
             <label
               htmlFor="uren"
-              className="block mb-4 text-gray-300 font-medium"
+              className="block mb-4 text-gray-700 font-medium"
             >
               Uren per week per medewerker aan deze taken?
             </label>
@@ -380,19 +336,19 @@ export default function QuickScanClient() {
                 onChange={(e) =>
                   setFormData({ ...formData, uren: parseInt(e.target.value) })
                 }
-                className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-gray-500"
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#3066be]"
               />
             </div>
             <div className="flex justify-between items-center mt-4">
               <span className="text-gray-500 text-sm">0 uur</span>
-              <span className="text-3xl font-bold text-white bg-gray-600 px-4 py-1 rounded-lg">
+              <span className="text-3xl font-bold text-[#3066be] bg-[#3066be]/10 px-4 py-1 rounded-lg">
                 {formData.uren}{" "}
                 <span className="text-sm font-normal opacity-70">uur</span>
               </span>
               <span className="text-gray-500 text-sm">40 uur</span>
             </div>
             {errors.uren && (
-              <p className="text-red-400 text-sm mt-2 text-center">
+              <p className="text-red-500 text-sm mt-2 text-center">
                 ⚠️ {errors.uren}
               </p>
             )}
@@ -400,13 +356,13 @@ export default function QuickScanClient() {
         </fieldset>
 
         {/* Step 2: Contact Details */}
-        <fieldset className="space-y-5 border border-gray-500/20 rounded-2xl p-6 bg-zinc-900/30">
-          <legend className="text-xl font-bold text-white px-2 flex items-center gap-2">
+        <fieldset className="space-y-5 border border-gray-200 rounded-2xl p-6 bg-white shadow-sm">
+          <legend className="text-xl font-bold text-gray-900 px-2 flex items-center gap-2">
             <span>👤</span> Waar mogen we het rapport heen sturen?
           </legend>
 
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
               Naam *
             </label>
             <input
@@ -416,18 +372,18 @@ export default function QuickScanClient() {
               onChange={(e) =>
                 setFormData({ ...formData, naam: e.target.value })
               }
-              className={`w-full p-4 rounded-xl bg-black border ${
-                errors.naam ? "border-red-500" : "border-zinc-700"
-              } text-white focus:border-gray-500 focus:outline-none transition`}
+              className={`w-full p-4 rounded-xl bg-gray-50 border ${
+                errors.naam ? "border-red-500" : "border-gray-300"
+              } text-gray-900 focus:border-[#3066be] focus:ring-1 focus:ring-[#3066be] focus:outline-none transition`}
             />
             {errors.naam && (
-              <p className="text-red-400 text-sm mt-1">⚠️ {errors.naam}</p>
+              <p className="text-red-500 text-sm mt-1">⚠️ {errors.naam}</p>
             )}
           </div>
 
           <div className="grid md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-2">
+              <label className="block text-sm font-medium text-gray-600 mb-2">
                 E-mailadres *
               </label>
               <input
@@ -437,16 +393,16 @@ export default function QuickScanClient() {
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
-                className={`w-full p-4 rounded-xl bg-black border ${
-                  errors.email ? "border-red-500" : "border-zinc-700"
-                } text-white focus:border-gray-500 focus:outline-none transition`}
+                className={`w-full p-4 rounded-xl bg-gray-50 border ${
+                  errors.email ? "border-red-500" : "border-gray-300"
+                } text-gray-900 focus:border-[#3066be] focus:ring-1 focus:ring-[#3066be] focus:outline-none transition`}
               />
               {errors.email && (
-                <p className="text-red-400 text-sm mt-1">⚠️ {errors.email}</p>
+                <p className="text-red-500 text-sm mt-1">⚠️ {errors.email}</p>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-2">
+              <label className="block text-sm font-medium text-gray-600 mb-2">
                 Telefoon *
               </label>
               <input
@@ -456,12 +412,12 @@ export default function QuickScanClient() {
                 onChange={(e) =>
                   setFormData({ ...formData, telefoon: e.target.value })
                 }
-                className={`w-full p-4 rounded-xl bg-black border ${
-                  errors.telefoon ? "border-red-500" : "border-zinc-700"
-                } text-white focus:border-gray-500 focus:outline-none transition`}
+                className={`w-full p-4 rounded-xl bg-gray-50 border ${
+                  errors.telefoon ? "border-red-500" : "border-gray-300"
+                } text-gray-900 focus:border-[#3066be] focus:ring-1 focus:ring-[#3066be] focus:outline-none transition`}
               />
               {errors.telefoon && (
-                <p className="text-red-400 text-sm mt-1">
+                <p className="text-red-500 text-sm mt-1">
                   ⚠️ {errors.telefoon}
                 </p>
               )}
@@ -474,7 +430,7 @@ export default function QuickScanClient() {
           <button
             type="submit"
             disabled={status === "sending"}
-            className="group w-full px-8 py-5 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-bold text-xl rounded-2xl hover:scale-[1.02] transition-all duration-300 shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+            className="group w-full px-8 py-5 bg-[#3066be] hover:bg-[#234a8c] text-white font-bold text-xl rounded-2xl hover:scale-[1.01] transition-all duration-300 shadow-lg shadow-[#3066be]/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
           >
             {status === "sending" ? (
               <>
@@ -520,7 +476,7 @@ export default function QuickScanClient() {
           </button>
 
           {status === "error" && (
-            <div className="bg-red-900/30 border border-red-500/50 rounded-xl p-4 text-center mt-4 text-red-200">
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center mt-4 text-red-600">
               ⚠️ Er ging iets mis. Probeer het opnieuw of mail ons direct.
             </div>
           )}

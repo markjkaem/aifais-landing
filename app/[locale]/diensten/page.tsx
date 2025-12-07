@@ -1,5 +1,5 @@
 // ========================================
-// FILE: app/diensten/page.tsx
+// FILE: app/diensten/page.tsx - LIGHT THEME
 // ========================================
 
 import { Metadata } from "next";
@@ -86,29 +86,29 @@ export default function ServicesPage() {
   };
 
   return (
-    <>
+    <main className="bg-[#fbfff1] text-gray-900 min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesSchema) }}
       />
 
-      {/* ✅ HERO SECTION */}
-      <section className="relative py-20 md:py-28 bg-black overflow-hidden">
+      {/* ✅ HERO SECTION (Light Theme) */}
+      <section className="relative py-20 md:py-28 overflow-hidden bg-white border-b border-gray-200">
         {/* Background Effects */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gray-900/20 blur-[100px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gray-900/10 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3066be]/5 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-6xl relative z-10 text-center">
-          <span className="inline-block px-4 py-1.5 mb-6 border border-gray-500/30 bg-gray-500/10 text-gray-300 rounded-full text-sm font-semibold tracking-wide uppercase">
+          <span className="inline-block px-4 py-1.5 mb-6 border border-[#3066be]/20 bg-[#3066be]/5 text-[#3066be] rounded-full text-sm font-semibold tracking-wide uppercase">
             Onze Expertise
           </span>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 leading-tight">
             Van Handmatig Werk Naar <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
               Slimme Processen
             </span>
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Wij bouwen de technische motor van jouw bedrijf. Of het nu gaat om
             het koppelen van software of het inzetten van AI: wij zorgen dat het
             werkt.
@@ -116,15 +116,15 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* ✅ SERVICES GRID (The Core Content) */}
-      <section className="py-16 md:py-24 bg-gray-950">
+      {/* ✅ SERVICES GRID (Light Theme) */}
+      <section className="py-16 md:py-24 bg-[#fbfff1]">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-8">
             {/* Service 1: Workflows */}
-            <article className="group relative bg-gray-900/50 border border-gray-800 rounded-3xl p-8 hover:border-gray-500/50 transition-all duration-300 hover:-translate-y-1">
-              <div className="w-14 h-14 bg-gray-900/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gray-600/20 transition-colors">
+            <article className="group relative bg-white border border-gray-200 rounded-3xl p-8 hover:border-[#3066be]/30 hover:shadow-xl hover:shadow-[#3066be]/5 transition-all duration-300 hover:-translate-y-1">
+              <div className="w-14 h-14 bg-[#3066be]/5 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#3066be]/10 transition-colors">
                 <svg
-                  className="w-7 h-7 text-gray-400"
+                  className="w-7 h-7 text-[#3066be]"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -137,39 +137,46 @@ export default function ServicesPage() {
                   />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#3066be] transition-colors">
                 Workflow Automatisering
               </h3>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-6 leading-relaxed">
                 Wij koppelen jouw systemen (CRM, Mail, Boekhouding) aan elkaar
                 via n8n of Make. Geen handmatige data-overdracht meer.
               </p>
-              <ul className="space-y-3 mb-8 text-sm text-gray-300">
+              <ul className="space-y-3 mb-8 text-sm text-gray-500 font-medium">
                 <li className="flex items-center gap-2">
-                  <span className="text-gray-500">✓</span> CRM Synchronisatie
+                  <span className="text-[#3066be] bg-[#3066be]/10 rounded-full p-0.5">
+                    ✓
+                  </span>{" "}
+                  CRM Synchronisatie
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-gray-500">✓</span> Lead Opvolging
+                  <span className="text-[#3066be] bg-[#3066be]/10 rounded-full p-0.5">
+                    ✓
+                  </span>{" "}
+                  Lead Opvolging
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-gray-500">✓</span> Order Verwerking
+                  <span className="text-[#3066be] bg-[#3066be]/10 rounded-full p-0.5">
+                    ✓
+                  </span>{" "}
+                  Order Verwerking
                 </li>
               </ul>
-              {/* Internal Link to specific service page (Future Proofing) */}
-
               <Link
                 href="/diensten/workflow-automatisering"
-                className="text-white font-semibold border-b border-gray-500 pb-1 hover:text-gray-400 transition"
+                className="text-[#3066be] font-bold border-b border-[#3066be]/30 pb-1 hover:border-[#3066be] hover:text-[#234a8c] transition flex items-center gap-2 w-fit"
               >
-                Lees meer over Workflows →
+                Lees meer over Workflows <span className="text-lg">→</span>
               </Link>
             </article>
 
             {/* Service 2: AI */}
-            <article className="group relative bg-gray-900/50 border border-gray-800 rounded-3xl p-8 hover:border-gray-500/50 transition-all duration-300 hover:-translate-y-1">
-              <div className="w-14 h-14 bg-gray-900/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gray-600/20 transition-colors">
+            <article className="group relative bg-white border border-gray-200 rounded-3xl p-8 hover:border-purple-500/30 hover:shadow-xl hover:shadow-purple-500/5 transition-all duration-300 hover:-translate-y-1">
+              <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-100 transition-colors">
                 <svg
-                  className="w-7 h-7 text-gray-400"
+                  className="w-7 h-7 text-purple-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -182,37 +189,46 @@ export default function ServicesPage() {
                   />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-purple-600 transition-colors">
                 AI Integraties
               </h3>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-6 leading-relaxed">
                 Zet ChatGPT of Claude in voor jouw bedrijf. Van slimme e-mail
                 beantwoording tot het analyseren van documenten.
               </p>
-              <ul className="space-y-3 mb-8 text-sm text-gray-300">
+              <ul className="space-y-3 mb-8 text-sm text-gray-500 font-medium">
                 <li className="flex items-center gap-2">
-                  <span className="text-gray-500">✓</span> Slimme Chatbots
+                  <span className="text-purple-600 bg-purple-100 rounded-full p-0.5">
+                    ✓
+                  </span>{" "}
+                  Slimme Chatbots
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-gray-500">✓</span> Document Analyse
+                  <span className="text-purple-600 bg-purple-100 rounded-full p-0.5">
+                    ✓
+                  </span>{" "}
+                  Document Analyse
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-gray-500">✓</span> Content Generatie
+                  <span className="text-purple-600 bg-purple-100 rounded-full p-0.5">
+                    ✓
+                  </span>{" "}
+                  Content Generatie
                 </li>
               </ul>
               <Link
                 href="/diensten/ai-integraties"
-                className="text-white font-semibold border-b border-gray-500 pb-1 hover:text-gray-400 transition"
+                className="text-purple-600 font-bold border-b border-purple-200 pb-1 hover:border-purple-600 hover:text-purple-800 transition flex items-center gap-2 w-fit"
               >
-                Ontdek AI Kansen →
+                Ontdek AI Kansen <span className="text-lg">→</span>
               </Link>
             </article>
 
             {/* Service 3: Admin */}
-            <article className="group relative bg-gray-900/50 border border-gray-800 rounded-3xl p-8 hover:border-green-500/50 transition-all duration-300 hover:-translate-y-1">
-              <div className="w-14 h-14 bg-green-900/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-green-600/20 transition-colors">
+            <article className="group relative bg-white border border-gray-200 rounded-3xl p-8 hover:border-green-500/30 hover:shadow-xl hover:shadow-green-500/5 transition-all duration-300 hover:-translate-y-1">
+              <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-green-100 transition-colors">
                 <svg
-                  className="w-7 h-7 text-green-400"
+                  className="w-7 h-7 text-green-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -225,44 +241,52 @@ export default function ServicesPage() {
                   />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-green-600 transition-colors">
                 Administratie
               </h3>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-6 leading-relaxed">
                 Verminder administratieve druk. Wij automatiseren facturatie,
                 urenregistratie en HR-processen.
               </p>
-              <ul className="space-y-3 mb-8 text-sm text-gray-300">
+              <ul className="space-y-3 mb-8 text-sm text-gray-500 font-medium">
                 <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Factuurverwerking
+                  <span className="text-green-600 bg-green-100 rounded-full p-0.5">
+                    ✓
+                  </span>{" "}
+                  Factuurverwerking
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Offerte
-                  Automatisering
+                  <span className="text-green-600 bg-green-100 rounded-full p-0.5">
+                    ✓
+                  </span>{" "}
+                  Offerte Automatisering
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-green-500">✓</span> Rapportages
+                  <span className="text-green-600 bg-green-100 rounded-full p-0.5">
+                    ✓
+                  </span>{" "}
+                  Rapportages
                 </li>
               </ul>
               <Link
                 href="/diensten/administratieve-automatisering"
-                className="text-white font-semibold border-b border-green-500 pb-1 hover:text-green-400 transition"
+                className="text-green-600 font-bold border-b border-green-200 pb-1 hover:border-green-600 hover:text-green-800 transition flex items-center gap-2 w-fit"
               >
-                Bespaar Tijd →
+                Bespaar Tijd <span className="text-lg">→</span>
               </Link>
             </article>
           </div>
         </div>
       </section>
 
-      {/* ✅ HOW WE WORK (Builds Trust) */}
-      <section className="py-24 bg-black border-t border-gray-900">
+      {/* ✅ HOW WE WORK (Light Theme) */}
+      <section className="py-24 bg-white border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Zo Werken Wij
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto">
               Geen ingewikkelde trajecten. Wij houden het simpel, transparant en
               snel.
             </p>
@@ -270,7 +294,7 @@ export default function ServicesPage() {
 
           <div className="relative">
             {/* Connecting Line (Desktop) */}
-            <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-800 -translate-y-1/2 z-0" />
+            <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-100 -translate-y-1/2 z-0" />
 
             <div className="grid md:grid-cols-4 gap-8 relative z-10">
               {[
@@ -297,15 +321,15 @@ export default function ServicesPage() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="bg-black border border-gray-800 p-6 rounded-xl text-center hover:border-gray-500/50 transition duration-300"
+                  className="bg-white border border-gray-200 p-6 rounded-xl text-center hover:border-[#3066be]/50 hover:shadow-lg transition duration-300"
                 >
-                  <div className="w-12 h-12 bg-gray-900/30 text-gray-400 font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-500/20">
+                  <div className="w-12 h-12 bg-[#3066be]/5 text-[#3066be] font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-4 border border-[#3066be]/10">
                     {item.step}
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-gray-400">{item.desc}</p>
+                  <p className="text-sm text-gray-600">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -313,16 +337,16 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* ✅ CTA SECTION */}
-      <section className="py-24 bg-gradient-to-b from-black to-gray-950/20 text-center">
+      {/* ✅ CTA SECTION (Light Theme Gradient) */}
+      <section className="py-24 bg-gradient-to-b from-[#fbfff1] to-white text-center border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900">
             Klaar Om Je Bedrijf Te <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
               Versnellen?
             </span>
           </h2>
-          <p className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
             Begin vandaag nog. Plan een gratis haalbaarheidscheck en ontdek
             binnen 30 minuten waar jouw kansen liggen.
           </p>
@@ -330,19 +354,19 @@ export default function ServicesPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/quickscan"
-              className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform shadow-lg"
+              className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:bg-[#234a8c] transition-all hover:-translate-y-1 shadow-lg shadow-[#3066be]/20"
             >
               Start Gratis Quickscan →
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 border border-gray-700 bg-gray-900/50 text-white font-semibold rounded-xl hover:bg-gray-800 transition"
+              className="px-8 py-4 border border-gray-300 bg-white text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition"
             >
               Plan een Gesprek
             </Link>
           </div>
         </div>
       </section>
-    </>
+    </main>
   );
 }

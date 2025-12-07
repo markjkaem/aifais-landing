@@ -1,5 +1,5 @@
 // ========================================
-// FILE: app/contact/page.tsx
+// FILE: app/contact/page.tsx - LIGHT THEME
 // ========================================
 
 import { Metadata } from "next";
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "AIFAIS",
     images: [
       {
-        url: "https://aifais.com/og-contact.jpg", // Ensure this exists
+        url: "https://aifais.com/og-contact.jpg",
         width: 1200,
         height: 630,
         alt: "Neem contact op met AIFAIS",
@@ -51,7 +51,6 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  // ✅ BREADCRUMB SCHEMA (Missing in original)
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -71,7 +70,6 @@ export default function ContactPage() {
     ],
   };
 
-  // ✅ CONTACT PAGE SCHEMA
   const contactPageSchema = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
@@ -81,7 +79,7 @@ export default function ContactPage() {
     url: "https://aifais.com/contact",
     mainEntity: {
       "@type": "LocalBusiness",
-      "@id": "https://aifais.com/#organization", // Links to Layout Schema
+      "@id": "https://aifais.com/#organization",
       name: "AIFAIS",
       telephone: "+31-6 18424470",
       email: "contact@aifais.com",

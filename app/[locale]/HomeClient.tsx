@@ -98,41 +98,13 @@ export default function HomeClient() {
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl lg:text-2xl text-gray-200 leading-relaxed mb-10 max-w-2xl">
-              Stop met handmatig werk. Wij bouwen autonome software die fungeert
-              als een extra medewerker. Integreert naadloos met je huidige team
-              en systemen.
+              Meer tijd. Meer winst. Minder gedoe. Wij automatiseren de taken
+              die je tijd kosten, zodat jij je kunt focussen op wat écht
+              belangrijk is: je bedrijf laten groeien. Gratis analyse.
               <span className="block mt-2 text-white font-medium">
-                Werkt 24/7. Nooit ziek. Betaal per resultaat.
+                Gratis plan. Niet goed, geld terug.
               </span>
             </p>
-
-            {/* Stats / Tech Specs */}
-            <div className="flex flex-wrap gap-8 md:gap-12 mb-10 pb-10 border-b border-white/20 font-mono">
-              <div>
-                <div className="text-2xl md:text-3xl font-bold text-white">
-                  24/7
-                </div>
-                <div className="text-xs text-gray-300 uppercase tracking-widest mt-1">
-                  Beschikbaar
-                </div>
-              </div>
-              <div>
-                <div className="text-2xl md:text-3xl font-bold text-white">
-                  Zero
-                </div>
-                <div className="text-xs text-gray-300 uppercase tracking-widest mt-1">
-                  Loonbelasting
-                </div>
-              </div>
-              <div>
-                <div className="text-2xl md:text-3xl font-bold text-white">
-                  100%
-                </div>
-                <div className="text-xs text-gray-300 uppercase tracking-widest mt-1">
-                  Schaalbaar
-                </div>
-              </div>
-            </div>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
@@ -140,7 +112,7 @@ export default function HomeClient() {
                 href="/quickscan"
                 className="group relative px-8 py-4 bg-[#3066be] text-white font-bold text-lg rounded-full hover:bg-[#234a8c] transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-[#3066be]/30"
               >
-                <span>Doe de gratis analyse</span>
+                <span>Doe nu de gratis analyse</span>
                 <svg
                   className="w-5 h-5 group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -156,10 +128,10 @@ export default function HomeClient() {
                 </svg>
               </Link>
               <Link
-                href="#demo"
+                href="/diensten"
                 className="px-8 py-4 border border-black/30 rounded-full text-black font-medium hover:bg-white/10 transition-all duration-300 flex items-center justify-center backdrop-blur-sm"
               >
-                Bekijk Demo
+                Bekijk Diensten
               </Link>
             </div>
           </div>
@@ -380,7 +352,7 @@ export default function HomeClient() {
             </span>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <span className="text-xl font-bold text-gray-900">Claude 3.5</span>
+            <span className="text-xl font-bold text-gray-900">Claude 4.5</span>
             <span className="text-[10px] text-gray-500 font-mono">
               Intelligence
             </span>

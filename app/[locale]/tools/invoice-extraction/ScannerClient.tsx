@@ -11,12 +11,10 @@ import {
   Coins,
   ArrowRight,
   CreditCard,
-  Code,
 } from "lucide-react";
 import CryptoModal from "@/app/Components/CryptoModal";
 
 // --- CONFIG ---
-// Vul hier je Stripe Payment Link in voor 1 scan
 const STRIPE_LINK_SINGLE =
   process.env.NEXT_PUBLIC_STRIPE_LINK_SINGLE ||
   "https://buy.stripe.com/test_...";
@@ -69,20 +67,17 @@ export default function ScannerClient() {
   }, []);
 
   // --- STRIPE RETURN HANDLER ---
-  // Checkt of de gebruiker terugkomt van Stripe
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
 
     if (sessionId) {
-      // We hebben betaald via Stripe!
       setPaymentProof({ type: "stripe", id: sessionId });
-      // Haal de params weg uit de URL voor netheid
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
 
-  // --- BESTAND LOGICA ---
+  // --- BESTAND LOGIC ---
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -90,8 +85,6 @@ export default function ScannerClient() {
       setScanResult(null);
       setError(null);
 
-      // Reset payment proof NIET als het Stripe is (want die page reload is net geweest)
-      // Maar wel als je een nieuw bestand kiest na een scan.
       if (scanResult) setPaymentProof(null);
 
       if (file.type.startsWith("image/")) {
@@ -120,7 +113,7 @@ export default function ScannerClient() {
     });
   };
 
-  // --- SCAN LOGICA ---
+  // --- SCAN LOGIC ---
   const handleCryptoSuccess = async (signature: string) => {
     setShowCryptoQR(false);
     setShowPaymentModal(false);
@@ -128,7 +121,6 @@ export default function ScannerClient() {
     await performScan({ type: "crypto", id: signature });
   };
 
-  // Deze wordt aangeroepen als er al een Stripe ID is (bij page load)
   const handleStripeContinue = async () => {
     if (paymentProof && paymentProof.type === "stripe") {
       await performScan(paymentProof);
@@ -147,12 +139,10 @@ export default function ScannerClient() {
     try {
       const { base64, mimeType } = await convertFileToBase64(selectedFile);
 
-      // Stuur naar de Backend
       const response = await fetch("/api/agent/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          // We sturen OF een signature (Crypto) OF een sessionId (Stripe)
           signature: proof.type === "crypto" ? proof.id : undefined,
           stripeSessionId: proof.type === "stripe" ? proof.id : undefined,
           invoiceBase64: base64,
@@ -184,22 +174,24 @@ export default function ScannerClient() {
 
   return (
     <div className="w-full max-w-2xl relative">
-      <div className="absolute -inset-1 bg-gradient-to-r from-gray-600 to-gray-600 rounded-[2rem] blur-2xl opacity-20 pointer-events-none" />
-      <div className="relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 shadow-2xl overflow-hidden min-h-[400px]">
+      {/* Glow Effect (Light Mode) */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-[#3066be]/20 to-purple-500/20 rounded-[2rem] blur-2xl pointer-events-none" />
+
+      <div className="relative bg-white border border-gray-200 rounded-3xl p-8 shadow-xl overflow-hidden min-h-[400px]">
         {/* PAYMENT MODAL (KEUZE) */}
         {showPaymentModal && !showCryptoQR && (
-          <div className="absolute inset-0 z-50 bg-black/90 flex items-center justify-center p-4 animate-in fade-in">
-            <div className="bg-[#111] border border-white/10 rounded-2xl p-6 w-full max-w-sm">
+          <div className="absolute inset-0 z-50 bg-white/90 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in">
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-white font-bold">Kies betaalmethode</h3>
+                <h3 className="text-gray-900 font-bold">Kies betaalmethode</h3>
                 <button onClick={() => setShowPaymentModal(false)}>
-                  <X className="text-gray-500 hover:text-white" />
+                  <X className="text-gray-400 hover:text-gray-600" />
                 </button>
               </div>
 
               <button
                 onClick={() => (window.location.href = STRIPE_LINK_SINGLE)}
-                className="w-full bg-white hover:bg-gray-100 text-black font-bold py-4 rounded-xl flex items-center justify-between px-4 mb-3 transition"
+                className="w-full bg-[#3066be] hover:bg-[#234a8c] text-white font-bold py-4 rounded-xl flex items-center justify-between px-4 mb-3 transition shadow-lg shadow-[#3066be]/20"
               >
                 <div className="flex items-center gap-3">
                   <CreditCard className="w-5 h-5" /> iDEAL / Card
@@ -209,10 +201,10 @@ export default function ScannerClient() {
 
               <button
                 onClick={() => setShowCryptoQR(true)}
-                className="w-full bg-[#14F195]/10 border border-[#14F195]/50 hover:bg-[#14F195]/20 text-[#14F195] font-bold py-4 rounded-xl flex items-center justify-between px-4 transition"
+                className="w-full bg-gray-50 border border-gray-200 hover:bg-gray-100 text-gray-700 font-bold py-4 rounded-xl flex items-center justify-between px-4 transition"
               >
                 <div className="flex items-center gap-3">
-                  <Coins className="w-5 h-5" /> Solana Pay
+                  <Coins className="w-5 h-5 text-green-500" /> Solana Pay
                 </div>
                 <span>{SCAN_CONFIG.priceSol} SOL</span>
               </button>
@@ -237,16 +229,16 @@ export default function ScannerClient() {
 
         {/* HEADER */}
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-            <div className="w-10 h-10 bg-gray-600/20 rounded-xl flex items-center justify-center border border-gray-500/30">
-              <Zap className="w-5 h-5 text-gray-400" />
+          <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+            <div className="w-10 h-10 bg-[#3066be]/10 rounded-xl flex items-center justify-center border border-[#3066be]/20">
+              <Zap className="w-5 h-5 text-[#3066be]" />
             </div>
             AI Invoice Scanner
           </h2>
           {scanResult && (
             <button
               onClick={reset}
-              className="text-xs text-gray-500 hover:text-white"
+              className="text-xs text-gray-500 hover:text-[#3066be] font-medium"
             >
               Nieuw
             </button>
@@ -256,15 +248,15 @@ export default function ScannerClient() {
         {/* --- STATE 1: UPLOAD --- */}
         {!selectedFile && (
           <div className="animate-in fade-in duration-300">
-            {/* 🔥 NIEUW: Melding als er betaald is maar bestand weg is */}
+            {/* Melding als er betaald is */}
             {paymentProof && (
-              <div className="mb-6 bg-green-500/10 border border-green-500/20 p-4 rounded-xl flex items-center gap-3">
-                <CheckCircle2 className="w-6 h-6 text-green-400 shrink-0" />
+              <div className="mb-6 bg-green-50 border border-green-200 p-4 rounded-xl flex items-center gap-3">
+                <CheckCircle2 className="w-6 h-6 text-green-600 shrink-0" />
                 <div>
-                  <h3 className="text-green-400 font-bold text-sm">
+                  <h3 className="text-green-700 font-bold text-sm">
                     Betaling Succesvol!
                   </h3>
-                  <p className="text-gray-400 text-xs">
+                  <p className="text-green-600 text-xs">
                     Door de beveiliging van je browser moeten we je vragen het
                     bestand nog één keer te selecteren.
                   </p>
@@ -283,39 +275,38 @@ export default function ScannerClient() {
               <div
                 className={`h-64 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center transition-all duration-300 ${
                   paymentProof
-                    ? "border-green-500/50 bg-green-900/5" // Groene gloed als betaald is
-                    : "border-white/10 group-hover:border-gray-500/50 group-hover:bg-gray-900/5"
+                    ? "border-green-500/50 bg-green-50"
+                    : "border-gray-300 group-hover:border-[#3066be]/50 group-hover:bg-[#3066be]/5"
                 }`}
               >
                 {paymentProof ? (
-                  <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-4">
-                    <FileText className="w-8 h-8 text-green-400" />
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                    <FileText className="w-8 h-8 text-green-600" />
                   </div>
                 ) : (
-                  <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <FileText className="w-8 h-8 text-gray-400 group-hover:text-gray-400" />
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition group-hover:bg-[#3066be]/10">
+                    <FileText className="w-8 h-8 text-gray-400 group-hover:text-[#3066be]" />
                   </div>
                 )}
 
-                <p className="text-gray-300 font-medium">
+                <p className="text-gray-600 font-medium">
                   {paymentProof
                     ? "Selecteer bestand om te starten"
                     : "Sleep je factuur hierheen"}
                 </p>
-                <p className="text-xs text-gray-500 mt-2">PDF, JPG of PNG</p>
+                <p className="text-xs text-gray-400 mt-2">PDF, JPG of PNG</p>
               </div>
             </div>
 
-            {/* Verberg de prijzen als er al betaald is */}
             {!paymentProof && (
               <div className="mt-6 flex items-center justify-center gap-6 text-xs text-gray-500">
                 <div className="flex items-center gap-2">
-                  <Coins className="w-4 h-4 text-[#14F195]" />
+                  <Coins className="w-4 h-4 text-green-500" />
                   Pay-per-scan ({SCAN_CONFIG.priceSol} SOL)
                 </div>
                 <div className="flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-yellow-400" />
-                  Powered by Claude 4.5 Opus
+                  <Zap className="w-4 h-4 text-[#3066be]" />
+                  Powered by Claude 3.5 Opus
                 </div>
               </div>
             )}
@@ -325,8 +316,8 @@ export default function ScannerClient() {
         {/* --- STATE 2: PREVIEW & ACTION --- */}
         {selectedFile && !scanResult && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
-            <div className="bg-white/5 rounded-2xl p-4 border border-white/10 mb-6 flex items-center gap-4">
-              <div className="w-12 h-12 bg-black/50 rounded-lg flex items-center justify-center overflow-hidden">
+            <div className="bg-gray-50 rounded-2xl p-4 border border-gray-200 mb-6 flex items-center gap-4">
+              <div className="w-12 h-12 bg-white border border-gray-200 rounded-lg flex items-center justify-center overflow-hidden">
                 {previewUrl ? (
                   <img
                     src={previewUrl}
@@ -337,7 +328,7 @@ export default function ScannerClient() {
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-white font-medium truncate">
+                <p className="text-gray-900 font-medium truncate">
                   {selectedFile.name}
                 </p>
               </div>
@@ -345,12 +336,12 @@ export default function ScannerClient() {
                 onClick={() => setSelectedFile(null)}
                 disabled={isScanning}
               >
-                <X className="w-5 h-5 text-gray-400 hover:text-white" />
+                <X className="w-5 h-5 text-gray-400 hover:text-red-500" />
               </button>
             </div>
 
             {error && (
-              <div className="mb-6 bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl flex items-start gap-3">
+              <div className="mb-6 bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 shrink-0" />
                 <span className="text-sm">{error}</span>
               </div>
@@ -361,13 +352,12 @@ export default function ScannerClient() {
               <button
                 onClick={() => setShowPaymentModal(true)}
                 disabled={isScanning}
-                className="w-full bg-white hover:bg-gray-200 text-black font-bold text-lg py-4 rounded-xl transition flex items-center justify-center gap-3"
+                className="w-full bg-[#3066be] hover:bg-[#234a8c] text-white font-bold text-lg py-4 rounded-xl transition flex items-center justify-center gap-3 shadow-lg shadow-[#3066be]/20"
               >
                 <span>Scan & Pay</span>
                 <ArrowRight className="w-5 h-5" />
               </button>
             ) : (
-              /* Er is al betaald (bijv terug van Stripe) */
               <button
                 onClick={
                   paymentProof.type === "stripe"
@@ -375,7 +365,7 @@ export default function ScannerClient() {
                     : () => {}
                 }
                 disabled={isScanning}
-                className="w-full bg-[#14F195] hover:bg-[#10c479] text-black font-bold text-lg py-4 rounded-xl transition flex items-center justify-center gap-3"
+                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg py-4 rounded-xl transition flex items-center justify-center gap-3 shadow-lg shadow-green-500/20"
               >
                 {isScanning ? (
                   <Loader2 className="w-6 h-6 animate-spin" />
@@ -386,7 +376,7 @@ export default function ScannerClient() {
             )}
 
             {!paymentProof && (
-              <p className="text-center text-xs text-gray-500 mt-4">
+              <p className="text-center text-xs text-gray-400 mt-4">
                 iDEAL, Creditcard & Solana geaccepteerd.
               </p>
             )}
@@ -396,24 +386,24 @@ export default function ScannerClient() {
         {/* --- STATE 3: RESULT --- */}
         {scanResult && (
           <div className="animate-in zoom-in-95 duration-300">
-            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 mb-6 flex items-center gap-3">
-              <CheckCircle2 className="w-6 h-6 text-green-400" />
+            <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 flex items-center gap-3">
+              <CheckCircle2 className="w-6 h-6 text-green-600" />
               <div>
-                <h3 className="text-green-400 font-bold">Scan Succesvol!</h3>
-                <p className="text-xs text-green-400/70">
+                <h3 className="text-green-700 font-bold">Scan Succesvol!</h3>
+                <p className="text-xs text-green-600">
                   Betaald via:{" "}
                   {paymentProof?.type === "crypto" ? "Solana" : "Stripe"}
                 </p>
               </div>
             </div>
-            <div className="bg-black/50 rounded-xl border border-white/10 p-4 relative">
-              <pre className="text-xs font-mono text-gray-300 overflow-x-auto">
+            <div className="bg-gray-50 rounded-xl border border-gray-200 p-4 relative shadow-inner">
+              <pre className="text-xs font-mono text-gray-700 overflow-x-auto">
                 {JSON.stringify(scanResult, null, 2)}
               </pre>
             </div>
             <button
               onClick={reset}
-              className="w-full mt-6 bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-xl transition"
+              className="w-full mt-6 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-xl transition"
             >
               Volgende Factuur
             </button>

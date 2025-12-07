@@ -1,10 +1,10 @@
 // ========================================
-// FILE: app/portfolio/[slug]/page.tsx
+// FILE: app/portfolio/[slug]/page.tsx - LIGHT THEME
 // ========================================
 
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image"; // ✅ Added for Core Web Vitals
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { projects } from "../data";
 
@@ -34,10 +34,10 @@ export async function generateMetadata({
     keywords: [
       "automatisering case study",
       project.title,
-      "n8n voorbeeld", // Added specific tech keyword
+      "n8n voorbeeld",
       "bedrijfsautomatisering resultaten",
       "mkb automatisering",
-      ...(project.tags || []), // Include project tags as keywords
+      ...(project.tags || []),
     ],
 
     openGraph: {
@@ -99,7 +99,6 @@ export default async function PortfolioItemPage({
     )
     .slice(0, 3);
 
-  // If we don't have enough related by category, fill with others
   if (relatedProjects.length < 3) {
     const others = projects
       .filter((p) => p.slug !== slug && !relatedProjects.includes(p))
@@ -115,10 +114,9 @@ export default async function PortfolioItemPage({
     description: project.description,
     image: `https://aifais.com${project.image}`,
     datePublished: project.date || new Date().toISOString(),
-    // ✅ SEO: Google likes to know when content was last updated
     dateModified: project.date || new Date().toISOString(),
     author: {
-      "@type": "Organization", // Ideally link to a Person (Mark/Faissal) if data allows
+      "@type": "Organization",
       name: "AIFAIS",
       url: "https://aifais.com",
     },
@@ -164,7 +162,6 @@ export default async function PortfolioItemPage({
 
   return (
     <>
-      {/* JSON-LD Schemas */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
@@ -174,22 +171,19 @@ export default async function PortfolioItemPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      {/* ✅ BREADCRUMBS UI (Optimized separators) */}
+      {/* ✅ BREADCRUMBS UI (Light Theme) */}
       <nav
-        className="bg-black py-4 border-b border-gray-800 sticky top-0 z-40 backdrop-blur-md bg-opacity-80"
+        className="bg-[#fbfff1]/95 py-4 border-b border-gray-200 sticky top-0 z-40 backdrop-blur-md"
         aria-label="Breadcrumb"
       >
         <div className="container mx-auto px-6 max-w-6xl">
-          <ol className="flex items-center gap-2 text-sm">
+          <ol className="flex items-center gap-2 text-sm text-gray-500">
             <li>
-              <Link
-                href="/"
-                className="text-gray-400 hover:text-gray-400 transition"
-              >
+              <Link href="/" className="hover:text-[#3066be] transition">
                 Home
               </Link>
             </li>
-            <li className="text-gray-600">
+            <li className="flex items-center">
               <svg
                 className="w-3 h-3"
                 fill="none"
@@ -207,12 +201,12 @@ export default async function PortfolioItemPage({
             <li>
               <Link
                 href="/portfolio"
-                className="text-gray-400 hover:text-gray-400 transition"
+                className="hover:text-[#3066be] transition"
               >
                 Portfolio
               </Link>
             </li>
-            <li className="text-gray-600">
+            <li className="flex items-center">
               <svg
                 className="w-3 h-3"
                 fill="none"
@@ -227,34 +221,34 @@ export default async function PortfolioItemPage({
                 />
               </svg>
             </li>
-            <li className="text-white font-medium truncate max-w-[200px] sm:max-w-none">
+            <li className="text-gray-900 font-medium truncate max-w-[200px] sm:max-w-none">
               {project.title}
             </li>
           </ol>
         </div>
       </nav>
 
-      {/* ✅ HERO SECTION */}
-      <section className="py-16 md:py-24 bg-black">
+      {/* ✅ HERO SECTION (Light Theme) */}
+      <section className="py-16 md:py-24 bg-white border-b border-gray-200">
         <div className="container mx-auto px-6 max-w-5xl">
           <header className="text-center mb-12">
             {/* Category Badge */}
             {project.category && (
-              <span className="inline-block px-4 py-2 bg-gray-600/20 text-gray-400 border border-gray-500/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+              <span className="inline-block px-4 py-2 bg-[#3066be]/5 text-[#3066be] border border-[#3066be]/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
                 {project.category}
               </span>
             )}
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 tracking-tight leading-tight">
               {project.title}
             </h1>
 
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               {project.description}
             </p>
 
             {/* Meta Info */}
-            <div className="flex flex-wrap gap-6 justify-center mt-8 text-sm text-gray-400">
+            <div className="flex flex-wrap gap-6 justify-center mt-8 text-sm text-gray-500 font-medium">
               {project.readTime && (
                 <span className="flex items-center gap-2">
                   <svg
@@ -298,8 +292,7 @@ export default async function PortfolioItemPage({
           </header>
 
           {/* Hero Image (Optimized) */}
-          <div className="relative rounded-2xl overflow-hidden border border-gray-800 shadow-2xl bg-gray-900 aspect-video">
-            {/* ✅ SEO: Use Next/Image for LCP Optimization */}
+          <div className="relative rounded-2xl overflow-hidden border border-gray-200 shadow-xl bg-gray-50 aspect-video">
             <Image
               src={project.image}
               alt={`${project.title} - bedrijfsautomatisering case study`}
@@ -312,45 +305,45 @@ export default async function PortfolioItemPage({
         </div>
       </section>
 
-      {/* ✅ RESULTS SECTION (High Trust Signals) */}
+      {/* ✅ RESULTS SECTION (Light Theme) */}
       {project.results && (
-        <section className="py-16 bg-black">
+        <section className="py-16 bg-[#fbfff1]">
           <div className="container mx-auto px-6 max-w-5xl">
-            <h2 className="text-2xl font-bold text-center mb-10 text-white">
-              <span className="border-b-2 border-gray-500 pb-2">
+            <h2 className="text-2xl font-bold text-center mb-10 text-gray-900">
+              <span className="border-b-2 border-[#3066be] pb-2">
                 Behaalde Resultaten
               </span>
             </h2>
 
             <div className="grid md:grid-cols-3 gap-6">
               {project.results.timeSaved && (
-                <div className="bg-gradient-to-br from-gray-900/30 to-gray-900 border border-gray-500/30 rounded-2xl p-8 text-center hover:border-gray-500/50 transition duration-300">
-                  <div className="text-4xl lg:text-5xl font-bold text-gray-400 mb-2">
+                <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center hover:border-[#3066be]/30 hover:shadow-lg transition duration-300">
+                  <div className="text-4xl lg:text-5xl font-bold text-[#3066be] mb-2">
                     {project.results.timeSaved}
                   </div>
-                  <p className="text-gray-400 font-medium text-sm uppercase tracking-wide">
+                  <p className="text-gray-500 font-medium text-sm uppercase tracking-wide">
                     Tijd Bespaard
                   </p>
                 </div>
               )}
 
               {project.results.roiMonths && (
-                <div className="bg-gradient-to-br from-green-900/20 to-gray-900 border border-green-500/30 rounded-2xl p-8 text-center hover:border-green-500/50 transition duration-300">
-                  <div className="text-4xl lg:text-5xl font-bold text-green-400 mb-2">
+                <div className="bg-white border border-green-200 rounded-2xl p-8 text-center hover:border-green-400 hover:shadow-lg transition duration-300">
+                  <div className="text-4xl lg:text-5xl font-bold text-green-600 mb-2">
                     {project.results.roiMonths} mnd
                   </div>
-                  <p className="text-gray-400 font-medium text-sm uppercase tracking-wide">
+                  <p className="text-gray-500 font-medium text-sm uppercase tracking-wide">
                     ROI Periode
                   </p>
                 </div>
               )}
 
               {project.results.costSaving && (
-                <div className="bg-gradient-to-br from-gray-900/20 to-gray-900 border border-gray-500/30 rounded-2xl p-8 text-center hover:border-gray-500/50 transition duration-300">
-                  <div className="text-4xl lg:text-5xl font-bold text-gray-400 mb-2">
+                <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center hover:border-[#3066be]/30 hover:shadow-lg transition duration-300">
+                  <div className="text-4xl lg:text-5xl font-bold text-[#3066be] mb-2">
                     {project.results.costSaving}
                   </div>
-                  <p className="text-gray-400 font-medium text-sm uppercase tracking-wide">
+                  <p className="text-gray-500 font-medium text-sm uppercase tracking-wide">
                     Jaarlijkse Besparing
                   </p>
                 </div>
@@ -360,12 +353,12 @@ export default async function PortfolioItemPage({
         </section>
       )}
 
-      {/* ✅ MAIN CONTENT */}
-      <article className="py-16 bg-black">
+      {/* ✅ MAIN CONTENT (Light Theme) */}
+      <article className="py-16 bg-white border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl">
           {/* Details/Features */}
           <section className="max-w-none">
-            <h2 className="text-3xl font-bold mb-8 text-white">
+            <h2 className="text-3xl font-bold mb-8 text-gray-900">
               De Oplossing & Impact
             </h2>
 
@@ -373,12 +366,12 @@ export default async function PortfolioItemPage({
               {project.details.map((detail: string, idx: number) => (
                 <li
                   key={idx}
-                  className="flex items-start gap-4 bg-gray-900/30 border border-gray-800/60 rounded-xl p-5 hover:border-gray-500/30 transition group"
+                  className="flex items-start gap-4 bg-gray-50 border border-gray-200 rounded-xl p-5 hover:border-[#3066be]/30 transition group"
                 >
-                  <span className="flex-shrink-0 w-8 h-8 bg-gray-600/10 rounded-full flex items-center justify-center text-gray-400 text-sm font-bold mt-0.5 group-hover:bg-gray-600/20 group-hover:text-gray-300 transition-colors">
+                  <span className="flex-shrink-0 w-8 h-8 bg-[#3066be]/10 text-[#3066be] rounded-full flex items-center justify-center font-bold text-sm mt-0.5 group-hover:bg-[#3066be] group-hover:text-white transition-colors">
                     {idx + 1}
                   </span>
-                  <span className="text-gray-300 leading-relaxed text-lg">
+                  <span className="text-gray-700 leading-relaxed text-lg">
                     {detail}
                   </span>
                 </li>
@@ -386,18 +379,17 @@ export default async function PortfolioItemPage({
             </ul>
           </section>
 
-          {/* Tags (Internal Linking Opportunities) */}
+          {/* Tags */}
           {project.tags && project.tags.length > 0 && (
-            <section className="mt-16 pt-12 border-t border-gray-800">
-              <h3 className="text-lg font-bold mb-6 text-gray-400 uppercase tracking-wider text-sm">
+            <section className="mt-16 pt-12 border-t border-gray-200">
+              <h3 className="text-lg font-bold mb-6 text-gray-500 uppercase tracking-wider text-sm">
                 Gebruikte Technologieën
               </h3>
               <div className="flex flex-wrap gap-3">
                 {project.tags.map((tag: string) => (
-                  // Note: Ideally, wrap this in a Link to /diensten/technologie/[tag] if the page exists
                   <span
                     key={tag}
-                    className="px-4 py-2 bg-gray-900 border border-gray-700 text-gray-300 rounded-lg hover:border-gray-500 hover:text-gray-400 transition text-sm font-medium cursor-default"
+                    className="px-4 py-2 bg-gray-100 border border-gray-200 text-gray-600 rounded-lg hover:border-[#3066be] hover:text-[#3066be] transition text-sm font-medium cursor-default"
                   >
                     {tag}
                   </span>
@@ -409,24 +401,24 @@ export default async function PortfolioItemPage({
           {/* Testimonial */}
           {project.testimonial && (
             <section className="mt-16">
-              <blockquote className="bg-gradient-to-br from-gray-900/10 to-gray-900/40 border border-gray-500/20 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+              <blockquote className="bg-[#fbfff1] border border-[#3066be]/20 rounded-3xl p-8 md:p-12 relative overflow-hidden shadow-sm">
                 {/* Quote Icon */}
-                <div className="absolute top-6 left-8 text-gray-600/20 text-8xl font-serif leading-none select-none">
+                <div className="absolute top-6 left-8 text-[#3066be]/10 text-8xl font-serif leading-none select-none">
                   "
                 </div>
 
-                <p className="relative z-10 text-xl md:text-2xl text-gray-200 italic leading-relaxed mb-8 text-center md:text-left">
+                <p className="relative z-10 text-xl md:text-2xl text-gray-800 italic leading-relaxed mb-8 text-center md:text-left font-serif">
                   {project.testimonial.quote}
                 </p>
-                <footer className="flex items-center justify-center md:justify-start gap-5 relative z-10 border-t border-gray-800 pt-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-gray-600 to-gray-600 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+                <footer className="flex items-center justify-center md:justify-start gap-5 relative z-10 border-t border-gray-200 pt-6">
+                  <div className="w-14 h-14 bg-[#3066be] rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-md">
                     {project.testimonial.author.charAt(0)}
                   </div>
                   <div>
-                    <cite className="not-italic font-bold text-white text-lg block">
+                    <cite className="not-italic font-bold text-gray-900 text-lg block">
                       {project.testimonial.author}
                     </cite>
-                    <span className="text-sm text-gray-400 font-medium">
+                    <span className="text-sm text-gray-500 font-medium">
                       {project.testimonial.role}
                     </span>
                   </div>
@@ -437,11 +429,11 @@ export default async function PortfolioItemPage({
         </div>
       </article>
 
-      {/* ✅ RELATED PROJECTS */}
+      {/* ✅ RELATED PROJECTS (Light Theme) */}
       {relatedProjects.length > 0 && (
-        <section className="py-20 bg-gray-950 border-t border-gray-900">
+        <section className="py-20 bg-[#fbfff1] border-t border-gray-200">
           <div className="container mx-auto px-6 max-w-6xl">
-            <h2 className="text-2xl font-bold mb-10 text-white flex items-center justify-center gap-3">
+            <h2 className="text-2xl font-bold mb-10 text-gray-900 flex items-center justify-center gap-3">
               Meer Projecten
             </h2>
 
@@ -450,10 +442,9 @@ export default async function PortfolioItemPage({
                 <Link
                   key={related.slug}
                   href={`/portfolio/${related.slug}`}
-                  className="group flex flex-col h-full bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-gray-500/50 hover:shadow-2xl transition-all duration-300"
+                  className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-[#3066be]/30 hover:shadow-xl transition-all duration-300"
                 >
                   <div className="relative h-48 overflow-hidden">
-                    {/* ✅ SEO: Optimized Image */}
                     <Image
                       src={related.image}
                       alt={related.title}
@@ -461,17 +452,17 @@ export default async function PortfolioItemPage({
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+                    <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
                   </div>
 
                   <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-lg font-bold mb-2 text-white group-hover:text-gray-400 transition-colors">
+                    <h3 className="text-lg font-bold mb-2 text-gray-900 group-hover:text-[#3066be] transition-colors">
                       {related.title}
                     </h3>
-                    <p className="text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
+                    <p className="text-gray-600 text-sm line-clamp-3 mb-4 flex-grow">
                       {related.description}
                     </p>
-                    <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    <span className="text-xs text-[#3066be] font-bold uppercase tracking-wider flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                       Bekijk Case{" "}
                       <svg
                         className="w-3 h-3"
@@ -495,7 +486,7 @@ export default async function PortfolioItemPage({
             <div className="text-center mt-12">
               <Link
                 href="/portfolio"
-                className="inline-block px-8 py-3 border border-gray-700 bg-gray-900 text-gray-300 rounded-xl hover:border-gray-500 hover:text-white transition font-medium"
+                className="inline-block px-8 py-3 border border-gray-300 bg-white text-gray-700 rounded-xl hover:bg-gray-50 hover:text-black transition font-medium"
               >
                 Terug naar Overzicht
               </Link>
@@ -504,33 +495,33 @@ export default async function PortfolioItemPage({
         </section>
       )}
 
-      {/* ✅ CTA SECTION */}
-      <section className="py-24 bg-gradient-to-b from-black to-gray-950/20 text-center relative overflow-hidden">
-        {/* Background Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gray-600/10 rounded-full blur-3xl pointer-events-none" />
+      {/* ✅ CTA SECTION (Light Theme) */}
+      <section className="py-24 bg-gradient-to-b from-white to-[#fbfff1] text-center relative overflow-hidden border-t border-gray-200">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#3066be]/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-4xl relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900">
             Klaar Voor Jouw Eigen <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
               Automatisering Succes?
             </span>
           </h2>
-          <p className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
             Net als dit project kunnen we jouw bedrijf helpen 40+ uur per maand
-            te besparen. Plan een gratis haalbaarheidscheck.
+            te besparen. Plan een gratis haalbaarheidscheck en ontdek jouw
+            mogelijkheden.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/quickscan"
-              className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+              className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg hover:shadow-xl"
             >
               Bereken Mijn Besparing →
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 border border-gray-700 bg-gray-900/50 text-white font-semibold rounded-xl hover:bg-gray-800 transition hover:border-gray-500 backdrop-blur-sm"
+              className="px-8 py-4 border border-gray-300 bg-white text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition"
             >
               Plan een Gesprek
             </Link>
