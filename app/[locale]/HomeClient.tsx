@@ -421,96 +421,218 @@ export default function HomeClient() {
         </div>
       </section>
       {/* ================= PROCESS (Light Mode) ================= */}
-      <section className="relative py-24 bg-white overflow-hidden border-t border-gray-200">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <div className="text-center mb-16">
+      <section className="relative py-24 bg-slate-50 overflow-hidden font-sans">
+        {/* Achtergrond Grid (Subtiel "Tech" effect) */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-[#3066be] opacity-20 blur-[100px]"></div>
+
+        <div className="container mx-auto px-6 max-w-5xl relative z-10">
+          {/* Header */}
+          <div className="text-center mb-20">
+            <div className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-[#3066be] uppercase bg-blue-50 border border-blue-100 rounded-full">
+              Process
+            </div>
             <h2
-              className={`${h1.className} text-3xl md:text-4xl font-bold mb-4 text-gray-900`}
+              className={`${h1.className} text-4xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight`}
             >
-              Hoe we werken
+              Hoe wij{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-blue-600">
+                werken
+              </span>
             </h2>
-            <p className="text-gray-600">
-              Transparant, eerlijk en zonder verrassingen.
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+              Geen black box, maar een helder proces. Transparant, eerlijk en
+              zonder verrassingen achteraf.
             </p>
           </div>
 
-          <div className="space-y-6 relative">
-            {/* Connecting Line */}
-            <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-gray-200 md:left-1/2 md:-ml-px"></div>
+          <div className="relative">
+            {/* Centrale Tijdlijn (Gradient Line) */}
+            <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-300 to-transparent md:left-1/2 md:-ml-px"></div>
 
             {/* Stap 1: Kennismaking */}
-            <div className="relative flex md:justify-end items-center md:flex-row flex-row-reverse gap-8">
-              <div className="hidden md:block w-1/2"></div>
-              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-white border-4 border-[#3066be] rounded-full z-10"></div>
-              <div className="w-full md:w-1/2 pl-16 md:pl-12">
-                <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-[#3066be] text-xs font-bold uppercase mb-2">
-                    Stap 01
+            <div className="relative flex flex-col md:flex-row items-center gap-8 mb-16 md:mb-24 group">
+              {/* Spacer links (voor desktop) */}
+              <div className="hidden md:block w-1/2 pr-12 text-right">
+                <span className="text-9xl font-bold text-slate-100 select-none absolute left-0 top-0 -translate-y-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10">
+                  01
+                </span>
+              </div>
+
+              {/* Center Node */}
+              <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 bg-white border border-slate-200 rounded-full shadow-lg z-10 group-hover:scale-110 group-hover:border-[#3066be] transition-all duration-300">
+                <span className="text-[#3066be] font-bold text-sm">01</span>
+              </div>
+
+              {/* Card */}
+              <div className="w-full md:w-1/2 pl-20 md:pl-12">
+                {/* Connector Line (Horizontal) */}
+                <div className="absolute left-8 md:left-1/2 top-6 w-12 h-px bg-slate-300 md:block hidden"></div>
+
+                <div className="relative bg-white border border-slate-100 p-8 rounded-2xl shadow-[0_5px_20px_-5px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-10px_rgba(48,102,190,0.15)] hover:-translate-y-1 transition-all duration-300">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-[#3066be]">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900">
+                      Koffie & Kritische Vragen
+                    </h3>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Koffie & Kritische Vragen
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="text-slate-600 leading-relaxed">
                     Het begint altijd met een gesprek. We drinken een koffie en
                     stellen veel vragen: Waar verlies je tijd? Wat zijn de
-                    vervelende klusjes? We willen je bedrijf écht snappen. Deze
-                    kennismaking is volledig op onze kosten.
+                    vervelende klusjes?
+                    <br />
+                    <span className="text-xs font-bold text-[#3066be] uppercase tracking-wide mt-3 inline-block bg-blue-50 px-2 py-1 rounded">
+                      100% Gratis sessie
+                    </span>
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Stap 2: Plan */}
-            <div className="relative flex md:justify-start items-center gap-8">
-              <div className="w-full md:w-1/2 pl-16 md:pr-12 md:pl-0 md:text-right">
-                <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-[#3066be] text-xs font-bold uppercase mb-2">
-                    Stap 02
+            {/* Stap 2: Plan (Links op desktop) */}
+            <div className="relative flex flex-col md:flex-row items-center gap-8 mb-16 md:mb-24 group">
+              {/* Card (Nu links) */}
+              <div className="w-full md:w-1/2 pl-20 md:pr-12 md:pl-0 md:text-right">
+                <div className="hidden md:block absolute right-1/2 top-6 w-12 h-px bg-slate-300"></div>
+
+                <div className="relative bg-white border border-slate-100 p-8 rounded-2xl shadow-[0_5px_20px_-5px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-10px_rgba(48,102,190,0.15)] hover:-translate-y-1 transition-all duration-300">
+                  <div className="flex items-center gap-4 mb-4 md:flex-row-reverse">
+                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-[#3066be]">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900">
+                      Concreet Voorstel
+                    </h3>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Concreet Voorstel
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    Daarna maken we een plan. Concreet: <em>dit</em>{" "}
-                    automatiseren we, <em>dit</em> levert het op en <em>dit</em>{" "}
-                    kost het. Geen verplichtingen, geen kleine lettertjes. Vind
+                  <p className="text-slate-600 leading-relaxed">
+                    We maken een plan. Concreet: <strong>dit</strong>{" "}
+                    automatiseren we, <strong>dit</strong> levert het op en{" "}
+                    <strong>dit</strong> kost het. Geen kleine lettertjes. Vind
                     je het niks? Dan schudden we handen en gaan we allebei
                     verder.
                   </p>
                 </div>
               </div>
-              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-white border-4 border-[#3066be] rounded-full z-10"></div>
-              <div className="hidden md:block w-1/2"></div>
+
+              {/* Center Node */}
+              <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 bg-white border border-slate-200 rounded-full shadow-lg z-10 group-hover:scale-110 group-hover:border-[#3066be] transition-all duration-300">
+                <span className="text-[#3066be] font-bold text-sm">02</span>
+              </div>
+
+              {/* Spacer rechts */}
+              <div className="hidden md:block w-1/2 pl-12">
+                <span className="text-9xl font-bold text-slate-100 select-none absolute right-0 top-0 -translate-y-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10">
+                  02
+                </span>
+              </div>
             </div>
 
-            {/* Stap 3: Bouwen & Garantie */}
-            <div className="relative flex md:justify-end items-center md:flex-row flex-row-reverse gap-8">
-              <div className="hidden md:block w-1/2"></div>
-              <div className="absolute left-8 md:left-1/2 -ml-3 w-6 h-6 bg-white border-4 border-[#3066be] rounded-full z-10"></div>
-              <div className="w-full md:w-1/2 pl-16 md:pl-12">
-                <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-[#3066be] text-xs font-bold uppercase mb-2">
-                    Stap 03
+            {/* Stap 3: Bouwen (Rechts op desktop) */}
+            <div className="relative flex flex-col md:flex-row items-center gap-8 group">
+              {/* Spacer links */}
+              <div className="hidden md:block w-1/2 pr-12 text-right">
+                <span className="text-9xl font-bold text-slate-100 select-none absolute left-0 top-0 -translate-y-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10">
+                  03
+                </span>
+              </div>
+
+              {/* Center Node */}
+              <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 bg-[#3066be] border-4 border-blue-100 rounded-full shadow-lg z-10 ring-4 ring-white">
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+
+              {/* Card */}
+              <div className="w-full md:w-1/2 pl-20 md:pl-12">
+                <div className="absolute left-8 md:left-1/2 top-6 w-12 h-px bg-slate-300 md:block hidden"></div>
+
+                <div className="relative bg-white border border-slate-100 p-8 rounded-2xl shadow-[0_5px_20px_-5px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-10px_rgba(48,102,190,0.15)] hover:-translate-y-1 transition-all duration-300 ring-1 ring-inset ring-slate-100">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-green-600">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900">
+                      Bouwen & Garantie
+                    </h3>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Bouwen & Garantie
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="text-slate-600 leading-relaxed mb-4">
                     Zeg je ja? Dan gaan we aan de slag. Je betaalt de helft
                     vooraf, wij bouwen. Bij oplevering, als alles werkt, volgt
-                    de rest. Werkt het niet zoals beloofd?
-                    <span className="text-[#3066be] font-semibold">
-                      {" "}
-                      Dan krijg je je geld terug.
-                    </span>
+                    de rest.
                   </p>
+                  <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                    <svg
+                      className="w-5 h-5 text-[#3066be]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                      />
+                    </svg>
+                    <span className="text-sm font-semibold text-slate-800">
+                      Niet goed? Geld terug.
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-
       {/* ================= TECH STACK (Light Mode) ================= */}
       <section className="py-16 border-b border-gray-200 bg-white">
         <p className="text-center text-gray-500 text-xs font-mono uppercase tracking-[0.3em] mb-10">
@@ -545,70 +667,143 @@ export default function HomeClient() {
       </section>
 
       {/* ================= CASES (Light Mode) ================= */}
-      <section id="cases" className="relative py-24 bg-white">
-        <div className="relative container mx-auto px-6 max-w-7xl">
-          <header className="text-center mb-16">
+      <section
+        id="cases"
+        className="relative py-24 bg-slate-50 overflow-hidden font-sans"
+      >
+        {/* Achtergrond Patroon (Subtiel Grid) */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+
+        <div className="relative container mx-auto px-6 max-w-7xl z-10">
+          {/* Header */}
+          <header className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 text-xs font-bold tracking-widest text-blue-600 uppercase bg-blue-50 border border-blue-100 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              Portfolio
+            </div>
             <h2
-              className={`${h1.className} text-4xl md:text-5xl font-bold mb-4 text-gray-900`}
+              className={`${h1.className} text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900 tracking-tight`}
             >
-              Collega's aan het werk
+              Digitale Werknemers <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-blue-400">
+                in actie.
+              </span>
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Onze <strong>Headless Agents</strong> draaien nu al productie bij
-              diverse bedrijven.
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+              Geen theoretische concepten, maar <strong>Headless Agents</strong>{" "}
+              die vandaag al draaien in productie en echte bedrijfsprocessen
+              automatiseren.
             </p>
           </header>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {projects.slice(0, 3).map((project: any) => (
+          {/* Projects Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+            {projects.slice(0, 3).map((project: any, index: number) => (
               <article
-                key={project.slug}
-                className="group relative bg-white border border-gray-200 rounded-3xl overflow-hidden hover:border-[#3066be]/50 hover:shadow-xl hover:shadow-[#3066be]/10 transition-all duration-500"
+                key={project.slug || index}
+                className="group flex flex-col bg-white border border-slate-200 rounded-[2rem] overflow-hidden hover:border-[#3066be]/30 hover:shadow-[0_20px_40px_-15px_rgba(48,102,190,0.15)] hover:-translate-y-1 transition-all duration-500"
               >
-                <div className="aspect-video relative overflow-hidden bg-gray-100">
+                {/* Image Container */}
+                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  {/* Subtle Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60" />
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-md border border-white/50 text-[#3066be] text-xs font-bold rounded-full shadow-sm">
-                    Live Systeem
+
+                  {/* Overlay Gradient (Zorgt dat tekst altijd leesbaar is en geeft diepte) */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+
+                  {/* Tech Overlay (Decorative Grid on Hover) */}
+                  <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-center"></div>
+
+                  {/* Status Badge */}
+                  <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur-md border border-white/50 rounded-full shadow-sm z-10">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span className="text-xs font-bold text-slate-800 tracking-wide uppercase">
+                      Live Systeem
+                    </span>
                   </div>
                 </div>
 
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-[#3066be] transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
+                {/* Content Body */}
+                <div className="flex flex-col flex-grow p-8">
+                  <div className="mb-4">
+                    {/* Fictieve Tags / Categorieën (Als je die hebt in je data, gebruik die hier) */}
+                    <div className="flex gap-2 mb-3">
+                      <span className="px-2 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wider rounded-md border border-slate-200">
+                        Automatisering
+                      </span>
+                      <span className="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider rounded-md border border-blue-100">
+                        AI Agent
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl font-bold text-slate-900 group-hover:text-[#3066be] transition-colors leading-tight">
+                      {project.title}
+                    </h3>
+                  </div>
+
+                  <p className="text-slate-600 text-sm leading-relaxed mb-8 line-clamp-3 flex-grow">
                     {project.description}
                   </p>
 
-                  <Link
-                    href={`/portfolio/${project.slug}`}
-                    className="inline-flex items-center gap-2 text-[#3066be] font-bold hover:gap-4 transition-all duration-300"
-                  >
-                    <span>Bekijk Case Study</span>
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  {/* Bottom Action */}
+                  <div className="pt-6 border-t border-slate-100 flex items-center justify-between mt-auto">
+                    <Link
+                      href={`/portfolio/${project.slug}`}
+                      className="inline-flex items-center gap-2 text-slate-900 font-bold text-sm group/link"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </Link>
+                      <span className="group-hover/link:text-[#3066be] transition-colors">
+                        Bekijk Case Study
+                      </span>
+                      <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center group-hover/link:bg-[#3066be] group-hover/link:text-white transition-all duration-300 group-hover/link:translate-x-1">
+                        <svg
+                          className="w-3 h-3"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2.5}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </div>
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}
+          </div>
+
+          {/* "More" Button (Optional) */}
+          <div className="mt-16 text-center">
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white border border-slate-200 rounded-full text-slate-900 font-bold hover:bg-slate-50 hover:border-slate-300 transition-all duration-300 shadow-sm"
+            >
+              Bekijk alle cases
+              <svg
+                className="w-4 h-4 text-slate-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
