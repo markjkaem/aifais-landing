@@ -184,7 +184,7 @@ export default function AIChatbot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-to-br from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white rounded-full shadow-2xl hover:shadow-gray-500/50 transition-all duration-300 flex items-center justify-center group hover:scale-110"
+          className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white rounded-full shadow-2xl hover:shadow-gray-500/50 transition-all duration-300 flex items-center justify-center group hover:scale-110"
           aria-label="Open chat"
         >
           <svg
@@ -212,7 +212,7 @@ export default function AIChatbot() {
       {isOpen && (
         <div className="fixed bottom-6 right-6 z-50 w-[400px] h-[600px] bg-gradient-to-br from-zinc-900 to-zinc-950 border-2 border-gray-500/50 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-slideUp">
           {/* Header */}
-          <div className="bg-gradient-to-r from-gray-600 to-gray-700 p-4 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                 <svg

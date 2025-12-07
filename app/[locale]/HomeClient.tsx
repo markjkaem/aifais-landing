@@ -575,34 +575,6 @@ export default function HomeClient() {
       <div id="demo" className="scroll-mt-24">
         <ToolsTeaser />
       </div>
-      {/* ================= FINAL CTA (Light Mode) ================= */}
-      <section className="relative py-24 bg-white border-t border-gray-200">
-        <div className="container mx-auto px-6 text-center">
-          <h2
-            className={`${h1.className} text-4xl md:text-6xl font-bold text-gray-900 mb-8`}
-          >
-            Future-proof je bedrijf.
-          </h2>
-          <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            Plan een vrijblijvende sessie. We kijken samen of jouw processen
-            klaar zijn voor de volgende stap.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link
-              href="/quickscan"
-              className="px-10 py-5 bg-[#3066be] text-white font-bold text-lg rounded-full hover:bg-[#234a8c] transition-all shadow-lg shadow-[#3066be]/20 hover:shadow-[#3066be]/40 hover:-translate-y-1"
-            >
-              Start Quickscan
-            </Link>
-            <Link
-              href="/contact"
-              className="px-10 py-5 border border-gray-300 text-gray-700 font-medium rounded-full hover:bg-gray-50 hover:text-black transition-all"
-            >
-              Contact Opnemen
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* FAQ */}
       <FAQSection />

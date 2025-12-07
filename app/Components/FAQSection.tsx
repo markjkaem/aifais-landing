@@ -7,41 +7,37 @@ interface FAQItem {
   answer: string;
 }
 
+// ✅ JOUW TEKSTEN
 const faqData: FAQItem[] = [
   {
     question: "Hoe snel kan ik resultaat zien?",
     answer:
-      "De meeste klanten zien binnen 2 weken hun eerste workflow live gaan. Simpele automatiseringen zoals data-sync of email workflows vaak al binnen een week. We focussen op quick wins eerst, zodat je snel rendement ziet.",
+      "Dat verschilt per situatie. Soms zie je binnen twee weken al de eerste resultaten, bij grotere custom made workflows kan het tot drie maanden duren. Het hangt af van wat er gebouwd moet worden. Maar één ding is zeker: we werken pas wanneer we samen een duidelijk doel hebben vastgesteld.",
   },
   {
-    question: "Moet ik zelf technisch zijn om dit te gebruiken?",
+    question: "Moet ik technisch zijn om dit te gebruiken?",
     answer:
-      "Absoluut niet. Wij bouwen alles voor je, testen het grondig, en trainen je team. Je krijgt een overzichtelijk dashboard waar je zonder code aanpassingen kunt maken. Denk aan het wijzigen van teksten, timing, of ontvangers - gewoon in normale taal.",
+      "Absoluut niet. Alles wat wij bouwen is gemaakt om door iedereen gebruikt te worden, zonder technische kennis. Jij hoeft alleen te weten wat je wilt bereiken, wij regelen de rest.",
   },
   {
     question: "Wat zijn de kosten?",
     answer:
-      "Een standaard workflow start vanaf €2.500. Complexere multi-step automatiseringen beginnen bij €5.000. Je krijgt altijd vooraf een transparante offerte met een duidelijk ROI-overzicht. De meeste klanten verdienen hun investering binnen 2-3 maanden terug door tijdsbesparing.",
+      "Dat hangt af van wat er nodig is. Tijdens het gratis kennismakingsgesprek brengen we in kaart wat er mogelijk is. Daarna ontvang je een vrijblijvend plan met een heldere prijsindicatie. Geen verrassingen achteraf.",
   },
   {
     question: "Werkt dit met onze huidige software?",
     answer:
-      "Waarschijnlijk wel! We integreren met 400+ populaire tools zoals Gmail, Slack, HubSpot, Exact Online, Salesforce, Shopify, en meer. Zelfs als jouw tool er niet tussen staat, kunnen we vaak via API's of webhooks toch integreren. In het gratis gesprek kijken we direct of het past.",
+      "Ja. Wij kunnen met vrijwel alle software werken. En mocht jouw systeem er niet standaard tussen zitten, dan integreren we vaak alsnog via APIs of webhooks. Kortom: we vinden altijd een manier.",
   },
   {
-    question: "Wat als het niet werkt zoals ik wil?",
+    question: "Wat als het niet werkt zoals afgesproken?",
     answer:
-      "Je krijgt 30 dagen gratis support na de lancering. We blijven doorwerken totdat alles perfect loopt. Daarna kun je kiezen voor een onderhoudscontract (vanaf €200/maand) of alleen betalen voor wijzigingen wanneer je ze nodig hebt. Geen verplichtingen.",
+      "Dan krijg je je geld terug. Zo simpel is het. Wij geloven in wat we maken en streven ernaar om het beste werk voor onze klanten neer te zetten. Werkt het niet? Dan betaal je niet.",
   },
   {
-    question: "Hoe weet ik of automatisering wat voor ons is?",
+    question: "Hoe weet ik of automatisering iets voor ons is?",
     answer:
-      "Als je team meer dan 5 uur per week bezig is met repetitieve taken (data-invoer, emails, rapportages, offertes), is automatisering bijna altijd de moeite waard. In ons gratis gesprek berekenen we samen de potentiële ROI voor jouw specifieke situatie.",
-  },
-  {
-    question: "Kunnen we het zelf later aanpassen?",
-    answer:
-      "Ja! We bouwen workflows zo dat je zelf eenvoudige aanpassingen kunt doen zonder programmeerkennis. Voor grotere wijzigingen of nieuwe workflows kun je altijd bij ons terugkomen. Je bent niet vendor-locked - de workflows blijven van jou.",
+      "Heb je taken die steeds terugkomen en veel tijd kosten? Dan is er waarschijnlijk iets te automatiseren. Denk aan e-mails lezen en beantwoorden, dossiers samenvatten, offertes maken, contracten opstellen, berichten versturen of agenda's beheren. Van backoffice tot frontoffice, van advocatenkantoor tot cafetaria. Elk bedrijf heeft vervelende klusjes die sneller en slimmer kunnen.",
   },
 ];
 

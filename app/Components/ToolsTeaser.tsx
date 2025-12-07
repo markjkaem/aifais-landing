@@ -31,7 +31,7 @@ export default function ToolsTeaser() {
                 Live Tech Demo
               </div>
 
-              <h2 className="text-4xl md:text-6xl font-bold text-gray-900 leading-[1.1] tracking-tight">
+              <h2 className="text-4xl md:text-4xl font-bold text-gray-900 leading-[1.1] tracking-tight">
                 Ervaar de kracht van <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] via-purple-500 to-[#3066be]">
                   Headless Agents
