@@ -184,7 +184,7 @@ export default function AIChatbot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-to-br from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 flex items-center justify-center group hover:scale-110"
+          className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-to-br from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white rounded-full shadow-2xl hover:shadow-gray-500/50 transition-all duration-300 flex items-center justify-center group hover:scale-110"
           aria-label="Open chat"
         >
           <svg
@@ -210,9 +210,9 @@ export default function AIChatbot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[400px] h-[600px] bg-gradient-to-br from-zinc-900 to-zinc-950 border-2 border-purple-500/50 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-slideUp">
+        <div className="fixed bottom-6 right-6 z-50 w-[400px] h-[600px] bg-gradient-to-br from-zinc-900 to-zinc-950 border-2 border-gray-500/50 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-slideUp">
           {/* Header */}
-          <div className="bg-gradient-to-r from-purple-600 to-purple-700 p-4 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-gray-600 to-gray-700 p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                 <svg
@@ -231,7 +231,7 @@ export default function AIChatbot() {
               </div>
               <div>
                 <h3 className="text-white font-bold">AIFAIS Assistent</h3>
-                <p className="text-purple-200 text-xs flex items-center gap-1">
+                <p className="text-gray-200 text-xs flex items-center gap-1">
                   <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                   Online
                 </p>
@@ -270,7 +270,7 @@ export default function AIChatbot() {
                 <div
                   className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                     message.role === "user"
-                      ? "bg-gradient-to-br from-purple-600 to-purple-700 text-white"
+                      ? "bg-gradient-to-br from-gray-600 to-gray-700 text-white"
                       : "bg-zinc-800 text-gray-200 border border-zinc-700"
                   }`}
                 >
@@ -283,7 +283,7 @@ export default function AIChatbot() {
 
             {/* Email Form Modal */}
             {showEmailForm && (
-              <div className="bg-gradient-to-br from-purple-950/50 to-zinc-900/50 border border-purple-500/50 rounded-xl p-4">
+              <div className="bg-gradient-to-br from-gray-950/50 to-zinc-900/50 border border-gray-500/50 rounded-xl p-4">
                 <h4 className="text-white font-semibold mb-2 text-sm">
                   Voordat we verdergaan...
                 </h4>
@@ -297,7 +297,7 @@ export default function AIChatbot() {
                     placeholder="Uw naam"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white text-sm focus:border-purple-500 focus:outline-none"
+                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white text-sm focus:border-gray-500 focus:outline-none"
                     required
                   />
                   <input
@@ -305,13 +305,13 @@ export default function AIChatbot() {
                     placeholder="uw@email.nl"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white text-sm focus:border-purple-500 focus:outline-none"
+                    className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-white text-sm focus:border-gray-500 focus:outline-none"
                     required
                   />
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-semibold rounded-lg transition-all text-sm disabled:opacity-50"
+                    className="w-full px-4 py-2 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white font-semibold rounded-lg transition-all text-sm disabled:opacity-50"
                   >
                     Doorgaan met Chatten
                   </button>
@@ -351,7 +351,7 @@ export default function AIChatbot() {
                     messages.length >= MAX_MESSAGES
                   }
                   maxLength={MAX_INPUT_LENGTH}
-                  className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none disabled:opacity-50 text-sm pr-16"
+                  className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-gray-500 focus:border-gray-500 focus:outline-none disabled:opacity-50 text-sm pr-16"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">
                   {input.length}/{MAX_INPUT_LENGTH}
@@ -365,7 +365,7 @@ export default function AIChatbot() {
                   showEmailForm ||
                   messages.length >= MAX_MESSAGES
                 }
-                className="px-5 py-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-5 py-3 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg
                   className="w-5 h-5"

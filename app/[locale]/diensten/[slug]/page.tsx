@@ -140,12 +140,12 @@ export default async function ServiceDetailPage({
       {/* --- HERO --- */}
       <section className="relative py-20 md:py-28 bg-black overflow-hidden">
         {/* Background gradient */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-900/20 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gray-900/20 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-4xl relative z-10 text-center">
           <Link
             href="/diensten"
-            className="inline-block mb-6 text-sm text-gray-400 hover:text-purple-400 transition"
+            className="inline-block mb-6 text-sm text-gray-400 hover:text-gray-400 transition"
           >
             ← Terug naar alle diensten
           </Link>
@@ -153,7 +153,7 @@ export default async function ServiceDetailPage({
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
             {service.title}
           </h1>
-          <p className="text-xl md:text-2xl text-purple-400 font-medium mb-6">
+          <p className="text-xl md:text-2xl text-gray-400 font-medium mb-6">
             {service.subtitle}
           </p>
           <p className="text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto">
@@ -192,7 +192,7 @@ export default async function ServiceDetailPage({
                     key={i}
                     className="flex items-start gap-4 p-4 rounded-xl bg-gray-900/50 border border-gray-800"
                   >
-                    <span className="flex-shrink-0 w-8 h-8 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center font-bold text-sm">
+                    <span className="flex-shrink-0 w-8 h-8 bg-gray-500/20 text-gray-400 rounded-full flex items-center justify-center font-bold text-sm">
                       {i + 1}
                     </span>
                     <span className="text-gray-200 font-medium">{feature}</span>
@@ -227,7 +227,7 @@ export default async function ServiceDetailPage({
                 ))}
               </ul>
 
-              <div className="mt-10 p-6 bg-gradient-to-br from-purple-900/20 to-gray-900 rounded-2xl border border-purple-500/20">
+              <div className="mt-10 p-6 bg-gradient-to-br from-gray-900/20 to-gray-900 rounded-2xl border border-gray-500/20">
                 <h3 className="text-xl font-bold text-white mb-2">
                   Klaar om te starten?
                 </h3>
@@ -237,7 +237,7 @@ export default async function ServiceDetailPage({
                 </p>
                 <Link
                   href="/contact"
-                  className="text-purple-400 font-bold hover:text-purple-300 flex items-center gap-2"
+                  className="text-gray-400 font-bold hover:text-gray-300 flex items-center gap-2"
                 >
                   Plan een gratis sessie <span aria-hidden="true">→</span>
                 </Link>
@@ -270,7 +270,7 @@ export default async function ServiceDetailPage({
       </section>
 
       {/* --- CTA --- */}
-      <section className="py-24 bg-gradient-to-b from-black to-purple-950/20 text-center">
+      <section className="py-24 bg-gradient-to-b from-black to-gray-950/20 text-center">
         <div className="container mx-auto px-6 max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Niet zeker of dit bij jou past?
@@ -281,7 +281,7 @@ export default async function ServiceDetailPage({
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-purple-500/25"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-gray-600 hover:bg-gray-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-gray-500/25"
           >
             Plan Adviesgesprek
           </Link>

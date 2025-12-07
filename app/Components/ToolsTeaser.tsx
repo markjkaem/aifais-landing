@@ -13,26 +13,26 @@ export default function ToolsTeaser() {
   return (
     <section className="py-32 bg-black relative overflow-hidden">
       {/* Achtergrond Sfeerlicht (Glows) */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-gray-900/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-gray-900/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* De 'Glass' Card */}
         <div className="relative bg-[#0A0A0A] border border-white/10 rounded-[32px] p-8 md:p-16 overflow-hidden group">
           {/* Subtiele gradient overlay op hover */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-500/5 via-transparent to-gray-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* LINKER KANT: De Pitch */}
             <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-500/10 border border-gray-500/20 text-gray-400 text-xs font-bold uppercase tracking-wider shadow-[0_0_10px_rgba(59,130,246,0.2)]">
                 <Sparkles className="w-3 h-3 fill-current" />
                 Aifais Self-Service
               </div>
 
               <h2 className="text-4xl md:text-6xl font-bold text-white leading-[1.1] tracking-tight">
                 Geen zin in <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 via-indigo-400 to-gray-500">
                   dure consultants?
                 </span>
               </h2>
@@ -81,8 +81,8 @@ export default function ToolsTeaser() {
 
                 <div className="space-y-4">
                   {/* Item 1 */}
-                  <div className="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-blue-500/30 transition-colors">
-                    <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center shrink-0 text-blue-400">
+                  <div className="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-gray-500/30 transition-colors">
+                    <div className="w-10 h-10 rounded-lg bg-gray-500/20 flex items-center justify-center shrink-0 text-gray-400">
                       <FileText className="w-5 h-5" />
                     </div>
                     <div>
@@ -98,7 +98,7 @@ export default function ToolsTeaser() {
 
                   {/* Item 2 */}
                   <div className="flex items-center gap-4 p-3 rounded-xl border border-transparent opacity-60">
-                    <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center shrink-0 text-purple-400">
+                    <div className="w-10 h-10 rounded-lg bg-gray-500/10 flex items-center justify-center shrink-0 text-gray-400">
                       <Scale className="w-5 h-5" />
                     </div>
                     <div>

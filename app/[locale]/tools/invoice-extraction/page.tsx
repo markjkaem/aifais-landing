@@ -80,7 +80,7 @@ export default function FactuurScannerPage() {
 
         <h1 className="text-5xl font-bold tracking-tight text-white mb-4">
           Factuur{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-500">
             Scanner
           </span>
         </h1>

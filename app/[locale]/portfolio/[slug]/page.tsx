@@ -184,7 +184,7 @@ export default async function PortfolioItemPage({
             <li>
               <Link
                 href="/"
-                className="text-gray-400 hover:text-purple-400 transition"
+                className="text-gray-400 hover:text-gray-400 transition"
               >
                 Home
               </Link>
@@ -207,7 +207,7 @@ export default async function PortfolioItemPage({
             <li>
               <Link
                 href="/portfolio"
-                className="text-gray-400 hover:text-purple-400 transition"
+                className="text-gray-400 hover:text-gray-400 transition"
               >
                 Portfolio
               </Link>
@@ -240,7 +240,7 @@ export default async function PortfolioItemPage({
           <header className="text-center mb-12">
             {/* Category Badge */}
             {project.category && (
-              <span className="inline-block px-4 py-2 bg-purple-600/20 text-purple-400 border border-purple-500/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+              <span className="inline-block px-4 py-2 bg-gray-600/20 text-gray-400 border border-gray-500/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
                 {project.category}
               </span>
             )}
@@ -258,7 +258,7 @@ export default async function PortfolioItemPage({
               {project.readTime && (
                 <span className="flex items-center gap-2">
                   <svg
-                    className="w-4 h-4 text-purple-400"
+                    className="w-4 h-4 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -276,7 +276,7 @@ export default async function PortfolioItemPage({
               {project.date && (
                 <span className="flex items-center gap-2">
                   <svg
-                    className="w-4 h-4 text-purple-400"
+                    className="w-4 h-4 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -317,15 +317,15 @@ export default async function PortfolioItemPage({
         <section className="py-16 bg-black">
           <div className="container mx-auto px-6 max-w-5xl">
             <h2 className="text-2xl font-bold text-center mb-10 text-white">
-              <span className="border-b-2 border-purple-500 pb-2">
+              <span className="border-b-2 border-gray-500 pb-2">
                 Behaalde Resultaten
               </span>
             </h2>
 
             <div className="grid md:grid-cols-3 gap-6">
               {project.results.timeSaved && (
-                <div className="bg-gradient-to-br from-purple-900/30 to-gray-900 border border-purple-500/30 rounded-2xl p-8 text-center hover:border-purple-500/50 transition duration-300">
-                  <div className="text-4xl lg:text-5xl font-bold text-purple-400 mb-2">
+                <div className="bg-gradient-to-br from-gray-900/30 to-gray-900 border border-gray-500/30 rounded-2xl p-8 text-center hover:border-gray-500/50 transition duration-300">
+                  <div className="text-4xl lg:text-5xl font-bold text-gray-400 mb-2">
                     {project.results.timeSaved}
                   </div>
                   <p className="text-gray-400 font-medium text-sm uppercase tracking-wide">
@@ -346,8 +346,8 @@ export default async function PortfolioItemPage({
               )}
 
               {project.results.costSaving && (
-                <div className="bg-gradient-to-br from-blue-900/20 to-gray-900 border border-blue-500/30 rounded-2xl p-8 text-center hover:border-blue-500/50 transition duration-300">
-                  <div className="text-4xl lg:text-5xl font-bold text-blue-400 mb-2">
+                <div className="bg-gradient-to-br from-gray-900/20 to-gray-900 border border-gray-500/30 rounded-2xl p-8 text-center hover:border-gray-500/50 transition duration-300">
+                  <div className="text-4xl lg:text-5xl font-bold text-gray-400 mb-2">
                     {project.results.costSaving}
                   </div>
                   <p className="text-gray-400 font-medium text-sm uppercase tracking-wide">
@@ -373,9 +373,9 @@ export default async function PortfolioItemPage({
               {project.details.map((detail: string, idx: number) => (
                 <li
                   key={idx}
-                  className="flex items-start gap-4 bg-gray-900/30 border border-gray-800/60 rounded-xl p-5 hover:border-purple-500/30 transition group"
+                  className="flex items-start gap-4 bg-gray-900/30 border border-gray-800/60 rounded-xl p-5 hover:border-gray-500/30 transition group"
                 >
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-600/10 rounded-full flex items-center justify-center text-purple-400 text-sm font-bold mt-0.5 group-hover:bg-purple-600/20 group-hover:text-purple-300 transition-colors">
+                  <span className="flex-shrink-0 w-8 h-8 bg-gray-600/10 rounded-full flex items-center justify-center text-gray-400 text-sm font-bold mt-0.5 group-hover:bg-gray-600/20 group-hover:text-gray-300 transition-colors">
                     {idx + 1}
                   </span>
                   <span className="text-gray-300 leading-relaxed text-lg">
@@ -397,7 +397,7 @@ export default async function PortfolioItemPage({
                   // Note: Ideally, wrap this in a Link to /diensten/technologie/[tag] if the page exists
                   <span
                     key={tag}
-                    className="px-4 py-2 bg-gray-900 border border-gray-700 text-gray-300 rounded-lg hover:border-purple-500 hover:text-purple-400 transition text-sm font-medium cursor-default"
+                    className="px-4 py-2 bg-gray-900 border border-gray-700 text-gray-300 rounded-lg hover:border-gray-500 hover:text-gray-400 transition text-sm font-medium cursor-default"
                   >
                     {tag}
                   </span>
@@ -409,9 +409,9 @@ export default async function PortfolioItemPage({
           {/* Testimonial */}
           {project.testimonial && (
             <section className="mt-16">
-              <blockquote className="bg-gradient-to-br from-purple-900/10 to-gray-900/40 border border-purple-500/20 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+              <blockquote className="bg-gradient-to-br from-gray-900/10 to-gray-900/40 border border-gray-500/20 rounded-3xl p-8 md:p-12 relative overflow-hidden">
                 {/* Quote Icon */}
-                <div className="absolute top-6 left-8 text-purple-600/20 text-8xl font-serif leading-none select-none">
+                <div className="absolute top-6 left-8 text-gray-600/20 text-8xl font-serif leading-none select-none">
                   "
                 </div>
 
@@ -419,14 +419,14 @@ export default async function PortfolioItemPage({
                   {project.testimonial.quote}
                 </p>
                 <footer className="flex items-center justify-center md:justify-start gap-5 relative z-10 border-t border-gray-800 pt-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+                  <div className="w-14 h-14 bg-gradient-to-br from-gray-600 to-gray-600 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg">
                     {project.testimonial.author.charAt(0)}
                   </div>
                   <div>
                     <cite className="not-italic font-bold text-white text-lg block">
                       {project.testimonial.author}
                     </cite>
-                    <span className="text-sm text-purple-400 font-medium">
+                    <span className="text-sm text-gray-400 font-medium">
                       {project.testimonial.role}
                     </span>
                   </div>
@@ -450,7 +450,7 @@ export default async function PortfolioItemPage({
                 <Link
                   key={related.slug}
                   href={`/portfolio/${related.slug}`}
-                  className="group flex flex-col h-full bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-purple-500/50 hover:shadow-2xl transition-all duration-300"
+                  className="group flex flex-col h-full bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-gray-500/50 hover:shadow-2xl transition-all duration-300"
                 >
                   <div className="relative h-48 overflow-hidden">
                     {/* ✅ SEO: Optimized Image */}
@@ -465,13 +465,13 @@ export default async function PortfolioItemPage({
                   </div>
 
                   <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-lg font-bold mb-2 text-white group-hover:text-purple-400 transition-colors">
+                    <h3 className="text-lg font-bold mb-2 text-white group-hover:text-gray-400 transition-colors">
                       {related.title}
                     </h3>
                     <p className="text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
                       {related.description}
                     </p>
-                    <span className="text-xs text-purple-400 font-semibold uppercase tracking-wider flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                       Bekijk Case{" "}
                       <svg
                         className="w-3 h-3"
@@ -495,7 +495,7 @@ export default async function PortfolioItemPage({
             <div className="text-center mt-12">
               <Link
                 href="/portfolio"
-                className="inline-block px-8 py-3 border border-gray-700 bg-gray-900 text-gray-300 rounded-xl hover:border-purple-500 hover:text-white transition font-medium"
+                className="inline-block px-8 py-3 border border-gray-700 bg-gray-900 text-gray-300 rounded-xl hover:border-gray-500 hover:text-white transition font-medium"
               >
                 Terug naar Overzicht
               </Link>
@@ -505,14 +505,14 @@ export default async function PortfolioItemPage({
       )}
 
       {/* ✅ CTA SECTION */}
-      <section className="py-24 bg-gradient-to-b from-black to-purple-950/20 text-center relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-b from-black to-gray-950/20 text-center relative overflow-hidden">
         {/* Background Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gray-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-4xl relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
             Klaar Voor Jouw Eigen <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
               Automatisering Succes?
             </span>
           </h2>

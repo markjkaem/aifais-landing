@@ -184,7 +184,7 @@ export default function ScannerClient() {
 
   return (
     <div className="w-full max-w-2xl relative">
-      <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[2rem] blur-2xl opacity-20 pointer-events-none" />
+      <div className="absolute -inset-1 bg-gradient-to-r from-gray-600 to-gray-600 rounded-[2rem] blur-2xl opacity-20 pointer-events-none" />
       <div className="relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-8 shadow-2xl overflow-hidden min-h-[400px]">
         {/* PAYMENT MODAL (KEUZE) */}
         {showPaymentModal && !showCryptoQR && (
@@ -238,8 +238,8 @@ export default function ScannerClient() {
         {/* HEADER */}
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-600/20 rounded-xl flex items-center justify-center border border-blue-500/30">
-              <Zap className="w-5 h-5 text-blue-400" />
+            <div className="w-10 h-10 bg-gray-600/20 rounded-xl flex items-center justify-center border border-gray-500/30">
+              <Zap className="w-5 h-5 text-gray-400" />
             </div>
             AI Invoice Scanner
           </h2>
@@ -284,7 +284,7 @@ export default function ScannerClient() {
                 className={`h-64 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center transition-all duration-300 ${
                   paymentProof
                     ? "border-green-500/50 bg-green-900/5" // Groene gloed als betaald is
-                    : "border-white/10 group-hover:border-blue-500/50 group-hover:bg-blue-900/5"
+                    : "border-white/10 group-hover:border-gray-500/50 group-hover:bg-gray-900/5"
                 }`}
               >
                 {paymentProof ? (
@@ -293,7 +293,7 @@ export default function ScannerClient() {
                   </div>
                 ) : (
                   <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <FileText className="w-8 h-8 text-gray-400 group-hover:text-blue-400" />
+                    <FileText className="w-8 h-8 text-gray-400 group-hover:text-gray-400" />
                   </div>
                 )}
 
@@ -407,7 +407,7 @@ export default function ScannerClient() {
               </div>
             </div>
             <div className="bg-black/50 rounded-xl border border-white/10 p-4 relative">
-              <pre className="text-xs font-mono text-blue-300 overflow-x-auto">
+              <pre className="text-xs font-mono text-gray-300 overflow-x-auto">
                 {JSON.stringify(scanResult, null, 2)}
               </pre>
             </div>

@@ -58,7 +58,7 @@ export default function AGVPage() {
               Email:{" "}
               <a
                 href="mailto:contact@aifais.com"
-                className="text-purple-400 hover:underline"
+                className="text-gray-400 hover:underline"
               >
                 contact@aifais.com
               </a>
@@ -71,7 +71,7 @@ export default function AGVPage() {
         {/* Table of Contents */}
         <nav className="mb-12 bg-gray-900/40 border border-gray-800 rounded-xl p-6">
           <h2 className="text-2xl font-bold mb-4">Inhoudsopgave</h2>
-          <ol className="space-y-2 text-purple-400">
+          <ol className="space-y-2 text-gray-400">
             <li>
               <a href="#toepasselijkheid" className="hover:underline">
                 1. Toepasselijkheid
@@ -139,7 +139,7 @@ export default function AGVPage() {
         <div className="space-y-12">
           {/* Article 1 */}
           <article id="toepasselijkheid" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 1 - Toepasselijkheid
             </h2>
 
@@ -166,7 +166,7 @@ export default function AGVPage() {
 
           {/* Article 2 */}
           <article id="diensten" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 2 - Diensten
             </h2>
 
@@ -199,7 +199,7 @@ export default function AGVPage() {
 
           {/* Article 3 */}
           <article id="offertes" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 3 - Offertes en Overeenkomsten
             </h2>
 
@@ -232,7 +232,7 @@ export default function AGVPage() {
 
           {/* Article 4 */}
           <article id="uitvoering" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 4 - Uitvoering Opdracht
             </h2>
 
@@ -270,7 +270,7 @@ export default function AGVPage() {
 
           {/* Article 5 */}
           <article id="prijzen" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 5 - Prijzen en Betaling
             </h2>
 
@@ -312,7 +312,7 @@ export default function AGVPage() {
 
           {/* Article 6 */}
           <article id="intellectueel" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 6 - Intellectueel Eigendom
             </h2>
 
@@ -346,7 +346,7 @@ export default function AGVPage() {
 
           {/* Article 7 */}
           <article id="garantie" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 7 - Garantie en Support
             </h2>
 
@@ -392,7 +392,7 @@ export default function AGVPage() {
 
           {/* Article 8 */}
           <article id="aansprakelijkheid" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 8 - Aansprakelijkheid
             </h2>
 
@@ -447,7 +447,7 @@ export default function AGVPage() {
 
           {/* Article 9 */}
           <article id="geheimhouding" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 9 - Geheimhouding
             </h2>
 
@@ -480,7 +480,7 @@ export default function AGVPage() {
 
           {/* Article 10 */}
           <article id="opzegging" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 10 - Opzegging en Ontbinding
             </h2>
 
@@ -520,7 +520,7 @@ export default function AGVPage() {
 
           {/* Article 11 */}
           <article id="klachten" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 11 - Klachten
             </h2>
 
@@ -550,7 +550,7 @@ export default function AGVPage() {
 
           {/* Article 12 */}
           <article id="toepasselijk-recht" className="scroll-mt-6">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               Artikel 12 - Toepasselijk Recht en Geschillen
             </h2>
 
@@ -577,7 +577,7 @@ export default function AGVPage() {
         </div>
 
         {/* Contact Section */}
-        <section className="mt-16 bg-gradient-to-br from-purple-900/20 to-gray-900/40 border border-purple-700 rounded-2xl p-8">
+        <section className="mt-16 bg-gradient-to-br from-gray-900/20 to-gray-900/40 border border-gray-700 rounded-2xl p-8">
           <h2 className="text-2xl font-bold mb-4 text-center">
             Vragen Over Deze Voorwaarden?
           </h2>
@@ -588,13 +588,13 @@ export default function AGVPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="mailto:contact@aifais.com"
-              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-400 text-black font-bold rounded-xl hover:scale-105 transition-transform text-center"
+              className="px-8 py-4 bg-gradient-to-r from-gray-500 to-gray-400 text-black font-bold rounded-xl hover:scale-105 transition-transform text-center"
             >
               📧 Email Ons
             </a>
             <Link
               href="/contact"
-              className="px-8 py-4 border border-purple-500 text-purple-400 font-semibold rounded-xl hover:bg-purple-500 hover:text-black transition text-center"
+              className="px-8 py-4 border border-gray-500 text-gray-400 font-semibold rounded-xl hover:bg-gray-500 hover:text-black transition text-center"
             >
               Contactformulier
             </Link>
@@ -605,15 +605,15 @@ export default function AGVPage() {
         <nav className="mt-16 pt-8 border-t border-gray-800 text-center">
           <p className="text-gray-400 mb-4">Bekijk ook:</p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/privacy" className="text-purple-400 hover:underline">
+            <Link href="/privacy" className="text-gray-400 hover:underline">
               Privacyverklaring
             </Link>
             <span className="text-gray-600">•</span>
-            <Link href="/contact" className="text-purple-400 hover:underline">
+            <Link href="/contact" className="text-gray-400 hover:underline">
               Contact
             </Link>
             <span className="text-gray-600">•</span>
-            <Link href="/" className="text-purple-400 hover:underline">
+            <Link href="/" className="text-gray-400 hover:underline">
               Terug naar Home
             </Link>
           </div>

@@ -46,7 +46,7 @@ export default function GoogleReviews() {
           href="https://www.google.com/search?sca_esv=d8140a1b87a5a1ad&hl=nl-NL&sxsrf=AE3TifP2NyEPAQ_nc1j-C7K7f1oYq35THw:1763496756982&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E5vBGIwaBGWd9QfpeKQ5ssd-dIj2eD7X3_dWw_vaTu-KQTU1jKzmrq6k4LxA9kyVpsR81u7Sz00Cyzwv9hsK6yHabStD&q=Ai+Fais+Reviews&sa=X&ved=2ahUKEwjtxoyuwfyQAxU0hf0HHdxWM2MQ0bkNegQIIhAD&cshid=1763496806830378&biw=1536&bih=695&dpr=1.25"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center font-medium text-blue-600 hover:underline"
+          className="inline-flex items-center font-medium text-gray-600 hover:underline"
         >
           Bekijk alle Google reviews
           <FcGoogle className="ml-2 w-5 h-5" />

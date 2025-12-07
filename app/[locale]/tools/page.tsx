@@ -21,7 +21,7 @@ export default function ToolsPage() {
     <div className="min-h-screen bg-black font-sans text-white relative overflow-hidden">
       {/* Achtergrond */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-900/20 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gray-900/20 rounded-full blur-[100px] pointer-events-none"></div>
 
       {/* Navigatie Terug */}
       <nav className="relative z-10 px-6 py-6 max-w-6xl mx-auto">
@@ -37,7 +37,7 @@ export default function ToolsPage() {
       <main className="relative z-10 max-w-6xl mx-auto px-6 pt-4 pb-20">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-tight">
-            Aifais <span className="text-blue-500">Tools</span>
+            Aifais <span className="text-gray-500">Tools</span>
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
             Krachtige micro-services voor ondernemers. <br />
@@ -50,10 +50,10 @@ export default function ToolsPage() {
           {/* TOOL 1: Factuur Scanner (LIVE) */}
           <Link
             href="/tools/invoice-extraction"
-            className="group relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-1 overflow-hidden hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1"
+            className="group relative bg-[#0A0A0A] border border-white/10 rounded-3xl p-1 overflow-hidden hover:border-gray-500/50 transition-all duration-300 hover:-translate-y-1"
           >
             <div className="relative bg-[#111] rounded-[22px] p-6 h-full flex flex-col">
-              <div className="w-12 h-12 bg-blue-900/30 rounded-xl flex items-center justify-center mb-4 text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+              <div className="w-12 h-12 bg-gray-900/30 rounded-xl flex items-center justify-center mb-4 text-gray-400 group-hover:bg-gray-600 group-hover:text-white transition-colors">
                 <ScanLine className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold mb-2">Factuur Scanner</h3>
@@ -65,7 +65,7 @@ export default function ToolsPage() {
                 <span className="text-xs font-mono text-green-400 bg-green-900/20 px-2 py-1 rounded">
                   LIVE
                 </span>
-                <span className="text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all text-blue-400">
+                <span className="text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all text-gray-400">
                   Open Tool <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
@@ -87,10 +87,10 @@ export default function ToolsPage() {
                 account.
               </p>
               <div className="flex items-center justify-between border-t border-white/5 pt-4 mt-auto">
-                <span className="text-xs font-mono text-blue-400 bg-blue-900/20 px-2 py-1 rounded">
+                <span className="text-xs font-mono text-gray-400 bg-gray-900/20 px-2 py-1 rounded">
                   GRATIS
                 </span>
-                <span className="text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all text-blue-400">
+                <span className="text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all text-gray-400">
                   Open Tool <ArrowRight className="w-4 h-4" />
                 </span>
               </div>

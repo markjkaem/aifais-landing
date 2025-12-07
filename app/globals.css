@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -23,9 +21,15 @@ body {
 }
 
 @keyframes zoomSlow {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .animate-zoomSlow {
@@ -33,23 +37,28 @@ body {
 }
 
 @keyframes teleport {
-  0%, 10% {
+  0%,
+  10% {
     transform: translate(0px, 0px) scale(1);
     opacity: 0;
   }
-  15%, 25% {
+  15%,
+  25% {
     transform: translate(300px, 50px) scale(1.2);
     opacity: 1;
   }
-  30%, 40% {
+  30%,
+  40% {
     transform: translate(-150px, 200px) scale(0.8);
     opacity: 1;
   }
-  45%, 50% {
+  45%,
+  50% {
     transform: translate(200px, -100px) scale(1.1);
     opacity: 1;
   }
-  55%, 100% {
+  55%,
+  100% {
     transform: translate(0px, 0px) scale(1);
     opacity: 0;
   }
@@ -58,8 +67,6 @@ body {
 .animate-teleport {
   animation: teleport 6s infinite;
 }
-
-
 
 .blog-content {
   @apply text-gray-200 leading-relaxed tracking-wide;
@@ -94,7 +101,7 @@ body {
 }
 
 .blog-content code {
-  @apply bg-gray-800 px-1 py-0.5 rounded text-purple-300;
+  @apply bg-gray-800 px-1 py-0.5 rounded text-gray-300;
 }
 
 .blog-content img {
@@ -102,5 +109,5 @@ body {
 }
 
 .blog-content blockquote {
-  @apply border-l-4 border-purple-500 pl-6 italic text-gray-300 my-8;
+  @apply border-l-4 border-gray-500 pl-6 italic text-gray-300 my-8;
 }

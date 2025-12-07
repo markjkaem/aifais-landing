@@ -50,7 +50,7 @@ export default function Footer() {
           <div className="flex flex-col gap-2 mt-2">
             <a
               href="mailto:info@aifais.com"
-              className="hover:text-purple-400 transition flex items-center gap-2"
+              className="hover:text-gray-400 transition flex items-center gap-2"
               itemProp="email"
             >
               <svg
@@ -70,7 +70,7 @@ export default function Footer() {
             </a>
             <a
               href="tel:+31618424470"
-              className="hover:text-purple-400 transition flex items-center gap-2"
+              className="hover:text-gray-400 transition flex items-center gap-2"
               itemProp="telephone"
             >
               <svg
@@ -97,25 +97,25 @@ export default function Footer() {
           <nav className="flex flex-col gap-3">
             <Link
               href="/diensten/email-reply-ai-agent"
-              className="hover:text-purple-400 transition"
+              className="hover:text-gray-400 transition"
             >
               AI Email Beantwoording Systeem
             </Link>
             <Link
               href="/diensten/sales-lead-automation"
-              className="hover:text-purple-400 transition"
+              className="hover:text-gray-400 transition"
             >
               Sales Lead Automatisering
             </Link>
             <Link
               href="/diensten/support-ticket-samenvatting-systeem"
-              className="hover:text-purple-400 transition"
+              className="hover:text-gray-400 transition"
             >
               Support Ticket Samenvatting Systeem
             </Link>
             <Link
               href="/diensten"
-              className="text-purple-400 hover:text-purple-300 transition font-medium mt-2 text-xs uppercase tracking-wider"
+              className="text-gray-400 hover:text-gray-300 transition font-medium mt-2 text-xs uppercase tracking-wider"
             >
               Bekijk alle diensten →
             </Link>
@@ -126,22 +126,19 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <h3 className="font-bold text-white text-base">Navigatie</h3>
           <nav className="flex flex-col gap-3">
-            <Link
-              href="/portfolio"
-              className="hover:text-purple-400 transition"
-            >
+            <Link href="/portfolio" className="hover:text-gray-400 transition">
               Portfolio & Cases
             </Link>
-            <Link href="/news" className="hover:text-purple-400 transition">
+            <Link href="/news" className="hover:text-gray-400 transition">
               Kennisbank & Nieuws
             </Link>
-            <Link href="/#about" className="hover:text-purple-400 transition">
+            <Link href="/#about" className="hover:text-gray-400 transition">
               Over Ons
             </Link>
-            <Link href="/tools" className="hover:text-purple-400 transition">
+            <Link href="/tools" className="hover:text-gray-400 transition">
               Tools
             </Link>
-            <Link href="/contact" className="hover:text-purple-400 transition">
+            <Link href="/contact" className="hover:text-gray-400 transition">
               Contact & Advies
             </Link>
           </nav>

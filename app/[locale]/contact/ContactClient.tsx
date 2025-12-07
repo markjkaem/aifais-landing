@@ -81,8 +81,8 @@ export default function ContactClient() {
   return (
     <div className="relative bg-black min-h-screen py-20 px-6 overflow-hidden">
       {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-950/10 via-transparent to-purple-950/10" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-950/10 via-transparent to-gray-950/10" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-gray-600/20 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl" />
       <div className="absolute inset-0 bg-[linear-gradient(rgba(147,51,234,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(147,51,234,0.03)_1px,transparent_1px)] bg-[size:72px_72px]" />
 
@@ -94,13 +94,13 @@ export default function ContactClient() {
       >
         {/* Header */}
         <motion.header variants={fadeUp} className="text-center mb-16">
-          <div className="inline-block mb-4 px-4 py-2 bg-purple-950/30 border border-purple-500/30 rounded-full">
-            <span className="text-purple-300 text-sm font-semibold tracking-wide">
+          <div className="inline-block mb-4 px-4 py-2 bg-gray-950/30 border border-gray-500/30 rounded-full">
+            <span className="text-gray-300 text-sm font-semibold tracking-wide">
               💬 GRATIS ADVIESGESPREK
             </span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-white via-purple-300 to-amber-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-gray-300 to-amber-400 bg-clip-text text-transparent">
               Klaar Om Te Starten?
             </span>
           </h1>
@@ -113,16 +113,16 @@ export default function ContactClient() {
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* LEFT: FORM */}
           <motion.div variants={fadeUp}>
-            <div className="relative bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-xl border border-purple-500/20 rounded-3xl p-8 shadow-2xl">
+            <div className="relative bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-xl border border-gray-500/20 rounded-3xl p-8 shadow-2xl">
               {/* Decorative corner accents */}
-              <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-600/30 to-transparent rounded-tl-3xl blur-2xl pointer-events-none" />
+              <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-gray-600/30 to-transparent rounded-tl-3xl blur-2xl pointer-events-none" />
 
               <div className="relative">
                 <h2 className="text-3xl font-bold mb-2 text-white">
                   Stuur Een Bericht
                 </h2>
                 <p className="text-gray-400 mb-8 text-sm">
-                  Velden met een <span className="text-purple-400">*</span> zijn
+                  Velden met een <span className="text-gray-400">*</span> zijn
                   verplicht.
                 </p>
 
@@ -133,7 +133,7 @@ export default function ContactClient() {
                       htmlFor="name"
                       className="block text-sm font-semibold text-gray-200 mb-2"
                     >
-                      Naam <span className="text-purple-400">*</span>
+                      Naam <span className="text-gray-400">*</span>
                     </label>
                     <input
                       id="name"
@@ -148,7 +148,7 @@ export default function ContactClient() {
                       }}
                       className={`w-full p-4 rounded-xl bg-zinc-950/50 text-white border ${
                         errors.name ? "border-red-500" : "border-zinc-800"
-                      } focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition`}
+                      } focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500/20 transition`}
                     />
                     {errors.name && (
                       <p className="text-red-400 text-xs mt-1">{errors.name}</p>
@@ -162,7 +162,7 @@ export default function ContactClient() {
                         htmlFor="email"
                         className="block text-sm font-semibold text-gray-200 mb-2"
                       >
-                        E-mailadres <span className="text-purple-400">*</span>
+                        E-mailadres <span className="text-gray-400">*</span>
                       </label>
                       <input
                         id="email"
@@ -177,7 +177,7 @@ export default function ContactClient() {
                         }}
                         className={`w-full p-4 rounded-xl bg-zinc-950/50 text-white border ${
                           errors.email ? "border-red-500" : "border-zinc-800"
-                        } focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition`}
+                        } focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500/20 transition`}
                       />
                       {errors.email && (
                         <p className="text-red-400 text-xs mt-1">
@@ -204,7 +204,7 @@ export default function ContactClient() {
                         onChange={(e) =>
                           setForm({ ...form, phone: e.target.value })
                         }
-                        className="w-full p-4 rounded-xl bg-zinc-950/50 text-white border border-zinc-800 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition"
+                        className="w-full p-4 rounded-xl bg-zinc-950/50 text-white border border-zinc-800 focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500/20 transition"
                       />
                     </div>
                   </div>
@@ -216,7 +216,7 @@ export default function ContactClient() {
                       className="block text-sm font-semibold text-gray-200 mb-2"
                     >
                       Waar kunnen we je mee helpen?{" "}
-                      <span className="text-purple-400">*</span>
+                      <span className="text-gray-400">*</span>
                     </label>
                     <textarea
                       id="message"
@@ -232,7 +232,7 @@ export default function ContactClient() {
                       rows={5}
                       className={`w-full p-4 rounded-xl bg-zinc-950/50 text-white border ${
                         errors.message ? "border-red-500" : "border-zinc-800"
-                      } focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition resize-none`}
+                      } focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500/20 transition resize-none`}
                     />
                     {errors.message && (
                       <p className="text-red-400 text-xs mt-1">
@@ -246,7 +246,7 @@ export default function ContactClient() {
                     <button
                       type="submit"
                       disabled={status === "sending"}
-                      className="group w-full px-8 py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-white text-white font-bold text-lg rounded-xl hover:scale-[1.02] transition-all duration-300 shadow-xl shadow-purple-500/20 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                      className="group w-full px-8 py-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-bold text-lg rounded-xl hover:scale-[1.02] transition-all duration-300 shadow-xl shadow-gray-500/20 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                     >
                       {status === "sending" ? (
                         <div className="flex items-center gap-2">
@@ -328,7 +328,7 @@ export default function ContactClient() {
                 <div className="absolute top-2 left-3.5 bottom-6 w-0.5 bg-gray-800" />
 
                 <div className="relative pl-10">
-                  <div className="absolute left-0 top-0 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm ring-4 ring-black z-10">
+                  <div className="absolute left-0 top-0 w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold text-sm ring-4 ring-black z-10">
                     1
                   </div>
                   <h4 className="text-white font-semibold mb-1">
@@ -367,16 +367,16 @@ export default function ContactClient() {
             </div>
 
             {/* Direct Contact Info */}
-            <div className="bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 border border-purple-500/20 rounded-2xl p-8">
+            <div className="bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 border border-gray-500/20 rounded-2xl p-8">
               <h2 className="text-xl font-bold text-white mb-6">
                 Liever direct contact?
               </h2>
               <div className="space-y-4">
                 <a
                   href="mailto:contact@aifais.com"
-                  className="flex items-center gap-4 p-4 bg-black/40 rounded-xl border border-zinc-800 hover:border-purple-500/50 transition group"
+                  className="flex items-center gap-4 p-4 bg-black/40 rounded-xl border border-zinc-800 hover:border-gray-500/50 transition group"
                 >
-                  <div className="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition">
+                  <div className="w-10 h-10 bg-gray-500/10 rounded-full flex items-center justify-center text-gray-400 group-hover:bg-gray-500 group-hover:text-white transition">
                     ✉️
                   </div>
                   <div>
@@ -386,7 +386,7 @@ export default function ContactClient() {
                 </a>
                 <a
                   href="tel:+31618424470"
-                  className="flex items-center gap-4 p-4 bg-black/40 rounded-xl border border-zinc-800 hover:border-purple-500/50 transition group"
+                  className="flex items-center gap-4 p-4 bg-black/40 rounded-xl border border-zinc-800 hover:border-gray-500/50 transition group"
                 >
                   <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center text-green-400 group-hover:bg-green-500 group-hover:text-white transition">
                     📞
@@ -400,7 +400,7 @@ export default function ContactClient() {
             </div>
 
             {/* Testimonial (Social Proof) */}
-            <div className="bg-purple-900/10 border border-purple-500/10 rounded-2xl p-6 italic text-gray-300 text-sm leading-relaxed">
+            <div className="bg-gray-900/10 border border-gray-500/10 rounded-2xl p-6 italic text-gray-300 text-sm leading-relaxed">
               "AIFAIS reageerde enorm snel. Binnen een week hadden we onze
               eerste workflow draaien die ons nu al 4 uur per week scheelt.
               Aanrader!"

@@ -19,9 +19,9 @@ export default function ThankYouClient() {
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6 md:p-10">
         <article className="max-w-2xl w-full text-center space-y-8">
           {/* Success Icon */}
-          <div className="mx-auto w-24 h-24 rounded-full bg-gradient-to-br from-purple-600/20 to-pink-600/20 flex items-center justify-center border border-purple-500/30">
+          <div className="mx-auto w-24 h-24 rounded-full bg-gradient-to-br from-gray-600/20 to-pink-600/20 flex items-center justify-center border border-gray-500/30">
             <svg
-              className="w-12 h-12 text-purple-400"
+              className="w-12 h-12 text-gray-400"
               fill="none"
               stroke="currentColor"
               strokeWidth="2.5"
@@ -38,7 +38,7 @@ export default function ThankYouClient() {
 
           {/* Header */}
           <header>
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-gray-400 via-pink-400 to-gray-400 bg-clip-text text-transparent">
               Je Quickscan is Ontvangen! 🎉
             </h1>
             <p className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-xl mx-auto">
@@ -48,10 +48,10 @@ export default function ThankYouClient() {
           </header>
 
           {/* Email Check Box */}
-          <section className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border-2 border-purple-500/30 rounded-2xl p-8 space-y-4">
-            <div className="mx-auto w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mb-4">
+          <section className="bg-gradient-to-br from-gray-900/20 to-pink-900/20 border-2 border-gray-500/30 rounded-2xl p-8 space-y-4">
+            <div className="mx-auto w-16 h-16 rounded-full bg-gray-500/20 flex items-center justify-center mb-4">
               <svg
-                className="w-8 h-8 text-purple-400"
+                className="w-8 h-8 text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -72,26 +72,26 @@ export default function ThankYouClient() {
 
             <ul className="text-left max-w-md mx-auto space-y-2">
               <li className="flex items-start gap-3">
-                <span className="text-purple-400 text-xl flex-shrink-0">✓</span>
+                <span className="text-gray-400 text-xl flex-shrink-0">✓</span>
                 <span className="text-gray-300">
                   Je persoonlijke besparingsinzicht
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-purple-400 text-xl flex-shrink-0">✓</span>
+                <span className="text-gray-400 text-xl flex-shrink-0">✓</span>
                 <span className="text-gray-300">
                   Concrete automatiseringsmogelijkheden
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-purple-400 text-xl flex-shrink-0">✓</span>
+                <span className="text-gray-400 text-xl flex-shrink-0">✓</span>
                 <span className="text-gray-300">
                   Wat de volgende stappen zijn
                 </span>
               </li>
             </ul>
 
-            <div className="pt-4 border-t border-purple-500/20 mt-6">
+            <div className="pt-4 border-t border-gray-500/20 mt-6">
               <p className="text-sm text-gray-400">
                 💡 <strong>Tip:</strong> Check ook je spam folder als je de
                 email niet ziet
@@ -107,7 +107,7 @@ export default function ThankYouClient() {
 
             <ol className="space-y-5 list-none">
               <li className="flex items-start gap-4">
-                <span className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-purple-600/20 to-pink-600/20 flex items-center justify-center text-purple-400 font-bold border border-purple-500/30">
+                <span className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-gray-600/20 to-pink-600/20 flex items-center justify-center text-gray-400 font-bold border border-gray-500/30">
                   1
                 </span>
                 <div>
@@ -122,7 +122,7 @@ export default function ThankYouClient() {
               </li>
 
               <li className="flex items-start gap-4">
-                <span className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-purple-600/20 to-pink-600/20 flex items-center justify-center text-purple-400 font-bold border border-purple-500/30">
+                <span className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-gray-600/20 to-pink-600/20 flex items-center justify-center text-gray-400 font-bold border border-gray-500/30">
                   2
                 </span>
                 <div>
@@ -136,13 +136,13 @@ export default function ThankYouClient() {
               </li>
 
               <li className="flex items-start gap-4">
-                <span className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-purple-600/20 to-pink-600/20 flex items-center justify-center text-purple-400 font-bold border border-purple-500/30">
+                <span className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-gray-600/20 to-pink-600/20 flex items-center justify-center text-gray-400 font-bold border border-gray-500/30">
                   3
                 </span>
                 <div>
                   <p className="font-semibold text-white text-lg">
                     We bellen binnen{" "}
-                    <span className="text-purple-400">1 werkdag</span>
+                    <span className="text-gray-400">1 werkdag</span>
                   </p>
                   <p className="text-sm text-gray-400 mt-1">
                     In een 15-30 min gesprek bespreken we concrete quick wins
@@ -158,12 +158,12 @@ export default function ThankYouClient() {
             <p className="text-sm text-gray-400 mb-4 text-center">
               Wat anderen zeggen:
             </p>
-            <blockquote className="text-gray-300 border-l-4 border-purple-500 pl-4">
+            <blockquote className="text-gray-300 border-l-4 border-gray-500 pl-4">
               <p className="italic mb-3">
                 "Binnen 2 weken hadden we onze eerste workflow live. Het
                 bespaart ons nu structureel 15 uur per week."
               </p>
-              <footer className="text-sm text-purple-400 font-semibold not-italic">
+              <footer className="text-sm text-gray-400 font-semibold not-italic">
                 — CFO, E-commerce bedrijf (28 medewerkers)
               </footer>
             </blockquote>
@@ -174,13 +174,13 @@ export default function ThankYouClient() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/portfolio"
-                className="px-8 py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg"
+                className="px-8 py-4 bg-gradient-to-r from-gray-500 via-pink-500 to-gray-500 text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg"
               >
                 Bekijk Onze Cases
               </Link>
               <Link
                 href="/"
-                className="px-8 py-4 border-2 border-purple-500/50 text-purple-400 rounded-xl hover:bg-purple-500/10 hover:border-purple-500 transition font-semibold"
+                className="px-8 py-4 border-2 border-gray-500/50 text-gray-400 rounded-xl hover:bg-gray-500/10 hover:border-gray-500 transition font-semibold"
               >
                 Terug naar Home
               </Link>
@@ -193,7 +193,7 @@ export default function ThankYouClient() {
               </p>
               <a
                 href="mailto:contact@aifais.com"
-                className="text-purple-400 hover:text-purple-300 transition font-semibold"
+                className="text-gray-400 hover:text-gray-300 transition font-semibold"
               >
                 contact@aifais.com
               </a>

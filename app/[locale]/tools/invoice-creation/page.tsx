@@ -19,18 +19,18 @@ export default function FactuurMakerPage() {
     <div className="min-h-screen bg-black font-sans relative flex flex-col items-center justify-center p-6 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gray-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
       {/* Header */}
       <div className="relative z-10 max-w-2xl w-full text-center mb-10">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-400 mb-6">
-          <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+          <span className="w-2 h-2 rounded-full bg-gray-500"></span>
           Gratis Tool
         </div>
 
         <h1 className="text-5xl font-bold tracking-tight text-white mb-4">
           Factuur{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-indigo-500">
             Maker
           </span>
         </h1>

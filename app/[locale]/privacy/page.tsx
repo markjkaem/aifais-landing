@@ -51,7 +51,7 @@ export default function PrivacyPage() {
               Email:{" "}
               <a
                 href="mailto:contact@aifais.com"
-                className="text-purple-400 hover:underline"
+                className="text-gray-400 hover:underline"
               >
                 contact@aifais.com
               </a>
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
         {/* Table of Contents */}
         <nav className="mb-12 bg-gray-900/40 border border-gray-800 rounded-xl p-6">
           <h2 className="text-2xl font-bold mb-4">Inhoudsopgave</h2>
-          <ol className="space-y-2 text-purple-400">
+          <ol className="space-y-2 text-gray-400">
             <li>
               <a href="#welke-gegevens" className="hover:underline">
                 1. Welke persoonsgegevens verzamelen wij?
@@ -117,7 +117,7 @@ export default function PrivacyPage() {
         <div className="space-y-12">
           {/* Section 1 */}
           <section id="welke-gegevens">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               1. Welke Persoonsgegevens Verzamelen Wij?
             </h2>
 
@@ -180,7 +180,7 @@ export default function PrivacyPage() {
                       href="https://autoriteitpersoonsgegevens.nl"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-purple-400 hover:underline"
+                      className="text-gray-400 hover:underline"
                     >
                       autoriteitpersoonsgegevens.nl
                     </a>
@@ -189,7 +189,7 @@ export default function PrivacyPage() {
                     Telefoon:{" "}
                     <a
                       href="tel:+31703888500"
-                      className="text-purple-400 hover:underline"
+                      className="text-gray-400 hover:underline"
                     >
                       (+31) 070 - 888 85 00
                     </a>
@@ -201,7 +201,7 @@ export default function PrivacyPage() {
 
           {/* Section 2 */}
           <section id="waarom">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               2. Waarom Verzamelen Wij Deze Gegevens?
             </h2>
 
@@ -268,7 +268,7 @@ export default function PrivacyPage() {
 
           {/* Section 3 */}
           <section id="bewaring">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               3. Hoe Lang Bewaren Wij Gegevens?
             </h2>
 
@@ -334,7 +334,7 @@ export default function PrivacyPage() {
 
           {/* Section 4 */}
           <section id="delen">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               4. Delen Wij Gegevens Met Derden?
             </h2>
 
@@ -411,7 +411,7 @@ export default function PrivacyPage() {
 
           {/* Section 5 */}
           <section id="cookies">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               5. Cookies & Tracking
             </h2>
 
@@ -441,7 +441,7 @@ export default function PrivacyPage() {
 
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
                 <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
-                  <span className="text-blue-400">📊</span> Analytische Cookies
+                  <span className="text-gray-400">📊</span> Analytische Cookies
                   (Google Analytics 4)
                 </h3>
                 <p className="text-gray-300 mb-3">
@@ -465,7 +465,7 @@ export default function PrivacyPage() {
 
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
                 <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
-                  <span className="text-purple-400">🎯</span> Marketing Cookies
+                  <span className="text-gray-400">🎯</span> Marketing Cookies
                   (optioneel)
                 </h3>
                 <p className="text-gray-300 mb-3">
@@ -481,7 +481,7 @@ export default function PrivacyPage() {
               </div>
             </div>
 
-            <div className="mt-6 bg-gray-900/40 border border-purple-800 rounded-xl p-6">
+            <div className="mt-6 bg-gray-900/40 border border-gray-800 rounded-xl p-6">
               <h3 className="text-xl font-semibold mb-3">Cookies Beheren</h3>
               <p className="text-gray-300 mb-4">
                 Je kunt cookies altijd beheren via je browserinstellingen:
@@ -505,7 +505,7 @@ export default function PrivacyPage() {
 
           {/* Section 6 */}
           <section id="beveiliging">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               6. Beveiliging
             </h2>
 
@@ -526,7 +526,7 @@ export default function PrivacyPage() {
 
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
                 <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                  <span className="text-blue-400">🛡️</span> Firewall Beveiliging
+                  <span className="text-gray-400">🛡️</span> Firewall Beveiliging
                 </h3>
                 <p className="text-gray-300 text-sm">
                   Servers zijn beveiligd met moderne firewalls
@@ -535,7 +535,7 @@ export default function PrivacyPage() {
 
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
                 <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                  <span className="text-purple-400">🔐</span> Toegangscontrole
+                  <span className="text-gray-400">🔐</span> Toegangscontrole
                 </h3>
                 <p className="text-gray-300 text-sm">
                   Alleen geautoriseerd personeel heeft toegang tot gegevens
@@ -566,7 +566,7 @@ export default function PrivacyPage() {
 
           {/* Section 7 */}
           <section id="rechten">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               7. Jouw Rechten (AVG)
             </h2>
 
@@ -577,7 +577,7 @@ export default function PrivacyPage() {
 
             <div className="space-y-4">
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-2 text-purple-400">
+                <h3 className="text-lg font-semibold mb-2 text-gray-400">
                   📋 Recht op Inzage
                 </h3>
                 <p className="text-gray-300 text-sm">
@@ -587,7 +587,7 @@ export default function PrivacyPage() {
               </div>
 
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-2 text-purple-400">
+                <h3 className="text-lg font-semibold mb-2 text-gray-400">
                   ✏️ Recht op Rectificatie
                 </h3>
                 <p className="text-gray-300 text-sm">
@@ -596,7 +596,7 @@ export default function PrivacyPage() {
               </div>
 
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-2 text-purple-400">
+                <h3 className="text-lg font-semibold mb-2 text-gray-400">
                   🗑️ Recht op Verwijdering ("Recht op Vergetelheid")
                 </h3>
                 <p className="text-gray-300 text-sm">
@@ -607,7 +607,7 @@ export default function PrivacyPage() {
               </div>
 
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-2 text-purple-400">
+                <h3 className="text-lg font-semibold mb-2 text-gray-400">
                   ⛔ Recht op Beperking
                 </h3>
                 <p className="text-gray-300 text-sm">
@@ -616,7 +616,7 @@ export default function PrivacyPage() {
               </div>
 
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-2 text-purple-400">
+                <h3 className="text-lg font-semibold mb-2 text-gray-400">
                   🚫 Recht van Bezwaar
                 </h3>
                 <p className="text-gray-300 text-sm">
@@ -626,7 +626,7 @@ export default function PrivacyPage() {
               </div>
 
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-2 text-purple-400">
+                <h3 className="text-lg font-semibold mb-2 text-gray-400">
                   📤 Recht op Dataportabiliteit
                 </h3>
                 <p className="text-gray-300 text-sm">
@@ -636,7 +636,7 @@ export default function PrivacyPage() {
               </div>
 
               <div className="bg-gray-900/40 border border-gray-800 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-2 text-purple-400">
+                <h3 className="text-lg font-semibold mb-2 text-gray-400">
                   ❌ Recht op Intrekking Toestemming
                 </h3>
                 <p className="text-gray-300 text-sm">
@@ -646,7 +646,7 @@ export default function PrivacyPage() {
               </div>
             </div>
 
-            <div className="mt-6 bg-purple-900/20 border border-purple-700 rounded-xl p-6">
+            <div className="mt-6 bg-gray-900/20 border border-gray-700 rounded-xl p-6">
               <h3 className="text-xl font-semibold mb-3">
                 Hoe Een Verzoek Indienen?
               </h3>
@@ -654,7 +654,7 @@ export default function PrivacyPage() {
                 Stuur een email naar{" "}
                 <a
                   href="mailto:contact@aifais.com"
-                  className="text-purple-400 hover:underline font-semibold"
+                  className="text-gray-400 hover:underline font-semibold"
                 >
                   contact@aifais.com
                 </a>{" "}
@@ -673,7 +673,7 @@ export default function PrivacyPage() {
 
           {/* Section 8 */}
           <section id="klachten">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               8. Klachten
             </h2>
 
@@ -691,7 +691,7 @@ export default function PrivacyPage() {
                   Email ons op:{" "}
                   <a
                     href="mailto:contact@aifais.com"
-                    className="text-purple-400 hover:underline"
+                    className="text-gray-400 hover:underline"
                   >
                     contact@aifais.com
                   </a>
@@ -705,7 +705,7 @@ export default function PrivacyPage() {
 
           {/* Section 9 */}
           <section id="wijzigingen">
-            <h2 className="text-3xl font-bold mb-6 text-purple-400">
+            <h2 className="text-3xl font-bold mb-6 text-gray-400">
               9. Wijzigingen in Deze Privacyverklaring
             </h2>
 
@@ -725,7 +725,7 @@ export default function PrivacyPage() {
           </section>
 
           {/* Contact Section */}
-          <section className="mt-12 bg-gradient-to-br from-purple-900/20 to-gray-900/40 border border-purple-700 rounded-2xl p-8">
+          <section className="mt-12 bg-gradient-to-br from-gray-900/20 to-gray-900/40 border border-gray-700 rounded-2xl p-8">
             <h2 className="text-2xl font-bold mb-4 text-center">
               Vragen Over Deze Privacyverklaring?
             </h2>
@@ -736,13 +736,13 @@ export default function PrivacyPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="mailto:contact@aifais.com"
-                className="px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-400 text-black font-bold rounded-xl hover:scale-105 transition-transform text-center"
+                className="px-8 py-4 bg-gradient-to-r from-gray-500 to-gray-400 text-black font-bold rounded-xl hover:scale-105 transition-transform text-center"
               >
                 📧 Email Ons
               </a>
               <Link
                 href="/contact"
-                className="px-8 py-4 border border-purple-500 text-purple-400 font-semibold rounded-xl hover:bg-purple-500 hover:text-black transition text-center"
+                className="px-8 py-4 border border-gray-500 text-gray-400 font-semibold rounded-xl hover:bg-gray-500 hover:text-black transition text-center"
               >
                 Contactformulier
               </Link>
@@ -754,15 +754,15 @@ export default function PrivacyPage() {
         <nav className="mt-16 pt-8 border-t border-gray-800 text-center">
           <p className="text-gray-400 mb-4">Bekijk ook:</p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/agv" className="text-purple-400 hover:underline">
+            <Link href="/agv" className="text-gray-400 hover:underline">
               Algemene Voorwaarden
             </Link>
             <span className="text-gray-600">•</span>
-            <Link href="/contact" className="text-purple-400 hover:underline">
+            <Link href="/contact" className="text-gray-400 hover:underline">
               Contact
             </Link>
             <span className="text-gray-600">•</span>
-            <Link href="/" className="text-purple-400 hover:underline">
+            <Link href="/" className="text-gray-400 hover:underline">
               Terug naar Home
             </Link>
           </div>

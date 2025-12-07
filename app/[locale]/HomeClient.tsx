@@ -30,7 +30,7 @@ const h1 = Space_Grotesk({
 // ✅ REUSABLE SVG FOR LINKEDIN (E-E-A-T)
 const LinkedInIcon = () => (
   <svg
-    className="w-6 h-6 text-gray-400 group-hover:text-blue-500 transition-colors"
+    className="w-6 h-6 text-gray-400 group-hover:text-gray-500 transition-colors"
     fill="currentColor"
     viewBox="0 0 24 24"
   >
@@ -41,7 +41,7 @@ const LinkedInIcon = () => (
 export default function HomeClient() {
   const bgClass = "bg-black";
   const textClass = "text-white";
-  const accentColor = "text-purple-500";
+  const accentColor = "text-gray-500";
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
@@ -83,7 +83,7 @@ export default function HomeClient() {
             </p>
           </video>
           {/* Multi-layer gradient for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-purple-900/30" />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-gray-900/30" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
         </div>
 
@@ -106,18 +106,18 @@ export default function HomeClient() {
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-4">
           <div className="max-w-4xl">
             {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full mb-6 backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-500/10 border border-gray-500/20 rounded-full mb-6 backdrop-blur-sm">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gray-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-gray-500"></span>
               </span>
-              <span className="text-sm text-purple-300 font-medium">
+              <span className="text-sm text-gray-300 font-medium">
                 🇳🇱 Specialist in Nederlandse MKB Automatisering
               </span>
             </div>
 
             {/* Eyebrow */}
-            <p className="text-purple-400 font-semibold text-base md:text-lg mb-4 tracking-wide uppercase">
+            <p className="text-gray-400 font-semibold text-base md:text-lg mb-4 tracking-wide uppercase">
               Bedrijfsautomatisering Nederland
             </p>
 
@@ -125,7 +125,7 @@ export default function HomeClient() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
               <span className="text-white block">
                 Procesautomatisering voor MKB:
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-300 to-yellow-300 animate-gradient">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 via-gray-300 to-yellow-300 animate-gradient">
                   {" "}
                   Bespaar 40+ Uur
                 </span>
@@ -266,7 +266,7 @@ export default function HomeClient() {
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <Link
                 href="/quickscan"
-                className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white font-bold rounded-xl hover:from-purple-500 hover:to-purple-400 transition-all duration-300 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-105 flex items-center justify-center gap-2"
+                className="group relative px-8 py-4 bg-gradient-to-r from-gray-600 to-gray-500 text-white font-bold rounded-xl hover:from-gray-500 hover:to-gray-400 transition-all duration-300 shadow-2xl shadow-gray-500/30 hover:shadow-gray-500/50 hover:scale-105 flex items-center justify-center gap-2"
               >
                 <span>Bereken Jouw Besparing</span>
                 <svg
@@ -286,7 +286,7 @@ export default function HomeClient() {
 
               <Link
                 href="#cases"
-                className="px-8 py-4 border-2 border-gray-600 rounded-xl text-white font-semibold hover:border-purple-400 hover:bg-purple-400/10 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm"
+                className="px-8 py-4 border-2 border-gray-600 rounded-xl text-white font-semibold hover:border-gray-400 hover:bg-gray-400/10 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm"
               >
                 <svg
                   className="w-5 h-5"
@@ -436,15 +436,15 @@ export default function HomeClient() {
         className="relative py-24 bg-black overflow-hidden"
       >
         {/* Background effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" />
-        <div className="absolute top-1/2 left-0 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950/5 to-transparent" />
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-gray-600/10 rounded-full blur-3xl" />
         <div className="absolute top-1/2 right-0 w-96 h-96 bg-amber-600/5 rounded-full blur-3xl" />
 
         <div className="relative container mx-auto px-6 max-w-7xl">
           {/* Header */}
           <header className="text-center mb-16">
-            <div className="inline-block mb-4 px-4 py-2 bg-purple-950/30 border border-purple-500/30 rounded-full">
-              <span className="text-purple-300 text-sm font-semibold tracking-wide">
+            <div className="inline-block mb-4 px-4 py-2 bg-gray-950/30 border border-gray-500/30 rounded-full">
+              <span className="text-gray-300 text-sm font-semibold tracking-wide">
                 ⚡ BEWEZEN RESULTATEN
               </span>
             </div>
@@ -453,7 +453,7 @@ export default function HomeClient() {
               id="cases-heading"
               className="text-4xl md:text-5xl font-bold mb-4"
             >
-              <span className="bg-gradient-to-r from-white via-purple-300 to-amber-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-gray-300 to-amber-400 bg-clip-text text-transparent">
                 Succesvolle Procesautomatisering Case Studies
               </span>
             </h2>
@@ -463,7 +463,7 @@ export default function HomeClient() {
                 50+ Nederlandse bedrijven
               </span>{" "}
               en besparen gemiddeld{" "}
-              <span className="text-purple-400 font-semibold">
+              <span className="text-gray-400 font-semibold">
                 40+ uur per week
               </span>
             </p>
@@ -474,10 +474,10 @@ export default function HomeClient() {
             {projects.slice(0, 3).map((project: any) => (
               <article
                 key={project.slug}
-                className="group relative rounded-2xl overflow-hidden border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 hover:border-purple-500/50 transition-all duration-300"
+                className="group relative rounded-2xl overflow-hidden border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 hover:border-gray-500/50 transition-all duration-300"
               >
                 {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-b from-purple-600/0 via-purple-600/5 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-b from-gray-600/0 via-gray-600/5 to-gray-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                 {/* Image */}
                 <div className="relative overflow-hidden h-56 bg-zinc-950">
@@ -494,7 +494,7 @@ export default function HomeClient() {
 
                   {/* Tag badge */}
                   {project.tag && (
-                    <div className="absolute top-4 left-4 px-3 py-1 bg-purple-600/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
+                    <div className="absolute top-4 left-4 px-3 py-1 bg-gray-600/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
                       {project.tag}
                     </div>
                   )}
@@ -509,7 +509,7 @@ export default function HomeClient() {
 
                 {/* Content */}
                 <div className="relative p-6">
-                  <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-300 transition-colors">
+                  <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-gray-300 transition-colors">
                     {project.title}
                   </h3>
                   <p className="text-gray-400 leading-relaxed mb-4 line-clamp-3">
@@ -519,7 +519,7 @@ export default function HomeClient() {
                   {/* CTA Link - Optimized Anchor Text */}
                   <Link
                     href={`/portfolio/${project.slug}`}
-                    className="inline-flex items-center gap-2 text-purple-400 font-semibold hover:text-purple-300 transition-colors group/link"
+                    className="inline-flex items-center gap-2 text-gray-400 font-semibold hover:text-gray-300 transition-colors group/link"
                     // ✅ Optimized Anchor Text for internal linking
                     aria-label={`Bekijk de ${project.title} Automatisering Case`}
                   >
@@ -541,16 +541,16 @@ export default function HomeClient() {
                 </div>
 
                 {/* Decorative corner gradient */}
-                <div className="absolute -bottom-16 -right-16 w-32 h-32 bg-gradient-to-br from-purple-600/20 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute -bottom-16 -right-16 w-32 h-32 bg-gradient-to-br from-gray-600/20 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </article>
             ))}
           </div>
 
           {/* Stats Bar */}
-          <div className="mb-16 p-8 bg-gradient-to-r from-purple-950/20 via-zinc-900/50 to-purple-950/20 border border-purple-500/20 rounded-2xl backdrop-blur-sm">
+          <div className="mb-16 p-8 bg-gradient-to-r from-gray-950/20 via-zinc-900/50 to-gray-950/20 border border-gray-500/20 rounded-2xl backdrop-blur-sm">
             <div className="grid grid-cols-3 gap-8 text-center">
               <div>
-                <div className="text-4xl font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent mb-2">
+                <div className="text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent mb-2">
                   50+
                 </div>
                 <div className="text-gray-400 text-sm">
@@ -558,7 +558,7 @@ export default function HomeClient() {
                 </div>
               </div>
               <div>
-                <div className="text-4xl font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent mb-2">
+                <div className="text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent mb-2">
                   2.000+
                 </div>
                 <div className="text-gray-400 text-sm">Uur Bespaard/Maand</div>
@@ -580,7 +580,7 @@ export default function HomeClient() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
                 href="/portfolio"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-purple-500/50 text-white font-semibold rounded-lg hover:bg-purple-500/10 hover:border-purple-400 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-gray-500/50 text-white font-semibold rounded-lg hover:bg-gray-500/10 hover:border-gray-400 transition-all duration-300"
               >
                 <span>Bekijk Alle Cases</span>
                 <svg
@@ -600,7 +600,7 @@ export default function HomeClient() {
 
               <Link
                 href="/quickscan"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-white text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/50"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-gray-500/25 hover:shadow-gray-500/50"
               >
                 <span>Start Gratis Quickscan</span>
                 <svg
@@ -627,8 +627,8 @@ export default function HomeClient() {
       {/* ABOUT US SECTION */}
       <section id="about" className="relative py-24 bg-black overflow-hidden">
         {/* Background gradient effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-transparent to-amber-900/5" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/10 via-transparent to-amber-900/5" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gray-600/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -636,7 +636,7 @@ export default function HomeClient() {
           <div className="text-center mb-16">
             {/* H2 Optimization */}
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-purple-400 via-white to-amber-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-gray-400 via-white to-amber-400 bg-clip-text text-transparent">
                 Onze Experts in MKB Automatisering
               </span>
             </h2>
@@ -651,14 +651,14 @@ export default function HomeClient() {
           <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {/* Mark */}
             <div className="group relative">
-              <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
+              <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-2xl p-8 border border-zinc-800 hover:border-gray-500/50 transition-all duration-300">
                 {/* Gradient border effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/10 to-pink-600/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-600/0 via-gray-600/10 to-pink-600/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 <div className="relative">
                   {/* Photo */}
                   <div className="mb-6 relative">
-                    <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-purple-500/20 group-hover:ring-purple-500/50 transition-all duration-300">
+                    <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-gray-500/20 group-hover:ring-gray-500/50 transition-all duration-300">
                       <Image
                         src="/mark.png"
                         alt="Mark - Co-founder AIFAIS, Technical Expert"
@@ -668,13 +668,13 @@ export default function HomeClient() {
                       />
                     </div>
                     {/* Decorative gradient circle */}
-                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-purple-600 via-white to-amber-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
+                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-gray-600 via-white to-amber-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
                   </div>
 
                   {/* Info */}
                   <div className="text-center">
                     <h3 className="text-2xl font-bold text-white mb-2">Mark</h3>
-                    <p className="text-purple-400 font-semibold mb-4">
+                    <p className="text-gray-400 font-semibold mb-4">
                       Co-founder & Technical Expert
                     </p>
                     <p className="text-gray-400 leading-relaxed mb-6">
@@ -685,13 +685,13 @@ export default function HomeClient() {
 
                     {/* Skills/Tags */}
                     <div className="flex flex-wrap gap-2 justify-center">
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
                         Software Development
                       </span>
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
                         Nocode/Lowcode Specialist
                       </span>
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
                         AI Integration
                       </span>
                     </div>
@@ -713,14 +713,14 @@ export default function HomeClient() {
 
             {/* Faisal */}
             <div className="group relative">
-              <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-2xl p-8 border border-zinc-800 hover:border-purple-500/50 transition-all duration-300">
+              <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-2xl p-8 border border-zinc-800 hover:border-gray-500/50 transition-all duration-300">
                 {/* Gradient border effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-white/5 to-amber-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-600/0 via-white/5 to-amber-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 <div className="relative">
                   {/* Photo */}
                   <div className="mb-6 relative">
-                    <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-purple-500/20 group-hover:ring-purple-500/50 transition-all duration-300">
+                    <div className="w-48 h-48 mx-auto rounded-xl overflow-hidden ring-4 ring-gray-500/20 group-hover:ring-gray-500/50 transition-all duration-300">
                       <Image
                         src="/faissal.png"
                         alt="Faissal - Co-founder AIFAIS, Business Development"
@@ -730,7 +730,7 @@ export default function HomeClient() {
                       />
                     </div>
                     {/* Decorative gradient circle */}
-                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-purple-600 via-white to-amber-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
+                    <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-gray-600 via-white to-amber-500 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-300" />
                   </div>
 
                   {/* Info */}
@@ -738,7 +738,7 @@ export default function HomeClient() {
                     <h3 className="text-2xl font-bold text-white mb-2">
                       Faissal
                     </h3>
-                    <p className="text-purple-400 font-semibold mb-4">
+                    <p className="text-gray-400 font-semibold mb-4">
                       Co-founder & Process Design
                     </p>
                     <p className="text-gray-400 leading-relaxed mb-6">
@@ -750,13 +750,13 @@ export default function HomeClient() {
 
                     {/* Skills/Tags */}
                     <div className="flex flex-wrap gap-2 justify-center">
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
                         Process Design
                       </span>
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
                         Customer Success
                       </span>
-                      <span className="px-3 py-1 bg-purple-900/30 text-purple-300 text-sm rounded-full border border-purple-500/30">
+                      <span className="px-3 py-1 bg-gray-900/30 text-gray-300 text-sm rounded-full border border-gray-500/30">
                         Growth Strategy
                       </span>
                     </div>
@@ -768,7 +768,7 @@ export default function HomeClient() {
                       aria-label="Stuur Faissal een email"
                     >
                       <svg
-                        className="w-6 h-6 group-hover:text-purple-400 transition-colors"
+                        className="w-6 h-6 group-hover:text-gray-400 transition-colors"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -795,7 +795,7 @@ export default function HomeClient() {
             </p>
             <Link
               href="/quickscan"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-white text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/50 hover:scale-105"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-500 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-gray-500/25 hover:shadow-gray-500/50 hover:scale-105"
             >
               Start Gratis Quickscan
               <svg
@@ -819,22 +819,22 @@ export default function HomeClient() {
       {/* AFSLUITENDE CTA */}
       <section className="relative py-24 bg-black overflow-hidden">
         {/* Background effects and grid remain */}
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-950/10 via-transparent to-purple-950/10" />
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-600/20 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-950/10 via-transparent to-gray-950/10" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gray-600/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-3xl" />
         <div className="absolute inset-0 bg-[linear-gradient(rgba(147,51,234,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(147,51,234,0.03)_1px,transparent_1px)] bg-[size:72px_72px]" />
 
         <div className="relative container mx-auto px-6 max-w-5xl">
           {/* Main content card */}
-          <div className="relative bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-xl border border-purple-500/20 rounded-3xl p-12 shadow-2xl">
+          <div className="relative bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-xl border border-gray-500/20 rounded-3xl p-12 shadow-2xl">
             {/* Decorative corner accents */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-600/30 to-transparent rounded-tl-3xl blur-2xl" />
+            <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-gray-600/30 to-transparent rounded-tl-3xl blur-2xl" />
             <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-amber-600/20 to-transparent rounded-br-3xl blur-2xl" />
 
             <div className="relative text-center">
               {/* Badge */}
-              <div className="inline-block mb-6 px-4 py-2 bg-purple-950/50 border border-purple-500/30 rounded-full">
-                <span className="text-purple-300 text-sm font-semibold tracking-wide">
+              <div className="inline-block mb-6 px-4 py-2 bg-gray-950/50 border border-gray-500/30 rounded-full">
+                <span className="text-gray-300 text-sm font-semibold tracking-wide">
                   🚀 GRATIS HAALBAARHEIDSCHECK
                 </span>
               </div>
@@ -842,7 +842,7 @@ export default function HomeClient() {
               {/* Heading */}
               {/* H2 Optimization */}
               <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-white via-purple-300 to-amber-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-white via-gray-300 to-amber-400 bg-clip-text text-transparent">
                   Klaar Om 40+ Uur Per Maand
                 </span>
                 <br />
@@ -862,10 +862,10 @@ export default function HomeClient() {
               {/* Benefits Grid (Process steps) */}
               <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto">
                 {/* Benefit 1 */}
-                <div className="group relative bg-zinc-950/50 border border-zinc-800 rounded-xl p-6 hover:border-purple-500/50 transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-purple-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="group relative bg-zinc-950/50 border border-zinc-800 rounded-xl p-6 hover:border-gray-500/50 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative">
-                    <div className="w-12 h-12 bg-purple-600/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <div className="w-12 h-12 bg-gray-600/20 rounded-full flex items-center justify-center mb-4 mx-auto">
                       <span className="text-2xl">🎯</span>
                     </div>
                     <h3 className="text-white font-semibold mb-2">Analyse</h3>
@@ -876,10 +876,10 @@ export default function HomeClient() {
                 </div>
 
                 {/* Benefit 2 */}
-                <div className="group relative bg-zinc-950/50 border border-zinc-800 rounded-xl p-6 hover:border-purple-500/50 transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-purple-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="group relative bg-zinc-950/50 border border-zinc-800 rounded-xl p-6 hover:border-gray-500/50 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative">
-                    <div className="w-12 h-12 bg-purple-600/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <div className="w-12 h-12 bg-gray-600/20 rounded-full flex items-center justify-center mb-4 mx-auto">
                       <span className="text-2xl">⚡</span>
                     </div>
                     <h3 className="text-white font-semibold mb-2">
@@ -892,10 +892,10 @@ export default function HomeClient() {
                 </div>
 
                 {/* Benefit 3 */}
-                <div className="group relative bg-zinc-950/50 border border-zinc-800 rounded-xl p-6 hover:border-purple-500/50 transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-purple-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="group relative bg-zinc-950/50 border border-zinc-800 rounded-xl p-6 hover:border-gray-500/50 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative">
-                    <div className="w-12 h-12 bg-purple-600/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <div className="w-12 h-12 bg-gray-600/20 rounded-full flex items-center justify-center mb-4 mx-auto">
                       <span className="text-2xl">💰</span>
                     </div>
                     <h3 className="text-white font-semibold mb-2">
@@ -958,7 +958,7 @@ export default function HomeClient() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
                   href="/quickscan"
-                  className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-purple-600 via-purple-500 to-white text-white font-bold text-lg rounded-xl hover:scale-105 transition-all duration-300 shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50"
+                  className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-bold text-lg rounded-xl hover:scale-105 transition-all duration-300 shadow-2xl shadow-gray-500/30 hover:shadow-gray-500/50"
                 >
                   <span>Start Gratis Quickscan</span>
                   <svg
@@ -978,7 +978,7 @@ export default function HomeClient() {
 
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-purple-500/50 text-white font-semibold rounded-xl hover:bg-purple-500/10 hover:border-purple-400 transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-gray-500/50 text-white font-semibold rounded-xl hover:bg-gray-500/10 hover:border-gray-400 transition-all duration-300"
                 >
                   <span>Plan een Gesprek</span>
                   <svg
@@ -999,11 +999,11 @@ export default function HomeClient() {
 
               {/* Social proof mini */}
               <p className="mt-8 text-gray-400 text-sm">
-                <span className="text-purple-300 font-semibold">
+                <span className="text-gray-300 font-semibold">
                   50+ bedrijven
                 </span>{" "}
                 gingen je voor en besparen nu gemiddeld{" "}
-                <span className="text-purple-300 font-semibold">
+                <span className="text-gray-300 font-semibold">
                   40+ uur per maand
                 </span>
               </p>
@@ -1014,9 +1014,9 @@ export default function HomeClient() {
           <div className="mt-12 text-center">
             <div className="inline-flex items-center gap-2 text-gray-500 text-sm">
               <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 border-2 border-black" />
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 border-2 border-black" />
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-black" />
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 border-2 border-black" />
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-500 to-gray-700 border-2 border-black" />
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 border-2 border-black" />
               </div>
               <span>Sluit je aan bij 50+ tevreden klanten</span>
             </div>
@@ -1027,20 +1027,20 @@ export default function HomeClient() {
       {/* HOE WE WERKEN */}
       <section className="relative py-24 bg-black overflow-hidden">
         {/* Background effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-950/5 to-transparent" />
-        <div className="absolute top-1/3 left-0 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950/5 to-transparent" />
+        <div className="absolute top-1/3 left-0 w-80 h-80 bg-gray-600/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/3 right-0 w-80 h-80 bg-amber-600/5 rounded-full blur-3xl" />
 
         <div className="relative container mx-auto px-6 max-w-4xl">
           {/* Header */}
           <div className="text-center mb-16">
-            <div className="inline-block mb-4 px-4 py-2 bg-purple-950/30 border border-purple-500/30 rounded-full">
-              <span className="text-purple-300 text-sm font-semibold tracking-wide">
+            <div className="inline-block mb-4 px-4 py-2 bg-gray-950/30 border border-gray-500/30 rounded-full">
+              <span className="text-gray-300 text-sm font-semibold tracking-wide">
                 ☕ ONZE AANPAK
               </span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-white via-purple-300 to-amber-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-gray-300 to-amber-400 bg-clip-text text-transparent">
                 Hoe We Werken
               </span>
             </h2>
@@ -1049,10 +1049,10 @@ export default function HomeClient() {
           {/* Content blocks */}
           <div className="space-y-12">
             {/* Block 1 - Kennismaking */}
-            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-purple-500/30 transition-all duration-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-purple-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-gray-500/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative flex gap-6">
-                <div className="flex-shrink-0 w-14 h-14 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                <div className="flex-shrink-0 w-14 h-14 bg-gray-600/20 rounded-xl flex items-center justify-center">
                   <span className="text-3xl">☕</span>
                 </div>
                 <div>
@@ -1065,7 +1065,7 @@ export default function HomeClient() {
                     vervelende klusjes die steeds terugkomen? En waar zou die
                     tijd eigenlijk naartoe moeten gaan? We willen je bedrijf
                     echt snappen, pas dan kunnen we iets bouwen dat werkt.{" "}
-                    <span className="text-purple-300 font-semibold">
+                    <span className="text-gray-300 font-semibold">
                       Deze kennismaking kost je niks.
                     </span>
                   </p>
@@ -1074,10 +1074,10 @@ export default function HomeClient() {
             </div>
 
             {/* Block 2 - Plan */}
-            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-purple-500/30 transition-all duration-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-purple-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-gray-500/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative flex gap-6">
-                <div className="flex-shrink-0 w-14 h-14 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                <div className="flex-shrink-0 w-14 h-14 bg-gray-600/20 rounded-xl flex items-center justify-center">
                   <span className="text-3xl">📋</span>
                 </div>
                 <div>
@@ -1098,10 +1098,10 @@ export default function HomeClient() {
             </div>
 
             {/* Block 3 - Uitvoering */}
-            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-purple-500/30 transition-all duration-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-purple-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="group relative bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-8 hover:border-gray-500/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-600/0 to-gray-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative flex gap-6">
-                <div className="flex-shrink-0 w-14 h-14 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                <div className="flex-shrink-0 w-14 h-14 bg-gray-600/20 rounded-xl flex items-center justify-center">
                   <span className="text-3xl">🚀</span>
                 </div>
                 <div>
@@ -1127,7 +1127,7 @@ export default function HomeClient() {
           <div className="mt-12 text-center">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-purple-500/50 text-white font-semibold rounded-xl hover:bg-purple-500/10 hover:border-purple-400 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-gray-500/50 text-white font-semibold rounded-xl hover:bg-gray-500/10 hover:border-gray-400 transition-all duration-300"
             >
               <span>Plan een koffie-moment</span>
               <svg

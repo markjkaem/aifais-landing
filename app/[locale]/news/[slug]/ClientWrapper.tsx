@@ -109,7 +109,7 @@ function TableOfContents({ content }: { content: string }) {
                   }}
                   className={`block py-1.5 border-l-2 pl-3 transition-all duration-200 ${
                     activeId === heading.id
-                      ? "border-purple-500 text-purple-400 font-medium translate-x-1"
+                      ? "border-gray-500 text-gray-400 font-medium translate-x-1"
                       : "border-gray-800 text-gray-500 hover:text-gray-300 hover:border-gray-600"
                   }`}
                 >
@@ -188,13 +188,13 @@ export function ClientWrapper({
       ),
       ul: ({ node, ...props }: any) => (
         <ul
-          className="list-disc ml-6 my-6 text-gray-300 space-y-2 marker:text-purple-500"
+          className="list-disc ml-6 my-6 text-gray-300 space-y-2 marker:text-gray-500"
           {...props}
         />
       ),
       ol: ({ node, ...props }: any) => (
         <ol
-          className="list-decimal ml-6 my-6 text-gray-300 space-y-2 marker:text-purple-500"
+          className="list-decimal ml-6 my-6 text-gray-300 space-y-2 marker:text-gray-500"
           {...props}
         />
       ),
@@ -204,7 +204,7 @@ export function ClientWrapper({
       a: ({ node, href, ...props }: any) => (
         <a
           href={href}
-          className="text-purple-400 font-medium hover:text-purple-300 hover:underline decoration-purple-500/30 underline-offset-4"
+          className="text-gray-400 font-medium hover:text-gray-300 hover:underline decoration-gray-500/30 underline-offset-4"
           target={href?.startsWith("http") ? "_blank" : undefined}
           rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
           {...props}
@@ -215,14 +215,14 @@ export function ClientWrapper({
       ),
       blockquote: ({ node, ...props }: any) => (
         <blockquote
-          className="border-l-4 border-purple-500 pl-6 py-3 my-8 italic text-gray-400 bg-gray-900/50 rounded-r-lg"
+          className="border-l-4 border-gray-500 pl-6 py-3 my-8 italic text-gray-400 bg-gray-900/50 rounded-r-lg"
           {...props}
         />
       ),
       code: ({ node, inline, ...props }: any) =>
         inline ? (
           <code
-            className="text-purple-300 bg-gray-800/80 px-1.5 py-0.5 rounded text-sm font-mono border border-gray-700/50"
+            className="text-gray-300 bg-gray-800/80 px-1.5 py-0.5 rounded text-sm font-mono border border-gray-700/50"
             {...props}
           />
         ) : (
@@ -273,7 +273,7 @@ export function ClientWrapper({
                   {article.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1.5 bg-gray-900 border border-gray-800 text-gray-400 rounded-md text-sm hover:border-purple-500 hover:text-purple-400 transition cursor-default"
+                      className="px-3 py-1.5 bg-gray-900 border border-gray-800 text-gray-400 rounded-md text-sm hover:border-gray-500 hover:text-gray-400 transition cursor-default"
                     >
                       #{tag}
                     </span>
@@ -285,13 +285,13 @@ export function ClientWrapper({
             {/* Author Box */}
             {article.authorBio && (
               <div className="mt-12 bg-gray-900/30 border border-gray-800 rounded-2xl p-8 flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left">
-                <div className="flex-shrink-0 w-20 h-20 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-3xl shadow-lg ring-4 ring-gray-900">
+                <div className="flex-shrink-0 w-20 h-20 bg-gradient-to-br from-gray-600 to-gray-600 rounded-full flex items-center justify-center text-white font-bold text-3xl shadow-lg ring-4 ring-gray-900">
                   {article.author.charAt(0).toUpperCase()}
                 </div>
                 <div>
                   <h3 className="font-bold text-white text-lg mb-2 flex items-center justify-center md:justify-start gap-2">
                     {article.author}
-                    <span className="px-2 py-0.5 bg-purple-900/50 text-purple-300 text-[10px] uppercase tracking-wider rounded border border-purple-500/20">
+                    <span className="px-2 py-0.5 bg-gray-900/50 text-gray-300 text-[10px] uppercase tracking-wider rounded border border-gray-500/20">
                       Auteur
                     </span>
                   </h3>

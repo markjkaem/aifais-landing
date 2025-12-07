@@ -221,7 +221,7 @@ export default function CryptoModal({
             {transactionSignature && (
               <button
                 onClick={viewOnExplorer}
-                className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-2 justify-center mx-auto"
+                className="text-gray-400 hover:text-gray-300 text-sm flex items-center gap-2 justify-center mx-auto"
               >
                 Bekijk transactie
                 <ExternalLink className="w-4 h-4" />
@@ -259,22 +259,22 @@ export default function CryptoModal({
                   href={solanaPayUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-blue-400 hover:text-blue-300 underline mb-6 block text-center"
+                  className="text-xs text-gray-400 hover:text-gray-300 underline mb-6 block text-center"
                 >
                   Open in wallet (debug link)
                 </a>
               </>
             ) : (
               <div className="bg-white/5 h-64 rounded-xl flex items-center justify-center mb-6">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+                <Loader2 className="w-8 h-8 animate-spin text-gray-500" />
               </div>
             )}
 
             {/* Polling status */}
             {isPolling && (
-              <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 mb-4 flex items-center gap-3">
-                <Loader2 className="w-4 h-4 animate-spin text-blue-400" />
-                <span className="text-blue-400 text-sm">
+              <div className="bg-gray-500/10 border border-gray-500/20 rounded-xl p-3 mb-4 flex items-center gap-3">
+                <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+                <span className="text-gray-400 text-sm">
                   Wachten op betaling...
                 </span>
               </div>

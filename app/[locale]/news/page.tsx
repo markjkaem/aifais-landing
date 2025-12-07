@@ -71,15 +71,15 @@ export default function NewsIndexPage() {
       {/* ✅ HERO SECTION */}
       <section className="relative py-20 md:py-28 bg-gradient-to-b from-black via-gray-950 to-gray-950 overflow-hidden">
         {/* Background Effects */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-900/20 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gray-900/20 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-6xl text-center relative z-10">
-          <span className="inline-block px-4 py-1.5 mb-6 border border-purple-500/30 bg-purple-500/10 text-purple-300 rounded-full text-sm font-semibold tracking-wide uppercase">
+          <span className="inline-block px-4 py-1.5 mb-6 border border-gray-500/30 bg-gray-500/10 text-gray-300 rounded-full text-sm font-semibold tracking-wide uppercase">
             Kennisbank
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
             Inzichten in <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
               Slimme Automatisering
             </span>
           </h1>
@@ -97,7 +97,7 @@ export default function NewsIndexPage() {
             {news.map((article) => (
               <article
                 key={article.slug}
-                className="group flex flex-col h-full rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:shadow-2xl hover:shadow-purple-900/10 hover:border-purple-500/50 transition-all duration-300"
+                className="group flex flex-col h-full rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:shadow-2xl hover:shadow-gray-900/10 hover:border-gray-500/50 transition-all duration-300"
               >
                 <Link
                   href={`/news/${article.slug}`}
@@ -138,14 +138,14 @@ export default function NewsIndexPage() {
                       <span>{article.readTime || 5} min lezen</span>
                     </div>
 
-                    <h2 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors line-clamp-2">
+                    <h2 className="text-xl font-bold text-white mb-3 group-hover:text-gray-400 transition-colors line-clamp-2">
                       {article.title}
                     </h2>
                     <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
                       {article.excerpt}
                     </p>
 
-                    <div className="flex items-center text-sm font-semibold text-purple-400 group-hover:translate-x-1 transition-transform pt-4 border-t border-gray-800 mt-auto">
+                    <div className="flex items-center text-sm font-semibold text-gray-400 group-hover:translate-x-1 transition-transform pt-4 border-t border-gray-800 mt-auto">
                       Lees Artikel
                       <svg
                         className="w-4 h-4 ml-2"

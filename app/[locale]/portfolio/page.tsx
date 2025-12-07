@@ -95,16 +95,16 @@ export default function Portfolio() {
       {/* ✅ HERO SECTION */}
       <section className="relative py-20 md:py-28 bg-gradient-to-b from-black via-gray-950 to-gray-950 overflow-hidden">
         {/* Background Accent */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-purple-900/20 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gray-900/20 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-6xl text-center relative z-10">
           <header className="max-w-4xl mx-auto">
-            <span className="inline-block px-4 py-1.5 mb-6 border border-purple-500/30 bg-purple-500/10 text-purple-300 rounded-full text-sm font-semibold tracking-wide uppercase">
+            <span className="inline-block px-4 py-1.5 mb-6 border border-gray-500/30 bg-gray-500/10 text-gray-300 rounded-full text-sm font-semibold tracking-wide uppercase">
               Bewezen Resultaten
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white tracking-tight">
               Portfolio: Succesvolle{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
                 Automatisering
               </span>{" "}
               Projecten
@@ -117,7 +117,7 @@ export default function Portfolio() {
 
             {/* ✅ STATS: Visual Trust */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mt-12 max-w-3xl mx-auto">
-              <div className="bg-gray-900/60 border border-gray-800 backdrop-blur-sm rounded-2xl p-6 hover:border-purple-500/30 transition duration-300">
+              <div className="bg-gray-900/60 border border-gray-800 backdrop-blur-sm rounded-2xl p-6 hover:border-gray-500/30 transition duration-300">
                 <p className="text-4xl font-bold text-white mb-1">
                   {projects.length}+
                 </p>
@@ -125,14 +125,14 @@ export default function Portfolio() {
                   Projecten
                 </p>
               </div>
-              <div className="bg-gray-900/60 border border-gray-800 backdrop-blur-sm rounded-2xl p-6 hover:border-purple-500/30 transition duration-300">
+              <div className="bg-gray-900/60 border border-gray-800 backdrop-blur-sm rounded-2xl p-6 hover:border-gray-500/30 transition duration-300">
                 <p className="text-4xl font-bold text-white mb-1">50+</p>
                 <p className="text-sm text-gray-400 font-medium uppercase tracking-wide">
                   Tevreden Klanten
                 </p>
               </div>
-              <div className="col-span-2 md:col-span-1 bg-gray-900/60 border border-gray-800 backdrop-blur-sm rounded-2xl p-6 hover:border-purple-500/30 transition duration-300">
-                <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-1">
+              <div className="col-span-2 md:col-span-1 bg-gray-900/60 border border-gray-800 backdrop-blur-sm rounded-2xl p-6 hover:border-gray-500/30 transition duration-300">
+                <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400 mb-1">
                   40+
                 </p>
                 <p className="text-sm text-gray-400 font-medium uppercase tracking-wide">
@@ -152,7 +152,7 @@ export default function Portfolio() {
               {projects.map((project) => (
                 <article
                   key={project.slug}
-                  className="group flex flex-col h-full rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:shadow-2xl hover:shadow-purple-900/10 hover:border-purple-500/50 transition-all duration-300"
+                  className="group flex flex-col h-full rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:shadow-2xl hover:shadow-gray-900/10 hover:border-gray-500/50 transition-all duration-300"
                 >
                   <Link
                     href={`/portfolio/${project.slug}`}
@@ -180,7 +180,7 @@ export default function Portfolio() {
                     </div>
 
                     <div className="p-6 flex flex-col flex-grow">
-                      <h2 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                      <h2 className="text-xl font-bold text-white mb-3 group-hover:text-gray-400 transition-colors">
                         {project.title}
                       </h2>
                       <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
@@ -188,7 +188,7 @@ export default function Portfolio() {
                       </p>
 
                       <div className="flex items-center justify-between pt-4 border-t border-gray-800 mt-auto">
-                        <span className="text-sm font-semibold text-purple-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+                        <span className="text-sm font-semibold text-gray-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
                           Bekijk Resultaten
                           <svg
                             className="w-4 h-4"
@@ -243,12 +243,12 @@ export default function Portfolio() {
       {/* ✅ CTA SECTION */}
       <section className="py-24 bg-gradient-to-b from-gray-950 to-black text-center relative overflow-hidden">
         {/* Glow Effect */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-purple-600/10 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-gray-600/10 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-4xl relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
             Jouw Bedrijf Ook In{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
               Dit Portfolio?
             </span>
           </h2>

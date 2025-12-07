@@ -179,7 +179,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
             <li>
               <Link
                 href="/"
-                className="text-gray-400 hover:text-purple-400 transition"
+                className="text-gray-400 hover:text-gray-400 transition"
               >
                 Home
               </Link>
@@ -202,7 +202,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
             <li>
               <Link
                 href="/news"
-                className="text-gray-400 hover:text-purple-400 transition"
+                className="text-gray-400 hover:text-gray-400 transition"
               >
                 Kennisbank
               </Link>
@@ -238,7 +238,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
           <header className="mb-10">
             {/* Category */}
             {article.category && (
-              <span className="inline-block px-4 py-1.5 bg-purple-600/10 text-purple-400 border border-purple-600/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+              <span className="inline-block px-4 py-1.5 bg-gray-600/10 text-gray-400 border border-gray-600/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
                 {article.category}
               </span>
             )}
@@ -251,7 +251,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
             {/* Author & Meta */}
             <div className="flex flex-wrap items-center gap-6 text-gray-400 text-sm pb-8 border-b border-gray-800">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-tr from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                <div className="w-10 h-10 bg-gradient-to-tr from-gray-600 to-gray-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
                   {article.author.charAt(0).toUpperCase()}
                 </div>
                 <div>
@@ -314,7 +314,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
           {/* Featured Image - Optimized */}
           {article.image && (
             <figure className="mb-12 relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl opacity-20 group-hover:opacity-30 blur transition duration-500"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-gray-600 to-gray-600 rounded-2xl opacity-20 group-hover:opacity-30 blur transition duration-500"></div>
               <Image
                 src={article.image}
                 alt={article.title}
@@ -342,7 +342,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
         <section className="py-20 bg-gray-950 border-t border-gray-900">
           <div className="container mx-auto px-6 max-w-6xl">
             <h2 className="text-2xl font-bold mb-10 text-white flex items-center gap-3">
-              <span className="w-1 h-8 bg-purple-600 rounded-full"></span>
+              <span className="w-1 h-8 bg-gray-600 rounded-full"></span>
               Lees ook dit
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
@@ -350,7 +350,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
                 <Link
                   key={related.slug}
                   href={`/news/${related.slug}`}
-                  className="group flex flex-col h-full bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-900/10 transition-all duration-300"
+                  className="group flex flex-col h-full bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-gray-500/50 hover:shadow-2xl hover:shadow-gray-900/10 transition-all duration-300"
                 >
                   {related.image && (
                     <div className="relative h-48 overflow-hidden">
@@ -365,7 +365,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
                     </div>
                   )}
                   <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-lg font-bold mb-3 text-white group-hover:text-purple-400 transition line-clamp-2">
+                    <h3 className="text-lg font-bold mb-3 text-white group-hover:text-gray-400 transition line-clamp-2">
                       {related.title}
                     </h3>
                     <p className="text-gray-400 text-sm line-clamp-3 mb-6 flex-grow">
@@ -406,11 +406,11 @@ export default async function NewsArticlePage({ params }: PageProps) {
 
       {/* ✅ CTA SECTION */}
       <section className="py-24 relative overflow-hidden bg-black">
-        <div className="absolute inset-0 bg-gradient-to-b from-black to-purple-950/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black to-gray-950/20"></div>
         <div className="container mx-auto px-6 max-w-4xl relative z-10 text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white tracking-tight">
             Klaar Voor Jouw Eigen{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
               Automatisering
             </span>
             ?

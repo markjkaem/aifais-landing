@@ -172,7 +172,7 @@ export default function InvoiceGenerator() {
       {/* --- LINKER KOLOM: INPUT --- */}
       <div className="bg-[#0A0A0A] border border-white/10 rounded-3xl p-6 shadow-2xl space-y-6">
         <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-4">
-          <PenTool className="w-5 h-5 text-blue-400" />
+          <PenTool className="w-5 h-5 text-gray-400" />
           <h3 className="text-white font-bold">Factuurgegevens</h3>
         </div>
 
@@ -187,14 +187,14 @@ export default function InvoiceGenerator() {
               name="ownName"
               placeholder="Jouw Bedrijfsnaam"
               onChange={handleChange}
-              className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-blue-500 outline-none w-full"
+              className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-gray-500 outline-none w-full"
             />
             <input
               type="text"
               name="ownKvk"
               placeholder="KvK Nummer"
               onChange={handleChange}
-              className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-blue-500 outline-none w-full"
+              className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-gray-500 outline-none w-full"
             />
           </div>
           <input
@@ -202,14 +202,14 @@ export default function InvoiceGenerator() {
             name="ownAddress"
             placeholder="Straat + Huisnummer, Postcode Stad"
             onChange={handleChange}
-            className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-blue-500 outline-none w-full"
+            className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-gray-500 outline-none w-full"
           />
           <input
             type="text"
             name="ownIban"
             placeholder="IBAN Rekeningnummer"
             onChange={handleChange}
-            className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-blue-500 outline-none w-full"
+            className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-gray-500 outline-none w-full"
           />
         </div>
 
@@ -223,14 +223,14 @@ export default function InvoiceGenerator() {
             name="clientName"
             placeholder="Naam Klant / Bedrijf"
             onChange={handleChange}
-            className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-blue-500 outline-none w-full"
+            className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-gray-500 outline-none w-full"
           />
           <input
             type="text"
             name="clientAddress"
             placeholder="Adres Klant"
             onChange={handleChange}
-            className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-blue-500 outline-none w-full"
+            className="bg-white/5 border border-white/10 rounded-lg p-3 text-white placeholder-gray-600 focus:border-gray-500 outline-none w-full"
           />
         </div>
 
@@ -245,21 +245,21 @@ export default function InvoiceGenerator() {
               name="invoiceNumber"
               value={data.invoiceNumber}
               onChange={handleChange}
-              className="bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-blue-500 outline-none w-full"
+              className="bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-gray-500 outline-none w-full"
             />
             <input
               type="date"
               name="invoiceDate"
               value={data.invoiceDate}
               onChange={handleChange}
-              className="bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-blue-500 outline-none w-full"
+              className="bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-gray-500 outline-none w-full"
             />
             <input
               type="date"
               name="expiryDate"
               value={data.expiryDate}
               onChange={handleChange}
-              className="bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-blue-500 outline-none w-full"
+              className="bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-gray-500 outline-none w-full"
             />
           </div>
         </div>
@@ -272,7 +272,7 @@ export default function InvoiceGenerator() {
             </p>
             <button
               onClick={addItem}
-              className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
+              className="text-xs text-gray-400 hover:text-gray-300 flex items-center gap-1"
             >
               + Regel toevoegen
             </button>
@@ -388,7 +388,7 @@ export default function InvoiceGenerator() {
         <button
           onClick={generatePDF}
           disabled={isGenerating}
-          className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-5 rounded-2xl shadow-xl shadow-blue-900/30 flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+          className="w-full bg-gradient-to-r from-gray-600 to-indigo-600 hover:from-gray-500 hover:to-indigo-500 text-white font-bold py-5 rounded-2xl shadow-xl shadow-gray-900/30 flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
         >
           {isGenerating ? (
             <>

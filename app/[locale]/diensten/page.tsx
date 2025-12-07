@@ -95,16 +95,16 @@ export default function ServicesPage() {
       {/* ✅ HERO SECTION */}
       <section className="relative py-20 md:py-28 bg-black overflow-hidden">
         {/* Background Effects */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-900/20 blur-[100px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-900/10 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gray-900/20 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gray-900/10 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="container mx-auto px-6 max-w-6xl relative z-10 text-center">
-          <span className="inline-block px-4 py-1.5 mb-6 border border-purple-500/30 bg-purple-500/10 text-purple-300 rounded-full text-sm font-semibold tracking-wide uppercase">
+          <span className="inline-block px-4 py-1.5 mb-6 border border-gray-500/30 bg-gray-500/10 text-gray-300 rounded-full text-sm font-semibold tracking-wide uppercase">
             Onze Expertise
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
             Van Handmatig Werk Naar <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-gray-400">
               Slimme Processen
             </span>
           </h1>
@@ -121,10 +121,10 @@ export default function ServicesPage() {
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-8">
             {/* Service 1: Workflows */}
-            <article className="group relative bg-gray-900/50 border border-gray-800 rounded-3xl p-8 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-1">
-              <div className="w-14 h-14 bg-purple-900/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600/20 transition-colors">
+            <article className="group relative bg-gray-900/50 border border-gray-800 rounded-3xl p-8 hover:border-gray-500/50 transition-all duration-300 hover:-translate-y-1">
+              <div className="w-14 h-14 bg-gray-900/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gray-600/20 transition-colors">
                 <svg
-                  className="w-7 h-7 text-purple-400"
+                  className="w-7 h-7 text-gray-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -146,30 +146,30 @@ export default function ServicesPage() {
               </p>
               <ul className="space-y-3 mb-8 text-sm text-gray-300">
                 <li className="flex items-center gap-2">
-                  <span className="text-purple-500">✓</span> CRM Synchronisatie
+                  <span className="text-gray-500">✓</span> CRM Synchronisatie
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-purple-500">✓</span> Lead Opvolging
+                  <span className="text-gray-500">✓</span> Lead Opvolging
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-purple-500">✓</span> Order Verwerking
+                  <span className="text-gray-500">✓</span> Order Verwerking
                 </li>
               </ul>
               {/* Internal Link to specific service page (Future Proofing) */}
 
               <Link
                 href="/diensten/workflow-automatisering"
-                className="text-white font-semibold border-b border-purple-500 pb-1 hover:text-purple-400 transition"
+                className="text-white font-semibold border-b border-gray-500 pb-1 hover:text-gray-400 transition"
               >
                 Lees meer over Workflows →
               </Link>
             </article>
 
             {/* Service 2: AI */}
-            <article className="group relative bg-gray-900/50 border border-gray-800 rounded-3xl p-8 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1">
-              <div className="w-14 h-14 bg-blue-900/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600/20 transition-colors">
+            <article className="group relative bg-gray-900/50 border border-gray-800 rounded-3xl p-8 hover:border-gray-500/50 transition-all duration-300 hover:-translate-y-1">
+              <div className="w-14 h-14 bg-gray-900/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-gray-600/20 transition-colors">
                 <svg
-                  className="w-7 h-7 text-blue-400"
+                  className="w-7 h-7 text-gray-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -191,18 +191,18 @@ export default function ServicesPage() {
               </p>
               <ul className="space-y-3 mb-8 text-sm text-gray-300">
                 <li className="flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> Slimme Chatbots
+                  <span className="text-gray-500">✓</span> Slimme Chatbots
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> Document Analyse
+                  <span className="text-gray-500">✓</span> Document Analyse
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> Content Generatie
+                  <span className="text-gray-500">✓</span> Content Generatie
                 </li>
               </ul>
               <Link
                 href="/diensten/ai-integraties"
-                className="text-white font-semibold border-b border-blue-500 pb-1 hover:text-blue-400 transition"
+                className="text-white font-semibold border-b border-gray-500 pb-1 hover:text-gray-400 transition"
               >
                 Ontdek AI Kansen →
               </Link>
@@ -297,9 +297,9 @@ export default function ServicesPage() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="bg-black border border-gray-800 p-6 rounded-xl text-center hover:border-purple-500/50 transition duration-300"
+                  className="bg-black border border-gray-800 p-6 rounded-xl text-center hover:border-gray-500/50 transition duration-300"
                 >
-                  <div className="w-12 h-12 bg-purple-900/30 text-purple-400 font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-4 border border-purple-500/20">
+                  <div className="w-12 h-12 bg-gray-900/30 text-gray-400 font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-500/20">
                     {item.step}
                   </div>
                   <h3 className="text-lg font-bold text-white mb-2">
@@ -314,11 +314,11 @@ export default function ServicesPage() {
       </section>
 
       {/* ✅ CTA SECTION */}
-      <section className="py-24 bg-gradient-to-b from-black to-purple-950/20 text-center">
+      <section className="py-24 bg-gradient-to-b from-black to-gray-950/20 text-center">
         <div className="container mx-auto px-6 max-w-4xl">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
             Klaar Om Je Bedrijf Te <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-pink-400">
               Versnellen?
             </span>
           </h2>

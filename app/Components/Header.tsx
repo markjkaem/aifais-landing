@@ -290,7 +290,7 @@ export default function HeaderMockup() {
         <nav className="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-300">
           <button
             onClick={() => handleDropdownToggle("services")}
-            className="hover:text-blue-400 transition flex items-center gap-2 group"
+            className="hover:text-gray-400 transition flex items-center gap-2 group"
           >
             {t("services")}
             <svg
@@ -310,7 +310,7 @@ export default function HeaderMockup() {
 
           <button
             onClick={() => handleDropdownToggle("news")}
-            className="hover:text-blue-400 transition flex items-center gap-2"
+            className="hover:text-gray-400 transition flex items-center gap-2"
           >
             {t("news")}
             <svg
@@ -330,7 +330,7 @@ export default function HeaderMockup() {
 
           <Link
             href={getLocalizedPath("/portfolio")}
-            className="hover:text-blue-400 transition"
+            className="hover:text-gray-400 transition"
             onClick={closeAll}
           >
             {t("cases")}
@@ -338,7 +338,7 @@ export default function HeaderMockup() {
 
           <Link
             href={getLocalizedPath("/#about")}
-            className="hover:text-blue-400 transition"
+            className="hover:text-gray-400 transition"
             onClick={(e) => {
               e.preventDefault();
               router.push(getLocalizedPath("/#about"));
@@ -349,14 +349,14 @@ export default function HeaderMockup() {
           </Link>
           <Link
             href={getLocalizedPath("/tools")}
-            className="hover:text-blue-400 transition"
+            className="hover:text-gray-400 transition"
             onClick={closeAll}
           >
             {t("tools")}
           </Link>
           <Link
             href={getLocalizedPath("/contact")}
-            className="hover:text-blue-400 transition"
+            className="hover:text-gray-400 transition"
             onClick={closeAll}
           >
             {t("contact")}
@@ -372,7 +372,7 @@ export default function HeaderMockup() {
               setSearchOpen(!searchOpen);
               setOpenDropdown(null);
             }}
-            className="text-gray-300 hover:text-blue-400 transition p-2 rounded-lg hover:bg-white/5"
+            className="text-gray-300 hover:text-gray-400 transition p-2 rounded-lg hover:bg-white/5"
             aria-label="Search"
           >
             <svg
@@ -397,7 +397,7 @@ export default function HeaderMockup() {
                 e.stopPropagation();
                 handleDropdownToggle("languages");
               }}
-              className="text-gray-300 hover:text-blue-400 transition text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5"
+              className="text-gray-300 hover:text-gray-400 transition text-sm flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5"
             >
               <svg
                 className="w-4 h-4"
@@ -438,7 +438,7 @@ export default function HeaderMockup() {
                   disabled={locale === "nl"}
                   className={`w-full text-left px-4 py-3 hover:bg-white/5 transition flex items-center gap-3 ${
                     locale === "nl"
-                      ? "text-blue-400 bg-blue-500/10 cursor-default"
+                      ? "text-gray-400 bg-gray-500/10 cursor-default"
                       : "text-gray-300 cursor-pointer"
                   }`}
                 >
@@ -450,7 +450,7 @@ export default function HeaderMockup() {
                   disabled={locale === "en"}
                   className={`w-full text-left px-4 py-3 hover:bg-white/5 transition flex items-center gap-3 ${
                     locale === "en"
-                      ? "text-blue-400 bg-blue-500/10 cursor-default"
+                      ? "text-gray-400 bg-gray-500/10 cursor-default"
                       : "text-gray-300 cursor-pointer"
                   }`}
                 >
@@ -464,7 +464,7 @@ export default function HeaderMockup() {
           {/* CTA Button */}
           <Link
             href={getLocalizedPath("/quickscan")}
-            className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-semibold rounded-lg transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105"
+            className="px-5 py-2.5 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white font-semibold rounded-lg transition-all hover:scale-105"
             onClick={closeAll}
           >
             Quickscan
@@ -473,7 +473,7 @@ export default function HeaderMockup() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden text-gray-200 text-3xl hover:text-blue-400 transition"
+          className="lg:hidden text-gray-200 text-3xl hover:text-gray-400 transition"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Menu"
         >
@@ -508,7 +508,7 @@ export default function HeaderMockup() {
                 }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 bg-black border border-white/20 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none text-lg"
+                className="w-full pl-12 pr-4 py-4 bg-black border border-white/20 rounded-xl text-white placeholder-gray-500 focus:border-gray-500 focus:outline-none text-lg"
                 autoFocus
               />
             </div>
@@ -527,9 +527,9 @@ export default function HeaderMockup() {
                       <span
                         className={`text-xs px-2 py-1 rounded uppercase font-semibold ${
                           result.type === "service"
-                            ? "bg-blue-500/20 text-blue-400"
+                            ? "bg-gray-500/20 text-gray-400"
                             : result.type === "case"
-                            ? "bg-blue-500/20 text-blue-400"
+                            ? "bg-gray-500/20 text-gray-400"
                             : "bg-gray-500/20 text-gray-400"
                         }`}
                       >
@@ -564,11 +564,11 @@ export default function HeaderMockup() {
                     className="group p-4 rounded-xl hover:bg-white/5 transition border border-transparent hover:border-white/10 flex items-start gap-4"
                     onClick={closeAll}
                   >
-                    <div className="mt-1 text-blue-400 group-hover:text-blue-300 transition">
+                    <div className="mt-1 text-gray-400 group-hover:text-gray-300 transition">
                       {service.icon}
                     </div>
                     <div>
-                      <h3 className="text-white font-semibold mb-1 group-hover:text-blue-400 transition">
+                      <h3 className="text-white font-semibold mb-1 group-hover:text-gray-400 transition">
                         {service.title}
                       </h3>
                       <p className="text-sm text-gray-400 line-clamp-2">
@@ -581,7 +581,7 @@ export default function HeaderMockup() {
               <div className="mt-4 px-4">
                 <Link
                   href={getLocalizedPath("/diensten")}
-                  className="text-blue-400 text-sm font-semibold hover:text-white transition flex items-center gap-1"
+                  className="text-gray-400 text-sm font-semibold hover:text-white transition flex items-center gap-1"
                   onClick={closeAll}
                 >
                   Bekijk Alle Diensten →
@@ -591,7 +591,7 @@ export default function HeaderMockup() {
 
             {/* Featured Event / CTA */}
             <div className="flex items-start">
-              <div className="bg-gradient-to-br from-blue-900/20 to-blue-700/10 border border-blue-500/30 rounded-2xl p-6 hover:border-blue-500/50 transition cursor-pointer w-full">
+              <div className="bg-gradient-to-br from-gray-900/20 to-gray-700/10 border border-gray-500/30 rounded-2xl p-6 hover:border-gray-500/50 transition cursor-pointer w-full">
                 <p className="font-semibold text-lg text-white mb-2">
                   Gratis Quickscan
                 </p>
@@ -602,7 +602,7 @@ export default function HeaderMockup() {
                 <Link
                   href={getLocalizedPath("/quickscan")}
                   onClick={closeAll}
-                  className="block w-full py-2 bg-blue-600 text-white text-center rounded-lg font-medium hover:bg-blue-500 transition"
+                  className="block w-full py-2 bg-gray-600 text-white text-center rounded-lg font-medium hover:bg-gray-500 transition"
                 >
                   Start Nu
                 </Link>
@@ -632,7 +632,7 @@ export default function HeaderMockup() {
                       className="group p-4 rounded-xl hover:bg-white/5 transition border border-transparent hover:border-white/10"
                       onClick={closeAll}
                     >
-                      <h3 className="text-white font-semibold mb-1 group-hover:text-blue-400 transition line-clamp-1">
+                      <h3 className="text-white font-semibold mb-1 group-hover:text-gray-400 transition line-clamp-1">
                         {blog.title}
                       </h3>
                       <p className="text-sm text-gray-400 line-clamp-2">
@@ -646,7 +646,7 @@ export default function HeaderMockup() {
               <div className="mt-4 px-4">
                 <Link
                   href={getLocalizedPath("/news")}
-                  className="text-blue-400 text-sm font-semibold hover:text-white transition flex items-center gap-1"
+                  className="text-gray-400 text-sm font-semibold hover:text-white transition flex items-center gap-1"
                   onClick={closeAll}
                 >
                   Bekijk Kennisbank →
@@ -656,7 +656,7 @@ export default function HeaderMockup() {
 
             {/* Featured Box (Right Side) */}
             <div className="flex items-start">
-              <div className="bg-gradient-to-br from-blue-900/20 to-blue-700/10 border border-blue-500/30 rounded-2xl p-6 hover:border-blue-500/50 transition cursor-pointer w-full">
+              <div className="bg-gradient-to-br from-gray-900/20 to-gray-700/10 border border-gray-500/30 rounded-2xl p-6 hover:border-gray-500/50 transition cursor-pointer w-full">
                 <Image
                   src="/lesson.jpg"
                   alt="Event Preview"
@@ -670,7 +670,7 @@ export default function HeaderMockup() {
                 <Link
                   href={getLocalizedPath("/contact")}
                   onClick={closeAll}
-                  className="text-sm text-blue-400 hover:text-white transition"
+                  className="text-sm text-gray-400 hover:text-white transition"
                 >
                   Inschrijven →
                 </Link>
@@ -690,7 +690,7 @@ export default function HeaderMockup() {
               placeholder={locale === "nl" ? "Zoeken..." : "Search..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 bg-black border border-white/20 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none"
+              className="w-full px-4 py-3 bg-black border border-white/20 rounded-lg text-white placeholder-gray-500 focus:border-gray-500 focus:outline-none"
             />
           </div>
 
@@ -721,7 +721,7 @@ export default function HeaderMockup() {
                   <Link
                     key={service.slug}
                     href={getLocalizedPath(service.slug)}
-                    className="block py-2 text-gray-300 hover:text-blue-400 transition"
+                    className="block py-2 text-gray-300 hover:text-gray-400 transition"
                     onClick={closeAll}
                   >
                     {service.title}
@@ -729,7 +729,7 @@ export default function HeaderMockup() {
                 ))}
                 <Link
                   href={getLocalizedPath("/diensten")}
-                  className="block py-2 text-blue-400 font-semibold"
+                  className="block py-2 text-gray-400 font-semibold"
                   onClick={closeAll}
                 >
                   Alle Diensten Bekijken
@@ -741,7 +741,7 @@ export default function HeaderMockup() {
           {/* Rest of mobile links (News, Portfolio, etc.) */}
           <Link
             href={getLocalizedPath("/portfolio")}
-            className="block py-3 hover:text-blue-400 transition font-semibold"
+            className="block py-3 hover:text-gray-400 transition font-semibold"
             onClick={closeAll}
           >
             {t("cases")}
@@ -749,7 +749,7 @@ export default function HeaderMockup() {
 
           <Link
             href={getLocalizedPath("/news")}
-            className="block py-3 hover:text-blue-400 transition font-semibold"
+            className="block py-3 hover:text-gray-400 transition font-semibold"
             onClick={closeAll}
           >
             {t("news")}
@@ -757,7 +757,7 @@ export default function HeaderMockup() {
 
           <Link
             href={getLocalizedPath("/#about")}
-            className="block py-3 hover:text-blue-400 transition font-semibold"
+            className="block py-3 hover:text-gray-400 transition font-semibold"
             onClick={(e) => {
               e.preventDefault();
               router.push(getLocalizedPath("/#about"));
@@ -768,14 +768,14 @@ export default function HeaderMockup() {
           </Link>
           <Link
             href={getLocalizedPath("/tools")}
-            className="block py-3 hover:text-blue-400 transition font-semibold"
+            className="block py-3 hover:text-gray-400 transition font-semibold"
             onClick={closeAll}
           >
             {t("tools")}
           </Link>
           <Link
             href={getLocalizedPath("/contact")}
-            className="block py-3 hover:text-blue-400 transition font-semibold"
+            className="block py-3 hover:text-gray-400 transition font-semibold"
             onClick={closeAll}
           >
             {t("contact")}
@@ -783,7 +783,7 @@ export default function HeaderMockup() {
 
           <Link
             href={getLocalizedPath("/quickscan")}
-            className="block mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-lg text-center"
+            className="block mt-4 px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white font-bold rounded-lg text-center"
             onClick={closeAll}
           >
             Start Quickscan
@@ -800,7 +800,7 @@ export default function HeaderMockup() {
                 disabled={locale === "nl"}
                 className={`flex-1 px-4 py-3 rounded-lg border transition flex items-center justify-center gap-2 ${
                   locale === "nl"
-                    ? "bg-blue-500/20 border-blue-500 text-blue-400"
+                    ? "bg-gray-500/20 border-gray-500 text-gray-400"
                     : "bg-white/5 border-white/10 text-gray-300"
                 }`}
               >
@@ -811,7 +811,7 @@ export default function HeaderMockup() {
                 disabled={locale === "en"}
                 className={`flex-1 px-4 py-3 rounded-lg border transition flex items-center justify-center gap-2 ${
                   locale === "en"
-                    ? "bg-blue-500/20 border-blue-500 text-blue-400"
+                    ? "bg-gray-500/20 border-gray-500 text-gray-400"
                     : "bg-white/5 border-white/10 text-gray-300"
                 }`}
               >

@@ -59,20 +59,20 @@ export default function FAQSection() {
       className="relative py-24 bg-black overflow-hidden"
     >
       {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-950/5 via-transparent to-purple-950/5" />
-      <div className="absolute top-1/3 left-0 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl" />
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-950/5 via-transparent to-gray-950/5" />
+      <div className="absolute top-1/3 left-0 w-96 h-96 bg-gray-600/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/3 right-0 w-96 h-96 bg-amber-600/5 rounded-full blur-3xl" />
 
       <div className="relative container mx-auto px-6 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-block mb-4 px-4 py-2 bg-purple-950/30 border border-purple-500/30 rounded-full">
-            <span className="text-purple-300 text-sm font-semibold tracking-wide">
+          <div className="inline-block mb-4 px-4 py-2 bg-gray-950/30 border border-gray-500/30 rounded-full">
+            <span className="text-gray-300 text-sm font-semibold tracking-wide">
               ❓ VEELGESTELDE VRAGEN
             </span>
           </div>
           <h2 id="faq-heading" className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-white via-purple-300 to-amber-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-gray-300 to-amber-400 bg-clip-text text-transparent">
               Alles Wat Je Moet Weten
             </span>
           </h2>
@@ -81,7 +81,7 @@ export default function FAQSection() {
             niet tussen?
             <a
               href="/contact"
-              className="text-purple-400 hover:text-purple-300 ml-1 underline"
+              className="text-gray-400 hover:text-gray-300 ml-1 underline"
             >
               Neem contact op
             </a>
@@ -93,22 +93,22 @@ export default function FAQSection() {
           {faqData.map((faq, index) => (
             <div
               key={index}
-              className="group relative bg-gradient-to-br from-zinc-900/50 to-zinc-950/50 backdrop-blur-sm border border-zinc-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300"
+              className="group relative bg-gradient-to-br from-zinc-900/50 to-zinc-950/50 backdrop-blur-sm border border-zinc-800 rounded-xl overflow-hidden hover:border-gray-500/50 transition-all duration-300"
             >
               {/* Gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-600/0 via-gray-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
               <button
                 onClick={() => toggleFAQ(index)}
-                className="relative w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-purple-500/50 rounded-xl"
+                className="relative w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-gray-500/50 rounded-xl"
                 aria-expanded={openIndex === index}
               >
                 <dt className="flex items-start justify-between gap-4">
-                  <span className="font-bold text-lg text-white group-hover:text-purple-300 transition-colors pr-8">
+                  <span className="font-bold text-lg text-white group-hover:text-gray-300 transition-colors pr-8">
                     {faq.question}
                   </span>
                   <span
-                    className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-purple-950/50 border border-purple-500/30 text-purple-400 transition-transform duration-300 ${
+                    className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-gray-950/50 border border-gray-500/30 text-gray-400 transition-transform duration-300 ${
                       openIndex === index ? "rotate-180" : ""
                     }`}
                     aria-hidden="true"
@@ -141,7 +141,7 @@ export default function FAQSection() {
 
               {/* Bottom border accent when open */}
               <div
-                className={`h-1 bg-gradient-to-r from-purple-600 via-purple-400 to-amber-400 transition-all duration-300 ${
+                className={`h-1 bg-gradient-to-r from-gray-600 via-gray-400 to-amber-400 transition-all duration-300 ${
                   openIndex === index ? "opacity-100" : "opacity-0"
                 }`}
               />
@@ -150,7 +150,7 @@ export default function FAQSection() {
         </dl>
 
         {/* Bottom CTA */}
-        <div className="mt-16 text-center p-8 bg-gradient-to-r from-purple-950/20 via-zinc-900/50 to-purple-950/20 border border-purple-500/20 rounded-2xl backdrop-blur-sm">
+        <div className="mt-16 text-center p-8 bg-gradient-to-r from-gray-950/20 via-zinc-900/50 to-gray-950/20 border border-gray-500/20 rounded-2xl backdrop-blur-sm">
           <h3 className="text-2xl font-bold text-white mb-3">
             Nog meer vragen?
           </h3>
@@ -160,7 +160,7 @@ export default function FAQSection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/quickscan"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-white text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-purple-500/25"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-gray-500/25"
             >
               <span>Start Gratis Quickscan</span>
               <svg
@@ -179,7 +179,7 @@ export default function FAQSection() {
             </a>
             <a
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 border border-purple-500/50 text-white font-semibold rounded-lg hover:bg-purple-500/10 hover:border-purple-400 transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 border border-gray-500/50 text-white font-semibold rounded-lg hover:bg-gray-500/10 hover:border-gray-400 transition-all duration-300"
             >
               <span>Stel Je Vraag</span>
               <svg

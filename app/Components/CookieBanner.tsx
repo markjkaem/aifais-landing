@@ -80,19 +80,19 @@ export default function CookieBanner() {
         }`}
       >
         <div className="max-w-6xl mx-auto">
-          <div className="relative bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 backdrop-blur-xl border border-purple-500/30 rounded-2xl p-6 md:p-8 shadow-2xl">
+          <div className="relative bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 backdrop-blur-xl border border-gray-500/30 rounded-2xl p-6 md:p-8 shadow-2xl">
             {/* Decorative gradient accent */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 via-purple-400 to-amber-400 rounded-t-2xl" />
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gray-600 via-gray-400 to-amber-400 rounded-t-2xl" />
 
             {/* Decorative corner glow */}
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-purple-600/20 rounded-full blur-3xl" />
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-gray-600/20 rounded-full blur-3xl" />
 
             <div className="relative">
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 {/* Content */}
                 <div className="flex-1">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-purple-600/20 rounded-xl flex items-center justify-center">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gray-600/20 rounded-xl flex items-center justify-center">
                       <span className="text-2xl">🍪</span>
                     </div>
                     <div>
@@ -113,7 +113,7 @@ export default function CookieBanner() {
                   {/* Cookie types info */}
                   <div className="ml-16 space-y-2 mb-4 md:mb-0">
                     <details className="group">
-                      <summary className="text-sm text-purple-400 hover:text-purple-300 cursor-pointer list-none flex items-center gap-2">
+                      <summary className="text-sm text-gray-400 hover:text-gray-300 cursor-pointer list-none flex items-center gap-2">
                         <svg
                           className="w-4 h-4 transition-transform group-open:rotate-90"
                           fill="none"
@@ -155,14 +155,14 @@ export default function CookieBanner() {
                           Lees meer in onze{" "}
                           <Link
                             href="/privacy"
-                            className="text-purple-400 hover:text-purple-300 underline"
+                            className="text-gray-400 hover:text-gray-300 underline"
                           >
                             privacyverklaring
                           </Link>{" "}
                           en{" "}
                           <Link
                             href="/cookies"
-                            className="text-purple-400 hover:text-purple-300 underline"
+                            className="text-gray-400 hover:text-gray-300 underline"
                           >
                             cookie policy
                           </Link>
@@ -177,7 +177,7 @@ export default function CookieBanner() {
                 <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto md:flex-shrink-0">
                   <button
                     onClick={acceptAll}
-                    className="px-6 py-3 bg-gradient-to-r from-purple-600 via-purple-500 to-white text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/50 whitespace-nowrap"
+                    className="px-6 py-3 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-gray-500/25 hover:shadow-gray-500/50 whitespace-nowrap"
                   >
                     Accepteer Alles
                   </button>

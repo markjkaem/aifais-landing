@@ -222,8 +222,8 @@ export default function QuickScanClient() {
               : "opacity-0 translate-x-10"
           }`}
         >
-          <div className="bg-zinc-900/90 backdrop-blur-lg border border-purple-500/30 rounded-xl p-4 shadow-2xl max-w-xs flex items-start gap-3">
-            <div className="bg-purple-600 rounded-full p-2 flex-shrink-0">
+          <div className="bg-zinc-900/90 backdrop-blur-lg border border-gray-500/30 rounded-xl p-4 shadow-2xl max-w-xs flex items-start gap-3">
+            <div className="bg-gray-600 rounded-full p-2 flex-shrink-0">
               <svg
                 className="w-4 h-4 text-white"
                 fill="currentColor"
@@ -238,7 +238,7 @@ export default function QuickScanClient() {
               </p>
               <p className="text-xs text-gray-400">
                 berekende zojuist{" "}
-                <span className="text-purple-400 font-bold">
+                <span className="text-gray-400 font-bold">
                   {currentSubmission.hours} uur
                 </span>{" "}
                 besparing
@@ -283,7 +283,7 @@ export default function QuickScanClient() {
         aria-label="Automatisering besparing calculator"
       >
         {/* Step 1: Situation */}
-        <fieldset className="space-y-6 border border-purple-500/20 rounded-2xl p-6 bg-zinc-900/30">
+        <fieldset className="space-y-6 border border-gray-500/20 rounded-2xl p-6 bg-zinc-900/30">
           <legend className="text-xl font-bold text-white px-2 flex items-center gap-2">
             <span>📊</span> Jouw Situatie
           </legend>
@@ -305,7 +305,7 @@ export default function QuickScanClient() {
               }
               className={`w-full p-4 rounded-xl bg-black border ${
                 errors.medewerkers ? "border-red-500" : "border-zinc-700"
-              } text-white focus:border-purple-500 focus:outline-none transition`}
+              } text-white focus:border-gray-500 focus:outline-none transition`}
             >
               <option value="">Selecteer aantal medewerkers...</option>
               <option value="1">1-5 medewerkers</option>
@@ -331,7 +331,7 @@ export default function QuickScanClient() {
                   key={t}
                   className={`flex items-center p-4 rounded-xl cursor-pointer transition border ${
                     formData.taken.includes(t)
-                      ? "border-purple-500 bg-purple-500/10"
+                      ? "border-gray-500 bg-gray-500/10"
                       : "border-zinc-800 hover:bg-zinc-800"
                   }`}
                 >
@@ -342,7 +342,7 @@ export default function QuickScanClient() {
                     disabled={
                       !formData.taken.includes(t) && formData.taken.length >= 3
                     }
-                    className="mr-4 accent-purple-500 w-5 h-5"
+                    className="mr-4 accent-gray-500 w-5 h-5"
                   />
                   <span
                     className={
@@ -380,12 +380,12 @@ export default function QuickScanClient() {
                 onChange={(e) =>
                   setFormData({ ...formData, uren: parseInt(e.target.value) })
                 }
-                className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                className="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-gray-500"
               />
             </div>
             <div className="flex justify-between items-center mt-4">
               <span className="text-gray-500 text-sm">0 uur</span>
-              <span className="text-3xl font-bold text-white bg-purple-600 px-4 py-1 rounded-lg">
+              <span className="text-3xl font-bold text-white bg-gray-600 px-4 py-1 rounded-lg">
                 {formData.uren}{" "}
                 <span className="text-sm font-normal opacity-70">uur</span>
               </span>
@@ -400,7 +400,7 @@ export default function QuickScanClient() {
         </fieldset>
 
         {/* Step 2: Contact Details */}
-        <fieldset className="space-y-5 border border-purple-500/20 rounded-2xl p-6 bg-zinc-900/30">
+        <fieldset className="space-y-5 border border-gray-500/20 rounded-2xl p-6 bg-zinc-900/30">
           <legend className="text-xl font-bold text-white px-2 flex items-center gap-2">
             <span>👤</span> Waar mogen we het rapport heen sturen?
           </legend>
@@ -418,7 +418,7 @@ export default function QuickScanClient() {
               }
               className={`w-full p-4 rounded-xl bg-black border ${
                 errors.naam ? "border-red-500" : "border-zinc-700"
-              } text-white focus:border-purple-500 focus:outline-none transition`}
+              } text-white focus:border-gray-500 focus:outline-none transition`}
             />
             {errors.naam && (
               <p className="text-red-400 text-sm mt-1">⚠️ {errors.naam}</p>
@@ -439,7 +439,7 @@ export default function QuickScanClient() {
                 }
                 className={`w-full p-4 rounded-xl bg-black border ${
                   errors.email ? "border-red-500" : "border-zinc-700"
-                } text-white focus:border-purple-500 focus:outline-none transition`}
+                } text-white focus:border-gray-500 focus:outline-none transition`}
               />
               {errors.email && (
                 <p className="text-red-400 text-sm mt-1">⚠️ {errors.email}</p>
@@ -458,7 +458,7 @@ export default function QuickScanClient() {
                 }
                 className={`w-full p-4 rounded-xl bg-black border ${
                   errors.telefoon ? "border-red-500" : "border-zinc-700"
-                } text-white focus:border-purple-500 focus:outline-none transition`}
+                } text-white focus:border-gray-500 focus:outline-none transition`}
               />
               {errors.telefoon && (
                 <p className="text-red-400 text-sm mt-1">
@@ -474,7 +474,7 @@ export default function QuickScanClient() {
           <button
             type="submit"
             disabled={status === "sending"}
-            className="group w-full px-8 py-5 bg-gradient-to-r from-purple-600 via-purple-500 to-white text-white font-bold text-xl rounded-2xl hover:scale-[1.02] transition-all duration-300 shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+            className="group w-full px-8 py-5 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-bold text-xl rounded-2xl hover:scale-[1.02] transition-all duration-300 shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
           >
             {status === "sending" ? (
               <>
