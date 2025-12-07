@@ -289,12 +289,6 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* ================= DEMO SECTION ================= */}
-      <div id="demo" className="scroll-mt-24">
-        {/* Your ToolsTeaser likely contains the functional invoice scanner */}
-        <ToolsTeaser />
-      </div>
-
       {/* ================= CASES / VOORBEELDEN ================= */}
       <section id="cases" className="relative py-24 bg-zinc-950">
         <div className="relative container mx-auto px-6 max-w-7xl">
@@ -530,6 +524,12 @@ export default function HomeClient() {
           </div>
         </div>
       </section>
+
+      {/* ================= DEMO SECTION ================= */}
+      <div id="demo" className="scroll-mt-24">
+        {/* Your ToolsTeaser likely contains the functional invoice scanner */}
+        <ToolsTeaser />
+      </div>
       {/* ================= FINAL CTA ================= */}
       <section className="relative py-24 bg-gradient-to-b from-black to-zinc-900 border-t border-white/5">
         <div className="container mx-auto px-6 text-center">
