@@ -48,8 +48,7 @@ export async function getSolPriceInEur(): Promise<number> {
 
   try {
     const response = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=eur",
-      { next: { revalidate: 300 } } // Cache 5 minuten
+      "https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=eur"
     );
     
     if (!response.ok) throw new Error("CoinGecko API failed");
