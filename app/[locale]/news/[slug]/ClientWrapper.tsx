@@ -83,7 +83,7 @@ function TableOfContents({ content }: { content: string }) {
   if (headings.length === 0) return null;
 
   return (
-    <aside className="hidden xl:block fixed left-8 top-44 w-64 max-h-[calc(100vh-200px)] overflow-y-auto custom-scrollbar">
+    <aside className="hidden z-10 xl:block fixed left-8 top-44 w-64 max-h-[calc(100vh-200px)] overflow-y-auto custom-scrollbar">
       {/* Light Theme TOC Box */}
       <div className="bg-white border border-gray-200 rounded-xl p-6 sticky top-32 shadow-sm">
         <h4 className="text-xs font-bold text-gray-500 mb-4 uppercase tracking-widest">
