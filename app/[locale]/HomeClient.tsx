@@ -991,134 +991,125 @@ export default function HomeClient() {
       </section>
 
       {/* ================= CASES (Light Mode) ================= */}
+      {/* Portfolio / Cases Section - Premium Redesign */}
       <section
         id="cases"
-        className="relative py-24 bg-slate-50 overflow-hidden font-sans"
+        className="relative py-24 md:py-32 bg-gray-50 overflow-hidden"
       >
-        {/* Achtergrond Patroon (Subtiel Grid) */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+        {/* Subtle background */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000006_1px,transparent_1px),linear-gradient(to_bottom,#00000006_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-        <div className="relative container mx-auto px-6 max-w-7xl z-10">
+        <div className="relative container mx-auto px-6 max-w-7xl">
           {/* Header */}
-          <header className="text-center mb-20">
-            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 text-xs font-bold tracking-widest text-blue-600 uppercase bg-blue-50 border border-blue-100 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-              Portfolio
+          <header className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-6 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
+              <span className="text-sm font-medium text-gray-600">
+                Portfolio
+              </span>
             </div>
-            <h2
-              className={`${h1.className} text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-slate-900 tracking-tight`}
-            >
-              Digitale Werknemers <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-blue-400">
-                in actie.
+
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
+              Digitale Werknemers{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-600">
+                in actie
               </span>
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              Geen theoretische concepten, maar <strong>Headless Agents</strong>{" "}
-              die vandaag al draaien in productie en echte bedrijfsprocessen
-              automatiseren.
+
+            <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+              Geen concepten, maar agents die vandaag al draaien in productie.
             </p>
           </header>
 
           {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {projects.slice(0, 3).map((project: any, index: number) => (
-              <article
+              <Link
                 key={project.slug || index}
-                className="group flex flex-col bg-white border border-slate-200 rounded-[2rem] overflow-hidden hover:border-[#3066be]/30 hover:shadow-[0_20px_40px_-15px_rgba(48,102,190,0.15)] hover:-translate-y-1 transition-all duration-500"
+                href={`/portfolio/${project.slug}`}
+                className="group flex flex-col bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300"
               >
-                {/* Image Container */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                {/* Image */}
+                <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
 
-                  {/* Overlay Gradient (Zorgt dat tekst altijd leesbaar is en geeft diepte) */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-
-                  {/* Tech Overlay (Decorative Grid on Hover) */}
-                  <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-center"></div>
-
                   {/* Status Badge */}
-                  <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur-md border border-white/50 rounded-full shadow-sm z-10">
+                  <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-white/95 backdrop-blur-sm rounded-full shadow-sm">
                     <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                     </span>
-                    <span className="text-xs font-bold text-slate-800 tracking-wide uppercase">
-                      Live Systeem
+                    <span className="text-xs font-semibold text-gray-700">
+                      Live
                     </span>
                   </div>
                 </div>
 
-                {/* Content Body */}
-                <div className="flex flex-col flex-grow p-8">
-                  <div className="mb-4">
-                    {/* Fictieve Tags / Categorieën (Als je die hebt in je data, gebruik die hier) */}
-                    <div className="flex gap-2 mb-3">
-                      <span className="px-2 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wider rounded-md border border-slate-200">
-                        Automatisering
-                      </span>
-                      <span className="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider rounded-md border border-blue-100">
-                        AI Agent
-                      </span>
-                    </div>
-
-                    <h3 className="text-2xl font-bold text-slate-900 group-hover:text-[#3066be] transition-colors leading-tight">
-                      {project.title}
-                    </h3>
+                {/* Content */}
+                <div className="flex flex-col flex-grow p-6">
+                  {/* Tags */}
+                  <div className="flex gap-2 mb-3">
+                    <span className="text-xs font-medium text-gray-500 px-2 py-1 bg-gray-100 rounded-md">
+                      Automatisering
+                    </span>
+                    <span className="text-xs font-medium text-blue-600 px-2 py-1 bg-blue-50 rounded-md">
+                      AI Agent
+                    </span>
                   </div>
 
-                  <p className="text-slate-600 text-sm leading-relaxed mb-8 line-clamp-3 flex-grow">
+                  {/* Title */}
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-600 transition-colors">
+                    {project.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 flex-grow">
                     {project.description}
                   </p>
 
-                  {/* Bottom Action */}
-                  <div className="pt-6 border-t border-slate-100 flex items-center justify-between mt-auto">
-                    <Link
-                      href={`/portfolio/${project.slug}`}
-                      className="inline-flex items-center gap-2 text-slate-900 font-bold text-sm group/link"
-                    >
-                      <span className="group-hover/link:text-[#3066be] transition-colors">
-                        Bekijk Case Study
-                      </span>
-                      <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center group-hover/link:bg-[#3066be] group-hover/link:text-white transition-all duration-300 group-hover/link:translate-x-1">
-                        <svg
-                          className="w-3 h-3"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2.5}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                      </div>
-                    </Link>
+                  {/* Link indicator */}
+                  <div className="mt-6 pt-5 border-t border-gray-100 flex items-center justify-between">
+                    <span className="text-sm font-semibold text-gray-900 group-hover:text-gray-600 transition-colors">
+                      Bekijk case
+                    </span>
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
 
-          {/* "More" Button (Optional) */}
-          <div className="mt-16 text-center">
+          {/* View All Button */}
+          <div className="mt-12 text-center">
             <Link
               href="/portfolio"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white border border-slate-200 rounded-full text-slate-900 font-bold hover:bg-slate-50 hover:border-slate-300 transition-all duration-300 shadow-sm"
+              className="inline-flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 rounded-full text-gray-900 font-semibold hover:bg-gray-50 hover:border-gray-300 hover:shadow-md transition-all duration-300 group"
             >
               Bekijk alle cases
               <svg
-                className="w-4 h-4 text-slate-400"
+                className="w-4 h-4 text-gray-400 group-hover:translate-x-1 transition-transform"
                 fill="none"
-                stroke="currentColor"
                 viewBox="0 0 24 24"
+                stroke="currentColor"
               >
                 <path
                   strokeLinecap="round"
@@ -1133,103 +1124,233 @@ export default function HomeClient() {
       </section>
 
       {/* ================= TEAM (Light Mode) ================= */}
+      {/* About / Team Section - Premium Redesign */}
       <section
         id="about"
-        className="relative py-24 bg-white border-t border-gray-200"
+        className="relative py-24 md:py-32 bg-white overflow-hidden"
       >
-        <div className="relative max-w-7xl mx-auto px-6">
+        {/* Subtle background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white" />
+
+        <div className="relative max-w-6xl mx-auto px-6">
+          {/* Header */}
           <div className="text-center mb-16">
-            <h2
-              className={`${h1.className} text-4xl md:text-5xl font-bold mb-6 text-gray-900`}
-            >
-              Engineering & Strategie
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-6 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
+              <span className="text-sm font-medium text-gray-600">
+                Het Team
+              </span>
+            </div>
+
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
+              Engineering &{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">
+                Strategie
+              </span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Wij combineren diepe technische kennis (Blockchain, AI) met
-              bedrijfskundig inzicht. Wij bouwen oplossingen die technisch
-              robuust zijn én commercieel renderen.
+
+            <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+              Technische diepgang meets bedrijfskundig inzicht. Wij bouwen
+              oplossingen die werken én renderen.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {/* Team Grid */}
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
             {/* Mark */}
-            <div className="group bg-white rounded-3xl p-8 border border-gray-200 hover:border-[#3066be]/30 hover:shadow-lg transition-all duration-300">
-              <div className="flex items-center gap-6 mb-6">
-                <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-gray-100 group-hover:border-[#3066be] transition-colors shadow-inner">
-                  <Image
-                    src="/mark.png"
-                    alt="Mark"
-                    fill
-                    className="object-cover grayscale group-hover:grayscale-0 transition-all"
-                  />
+            <div className="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300">
+              {/* Gradient accent top */}
+              <div className="h-1 bg-gradient-to-r from-blue-300 to-blue-600" />
+
+              <div className="p-8">
+                <div className="flex items-start gap-5 mb-6">
+                  {/* Avatar */}
+                  <div className="relative">
+                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-100">
+                      <Image
+                        src="/mark.png"
+                        alt="Mark"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    {/* Status dot */}
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-white flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                    </div>
+                  </div>
+
+                  {/* Name & Title */}
+                  <div className="pt-1">
+                    <h3 className="text-xl font-bold text-gray-900">Mark</h3>
+                    <p className="text-sm text-gray-500">Head of Engineering</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Mark</h3>
-                  <p className="text-[#3066be] font-mono text-sm">
-                    Head of Engineering
-                  </p>
+
+                {/* Bio */}
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  Techniek moet niet ingewikkeld zijn. Met jarenlange ervaring
+                  als software engineer bouwt Mark slimme systemen die voor
+                  iedereen bruikbaar zijn. De stille kracht achter elke
+                  oplossing die we opleveren.
+                </p>
+
+                {/* Skills */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="text-xs font-medium text-gray-600 px-3 py-1.5 rounded-lg bg-gray-100">
+                    System Architecture
+                  </span>
+                  <span className="text-xs font-medium text-gray-600 px-3 py-1.5 rounded-lg bg-gray-100">
+                    AI Integration
+                  </span>
+                  <span className="text-xs font-medium text-gray-600 px-3 py-1.5 rounded-lg bg-gray-100">
+                    Blockchain
+                  </span>
                 </div>
+
+                {/* Link */}
+                <a
+                  href="https://www.linkedin.com/in/mark-v-898408309/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-900 transition-colors group/link"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                  <span>LinkedIn</span>
+                  <svg
+                    className="w-3 h-3 group-hover/link:translate-x-0.5 transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
               </div>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Techniek moet niet ingewikkeld zijn. Dat is waar Mark in
-                gelooft. Met jarenlange ervaring als software engineer weet hij
-                hoe je slimme systemen bouwt die voor iedereen bruikbaar zijn.
-                Hij is de stille kracht achter elke workflow die wij opleveren.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">
-                  System Architecture
-                </span>
-                <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">
-                  Security
-                </span>
-              </div>
-              <Link
-                href="https://www.linkedin.com/in/mark-v-898408309/"
-                target="_blank"
-                className="text-gray-500 hover:text-[#3066be] transition-colors flex items-center gap-2 text-sm font-medium"
-              >
-                <LinkedInIcon /> LinkedIn Profiel
-              </Link>
             </div>
 
             {/* Faissal */}
-            <div className="group bg-white rounded-3xl p-8 border border-gray-200 hover:border-[#3066be]/30 hover:shadow-lg transition-all duration-300">
-              <div className="flex items-center gap-6 mb-6">
-                <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-gray-100 group-hover:border-[#3066be] transition-colors shadow-inner">
-                  <Image
-                    src="/faissal.png"
-                    alt="Faissal"
-                    fill
-                    className="object-cover grayscale group-hover:grayscale-0 transition-all"
-                  />
+            <div className="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300">
+              {/* Gradient accent top */}
+              <div className="h-1 bg-gradient-to-r from-blue-500 to-blue-800" />
+
+              <div className="p-8">
+                <div className="flex items-start gap-5 mb-6">
+                  {/* Avatar */}
+                  <div className="relative">
+                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-100">
+                      <Image
+                        src="/faissal.png"
+                        alt="Faissal"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    {/* Status dot */}
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-white flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                    </div>
+                  </div>
+
+                  {/* Name & Title */}
+                  <div className="pt-1">
+                    <h3 className="text-xl font-bold text-gray-900">Faissal</h3>
+                    <p className="text-sm text-gray-500">
+                      Business Logic Architect
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Faissal</h3>
-                  <p className="text-[#3066be] font-mono text-sm">
-                    Business Logic Architect
-                  </p>
+
+                {/* Bio */}
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  Vertaalt complexe operationele vraagstukken naar logische
+                  workflows die door AI kunnen worden uitgevoerd. Focus op ROI
+                  en procesoptimalisatie voor elk project.
+                </p>
+
+                {/* Skills */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="text-xs font-medium text-gray-600 px-3 py-1.5 rounded-lg bg-gray-100">
+                    Workflow Design
+                  </span>
+                  <span className="text-xs font-medium text-gray-600 px-3 py-1.5 rounded-lg bg-gray-100">
+                    Business Analysis
+                  </span>
+                  <span className="text-xs font-medium text-gray-600 px-3 py-1.5 rounded-lg bg-gray-100">
+                    ROI Optimization
+                  </span>
                 </div>
+
+                {/* Link */}
+                <a
+                  href="mailto:faissal@aifais.com"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-900 transition-colors group/link"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                  <span>Email</span>
+                  <svg
+                    className="w-3 h-3 group-hover/link:translate-x-0.5 transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
               </div>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Ik vertaal complexe operationele vraagstukken naar logische
-                workflows die door AI kunnen worden uitgevoerd. Focus op ROI en
-                procesoptimalisatie.
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">
-                  Workflow Design
-                </span>
-                <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full border border-gray-200">
-                  Business Analysis
-                </span>
+            </div>
+          </div>
+
+          {/* Bottom Stats / Trust */}
+          <div className="mt-16 pt-12 border-t border-gray-100">
+            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 text-center">
+              <div>
+                <div className="text-3xl font-bold text-gray-900">2</div>
+                <div className="text-sm text-gray-500">Founders</div>
               </div>
-              <a
-                href="mailto:faissal@aifais.com"
-                className="text-gray-500 hover:text-[#3066be] transition-colors flex items-center gap-2 text-sm font-medium"
-              >
-                <EmailIcon /> Email Contact
-              </a>
+              <div className="hidden sm:block w-px h-10 bg-gray-200" />
+              <div>
+                <div className="text-3xl font-bold text-gray-900">Gouda</div>
+                <div className="text-sm text-gray-500">Zuid-Holland, NL</div>
+              </div>
+              <div className="hidden sm:block w-px h-10 bg-gray-200" />
+              <div>
+                <div className="text-3xl font-bold text-gray-900">100%</div>
+                <div className="text-sm text-gray-500">Bootstrapped</div>
+              </div>
+              <div className="hidden sm:block w-px h-10 bg-gray-200" />
+              <div>
+                <div className="text-3xl font-bold text-gray-900">24h</div>
+                <div className="text-sm text-gray-500">Response Time</div>
+              </div>
             </div>
           </div>
         </div>
