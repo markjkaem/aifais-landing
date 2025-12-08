@@ -36,18 +36,7 @@ export async function POST(req: NextRequest) {
 
     console.log(`Incoming Data: Signature=${!!signature}, SessionID=${!!stripeSessionId}`);
 
-    // =========================================================================
-    // 1. PAYMENT CHECK (Eén regel code!)
-    const payment = await gatekeepPayment(body);
     
-    // Als betaling mislukt is, stuur direct de error terug die uit de gatekeeper komt
-    if (!payment.success) {
-      // @ts-ignore (details kan undefined zijn, maar dat mag in json)
-      return NextResponse.json(
-          { error: payment.error, ...payment.details }, 
-          { status: payment.status }
-      );
-    }
     // =========================================================================
     // 2. UITVOEREN: PDF GENERATIE (Server Side)
     // =========================================================================
