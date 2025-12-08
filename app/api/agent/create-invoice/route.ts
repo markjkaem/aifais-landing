@@ -3,9 +3,10 @@ import { Connection, clusterApiUrl } from "@solana/web3.js";
 import Stripe from "stripe";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
-import { checkPayment, markPaymentUsed } from "@/utils/x402-guard";
-import { redis } from "@/lib/redis";
+
+// Zorg dat deze paden kloppen met jouw bestandsstructuur!
 import { gatekeepPayment } from "@/lib/payment-gatekeeper";
+// Of als je ze in utils hebt staan: import { checkPayment, markPaymentUsed } from "@/utils/x402-guard";
 
 // Init services
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY || "");
@@ -36,19 +37,30 @@ export async function POST(req: NextRequest) {
 
     console.log(`Incoming Data: Signature=${!!signature}, SessionID=${!!stripeSessionId}`);
 
+    // =========================================================================
+    // 1. PAYMENT CHECK (Eén regel code!)
+    const payment = await gatekeepPayment(body);
     
+    // Als betaling mislukt is, stuur direct de error terug die uit de gatekeeper komt
+    if (!payment.success) {
+      // @ts-ignore (details kan undefined zijn, maar dat mag in json)
+      return NextResponse.json(
+          { error: payment.error, ...payment.details }, 
+          { status: payment.status }
+      );
+    }
+
     // =========================================================================
     // 2. UITVOEREN: PDF GENERATIE (Server Side)
     // =========================================================================
-    console.log(`Starting PDF generation with method: ${paymentMethod}`);
 
-    // Validatie van input
-    if (!ownName || !items || !Array.isArray(items)) {
-        return NextResponse.json({ error: "Missing required invoice data (ownName, items)." }, { status: 400 });
+    // Validatie van input voor PDF
+    if (!items || !Array.isArray(items)) {
+        return NextResponse.json({ error: "Missing required invoice items." }, { status: 400 });
     }
 
     const doc = new jsPDF();
-    const primaryColor = [48, 102, 190]; // #3066be
+    const primaryColor = [48, 102, 190] as [number, number, number]; // #3066be casten voor TS
 
     // --- Header ---
     doc.setFontSize(24);
@@ -67,7 +79,7 @@ export async function POST(req: NextRequest) {
     
     // Links: Eigen bedrijf
     doc.setFont("helvetica", "bold");
-    doc.text(ownName, 14, 50);
+    doc.text(ownName || "Mijn Bedrijf", 14, 50);
     doc.setFont("helvetica", "normal");
     
     // Rechts: Klant
@@ -78,22 +90,23 @@ export async function POST(req: NextRequest) {
 
     // --- Berekeningen ---
     let subtotal = 0;
+    
+    // Data voor autotable voorbereiden
     const tableRows = items.map((item: any) => {
       const qty = Number(item.quantity) || 0;
-      const price = Number(item.price) || 0;
+      const price = Number(item.unitPrice || item.price) || 0; // Support beide veldnamen
       const total = qty * price;
       subtotal += total;
       
       return [
         item.description || "Dienst/Product",
-        qty,
+        qty.toString(),
         formatCurrency(price),
-        `${item.vatRate || 21}%`,
+        "21%", // Hardcoded BTW voor nu, kan dynamisch
         formatCurrency(total),
       ];
     });
 
-    // Simpele BTW berekening (totaal) - kan je complexer maken indien nodig
     const vatAmount = subtotal * 0.21; 
     const totalAmount = subtotal + vatAmount;
 
@@ -102,12 +115,12 @@ export async function POST(req: NextRequest) {
       startY: 70,
       head: [["Omschrijving", "Aantal", "Prijs", "BTW", "Totaal"]],
       body: tableRows,
-      headStyles: { fillColor: [48, 102, 190], textColor: 255, fontStyle: 'bold' },
+      headStyles: { fillColor: primaryColor, textColor: 255, fontStyle: 'bold' },
     });
 
     // --- Totalen ---
-    // @ts-ignore
-    const finalY = doc.lastAutoTable.finalY + 10;
+    // @ts-ignore: lastAutoTable bestaat wel op doc object na plugin load
+    const finalY = (doc as any).lastAutoTable.finalY + 10;
     const labelX = 130;
     const valueX = 190;
 
@@ -127,6 +140,11 @@ export async function POST(req: NextRequest) {
         doc.setFontSize(9);
         doc.setTextColor(100);
         doc.text(notes, 14, 280);
+    } else {
+        // Standaard footer als er geen notes zijn
+        doc.setFontSize(8);
+        doc.setTextColor(150);
+        doc.text(`Gegenereerd via AI Agent - Betaald met ${paymentMethod}`, 14, 290);
     }
 
     // --- Output Converteren naar Base64 ---
@@ -143,17 +161,18 @@ export async function POST(req: NextRequest) {
       message: "Factuur succesvol gegenereerd.",
       fileName: `factuur_${invoiceNumber || 'concept'}.pdf`,
       mimeType: "application/pdf",
-      base64: base64Pdf, // Dit is wat de Agent ontvangt en kan opslaan/tonen
-      meta: { method: paymentMethod }
+      base64: base64Pdf, 
+      meta: { method: paymentMethod, total: totalAmount }
     });
 
   } catch (error: any) {
-    if (error.message && error.message.includes("Double Spend")) {
-         console.warn(`Double Spend detected (409): ${error.message}`);
-         return NextResponse.json({ error: error.message }, { status: 409 });
+    // Specifieke error handling voor Replay Attacks
+    if (error.message && error.message.includes("Transaction signature already used")) {
+          console.warn(`Double Spend detected (409): ${error.message}`);
+          return NextResponse.json({ error: error.message }, { status: 409 });
     }
     
     console.error("--- API END: CRITICAL ERROR (500) ---", error);
-    return NextResponse.json({ error: "Internal Server Error during invoice generation" }, { status: 500 });
+    return NextResponse.json({ error: "Internal Server Error during invoice generation", details: error.message }, { status: 500 });
   }
 }
