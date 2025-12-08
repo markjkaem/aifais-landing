@@ -9,7 +9,7 @@ export const workflowArticle = {
   author: "Mark Teekens",
   authorBio: "Mark Teekens is automatisering-specialist bij Aifais en helpt bedrijven bij het implementeren van slimme workflow-oplossingen.",
   category: "Strategie",
-  image: "/lesson.jpg",
+  image: "/lesson1.jpg",
   readTime: 8,
   tags: [
     "workflow automatisering",
