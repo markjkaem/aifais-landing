@@ -8,13 +8,6 @@ import autoTable from "jspdf-autotable";
 import { gatekeepPayment } from "@/lib/payment-gatekeeper";
 // Of als je ze in utils hebt staan: import { checkPayment, markPaymentUsed } from "@/utils/x402-guard";
 
-// Init services
-const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY || "");
-const connection = new Connection(
-  process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta"),
-  "confirmed"
-);
-
 // Helper voor valuta
 const formatCurrency = (amount: number) => `EUR ${amount.toFixed(2)}`;
 
