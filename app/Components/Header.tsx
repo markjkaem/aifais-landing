@@ -5,23 +5,20 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { projects } from "../[locale]/portfolio/data";
-import { news } from "../[locale]/news/data";
+import { projects } from "../[locale]/portfolio/data"; // Pas pad aan indien nodig
+import { news } from "../[locale]/news/data"; // Pas pad aan indien nodig
 
-// --- COLORS CONSTANTS ---
-const PRIMARY_BLUE = "#3066be";
-const BG_CREAM = "#fbfff1";
-
-// ✅ NEW: Define Service Links for Navigation & Search
+// --- CONFIGURATION ---
+// Hier definiëren we de diensten die in het menu komen.
+// Dit maakt het makkelijk om later items toe te voegen of te wijzigen.
 const serviceLinks = [
   {
-    title: "Next-gen telefonische assistenten",
+    title: "Telefonische Assistenten",
     slug: "/diensten/human-parity-voice",
-    description:
-      "Vervang frustrerende keuzemenu's door vloeiende, menselijke conversaties.",
+    description: "Vervang keuzemenu's door vloeiende, menselijke conversaties.",
     icon: (
       <svg
-        className="w-5 h-5"
+        className="w-6 h-6"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -30,19 +27,18 @@ const serviceLinks = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={2}
-          d="M13 10V3L4 14h7v7l9-11h-7z"
+          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
         />
       </svg>
     ),
   },
   {
-    title: "Chat met uw bedrijfsdata.",
-    slug: "/diensten/enterprise-brain-rag",
-    description:
-      "Maak uw institutionele kennis direct toegankelijk via RAG systemen.",
+    title: "Bedrijfsbrein & Geheugen",
+    slug: "/diensten/bedrijfsbrein",
+    description: "Al uw bedrijfsdata doorzoekbaar en gekoppeld via GraphRAG.",
     icon: (
       <svg
-        className="w-5 h-5"
+        className="w-6 h-6"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -57,12 +53,12 @@ const serviceLinks = [
     ),
   },
   {
-    title: "AI & Slimme Bedrijfsprocessen",
+    title: "AI Medewerkers (Agents)",
     slug: "/diensten/ai-integratie",
-    description: "Zet Kunstmatige Intelligentie aan het werk.",
+    description: "Autonome digitale collega's die processen voor u uitvoeren.",
     icon: (
       <svg
-        className="w-5 h-5"
+        className="w-6 h-6"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -71,18 +67,18 @@ const serviceLinks = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={2}
-          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
         />
       </svg>
     ),
   },
   {
-    title: "Administratie",
-    slug: "/diensten/administratieve-automatisering",
-    description: "Facturatie, HR en rapportages op automatische piloot.",
+    title: "Agent API (x402)",
+    slug: "/diensten/agent-api",
+    description: "Waar Agents zaken doen met elkaar",
     icon: (
       <svg
-        className="w-5 h-5"
+        className="w-6 h-6"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -91,47 +87,7 @@ const serviceLinks = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={2}
-          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-        />
-      </svg>
-    ),
-  },
-  {
-    title: "Workflow Automatisering",
-    slug: "/diensten/workflow-automatisering",
-    description: "Laat je systemen met elkaar praten.",
-    icon: (
-      <svg
-        className="w-5 h-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-        />
-      </svg>
-    ),
-  },
-  {
-    title: "Bedrijfsbrein & Kennismanagement",
-    slug: "/diensten/bedrijfsbrein",
-    description: "Jouw bedrijfsdata altijd binnen handbereik.",
-    icon: (
-      <svg
-        className="w-5 h-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          d="M13 10V3L4 14h7v7l9-11h-7z"
         />
       </svg>
     ),
@@ -210,47 +166,30 @@ export default function HeaderMockup() {
     };
   }, [openDropdown, mobileOpen, searchOpen]);
 
-  // ✅ Search functionality
+  // ✅ Search functionality populated with new services
   const allSearchableContent = [
-    {
-      type: "page",
-      title: "Home",
-      slug: "/",
-    },
-    // 1. New Services (High Priority)
+    { type: "page", title: "Home", slug: "/" },
+    // 1. New Services
     ...serviceLinks.map((s) => ({
       type: "service",
       title: s.title,
       slug: s.slug,
     })),
-    // 2. Projects
-    ...projects.map((p) => ({
+    // 2. Projects (Fallback to empty array if projects not loaded)
+    ...(projects || []).map((p) => ({
       type: "case",
       title: p.title,
       slug: `/portfolio/${p.slug}`,
     })),
-    // 3. News
-    ...news.map((n) => ({
+    // 3. News (Fallback)
+    ...(news || []).map((n) => ({
       type: "news",
       title: n.title,
       slug: `/news/${n.slug}`,
     })),
     // 4. Core Pages
-    {
-      type: "page",
-      title: locale === "nl" ? "Alle Diensten" : "All Services",
-      slug: "/diensten",
-    },
-    {
-      type: "page",
-      title: locale === "nl" ? "Tools" : "Tools",
-      slug: "/tools",
-    },
-    {
-      type: "page",
-      title: locale === "nl" ? "Contact" : "Contact",
-      slug: "/contact",
-    },
+    { type: "page", title: "Tools", slug: "/tools" },
+    { type: "page", title: "Contact", slug: "/contact" },
   ];
 
   const searchResults =
@@ -267,30 +206,23 @@ export default function HeaderMockup() {
       closeAll();
       return;
     }
-
     let pathWithoutLocale = pathname;
-
     if (pathWithoutLocale.startsWith("/en/")) {
       pathWithoutLocale = pathWithoutLocale.substring(3);
     } else if (pathWithoutLocale === "/en") {
       pathWithoutLocale = "/";
     }
-
-    let newPath: string;
-    if (newLocale === "nl") {
-      newPath = pathWithoutLocale || "/";
-    } else {
-      newPath = pathWithoutLocale === "/" ? "/en" : `/en${pathWithoutLocale}`;
-    }
-
+    let newPath =
+      newLocale === "nl"
+        ? pathWithoutLocale || "/"
+        : pathWithoutLocale === "/"
+        ? "/en"
+        : `/en${pathWithoutLocale}`;
     window.location.href = newPath;
   };
 
   const getLocalizedPath = (path: string) => {
-    if (locale === "nl") {
-      return path;
-    }
-    return `/en${path}`;
+    return locale === "nl" ? path : `/en${path}`;
   };
 
   return (
@@ -300,7 +232,7 @@ export default function HeaderMockup() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Desktop navigation */}
+        {/* --- DESKTOP NAV --- */}
         <nav className="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-600">
           <Link
             href={getLocalizedPath("/")}
@@ -309,9 +241,13 @@ export default function HeaderMockup() {
           >
             Home
           </Link>
+
+          {/* SERVICES DROPDOWN TRIGGER */}
           <button
             onClick={() => handleDropdownToggle("services")}
-            className="hover:text-[#3066be] transition flex items-center gap-2 group"
+            className={`hover:text-[#3066be] transition flex items-center gap-2 group ${
+              openDropdown === "services" ? "text-[#3066be]" : ""
+            }`}
           >
             {t("services")}
             <svg
@@ -329,9 +265,12 @@ export default function HeaderMockup() {
             </svg>
           </button>
 
+          {/* NEWS DROPDOWN TRIGGER */}
           <button
             onClick={() => handleDropdownToggle("news")}
-            className="hover:text-[#3066be] transition flex items-center gap-2"
+            className={`hover:text-[#3066be] transition flex items-center gap-2 ${
+              openDropdown === "news" ? "text-[#3066be]" : ""
+            }`}
           >
             {t("news")}
             <svg
@@ -356,7 +295,6 @@ export default function HeaderMockup() {
           >
             {t("cases")}
           </Link>
-
           <Link
             href={getLocalizedPath("/#about")}
             className="hover:text-[#3066be] transition"
@@ -384,9 +322,8 @@ export default function HeaderMockup() {
           </Link>
         </nav>
 
-        {/* Desktop actions */}
+        {/* --- DESKTOP ACTIONS --- */}
         <div className="hidden lg:flex items-center gap-3">
-          {/* Search button */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -411,7 +348,7 @@ export default function HeaderMockup() {
             </svg>
           </button>
 
-          {/* Language selector */}
+          {/* LANGUAGE SELECTOR */}
           <div className="relative">
             <button
               onClick={(e) => {
@@ -434,21 +371,7 @@ export default function HeaderMockup() {
                 />
               </svg>
               {locale.toUpperCase()}
-              <svg
-                className={`w-3 h-3 transition-transform ${
-                  openDropdown === "languages" ? "rotate-180" : ""
-                }`}
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
             </button>
-
             {openDropdown === "languages" && (
               <div
                 className="absolute right-0 mt-2 bg-white/98 backdrop-blur-xl border border-gray-200 rounded-xl shadow-xl overflow-hidden min-w-[180px] z-50 animate-slideDown"
@@ -463,7 +386,7 @@ export default function HeaderMockup() {
                       : "text-gray-700 cursor-pointer"
                   }`}
                 >
-                  <span className="text-xl">🇳🇱</span>
+                  <span className="text-xl">🇳🇱</span>{" "}
                   <span className="font-medium">Nederlands</span>
                 </button>
                 <button
@@ -475,14 +398,13 @@ export default function HeaderMockup() {
                       : "text-gray-700 cursor-pointer"
                   }`}
                 >
-                  <span className="text-xl">🇬🇧</span>
+                  <span className="text-xl">🇬🇧</span>{" "}
                   <span className="font-medium">English</span>
                 </button>
               </div>
             )}
           </div>
 
-          {/* CTA Button */}
           <Link
             href={getLocalizedPath("/contact")}
             className="px-5 py-2.5 bg-[#3066be] hover:bg-[#234a8c] text-white font-semibold rounded-lg transition-all hover:scale-105 shadow-md shadow-[#3066be]/20"
@@ -492,7 +414,7 @@ export default function HeaderMockup() {
           </Link>
         </div>
 
-        {/* Mobile hamburger */}
+        {/* --- MOBILE HAMBURGER --- */}
         <button
           className="lg:hidden text-gray-800 text-3xl hover:text-[#3066be] transition"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -502,7 +424,7 @@ export default function HeaderMockup() {
         </button>
       </div>
 
-      {/* Search Overlay */}
+      {/* --- SEARCH OVERLAY --- */}
       {searchOpen && (
         <div className="absolute top-full left-0 right-0 bg-white/98 backdrop-blur-xl border-b border-gray-200 shadow-xl animate-slideDown">
           <div className="max-w-3xl mx-auto px-6 py-6">
@@ -533,8 +455,6 @@ export default function HeaderMockup() {
                 autoFocus
               />
             </div>
-
-            {/* Search Results */}
             {searchResults.length > 0 && (
               <div className="mt-4 space-y-2">
                 {searchResults.map((result, i) => (
@@ -568,14 +488,13 @@ export default function HeaderMockup() {
         </div>
       )}
 
-      {/* Desktop Mega Menu - Services (OPTIMIZED) */}
+      {/* --- MEGA MENU: SERVICES (IMPROVED GRID) --- */}
       {openDropdown === "services" && (
         <div className="hidden lg:block w-full bg-white/98 backdrop-blur-xl border-b border-gray-200 shadow-2xl py-8 animate-slideDown">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 gap-8">
-            {/* SERVICES */}
             <div className="col-span-2">
               <h4 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4 px-4">
-                Onze Diensten
+                Onze Oplossingen
               </h4>
               <div className="grid grid-cols-2 gap-4">
                 {serviceLinks.map((service) => (
@@ -585,45 +504,46 @@ export default function HeaderMockup() {
                     className="group p-4 rounded-xl hover:bg-gray-50 transition border border-transparent hover:border-gray-200 flex items-start gap-4"
                     onClick={closeAll}
                   >
-                    <div className="mt-1 text-[#3066be] group-hover:scale-110 transition">
+                    <div className="mt-1 text-[#3066be] group-hover:scale-110 transition bg-blue-50 p-2 rounded-lg">
                       {service.icon}
                     </div>
                     <div>
                       <h3 className="text-gray-900 font-semibold mb-1 group-hover:text-[#3066be] transition">
                         {service.title}
                       </h3>
-                      <p className="text-sm text-gray-500 line-clamp-2">
+                      <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">
                         {service.description}
                       </p>
                     </div>
                   </Link>
                 ))}
               </div>
-              <div className="mt-4 px-4">
+              <div className="mt-6 px-4 pt-4 border-t border-gray-100">
                 <Link
                   href={getLocalizedPath("/diensten")}
                   className="text-gray-500 text-sm font-semibold hover:text-[#3066be] transition flex items-center gap-1"
                   onClick={closeAll}
                 >
-                  Bekijk Alle Diensten →
+                  Bekijk alle overige diensten{" "}
+                  <ArrowRightIcon className="w-4 h-4" />
                 </Link>
               </div>
             </div>
 
-            {/* Featured Event / CTA */}
+            {/* Featured / CTA Box */}
             <div className="flex items-start">
-              <div className="bg-gradient-to-br from-[#3066be]/5 to-blue-50 border border-[#3066be]/20 rounded-2xl p-6 hover:border-[#3066be]/40 transition cursor-pointer w-full">
-                <p className="font-semibold text-lg text-gray-900 mb-2">
+              <div className="bg-gradient-to-br from-[#3066be]/5 to-blue-50 border border-[#3066be]/20 rounded-2xl p-6 hover:border-[#3066be]/40 transition cursor-pointer w-full relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#3066be]/10 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-[#3066be]/20"></div>
+                <p className="font-semibold text-lg text-gray-900 mb-2 relative z-10">
                   Gratis analyse van jouw automatiseringskansen
                 </p>
-                <p className="text-sm text-gray-600 mb-4">
-                  Ontdek binnen 2 minuten waar jouw grootste automatisering
-                  kansen liggen.
+                <p className="text-sm text-gray-600 mb-6 relative z-10">
+                  Ontdek binnen 2 minuten waar jouw grootste winst ligt.
                 </p>
                 <Link
                   href={getLocalizedPath("/contact")}
                   onClick={closeAll}
-                  className="block w-full py-2 bg-[#3066be] text-white text-center rounded-lg font-medium hover:bg-[#234a8c] transition"
+                  className="block w-full py-3 bg-[#3066be] text-white text-center rounded-lg font-medium hover:bg-[#234a8c] transition relative z-10 shadow-lg shadow-blue-900/10"
                 >
                   Start Nu
                 </Link>
@@ -633,18 +553,16 @@ export default function HeaderMockup() {
         </div>
       )}
 
-      {/* Desktop Mega Menu - News (UPDATED) */}
+      {/* --- MEGA MENU: NEWS (UNCHANGED LOGIC) --- */}
       {openDropdown === "news" && (
         <div className="hidden lg:block w-full bg-white/98 backdrop-blur-xl border-b border-gray-200 shadow-2xl py-8 animate-slideDown">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 gap-8">
             <div className="col-span-2">
-              {/* Header for list */}
               <h4 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4 px-4">
                 Nieuwste Artikelen
               </h4>
-
               <div className="grid grid-cols-2 gap-4">
-                {news
+                {(news || [])
                   .filter((item) => item.id < 5)
                   .map((blog) => (
                     <Link
@@ -662,8 +580,6 @@ export default function HeaderMockup() {
                     </Link>
                   ))}
               </div>
-
-              {/* Link to Overview Page */}
               <div className="mt-4 px-4">
                 <Link
                   href={getLocalizedPath("/news")}
@@ -674,17 +590,16 @@ export default function HeaderMockup() {
                 </Link>
               </div>
             </div>
-
-            {/* Featured Box (Right Side) */}
             <div className="flex items-start">
               <div className="bg-white border border-gray-200 rounded-2xl p-6 hover:border-[#3066be]/30 hover:shadow-lg transition cursor-pointer w-full">
-                <Image
-                  src="/lesson.jpg"
-                  alt="Event Preview"
-                  width={300}
-                  height={180}
-                  className="rounded-lg object-cover mb-4 w-full h-40"
-                />
+                <div className="relative w-full h-40 mb-4 rounded-lg overflow-hidden bg-gray-100">
+                  <Image
+                    src="/lesson.jpg"
+                    alt="Event"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <p className="font-semibold text-lg text-gray-900 mb-2">
                   {tEvent("title")}
                 </p>
@@ -701,10 +616,9 @@ export default function HeaderMockup() {
         </div>
       )}
 
-      {/* MOBILE MENU */}
+      {/* --- MOBILE MENU (UPDATED) --- */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-200 px-6 py-6 space-y-4 text-gray-800 text-base max-h-[80vh] overflow-y-auto animate-slideDown shadow-2xl">
-          {/* Mobile Search */}
+        <div className="lg:hidden bg-white border-t border-gray-200 px-6 py-6 space-y-4 text-gray-800 text-base max-h-[85vh] overflow-y-auto animate-slideDown shadow-2xl pb-20">
           <div className="pb-4 border-b border-gray-200">
             <input
               type="text"
@@ -715,7 +629,6 @@ export default function HeaderMockup() {
             />
           </div>
 
-          {/* Mobile: Services */}
           <div>
             <button
               onClick={() => handleDropdownToggle("services")}
@@ -759,7 +672,6 @@ export default function HeaderMockup() {
             )}
           </div>
 
-          {/* Rest of mobile links */}
           <Link
             href={getLocalizedPath("/portfolio")}
             className="block py-3 hover:text-[#3066be] transition font-semibold"
@@ -767,7 +679,6 @@ export default function HeaderMockup() {
           >
             {t("cases")}
           </Link>
-
           <Link
             href={getLocalizedPath("/news")}
             className="block py-3 hover:text-[#3066be] transition font-semibold"
@@ -775,7 +686,6 @@ export default function HeaderMockup() {
           >
             {t("news")}
           </Link>
-
           <Link
             href={getLocalizedPath("/#about")}
             className="block py-3 hover:text-[#3066be] transition font-semibold"
@@ -810,7 +720,6 @@ export default function HeaderMockup() {
             Start Analyse Gesprek
           </Link>
 
-          {/* Mobile languages */}
           <div className="pt-4 border-t border-gray-200">
             <p className="text-xs text-gray-400 mb-3 uppercase tracking-wider font-semibold">
               {t("language")}
@@ -859,5 +768,24 @@ export default function HeaderMockup() {
         }
       `}</style>
     </header>
+  );
+}
+
+// Simple Arrow Icon Component
+function ArrowRightIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M14 5l7 7m0 0l-7 7m7-7H3"
+      />
+    </svg>
   );
 }

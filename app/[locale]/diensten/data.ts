@@ -123,34 +123,5 @@ export const services = [
       },
     ],
   },
-  {
-    slug: "administratieve-automatisering",
-    title: "Administratieve Automatisering",
-    subtitle: "Nooit meer facturen handmatig verwerken.",
-    description:
-      "Administratie is noodzakelijk, maar tijdrovend. Wij automatiseren het volledige proces van offerte tot factuur en betalingsherinnering, zodat je financiën altijd op orde zijn.",
-    icon: "bar_chart",
-    benefits: [
-      "Facturen worden automatisch ingelezen en geboekt",
-      "Offertes automatisch nabellen of mailen",
-      "Altijd realtime inzicht in openstaande posten",
-      "Foutloze financiële rapportages",
-    ],
-    features: [
-      "Factuurverwerking (Scan & Herken)",
-      "Automatisch debiteurenbeheer",
-      "Urenregistratie koppelingen",
-      "Onboarding van nieuwe klanten",
-    ],
-    faq: [
-      {
-        question: "Werkt dit met mijn boekhoudpakket?",
-        answer: "Ja, wij koppelen met o.a. Exact Online, Moneybird, Twinfield, e-Boekhouden en SnelStart.",
-      },
-      {
-        question: "Wat als er een fout in een factuur zit?",
-        answer: "Onze software herkent afwijkingen direct en zet deze apart voor een snelle menselijke check. Je houdt altijd de controle.",
-      },
-    ],
-  },
+ 
 ];

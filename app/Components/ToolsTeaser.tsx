@@ -65,11 +65,11 @@ export default function ToolsTeaser() {
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
-                  href="/tools/invoice-extraction"
+                  href="/diensten/agent-api"
                   className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:bg-[#234a8c] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#3066be]/20 hover:-translate-y-1"
                 >
                   <Zap className="w-4 h-4 fill-white" />
-                  Start Agent
+                  Hoe werkt het?
                 </Link>
                 <Link
                   href="/tools"
