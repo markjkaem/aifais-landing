@@ -166,109 +166,104 @@ export default function HomeClient() {
       </section>
 
       {/* ================= EXPLAINER (Light Theme) ================= */}
-      <section className="py-24 bg-slate-50 relative overflow-hidden">
-        {/* Decoratieve achtergrond details */}
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
-        <div className="absolute -left-20 top-40 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-        <div className="absolute -right-20 bottom-40 w-96 h-96 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+      {/* Software die Werkt Section - Premium Redesign */}
+      <section className="py-24 md:py-32 bg-white relative overflow-hidden">
+        {/* Subtle background elements */}
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white" />
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-100/40 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-l from-purple-100/40 to-transparent rounded-full blur-3xl" />
 
         <div className="container mx-auto px-6 max-w-7xl relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Text Content */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Left: Text Content */}
             <div className="order-2 lg:order-1">
-              <h2
-                className={`${h1.className} text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-slate-900 tracking-tight leading-[1.1]`}
-              >
+              {/* Heading with visual flair */}
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-gray-900 tracking-tight leading-[1.1]">
                 Software die{" "}
-                <span className="text-[#3066be] relative inline-block">
-                  werkt
-                  {/* Onderstreping effect */}
-                  <svg
-                    className="absolute w-full h-3 -bottom-1 left-0 text-[#3066be]/20"
-                    viewBox="0 0 100 10"
-                    preserveAspectRatio="none"
-                  >
-                    <path
-                      d="M0 5 Q 50 10 100 5"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      fill="none"
-                    />
-                  </svg>
+                <span className="relative inline-block">
+                  <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500">
+                    werkt
+                  </span>
+                  <span className="absolute bottom-1 left-0 w-full h-3 bg-blue-100 -z-0 rounded" />
                 </span>
                 ,
                 <br />
                 niet software die{" "}
-                <span className="text-slate-400 line-through decoration-slate-400/50 decoration-4 decoration-wavy">
+                <span className="text-gray-300 line-through decoration-2">
                   wacht
                 </span>
                 .
               </h2>
 
-              <div className="prose prose-lg text-slate-600 mb-10">
-                <p className="leading-relaxed">
+              {/* Description */}
+              <div className="space-y-4 mb-10">
+                <p className="text-xl text-gray-500 leading-relaxed">
                   Traditionele software is passief: het wacht tot jij op de
-                  knoppen drukt. Een{" "}
-                  <strong className="text-slate-900">Digitale Werknemer</strong>{" "}
-                  is proactief.
+                  knoppen drukt.
                 </p>
-                <p className="leading-relaxed">
-                  Wij bouwen intelligente agenten die zelfstandig taken
-                  oppakken. Ze lezen je mail, begrijpen context, en voeren
-                  acties uit in je systemen. Zonder dat jij erbij hoeft te zijn.
+                <p className="text-xl text-gray-600 leading-relaxed">
+                  Een{" "}
+                  <span className="font-semibold text-gray-900">
+                    Digitale Werknemer
+                  </span>{" "}
+                  is proactief. Hij leest je mail, begrijpt context, en voert
+                  acties uit — zonder dat jij erbij hoeft te zijn.
                 </p>
               </div>
 
-              <ul className="space-y-8 mt-8">
+              {/* Feature Cards */}
+              <div className="space-y-4">
                 {[
                   {
                     title: "Autonome Uitvoering",
-                    desc: "Geen kliks nodig. Onze agents nemen het volledige proces over, van start tot finish.",
+                    desc: "Geen kliks nodig. Je agent neemt het volledige proces over, van start tot finish.",
                     icon: (
                       <svg
+                        className="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
-                        strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-6 h-6"
+                        strokeWidth={1.5}
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                          d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
                         />
                       </svg>
                     ),
+                    color: "blue" as const,
                   },
                   {
                     title: "Contextuele AI",
-                    desc: "Begrijpt niet alleen data, maar ook de nuance. Leest e-mails en PDF's zoals een mens dat doet.",
+                    desc: "Begrijpt niet alleen data, maar ook nuance. Leest documenten zoals een mens dat doet.",
                     icon: (
                       <svg
+                        className="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
-                        strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-6 h-6"
+                        strokeWidth={1.5}
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"
+                          d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"
                         />
                       </svg>
                     ),
+                    color: "purple" as const,
                   },
                   {
-                    title: "No Cure, No Pay",
-                    desc: "Wij geloven in resultaat. Je betaalt alleen voor succesvol afgeronde taken.",
+                    title: "Niet Goed, Geld Terug",
+                    desc: "Wij geloven in resultaat. Werkt het niet zoals afgesproken? Dan betaal je niet.",
                     icon: (
                       <svg
+                        className="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
-                        strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-6 h-6"
+                        strokeWidth={1.5}
                       >
                         <path
                           strokeLinecap="round"
@@ -277,344 +272,647 @@ export default function HomeClient() {
                         />
                       </svg>
                     ),
+                    color: "emerald" as const,
                   },
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-4 md:gap-5 group">
-                    {/* Icon Container */}
-                    <div className="shrink-0 w-12 h-12 rounded-xl bg-blue-50 text-[#3066be] border border-blue-100 flex items-center justify-center transition-all duration-300 group-hover:bg-[#3066be] group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-500/30">
-                      {item.icon}
-                    </div>
+                ].map((item, i) => {
+                  const colors: Record<"blue" | "purple" | "emerald", string> =
+                    {
+                      blue: "bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white",
+                      purple:
+                        "bg-purple-50 text-purple-600 group-hover:bg-purple-600 group-hover:text-white",
+                      emerald:
+                        "bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white",
+                    };
 
-                    {/* Text */}
-                    <div className="pt-1">
-                      <h3 className="text-slate-900 font-bold text-lg mb-1 group-hover:text-[#3066be] transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                        {item.desc}
-                      </p>
+                  return (
+                    <div
+                      key={i}
+                      className="group flex items-start gap-4 p-4 rounded-2xl hover:bg-gray-50 transition-all duration-300 cursor-default"
+                    >
+                      <div
+                        className={`flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                          colors[item.color]
+                        }`}
+                      >
+                        {item.icon}
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 mb-1">
+                          {item.title}
+                        </h3>
+                        <p className="text-gray-500 text-sm leading-relaxed">
+                          {item.desc}
+                        </p>
+                      </div>
                     </div>
-                  </li>
-                ))}
-              </ul>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Visual: Workflow Architectuur */}
-            <div className="order-1 lg:order-2 relative w-full">
-              {/* Card Container */}
-              <div className="relative bg-white rounded-[2rem] border border-slate-200 p-8 md:p-10 shadow-2xl shadow-slate-200/60 overflow-hidden transform hover:scale-[1.01] transition-transform duration-500">
-                {/* Grid Background inside Card */}
-                <div
-                  className="absolute inset-0 opacity-[0.03]"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(#3066be 1px, transparent 1px)",
-                    backgroundSize: "24px 24px",
-                  }}
-                ></div>
+            {/* Right: Interactive Visual */}
+            <div className="order-1 lg:order-2">
+              <div className="relative">
+                {/* Glow effect behind card */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 rounded-[2.5rem] blur-2xl opacity-60" />
 
-                <div className="relative z-10 flex flex-col items-center w-full space-y-2">
-                  {/* INPUT LAYER */}
-                  <div className="w-full bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm relative group">
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-xs font-bold tracking-wider text-slate-400 uppercase">
-                        Input Bronnen
+                {/* Main Card */}
+                <div className="relative bg-white rounded-[2rem] border border-gray-200 shadow-2xl shadow-gray-200/50 overflow-hidden">
+                  {/* Card Header */}
+                  <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex gap-1.5">
+                        <div className="w-3 h-3 rounded-full bg-red-400" />
+                        <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                        <div className="w-3 h-3 rounded-full bg-green-400" />
+                      </div>
+                      <span className="text-sm text-gray-400 font-mono">
+                        agent.process
                       </span>
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 rounded-full bg-red-400/20"></div>
-                        <div className="w-2 h-2 rounded-full bg-yellow-400/20"></div>
-                        <div className="w-2 h-2 rounded-full bg-green-400/20"></div>
-                      </div>
                     </div>
-                    <div className="flex flex-wrap gap-3">
-                      <div className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 shadow-sm">
-                        <span className="w-2 h-2 rounded-full bg-orange-400"></span>{" "}
-                        Nieuwe E-mail
-                      </div>
-                      <div className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-600 shadow-sm">
-                        <span className="w-2 h-2 rounded-full bg-red-400"></span>{" "}
-                        Factuur PDF
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                      </span>
+                      <span className="text-xs text-emerald-600 font-medium">
+                        Live
+                      </span>
                     </div>
                   </div>
 
-                  {/* Connecting Line 1 */}
-                  <div className="h-8 border-l-2 border-dashed border-slate-300"></div>
-
-                  {/* PROCESSING LAYER (The Brain) */}
-                  <div className="w-full relative p-1 rounded-xl bg-gradient-to-r from-[#3066be] via-blue-400 to-[#3066be] shadow-lg shadow-blue-500/20">
-                    <div className="bg-white rounded-[10px] p-6 relative overflow-hidden">
-                      {/* Scanning Animation Line */}
-                      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent animate-[shimmer_2s_infinite] opacity-50"></div>
-
-                      <div className="flex justify-between items-center mb-4">
-                        <div className="flex items-center gap-2">
-                          <span className="relative flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#3066be]"></span>
-                          </span>
-                          <span className="text-[#3066be] font-bold text-sm tracking-wide">
-                            AI PROCESSING
-                          </span>
+                  {/* Card Body */}
+                  <div className="p-6 space-y-4">
+                    {/* Input Section */}
+                    <div className="bg-gray-50 rounded-xl p-4">
+                      <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                        Input
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <div className="inline-flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-gray-200 text-sm">
+                          <div className="w-2 h-2 rounded-full bg-orange-400" />
+                          <span className="text-gray-600">email_inbox</span>
                         </div>
-                        <span className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded font-mono">
-                          Running...
-                        </span>
+                        <div className="inline-flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-gray-200 text-sm">
+                          <div className="w-2 h-2 rounded-full bg-red-400" />
+                          <span className="text-gray-600">invoice.pdf</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Processing Section */}
+                    <div className="relative">
+                      {/* Connector */}
+                      <div className="absolute left-1/2 -top-2 w-px h-2 bg-gray-200" />
+
+                      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-[2px]">
+                        <div className="bg-white rounded-[10px] p-4">
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
+                                <svg
+                                  className="w-4 h-4 text-white"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                                  />
+                                </svg>
+                              </div>
+                              <span className="font-semibold text-gray-900">
+                                AI Processing
+                              </span>
+                            </div>
+                            <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full font-medium">
+                              3.2s
+                            </span>
+                          </div>
+
+                          <div className="space-y-2 font-mono text-sm">
+                            <div className="flex items-center gap-2 text-gray-500">
+                              <svg
+                                className="w-4 h-4 text-emerald-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                              <span>Document geanalyseerd</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-500">
+                              <svg
+                                className="w-4 h-4 text-emerald-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                              <span>€2.450,00 geëxtraheerd</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-500">
+                              <svg
+                                className="w-4 h-4 text-emerald-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                              <span>Matched met PO #2024-0891</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
-                      <div className="space-y-3">
-                        {/* Simulated Code/Log lines */}
-                        <div className="h-2 w-3/4 bg-slate-100 rounded animate-pulse"></div>
-                        <div className="h-2 w-1/2 bg-slate-100 rounded animate-pulse delay-75"></div>
-                        <div className="h-2 w-2/3 bg-slate-100 rounded animate-pulse delay-150"></div>
-                      </div>
+                      {/* Connector */}
+                      <div className="absolute left-1/2 -bottom-2 w-px h-2 bg-gray-200" />
+                    </div>
 
-                      <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col gap-1">
-                        <p className="text-xs text-slate-500 font-mono flex items-center gap-2">
-                          <span className="text-green-500">✔</span> Context
-                          begrepen
-                        </p>
-                        <p className="text-xs text-slate-500 font-mono flex items-center gap-2">
-                          <span className="text-green-500">✔</span> Data
-                          geëxtraheerd
-                        </p>
+                    {/* Output Section */}
+                    <div className="bg-emerald-50 rounded-xl p-4 flex items-center justify-between">
+                      <div>
+                        <div className="text-xs font-semibold text-emerald-600/70 uppercase tracking-wider mb-1">
+                          Output
+                        </div>
+                        <div className="text-emerald-900 font-semibold">
+                          Factuur verwerkt & ingeboekt
+                        </div>
+                      </div>
+                      <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center">
+                        <svg
+                          className="w-5 h-5 text-white"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2.5}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
                       </div>
                     </div>
                   </div>
 
-                  {/* Connecting Line 2 */}
-                  <div className="h-8 border-l-2 border-dashed border-slate-300"></div>
-
-                  {/* OUTPUT LAYER */}
-                  <div className="w-full bg-emerald-50/50 border border-emerald-100 rounded-xl p-5 flex items-center justify-between">
-                    <div>
-                      <span className="block text-xs font-bold tracking-wider text-emerald-600/70 uppercase mb-1">
-                        Resultaat
+                  {/* Card Footer */}
+                  <div className="px-6 py-4 border-t border-gray-100 bg-gray-50/30">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-400">
+                        Geen menselijke actie nodig
                       </span>
-                      <span className="text-emerald-900 font-medium text-sm">
-                        Factuur ingeboekt & betaald
+                      <span className="text-gray-500 font-medium">
+                        24/7 actief
                       </span>
-                    </div>
-                    <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center border border-emerald-100 shadow-sm text-emerald-600">
-                      <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Floating element behind for depth */}
-              <div className="absolute -bottom-6 -right-6 w-full h-full bg-slate-100 rounded-[2rem] -z-10"></div>
+                {/* Floating badges */}
+                <div className="absolute -top-3 -right-3 px-3 py-1.5 bg-white rounded-full border border-gray-200 shadow-lg text-xs font-semibold text-gray-600">
+                  100% automatisch
+                </div>
+
+                <div className="absolute -bottom-3 -left-3 px-3 py-1.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-lg text-xs font-semibold text-white">
+                  Claude 4.5 Powered
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
       {/* ================= PROCESS (Light Mode) ================= */}
-      <section className="relative py-24 bg-slate-50 overflow-hidden font-sans">
-        {/* Achtergrond Grid (Subtiel "Tech" effect) */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-[#3066be] opacity-20 blur-[100px]"></div>
+      {/* Hoe Wij Werken Section - Premium Redesign */}
+      <section className="relative py-24 md:py-32 bg-gray-50 overflow-hidden">
+        {/* Subtle background */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:32px_32px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-100/50 to-purple-100/50 rounded-full blur-3xl opacity-50" />
 
         <div className="container mx-auto px-6 max-w-5xl relative z-10">
           {/* Header */}
           <div className="text-center mb-20">
-            <div className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-[#3066be] uppercase bg-blue-50 border border-blue-100 rounded-full">
-              Process
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-6 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
+              <span className="text-sm font-medium text-gray-600">
+                Ons Proces
+              </span>
             </div>
-            <h2
-              className={`${h1.className} text-4xl md:text-5xl font-bold mb-6 text-slate-900 tracking-tight`}
-            >
+
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
               Hoe wij{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-blue-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">
                 werken
               </span>
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              Geen black box, maar een helder proces. Transparant, eerlijk en
-              zonder verrassingen achteraf.
+
+            <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+              Geen black box. Transparant, eerlijk, en zonder verrassingen.
             </p>
           </div>
 
+          {/* Timeline */}
           <div className="relative">
-            {/* Centrale Tijdlijn (Gradient Line) */}
-            <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-300 to-transparent md:left-1/2 md:-ml-px"></div>
+            {/* Vertical line (desktop) */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-gray-200 via-gray-300 to-gray-200" />
 
-            {/* Stap 1: Kennismaking */}
-            <div className="relative flex flex-col md:flex-row items-center gap-8 mb-16 md:mb-24 group">
-              {/* Spacer links (voor desktop) */}
-              <div className="hidden md:block w-1/2 pr-12 text-right">
-                <span className="text-9xl font-bold text-slate-100 select-none absolute left-0 top-0 -translate-y-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10">
-                  01
-                </span>
-              </div>
-
-              {/* Center Node */}
-              <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 bg-white border border-slate-200 rounded-full shadow-lg z-10 group-hover:scale-110 group-hover:border-[#3066be] transition-all duration-300">
-                <span className="text-[#3066be] font-bold text-sm">01</span>
-              </div>
-
-              {/* Card */}
-              <div className="w-full md:w-1/2 pl-20 md:pl-12">
-                {/* Connector Line (Horizontal) */}
-                <div className="absolute left-8 md:left-1/2 top-6 w-12 h-px bg-slate-300 md:block hidden"></div>
-
-                <div className="relative bg-white border border-slate-100 p-8 rounded-2xl shadow-[0_5px_20px_-5px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-10px_rgba(48,102,190,0.15)] hover:-translate-y-1 transition-all duration-300">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-[#3066be]">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-slate-900">
-                      Koffie & Kritische Vragen
-                    </h3>
-                  </div>
-                  <p className="text-slate-600 leading-relaxed">
-                    Het begint altijd met een gesprek. We drinken een koffie en
-                    stellen veel vragen: Waar verlies je tijd? Wat zijn de
-                    vervelende klusjes?
-                    <br />
-                    <span className="text-xs font-bold text-[#3066be] uppercase tracking-wide mt-3 inline-block bg-blue-50 px-2 py-1 rounded">
-                      100% Gratis sessie
+            {/* Step 1 */}
+            <div className="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-12 md:mb-20">
+              {/* Left content (desktop) */}
+              <div className="hidden md:flex w-1/2 justify-end pr-12">
+                <div className="max-w-md text-right">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full mb-4">
+                    <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
+                      Stap 1
                     </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Stap 2: Plan (Links op desktop) */}
-            <div className="relative flex flex-col md:flex-row items-center gap-8 mb-16 md:mb-24 group">
-              {/* Card (Nu links) */}
-              <div className="w-full md:w-1/2 pl-20 md:pr-12 md:pl-0 md:text-right">
-                <div className="hidden md:block absolute right-1/2 top-6 w-12 h-px bg-slate-300"></div>
-
-                <div className="relative bg-white border border-slate-100 p-8 rounded-2xl shadow-[0_5px_20px_-5px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-10px_rgba(48,102,190,0.15)] hover:-translate-y-1 transition-all duration-300">
-                  <div className="flex items-center gap-4 mb-4 md:flex-row-reverse">
-                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-[#3066be]">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-slate-900">
-                      Concreet Voorstel
-                    </h3>
                   </div>
-                  <p className="text-slate-600 leading-relaxed">
-                    We maken een plan. Concreet: <strong>dit</strong>{" "}
-                    automatiseren we, <strong>dit</strong> levert het op en{" "}
-                    <strong>dit</strong> kost het. Geen kleine lettertjes. Vind
-                    je het niks? Dan schudden we handen en gaan we allebei
-                    verder.
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                    Koffie & Kritische Vragen
+                  </h3>
+                  <p className="text-gray-500 leading-relaxed mb-4">
+                    Het begint met een gesprek. Waar verlies je tijd? Wat zijn
+                    de vervelende klusjes? We stellen de juiste vragen.
                   </p>
-                </div>
-              </div>
-
-              {/* Center Node */}
-              <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 bg-white border border-slate-200 rounded-full shadow-lg z-10 group-hover:scale-110 group-hover:border-[#3066be] transition-all duration-300">
-                <span className="text-[#3066be] font-bold text-sm">02</span>
-              </div>
-
-              {/* Spacer rechts */}
-              <div className="hidden md:block w-1/2 pl-12">
-                <span className="text-9xl font-bold text-slate-100 select-none absolute right-0 top-0 -translate-y-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10">
-                  02
-                </span>
-              </div>
-            </div>
-
-            {/* Stap 3: Bouwen (Rechts op desktop) */}
-            <div className="relative flex flex-col md:flex-row items-center gap-8 group">
-              {/* Spacer links */}
-              <div className="hidden md:block w-1/2 pr-12 text-right">
-                <span className="text-9xl font-bold text-slate-100 select-none absolute left-0 top-0 -translate-y-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10">
-                  03
-                </span>
-              </div>
-
-              {/* Center Node */}
-              <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 bg-[#3066be] border-4 border-blue-100 rounded-full shadow-lg z-10 ring-4 ring-white">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-
-              {/* Card */}
-              <div className="w-full md:w-1/2 pl-20 md:pl-12">
-                <div className="absolute left-8 md:left-1/2 top-6 w-12 h-px bg-slate-300 md:block hidden"></div>
-
-                <div className="relative bg-white border border-slate-100 p-8 rounded-2xl shadow-[0_5px_20px_-5px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-10px_rgba(48,102,190,0.15)] hover:-translate-y-1 transition-all duration-300 ring-1 ring-inset ring-slate-100">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-green-600">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-slate-900">
-                      Bouwen & Garantie
-                    </h3>
-                  </div>
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    Zeg je ja? Dan gaan we aan de slag. Je betaalt de helft
-                    vooraf, wij bouwen. Bij oplevering, als alles werkt, volgt
-                    de rest.
-                  </p>
-                  <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-medium">
                     <svg
-                      className="w-5 h-5 text-[#3066be]"
+                      className="w-4 h-4"
                       fill="none"
-                      stroke="currentColor"
                       viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    100% Gratis
+                  </span>
+                </div>
+              </div>
+
+              {/* Center node */}
+              <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 shadow-lg flex items-center justify-center z-10 group-hover:border-blue-500 transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right content (desktop) / Mobile content */}
+              <div className="w-full md:w-1/2 pl-20 md:pl-12">
+                {/* Mobile only */}
+                <div className="md:hidden mb-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full mb-3">
+                    <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
+                      Stap 1
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Koffie & Kritische Vragen
+                  </h3>
+                  <p className="text-gray-500 leading-relaxed mb-3">
+                    Het begint met een gesprek. Waar verlies je tijd? Wat zijn
+                    de vervelende klusjes?
+                  </p>
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-medium">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    100% Gratis
+                  </span>
+                </div>
+
+                {/* Desktop visual */}
+                <div className="hidden md:block bg-white rounded-2xl border border-gray-200 p-6 shadow-lg shadow-gray-200/50">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
+                      <span className="text-lg">☕</span>
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium text-gray-900">
+                        Gratis Kennismaking
+                      </div>
+                      <div className="text-xs text-gray-400">
+                        30 minuten • Online of op locatie
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2 text-sm text-gray-500">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gray-300" />
+                      Welke taken kosten je de meeste tijd?
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gray-300" />
+                      Welke software gebruik je al?
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gray-300" />
+                      Wat zou je het liefst automatiseren?
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-12 md:mb-20">
+              {/* Left content (desktop) - Card */}
+              <div className="hidden md:flex w-1/2 justify-end pr-12">
+                <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg shadow-gray-200/50 max-w-sm">
+                  <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">
+                    Voorstel Voorbeeld
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                      <span className="text-gray-600">Wat we bouwen</span>
+                      <span className="font-medium text-gray-900">
+                        Email Agent
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                      <span className="text-gray-600">Tijdsbesparing</span>
+                      <span className="font-medium text-emerald-600">
+                        ~15 uur/week
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                      <span className="text-gray-600">Doorlooptijd</span>
+                      <span className="font-medium text-gray-900">2 weken</span>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <span className="text-gray-600">Investering</span>
+                      <span className="font-bold text-gray-900">€2.500</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Center node */}
+              <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 shadow-lg flex items-center justify-center z-10">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right content */}
+              <div className="w-full md:w-1/2 pl-20 md:pl-12">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-50 rounded-full mb-4">
+                  <span className="text-xs font-semibold text-purple-600 uppercase tracking-wide">
+                    Stap 2
+                  </span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
+                  Concreet Voorstel
+                </h3>
+                <p className="text-gray-500 leading-relaxed mb-4">
+                  <strong className="text-gray-700">Dit</strong> automatiseren
+                  we, <strong className="text-gray-700">dit</strong> levert het
+                  op, <strong className="text-gray-700">dit</strong> kost het.
+                  Geen kleine lettertjes.
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Vind je het niks? Dan schudden we handen en gaan we verder.
+                  Geen harde feelings.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-12 md:mb-20">
+              {/* Left content (desktop) */}
+              <div className="hidden md:flex w-1/2 justify-end pr-12">
+                <div className="max-w-md text-right">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full mb-4">
+                    <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
+                      Stap 3
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                    Bouwen & Testen
+                  </h3>
+                  <p className="text-gray-500 leading-relaxed">
+                    Je betaalt 50% vooraf, wij gaan bouwen. We houden je op de
+                    hoogte en testen samen tot het perfect werkt.
+                  </p>
+                </div>
+              </div>
+
+              {/* Center node */}
+              <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 shadow-lg flex items-center justify-center z-10">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right content */}
+              <div className="w-full md:w-1/2 pl-20 md:pl-12">
+                {/* Mobile only */}
+                <div className="md:hidden mb-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full mb-3">
+                    <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
+                      Stap 3
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Bouwen & Testen
+                  </h3>
+                  <p className="text-gray-500 leading-relaxed">
+                    50% vooraf, wij bouwen. We testen samen tot het perfect
+                    werkt.
+                  </p>
+                </div>
+
+                {/* Desktop visual */}
+                <div className="hidden md:block bg-white rounded-2xl border border-gray-200 p-6 shadow-lg shadow-gray-200/50">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex -space-x-2">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white">
+                        M
+                      </div>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white">
+                        F
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      Mark & Faissal aan het werk
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full w-3/4" />
+                      </div>
+                      <span className="text-sm font-medium text-gray-600 whitespace-nowrap">
+                        75%
+                      </span>
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      Gemiddelde doorlooptijd: 2 weken
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 4 - Final */}
+            <div className="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0">
+              {/* Left content (desktop) - Card */}
+              <div className="hidden md:flex w-1/2 justify-end pr-12">
+                <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 shadow-xl max-w-sm text-white">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                      <svg
+                        className="w-5 h-5 text-emerald-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="font-semibold">Onze Garantie</div>
+                      <div className="text-sm text-gray-400">
+                        Geen risico voor jou
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    Werkt het niet zoals afgesproken? Dan krijg je je geld
+                    terug. Zo simpel is het.
+                  </p>
+                </div>
+              </div>
+
+              {/* Center node - Final (different style) */}
+              <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-lg shadow-emerald-500/30 flex items-center justify-center z-10 ring-4 ring-white">
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Right content */}
+              <div className="w-full md:w-1/2 pl-20 md:pl-12">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 rounded-full mb-4">
+                  <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">
+                    Stap 4
+                  </span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
+                  Live & Garantie
+                </h3>
+                <p className="text-gray-500 leading-relaxed mb-4">
+                  Je Digitale Werknemer gaat live en draait 24/7. Bij oplevering
+                  betaal je de rest — alleen als alles werkt.
+                </p>
+
+                {/* Mobile guarantee */}
+                <div className="md:hidden bg-gray-900 rounded-xl p-4 text-white">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg
+                      className="w-5 h-5 text-emerald-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
                       <path
                         strokeLinecap="round"
@@ -623,12 +921,38 @@ export default function HomeClient() {
                         d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
                       />
                     </svg>
-                    <span className="text-sm font-semibold text-slate-800">
+                    <span className="font-semibold">
                       Niet goed? Geld terug.
                     </span>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="mt-20 text-center">
+            <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-2 bg-white rounded-full border border-gray-200 shadow-lg">
+              <span className="text-gray-600 px-4">Klaar om te beginnen?</span>
+              <a
+                href="/contact"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-all"
+              >
+                Plan gratis gesprek
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
