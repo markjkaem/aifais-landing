@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/portfolio",
     "/diensten",
+    "/diensten/bedrijfsbrein",
     "/news", // ✅ Ensure this is here
     "/contact",
     "/tools",
