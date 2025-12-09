@@ -84,7 +84,7 @@ export default function ServicesPage() {
       ),
       title: "Document Agent",
       description: "Verwerkt facturen, contracten en formulieren automatisch.",
-      link: "/portfolio/document-processing",
+      link: "/portfolio/data-pipeline-and-reporting-automation",
     },
     {
       icon: (
