@@ -155,10 +155,10 @@ export default function HomeClient() {
               </Link>
 
               <Link
-                href="/diensten"
+                href="/tools/roi-calculator"
                 className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-medium hover:bg-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center backdrop-blur-md"
               >
-                Bekijk Diensten
+                Besparings tool proberen
               </Link>
             </div>
           </div>
