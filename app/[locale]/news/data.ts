@@ -1,5 +1,5 @@
 // ========================================
-// FILE: app/news/[slug]/data.ts
+// FILE: app/news/data.ts
 // ========================================
 
 import { workflowArticle } from "./articles/workflow-automatisering";
@@ -7,10 +7,28 @@ import { aiArticle } from "./articles/klantenservice-ai";
 import { invoiceArticle } from "./articles/facturatie-gids";
 import { x402Article } from "./articles/x402-de-krachtbron-voor-autonome-agents";
 
-// Voeg hier nieuwe artikelen toe door ze te importeren
-export const news = [
+// Dit type helpt je om consistent te blijven met AEO velden
+export interface AEOArticle {
+  id: number;
+  slug: string;
+  title: string;
+  aeoSnippet: string; // Verplicht voor AEO
+  excerpt: string;
+  date: string;
+  updatedAt?: string;
+  author: string;
+  authorBio: string;
+  category: string;
+  image: string;
+  readTime: number;
+  tags: string[];
+  faq?: { question: string; answer: string }[]; // Verplicht voor Schema
+  content: string; // Gebruik Markdown met H2 vragen
+}
+
+export const news: AEOArticle[] = [
   workflowArticle,
   aiArticle,
   x402Article,
   invoiceArticle,
-].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Altijd de nieuwste bovenaan
+].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
