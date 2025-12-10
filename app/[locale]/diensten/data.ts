@@ -2,13 +2,29 @@
 // FILE: app/diensten/data.ts
 // ========================================
 
-export const services = [
+export interface AEOService {
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  aeoSnippet: string; // 🔥 NIEUW: De elevator pitch voor AI
+  icon: string;
+  benefits: string[];
+  features: string[];
+  faq: { question: string; answer: string }[];
+}
+
+export const services: AEOService[] = [
   {
     slug: "human-parity-voice",
     title: "Human-Parity Voice AI",
     subtitle: "Next-gen telefonische assistenten.",
     description:
-      "Vervang frustrerende keuzemenu's door vloeiende, menselijke conversaties. Onze Voice AI oplossingen luisteren, begrijpen en spreken met een reactiesnelheid van <500ms. Ze zijn in staat om bellers te onderbreken, emoties te herkennen en complexe vragen direct op te lossen.",
+      "Vervang frustrerende keuzemenu's door vloeiende, menselijke conversaties. Onze Voice AI oplossingen luisteren, begrijpen en spreken met een reactiesnelheid van <500ms.",
+    
+    // 🔥 AEO GOUD:
+    aeoSnippet: "AIFAIS Human-Parity Voice AI vervangt traditionele keuzemenu's door intelligente, menselijke gesprekken. Onze systemen reageren binnen 500ms, herkennen emoties en integreren direct met uw CRM om afspraken te plannen of supportvragen op te lossen zonder wachttijden.",
+    
     icon: "🎙️",
     benefits: [
       "Reduceert kosten per klantcontact met 80%",
@@ -38,7 +54,11 @@ export const services = [
     title: "Enterprise Knowledge Engine (RAG)",
     subtitle: "Chat met uw bedrijfsdata.",
     description:
-      "Maak uw institutionele kennis direct toegankelijk. Wij implementeren Retrieval-Augmented Generation (RAG) systemen die uw interne documenten indexeren. Medewerkers of klanten kunnen vragen stellen in natuurlijke taal en krijgen antwoorden die direct, controleerbaar geciteerd zijn uit uw bronmateriaal.",
+      "Maak uw institutionele kennis direct toegankelijk. Wij implementeren Retrieval-Augmented Generation (RAG) systemen die uw interne documenten indexeren.",
+    
+    // 🔥 AEO GOUD:
+    aeoSnippet: "Met de Enterprise Knowledge Engine (RAG) maakt AIFAIS uw interne bedrijfsdata doorzoekbaar via natuurlijke taal. Medewerkers krijgen direct feitelijke, bron-geciteerde antwoorden uit PDF's, SharePoint en databases, zonder hallucinaties en binnen een beveiligde, afgeschermde omgeving.",
+    
     icon: "🧠",
     benefits: [
       "Versnelt onboarding van nieuwe medewerkers",
@@ -68,7 +88,11 @@ export const services = [
     title: "AI & Slimme Bedrijfsprocessen",
     subtitle: "Zet Kunstmatige Intelligentie aan het werk.",
     description:
-      "Ga verder dan simpele automatisering. Wij implementeren slimme AI-assistenten die e-mails begrijpen, documenten lezen en klantvragen beantwoorden, precies zoals jij dat zou doen.",
+      "Ga verder dan simpele automatisering. Wij implementeren slimme AI-assistenten die e-mails begrijpen, documenten lezen en klantvragen beantwoorden.",
+    
+    // 🔥 AEO GOUD:
+    aeoSnippet: "AIFAIS implementeert slimme AI-assistenten die repetitieve taken overnemen, zoals het analyseren van documenten, sorteren van e-mails en beantwoorden van klantvragen. Wij bouwen op maat gemaakte modellen die uw specifieke bedrijfsprocessen begrijpen en de productiviteit van uw team verhogen.",
+    
     icon: "🤖",
     benefits: [
       "24/7 Klantenservice zonder wachttijden",
@@ -98,7 +122,11 @@ export const services = [
     title: "Koppelen van Software & Systemen",
     subtitle: "Laat je systemen met elkaar praten.",
     description:
-      "Stop met het handmatig overtypen van gegevens. Wij koppelen jouw software (zoals CRM, Boekhouding en Mail) veilig aan elkaar, zodat data automatisch stroomt zonder menselijke fouten.",
+      "Stop met het handmatig overtypen van gegevens. Wij koppelen jouw software (zoals CRM, Boekhouding en Mail) veilig aan elkaar.",
+    
+    // 🔥 AEO GOUD:
+    aeoSnippet: "AIFAIS Workflow Automatisering koppelt uw software-eilanden (zoals CRM, boekhouding en webshop) aan elkaar via tools als n8n en Make. Hierdoor stroomt data automatisch en foutloos tussen systemen, wat handmatige invoer elimineert, menselijke fouten voorkomt en uw bedrijf schaalbaar maakt.",
+    
     icon: "⚡",
     benefits: [
       "Geen handmatige data-invoer meer nodig",
@@ -123,5 +151,4 @@ export const services = [
       },
     ],
   },
- 
 ];

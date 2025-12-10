@@ -1,3 +1,7 @@
+// ========================================
+// FILE: app/tools/page.tsx
+// ========================================
+
 import { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -8,12 +12,13 @@ import {
   CheckCircle2,
   Lock,
   PenTool,
+  Calculator, // ✅ Nieuw icoon toegevoegd
 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Aifais Tools | Slimme AI Software voor MKB",
   description:
-    "Direct aan de slag met onze AI tools. Factuur scanners, juridische checks en meer. Geen abonnement nodig.",
+    "Direct aan de slag met onze AI tools. Factuur scanners, juridische checks en ROI calculators. Geen abonnement nodig.",
 };
 
 export default function ToolsPage() {
@@ -47,6 +52,33 @@ export default function ToolsPage() {
 
         {/* --- GRID --- */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* TOOL 0: ROI Calculator (NIEUW & HIGHLIGHT) */}
+          <Link
+            href="/tools/roi-calculator"
+            className="group relative bg-white border border-gray-200 rounded-3xl p-1 overflow-hidden hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 hover:-translate-y-1"
+          >
+            <div className="relative bg-white rounded-[22px] p-6 h-full flex flex-col">
+              <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                <Calculator className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-emerald-600 transition-colors">
+                Besparings Calculator
+              </h3>
+              <p className="text-gray-600 text-sm mb-6 flex-1">
+                Bereken exact hoeveel tijd en geld je kunt besparen met
+                automatisering. Inclusief gratis rapport.
+              </p>
+              <div className="flex items-center justify-between border-t border-gray-100 pt-4 mt-auto">
+                <span className="text-xs font-mono text-emerald-700 bg-emerald-50 px-2 py-1 rounded border border-emerald-100 font-bold">
+                  POPULAIR
+                </span>
+                <span className="text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all text-emerald-600">
+                  Bereken Nu <ArrowRight className="w-4 h-4" />
+                </span>
+              </div>
+            </div>
+          </Link>
+
           {/* TOOL 1: Factuur Scanner (LIVE) */}
           <Link
             href="/tools/invoice-extraction"
