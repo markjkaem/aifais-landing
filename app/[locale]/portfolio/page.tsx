@@ -114,32 +114,6 @@ export default function Portfolio() {
               automatiseren van repetitieve processen. Van lead-opvolging tot
               complexe data-synchronisatie.
             </p>
-
-            {/* ✅ STATS: Visual Trust (Light Theme) */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mt-12 max-w-3xl mx-auto">
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300">
-                <p className="text-4xl font-bold text-[#3066be] mb-1">
-                  {projects.length}+
-                </p>
-                <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">
-                  Projecten
-                </p>
-              </div>
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300">
-                <p className="text-4xl font-bold text-[#3066be] mb-1">50+</p>
-                <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">
-                  Tevreden Klanten
-                </p>
-              </div>
-              <div className="col-span-2 md:col-span-1 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300">
-                <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600 mb-1">
-                  40+
-                </p>
-                <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">
-                  Uur/mnd Bespaard
-                </p>
-              </div>
-            </div>
           </header>
         </div>
       </section>
