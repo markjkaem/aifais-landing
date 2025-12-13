@@ -671,7 +671,7 @@ export default function HomeClient() {
                     Voorstel Voorbeeld
                   </div>
                   <div className="space-y-3">
-                    <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <div className="flex justify-between items-center space-x-4 py-2 border-b border-gray-100">
                       <span className="text-gray-600">Wat we bouwen</span>
                       <span className="font-medium text-gray-900">
                         Email Agent
@@ -686,10 +686,6 @@ export default function HomeClient() {
                     <div className="flex justify-between items-center py-2 border-b border-gray-100">
                       <span className="text-gray-600">Doorlooptijd</span>
                       <span className="font-medium text-gray-900">2 weken</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2">
-                      <span className="text-gray-600">Investering</span>
-                      <span className="font-bold text-gray-900">€2.500</span>
                     </div>
                   </div>
                 </div>
