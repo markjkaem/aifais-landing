@@ -1,5 +1,6 @@
 // ========================================
 // FILE: components/AdvancedROICalculator.tsx
+// Premium Fintech/Consultancy Aesthetic
 // ========================================
 
 "use client";
@@ -7,7 +8,6 @@
 import Link from "next/link";
 import { useState, useMemo } from "react";
 
-// Types
 type RoleRow = {
   id: number;
   roleName: string;
@@ -16,49 +16,60 @@ type RoleRow = {
   hoursWastedPerWeek: number;
 };
 
+const presetRoles = [
+  { name: "Administratie", rate: 35, hours: 8 },
+  { name: "Sales", rate: 65, hours: 5 },
+  { name: "Klantenservice", rate: 38, hours: 10 },
+  { name: "Operations", rate: 45, hours: 6 },
+  { name: "Finance", rate: 55, hours: 7 },
+];
+
 export function AdvancedROICalculator() {
   const [rows, setRows] = useState<RoleRow[]>([
     {
       id: 1,
-      roleName: "Administratie / Backoffice",
-      employeeCount: 2,
-      hourlyRate: 35,
+      roleName: "Administratie",
+      employeeCount: 1,
+      hourlyRate: 30,
       hoursWastedPerWeek: 8,
-    },
-    {
-      id: 2,
-      roleName: "Sales / Account Managers",
-      employeeCount: 3,
-      hourlyRate: 65,
-      hoursWastedPerWeek: 5,
     },
   ]);
 
   const [efficiencyGain, setEfficiencyGain] = useState(80);
   const [opportunityMultiplier, setOpportunityMultiplier] = useState(1.5);
+  const [activeTab, setActiveTab] = useState<"input" | "results">("input");
 
   const addRow = () => {
     const newId = rows.length > 0 ? Math.max(...rows.map((r) => r.id)) + 1 : 1;
+    const unusedPreset = presetRoles.find(
+      (p) => !rows.some((r) => r.roleName === p.name)
+    );
     setRows([
       ...rows,
       {
         id: newId,
-        roleName: "Nieuwe Rol",
+        roleName: unusedPreset?.name || "Nieuwe rol",
         employeeCount: 1,
-        hourlyRate: 45,
-        hoursWastedPerWeek: 5,
+        hourlyRate: unusedPreset?.rate || 45,
+        hoursWastedPerWeek: unusedPreset?.hours || 5,
       },
     ]);
   };
 
-  const updateRow = (id: number, field: keyof RoleRow, value: any) => {
+  const updateRow = (
+    id: number,
+    field: keyof RoleRow,
+    value: string | number
+  ) => {
     setRows(
       rows.map((row) => (row.id === id ? { ...row, [field]: value } : row))
     );
   };
 
   const removeRow = (id: number) => {
-    setRows(rows.filter((row) => row.id !== id));
+    if (rows.length > 1) {
+      setRows(rows.filter((row) => row.id !== id));
+    }
   };
 
   const results = useMemo(() => {
@@ -84,13 +95,19 @@ export function AdvancedROICalculator() {
     const costAfterAI = totalCurrentCost - totalSavings;
     const hoursReclaimed = totalHoursWasted * (efficiencyGain / 100);
     const fteRecovered = hoursReclaimed / 1700;
+    const monthlyValue = totalSavings / 12;
 
     return {
       totalCurrentCost,
+      totalDirectCost,
+      totalOpportunityCost,
       totalSavings,
       costAfterAI,
       hoursReclaimed,
       fteRecovered,
+      monthlyValue,
+      savingsPercentage:
+        totalCurrentCost > 0 ? (totalSavings / totalCurrentCost) * 100 : 0,
     };
   }, [rows, efficiencyGain, opportunityMultiplier]);
 
@@ -101,99 +118,166 @@ export function AdvancedROICalculator() {
       maximumFractionDigits: 0,
     }).format(amount);
 
+  const formatNumber = (num: number) =>
+    new Intl.NumberFormat("nl-NL").format(Math.round(num));
+
   return (
-    // ✅ FIX: 'relative z-20' toegevoegd zodat hij altijd bovenop de gloed ligt
-    <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden relative z-20">
-      {/* Header */}
-      <div className="bg-[#3066be] p-6 text-white text-center">
-        <h3 className="text-2xl font-bold">ROI & Besparingscalculator</h3>
-        <p className="text-blue-100 text-sm mt-1">
-          Bereken de impact van AI-automatisering op jouw organisatie
-        </p>
+    <div className="font-body relative z-20">
+      {/* Mobile Tab Switcher */}
+      <div className="lg:hidden border-b border-gray-200 bg-gray-50">
+        <div className="flex">
+          <button
+            onClick={() => setActiveTab("input")}
+            className={`flex-1 py-4 text-sm font-semibold transition-colors ${
+              activeTab === "input"
+                ? "text-[#1e3a5f] border-b-2 border-[#1e3a5f] bg-white"
+                : "text-gray-500"
+            }`}
+          >
+            Invoer
+          </button>
+          <button
+            onClick={() => setActiveTab("results")}
+            className={`flex-1 py-4 text-sm font-semibold transition-colors ${
+              activeTab === "results"
+                ? "text-[#1e3a5f] border-b-2 border-[#1e3a5f] bg-white"
+                : "text-gray-500"
+            }`}
+          >
+            Resultaten
+          </button>
+        </div>
       </div>
 
-      <div className="p-6 md:p-8 grid lg:grid-cols-2 gap-12">
-        {/* KOLOM 1: INPUTS */}
-        <div className="space-y-8">
-          <div>
-            <div className="flex justify-between items-center mb-4">
-              <h4 className="text-gray-900 font-bold flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-xs">
+      <div className="grid lg:grid-cols-2">
+        {/* LEFT: INPUT PANEL */}
+        <div
+          className={`p-6 md:p-8 border-r border-gray-100 ${
+            activeTab === "results" ? "hidden lg:block" : ""
+          }`}
+        >
+          {/* Section 1: Team Roles */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-3">
+                <span className="w-7 h-7 rounded-full bg-[#3066be] text-white flex items-center justify-center text-xs font-bold">
                   1
                 </span>
-                Jouw Team
-              </h4>
+                <h4 className="font-semibold text-gray-900">
+                  Teamsamenstelling
+                </h4>
+              </div>
               <button
                 onClick={addRow}
-                className="text-xs text-[#3066be] font-bold hover:underline"
+                className="text-sm text-[#1e3a5f] font-semibold hover:text-[#2d4a6f] transition-colors flex items-center gap-1"
               >
-                + Rol Toevoegen
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
+                </svg>
+                Rol toevoegen
               </button>
             </div>
 
-            <div className="space-y-4">
-              {rows.map((row) => (
+            <div className="space-y-3">
+              {rows.map((row, index) => (
                 <div
                   key={row.id}
-                  className="p-4 bg-gray-50 rounded-xl border border-gray-100 relative group"
+                  className="group relative bg-gray-50 rounded-xl p-4 border border-gray-200 hover:border-gray-300 transition-colors"
                 >
-                  <div className="flex justify-between mb-2">
+                  {/* Role Header */}
+                  <div className="flex items-center justify-between mb-4">
                     <input
                       type="text"
                       value={row.roleName}
                       onChange={(e) =>
                         updateRow(row.id, "roleName", e.target.value)
                       }
-                      className="bg-transparent font-bold text-gray-800 focus:outline-none focus:border-b border-[#3066be] w-full"
+                      className="bg-transparent font-semibold text-gray-900 focus:outline-none border-b border-transparent focus:border-[#1e3a5f] transition-colors text-sm"
+                      placeholder="Rolnaam"
                     />
                     <button
                       onClick={() => removeRow(row.id)}
-                      className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition"
+                      disabled={rows.length <= 1}
+                      className={`w-6 h-6 rounded-full flex items-center justify-center transition-all ${
+                        rows.length <= 1
+                          ? "text-gray-300 cursor-not-allowed"
+                          : "text-gray-400 hover:text-red-500 hover:bg-red-50"
+                      }`}
+                      title={
+                        rows.length <= 1
+                          ? "Minimaal één rol vereist"
+                          : "Verwijderen"
+                      }
                     >
-                      ✕
+                      <svg
+                        className="w-3.5 h-3.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4 text-sm">
+                  {/* Input Grid */}
+                  <div className="grid grid-cols-3 gap-3">
                     <div>
-                      <label className="block text-gray-500 text-xs mb-1">
+                      <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
                         Aantal FTE
                       </label>
                       <input
                         type="number"
                         min="1"
+                        max="100"
                         value={row.employeeCount}
                         onChange={(e) =>
                           updateRow(
                             row.id,
                             "employeeCount",
-                            Number(e.target.value)
+                            Math.max(1, Number(e.target.value))
                           )
                         }
-                        className="w-full p-2 bg-white rounded border border-gray-200 focus:ring-2 ring-[#3066be]/20 outline-none"
+                        className="w-full px-3 py-2 bg-white rounded-lg border border-gray-200 focus:border-[#1e3a5f] focus:ring-2 focus:ring-[#1e3a5f]/10 outline-none text-sm font-medium text-gray-900 transition-all"
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-500 text-xs mb-1">
-                        Uurtarief (€)
+                      <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                        €/uur
                       </label>
                       <input
                         type="number"
                         min="15"
+                        max="500"
                         value={row.hourlyRate}
                         onChange={(e) =>
                           updateRow(
                             row.id,
                             "hourlyRate",
-                            Number(e.target.value)
+                            Math.max(15, Number(e.target.value))
                           )
                         }
-                        className="w-full p-2 bg-white rounded border border-gray-200 focus:ring-2 ring-[#3066be]/20 outline-none"
+                        className="w-full px-3 py-2 bg-white rounded-lg border border-gray-200 focus:border-[#1e3a5f] focus:ring-2 focus:ring-[#1e3a5f]/10 outline-none text-sm font-medium text-gray-900 transition-all"
                       />
                     </div>
                     <div>
-                      <label className="block text-gray-500 text-xs mb-1">
-                        Verspilde uren/week
+                      <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                        Uren/week
                       </label>
                       <input
                         type="number"
@@ -204,10 +288,10 @@ export function AdvancedROICalculator() {
                           updateRow(
                             row.id,
                             "hoursWastedPerWeek",
-                            Number(e.target.value)
+                            Math.min(40, Math.max(1, Number(e.target.value)))
                           )
                         }
-                        className="w-full p-2 bg-white rounded border border-gray-200 focus:ring-2 ring-[#3066be]/20 outline-none"
+                        className="w-full px-3 py-2 bg-white rounded-lg border border-gray-200 focus:border-[#1e3a5f] focus:ring-2 focus:ring-[#1e3a5f]/10 outline-none text-sm font-medium text-gray-900 transition-all"
                       />
                     </div>
                   </div>
@@ -216,26 +300,31 @@ export function AdvancedROICalculator() {
             </div>
           </div>
 
-          {/* Advanced Sliders */}
+          {/* Section 2: Parameters */}
           <div>
-            <h4 className="text-gray-900 font-bold flex items-center gap-2 mb-4">
-              <span className="w-6 h-6 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-xs">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="w-7 h-7 rounded-full bg-[#3066be] text-white flex items-center justify-center text-xs font-bold">
                 2
               </span>
-              Geavanceerde Factoren
-            </h4>
+              <h4 className="font-semibold text-gray-900">Parameters</h4>
+            </div>
 
             <div className="space-y-6">
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <label className="text-gray-600 font-medium">
-                    Automatisering Efficiëntie
-                  </label>
-                  <span className="text-[#3066be] font-bold">
+              {/* Efficiency Slider */}
+              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900">
+                      Automatiseringsgraad
+                    </label>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      Percentage taken dat geautomatiseerd wordt
+                    </p>
+                  </div>
+                  <span className="text-lg font-bold text-[#1e3a5f] tabular-nums">
                     {efficiencyGain}%
                   </span>
                 </div>
-                {/* ✅ FIX: 'appearance-none' weggehaald zodat sliders werken in alle browsers */}
                 <input
                   type="range"
                   min="10"
@@ -243,23 +332,29 @@ export function AdvancedROICalculator() {
                   step="5"
                   value={efficiencyGain}
                   onChange={(e) => setEfficiencyGain(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-[#3066be]"
+                  className="w-full h-2 bg-gray-200 rounded-full cursor-pointer accent-[#1e3a5f]"
                 />
-                <p className="text-xs text-gray-400 mt-1">
-                  Hoeveel van het handwerk kan AI overnemen?
-                </p>
+                <div className="flex justify-between text-[10px] text-gray-400 mt-1.5">
+                  <span>Conservatief</span>
+                  <span>Optimaal</span>
+                </div>
               </div>
 
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <label className="text-gray-600 font-medium">
-                    Opportunity Multiplier
-                  </label>
-                  <span className="text-[#3066be] font-bold">
-                    {opportunityMultiplier}x
+              {/* Opportunity Multiplier */}
+              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900">
+                      Opportuniteitsfactor
+                    </label>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      Gederfde waarde per uur (bijv. sales → omzet)
+                    </p>
+                  </div>
+                  <span className="text-lg font-bold text-[#1e3a5f] tabular-nums">
+                    {opportunityMultiplier.toFixed(1)}×
                   </span>
                 </div>
-                {/* ✅ FIX: 'appearance-none' weggehaald */}
                 <input
                   type="range"
                   min="1"
@@ -269,95 +364,173 @@ export function AdvancedROICalculator() {
                   onChange={(e) =>
                     setOpportunityMultiplier(Number(e.target.value))
                   }
-                  className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer accent-[#3066be]"
+                  className="w-full h-2 bg-gray-200 rounded-full cursor-pointer accent-[#1e3a5f]"
                 />
-                <p className="text-xs text-gray-400 mt-1">
-                  Waarde die je misloopt (1 uur sales = 1.5x uurtarief aan
-                  omzet).
-                </p>
+                <div className="flex justify-between text-[10px] text-gray-400 mt-1.5">
+                  <span>1× (alleen loon)</span>
+                  <span>5× (hoge leverage)</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* KOLOM 2: RESULTATEN */}
-        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200 flex flex-col justify-between">
-          <div>
-            <h4 className="text-gray-900 font-bold mb-6 text-xl">
-              Jouw Besparingspotentieel
-            </h4>
-
-            <div className="text-center mb-8">
-              <span className="block text-sm text-gray-500 uppercase tracking-wide font-semibold mb-2">
-                Jaarlijkse Winst met AI
-              </span>
-              <span className="text-5xl md:text-6xl font-extrabold text-[#3066be] tracking-tight">
+        {/* RIGHT: RESULTS PANEL */}
+        <div
+          className={` bg-[#3066be]  p-6 md:p-8 text-white ${
+            activeTab === "input" ? "hidden lg:block" : ""
+          }`}
+        >
+          {/* Hero Number */}
+          <div className="text-center mb-8">
+            <span className="inline-block text-[10px] font-bold tracking-[0.2em] uppercase text-white/50 mb-3">
+              Geschat jaarlijks voordeel
+            </span>
+            <div className="relative">
+              <span className="block text-5xl md:text-6xl font-bold tracking-tight tabular-nums">
                 {formatEuro(results.totalSavings)}
               </span>
+              <span className="block text-sm text-white/60 mt-2">
+                {formatEuro(results.monthlyValue)} per maand
+              </span>
+            </div>
+          </div>
+
+          {/* Visual Comparison */}
+          <div className="bg-white/10 backdrop-blur rounded-xl p-5 mb-6">
+            <div className="flex items-center justify-between text-xs text-white/60 mb-3">
+              <span>Huidige situatie</span>
+              <span>Na automatisering</span>
             </div>
 
-            <div className="space-y-4 mb-8">
-              <div>
-                <div className="flex justify-between text-xs text-gray-500 mb-1">
-                  <span>Huidige Kosten (Inclusief gemiste omzet)</span>
-                  <span>{formatEuro(results.totalCurrentCost)}</span>
-                </div>
-                <div className="h-4 bg-gray-200 rounded-full overflow-hidden w-full">
-                  <div className="h-full bg-red-400 w-full"></div>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between text-xs text-gray-500 mb-1">
-                  <span>Kosten met AIFAIS</span>
-                  <span className="font-bold text-green-600">
-                    {formatEuro(results.costAfterAI)}
-                  </span>
-                </div>
-                <div className="h-4 bg-gray-200 rounded-full overflow-hidden w-full relative">
-                  <div
-                    className="h-full bg-green-500 absolute left-0 top-0 transition-all duration-500"
-                    style={{
-                      width: `${
-                        (results.costAfterAI / results.totalCurrentCost) * 100
-                      }%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
+            <div className="relative h-4 bg-white/10 rounded-full overflow-hidden mb-3">
+              {/* Current cost bar (full width = 100%) */}
+              <div
+                className="absolute inset-y-0 left-0 bg-red-400/80 rounded-full"
+                style={{ width: "100%" }}
+              />
+              {/* Cost after AI (proportional) */}
+              <div
+                className="absolute inset-y-0 left-0 bg-emerald-400 rounded-full transition-all duration-700 ease-out"
+                style={{
+                  width: `${Math.max(
+                    5,
+                    (results.costAfterAI / results.totalCurrentCost) * 100
+                  )}%`,
+                }}
+              />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm text-center">
-                <span className="block text-2xl font-bold text-gray-800">
-                  {Math.round(results.hoursReclaimed).toLocaleString()}
-                </span>
-                <span className="text-xs text-gray-500">
-                  Uur Teruggewonnen / Jaar
+            <div className="flex items-center justify-between text-sm">
+              <div>
+                <span className="text-white/50 text-xs block">Was</span>
+                <span className="font-semibold text-red-300">
+                  {formatEuro(results.totalCurrentCost)}
                 </span>
               </div>
-              <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm text-center">
-                <span className="block text-2xl font-bold text-gray-800">
-                  {results.fteRecovered.toFixed(1)} FTE
+              <div className="text-center">
+                <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 bg-emerald-400/20 px-2 py-1 rounded-full">
+                  <svg
+                    className="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 10l7-7m0 0l7 7m-7-7v18"
+                    />
+                  </svg>
+                  {results.savingsPercentage.toFixed(0)}% besparing
                 </span>
-                <span className="text-xs text-gray-500">Capaciteit Erbij</span>
+              </div>
+              <div className="text-right">
+                <span className="text-white/50 text-xs block">Wordt</span>
+                <span className="font-semibold text-emerald-300">
+                  {formatEuro(results.costAfterAI)}
+                </span>
               </div>
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-gray-200 text-center">
-            <p className="text-sm text-gray-600 mb-4">
-              Wil je een gedetailleerd rapport van deze cijfers per e-mail
-              ontvangen?
-            </p>
+          {/* Key Metrics Grid */}
+          <div className="grid grid-cols-2 gap-3 mb-8">
+            <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
+              <span className="block text-2xl font-bold tabular-nums">
+                {formatNumber(results.hoursReclaimed)}
+              </span>
+              <span className="text-xs text-white/60 leading-tight block mt-1">
+                uren teruggewonnen
+              </span>
+            </div>
+            <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
+              <span className="block text-2xl font-bold tabular-nums">
+                {results.fteRecovered.toFixed(1)}
+              </span>
+              <span className="text-xs text-white/60 leading-tight block mt-1">
+                FTE-equivalent
+              </span>
+            </div>
+          </div>
+
+          {/* Breakdown */}
+          <div className="border-t border-white/10 pt-6 mb-8">
+            <h5 className="text-xs font-bold tracking-[0.15em] uppercase text-white/40 mb-4">
+              Uitsplitsing
+            </h5>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-white/70">
+                  Directe loonkosten
+                </span>
+                <span className="text-sm font-semibold tabular-nums">
+                  {formatEuro(results.totalDirectCost)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-white/70">
+                  Opportuniteitskosten
+                </span>
+                <span className="text-sm font-semibold tabular-nums">
+                  {formatEuro(results.totalOpportunityCost)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                <span className="text-sm font-semibold text-white/90">
+                  Totale vermijdbare kosten
+                </span>
+                <span className="text-sm font-bold tabular-nums">
+                  {formatEuro(results.totalCurrentCost)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="space-y-3">
             <Link
               href="/contact"
-              className="block w-full py-4 bg-[#3066be] hover:bg-[#234a8c] text-white font-bold rounded-xl shadow-lg transition-all hover:-translate-y-1 text-center"
+              className="flex items-center justify-center gap-2 w-full py-4 bg-white text-[#1e3a5f] font-semibold rounded-xl hover:bg-amber-50 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 group"
             >
-              Neem contact op →
+              Bespreek uw situatie
+              <svg
+                className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                />
+              </svg>
             </Link>
-            <p className="text-xs text-gray-400 mt-3">
-              Geen zorgen, we spammen niet.
+            <p className="text-center text-xs text-white/40">
+              Vrijblijvend gesprek van 30 minuten
             </p>
           </div>
         </div>

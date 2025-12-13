@@ -158,7 +158,7 @@ export default function HomeClient() {
                 href="/tools/roi-calculator"
                 className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-medium hover:bg-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center backdrop-blur-md"
               >
-                Besparings tool proberen
+                Bereken jaarlijkse voordeel
               </Link>
             </div>
           </div>
