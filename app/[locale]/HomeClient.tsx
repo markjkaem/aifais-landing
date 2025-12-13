@@ -56,10 +56,10 @@ export default function HomeClient() {
         {/* Background Video / Overlay */}
         <div className="absolute inset-0 w-full h-full z-0">
           {/* Base Background Color (Fallback) */}
-          <div className="absolute inset-0 bg-[#0f172a]"></div>
+          <div className="absolute inset-0 bg-[#3066be]"></div>
 
           {/* Gradient Overlay - Darkened for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0f172a]/90 via-[#1e3a8a]/40 to-[#0f172a]/90" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#3066be] via-[#1e3a8a]/40 to-[#0f172a]/90" />
 
           {/* Subtle Vignette */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
@@ -73,7 +73,7 @@ export default function HomeClient() {
             <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-lg shadow-lg shadow-black/5 cursor-default hover:bg-white/10 transition-colors">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3066be] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0cff10] shadow-[0_0_8px_#0cff10]"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#90eb91] shadow-[0_0_8px_#0cff10]"></span>
               </span>
               <span className="text-xs font-mono tracking-widest uppercase text-blue-100/80">
                 AI-Driven Workforce
@@ -103,7 +103,7 @@ export default function HomeClient() {
           <div className="max-w-4xl">
             {/* Main Headline */}
             <h1
-              className={`${h1.className} text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.05] mb-8 text-white`}
+              className={`${h1.className} text-5xl sm:text-6xl md:text-6xl lg:text-8xl font-bold tracking-tighter leading-[1.05] mb-8 text-white`}
             >
               <span className="block text-blue-100/90">Neem je eerste</span>
 
