@@ -1,171 +1,201 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  Sparkles,
   Zap,
-  Check,
   FileText,
   Scale,
   Mail,
-  Cpu,
+  Calculator,
+  PenTool,
+  CircleDot,
+  Lock,
+  Sparkles,
 } from "lucide-react";
 
 export default function ToolsTeaser() {
   return (
-    <section className="py-32 bg-white relative overflow-hidden">
-      {/* Achtergrond Sfeerlicht (Glows - Light Mode) */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-[#3066be]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
+    <section className="py-28 bg-slate-50/50 relative overflow-hidden">
+      {/* Subtle background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-sky-50 via-transparent to-transparent pointer-events-none" />
+      <div
+        className="absolute inset-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        {/* De 'Glass' Card - Light Mode Version */}
-        <div className="relative bg-white border border-gray-200 rounded-[32px] p-8 md:p-16 overflow-hidden group shadow-2xl shadow-[#3066be]/5">
-          {/* Subtiele gradient overlay op hover */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#3066be]/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            {/* LINKER KANT: De Pitch */}
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#3066be]/10 border border-[#3066be]/20 text-[#3066be] text-xs font-bold uppercase tracking-wider shadow-sm">
-                <Cpu className="w-3 h-3" />
-                Live Tech Demo
-              </div>
-
-              <h2 className="text-4xl md:text-4xl font-bold text-gray-900 leading-[1.1] tracking-tight">
-                Ervaar de kracht van <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] via-purple-500 to-[#3066be]">
-                  Headless Agents
-                </span>
+        {/* Section Header */}
+        <div className="mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-px w-12 bg-gradient-to-r from-slate-300 to-transparent" />
+            <span className="text-xs font-semibold tracking-widest uppercase text-slate-400">
+              Tools
+            </span>
+          </div>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-3">
+                Praktische tools,{" "}
+                <span className="text-slate-400">direct bruikbaar</span>
               </h2>
-
-              <p className="text-gray-600 text-lg leading-relaxed max-w-md">
-                Geen praatjes, maar werkende code. Probeer onze{" "}
-                <strong className="text-gray-900">
-                  autonome factuurscanner
-                </strong>
-                . Volledig aangedreven door Solana Blinks, X402 betalingen en
-                het MCP protocol.
+              <p className="text-slate-500 text-lg max-w-xl">
+                Van gratis calculators tot geavanceerde API's. Geen account
+                nodig.
               </p>
+            </div>
+            <Link
+              href="/tools"
+              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors group shrink-0"
+            >
+              Bekijk alle tools
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
+        </div>
 
-              {/* Tech Badges (Light Mode) */}
-              <div className="flex flex-wrap gap-2">
-                <span className="px-2 py-1 bg-gray-100 border border-gray-200 rounded text-[10px] text-gray-600 font-mono font-semibold">
-                  SOLANA
-                </span>
-                <span className="px-2 py-1 bg-gray-100 border border-gray-200 rounded text-[10px] text-gray-600 font-mono font-semibold">
-                  X402
-                </span>
-                <span className="px-2 py-1 bg-gray-100 border border-gray-200 rounded text-[10px] text-gray-600 font-mono font-semibold">
-                  MCP
-                </span>
-                <span className="px-2 py-1 bg-gray-100 border border-gray-200 rounded text-[10px] text-gray-600 font-mono font-semibold">
-                  AI
-                </span>
-              </div>
+        {/* Main Grid */}
+        <div className="grid lg:grid-cols-5 gap-4">
+          {/* Featured: Invoice Scanner API - Takes 3 columns */}
+          <Link
+            href="/tools/invoice-extraction"
+            className="lg:col-span-3 group"
+          >
+            <div className="h-full bg-white border border-slate-200/80 rounded-2xl p-6 md:p-8 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/[0.04] transition-all duration-300 hover:-translate-y-0.5">
+              <div className="flex flex-col h-full">
+                {/* Header */}
+                <div className="flex items-start justify-between mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 group-hover:bg-sky-500 group-hover:text-white transition-colors">
+                    <FileText className="w-6 h-6" strokeWidth={1.75} />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-wide uppercase text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-200/60">
+                      <Sparkles className="w-3 h-3" />
+                      Live API
+                    </span>
+                  </div>
+                </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Link
-                  href="/diensten/agent-api"
-                  className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:bg-[#234a8c] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#3066be]/20 hover:-translate-y-1"
-                >
-                  <Zap className="w-4 h-4 fill-white" />
-                  Hoe werkt het?
-                </Link>
-                <Link
-                  href="/tools"
-                  className="px-8 py-4 bg-gray-50 text-gray-700 font-medium rounded-xl border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-all flex items-center justify-center gap-2 group/btn"
-                >
-                  Alle Tools
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </Link>
+                {/* Content */}
+                <h3 className="text-xl font-semibold text-slate-900 mb-2 group-hover:text-slate-800 transition-colors">
+                  Factuur Scanner
+                </h3>
+                <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1">
+                  Sleep facturen, krijg gestructureerde data. Met KvK
+                  verificatie en Excel export. Een showcase tool die draait op
+                  blockchain infrastructuur.
+                </p>
+
+                {/* Tech Stack - Only for this card */}
+                <div className="pt-5 border-t border-slate-100">
+                  <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider mb-3">
+                    Blockchain Stack
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] text-slate-600 font-mono font-semibold">
+                      SOLANA
+                    </span>
+                    <span className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] text-slate-600 font-mono font-semibold">
+                      X402 Protocol
+                    </span>
+                    <span className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] text-slate-600 font-mono font-semibold">
+                      MCP Server
+                    </span>
+                    <span className="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded text-[10px] text-slate-600 font-mono font-semibold">
+                      0.001 SOL/scan
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                      <span className="text-xs text-slate-500 font-medium">
+                        Online
+                      </span>
+                    </div>
+                    <span className="text-sm font-medium text-sky-600 flex items-center gap-1 group-hover:gap-2 transition-all">
+                      Probeer nu
+                      <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
+          </Link>
 
-            {/* RECHTER KANT: Visuele Feature Lijst (Zwevend Kaartje) */}
-            <div className="relative hidden lg:block">
-              {/* Het zwevende paneel (Light Mode) */}
-              <div className="bg-white border border-gray-200 rounded-3xl p-8 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] relative z-10 transform rotate-2 group-hover:rotate-0 transition-transform duration-500 ease-out origin-center">
-                <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
-                  <div>
-                    <h4 className="text-gray-900 font-bold text-lg">
-                      Active Agents
-                    </h4>
-                    <p className="text-xs text-gray-500 mt-1 font-mono">
-                      Status: ONLINE • Network: SOLANA
+          {/* Right Column: Free Tools - Takes 2 columns */}
+          <div className="lg:col-span-2 flex flex-col gap-4">
+            {/* ROI Calculator */}
+            <Link href="/tools/roi-calculator" className="group flex-1">
+              <div className="h-full bg-white border border-slate-200/80 rounded-2xl p-5 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/[0.04] transition-all duration-300 hover:-translate-y-0.5">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white transition-colors shrink-0">
+                    <Calculator className="w-5 h-5" strokeWidth={1.75} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="text-base font-semibold text-slate-900 group-hover:text-slate-800 transition-colors">
+                        Besparings Calculator
+                      </h3>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60 uppercase tracking-wide">
+                        Gratis
+                      </span>
+                    </div>
+                    <p className="text-slate-500 text-sm leading-relaxed">
+                      Bereken je ROI op automatisering
                     </p>
-                  </div>
-                  <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center animate-pulse">
-                    <div className="w-3 h-3 bg-green-500 rounded-full" />
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  {/* Item 1 */}
-                  <Link
-                    href="/tools/invoice-extraction"
-                    className="block group/item"
-                  >
-                    <div className="flex items-center gap-4 p-3 rounded-xl bg-gray-50 border border-gray-100 group-hover/item:border-[#3066be]/30 group-hover/item:bg-[#3066be]/5 transition-colors cursor-pointer shadow-sm">
-                      <div className="w-10 h-10 rounded-lg bg-[#3066be]/10 flex items-center justify-center shrink-0 text-[#3066be]">
-                        <FileText className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <p className="text-gray-900 font-medium text-sm group-hover/item:text-[#3066be] transition-colors">
-                          Invoice Extraction Agent
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          OCR + Validatie + JSON Export
-                        </p>
-                      </div>
-                      <div className="ml-auto flex items-center gap-2">
-                        <span className="text-[10px] bg-white border border-gray-200 px-1.5 py-0.5 rounded text-gray-500 font-mono font-semibold">
-                          0.001 SOL
-                        </span>
-                        <ArrowRight className="w-4 h-4 text-gray-400 group-hover/item:text-[#3066be] -translate-x-2 group-hover/item:translate-x-0 transition-all opacity-0 group-hover/item:opacity-100" />
-                      </div>
-                    </div>
-                  </Link>
-
-                  {/* Item 2 */}
-                  <div className="flex items-center gap-4 p-3 rounded-xl border border-transparent opacity-60 grayscale hover:grayscale-0 transition-all">
-                    <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center shrink-0 text-gray-400">
-                      <Scale className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-gray-900 font-medium text-sm">
-                        Legal Review Agent
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Contract analyse & risico check
-                      </p>
-                    </div>
-                    <span className="ml-auto text-[10px] border border-gray-200 px-1.5 py-0.5 rounded text-gray-400 font-mono font-semibold">
-                      SOON
-                    </span>
-                  </div>
-
-                  {/* Item 3 */}
-                  <div className="flex items-center gap-4 p-3 rounded-xl border border-transparent opacity-60 grayscale hover:grayscale-0 transition-all">
-                    <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center shrink-0 text-gray-400">
-                      <Mail className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-gray-900 font-medium text-sm">
-                        Email Triage Agent
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Inbox sorteren & auto-reply
-                      </p>
-                    </div>
-                    <span className="ml-auto text-[10px] border border-gray-200 px-1.5 py-0.5 rounded text-gray-400 font-mono font-semibold">
-                      SOON
-                    </span>
                   </div>
                 </div>
               </div>
+            </Link>
 
-              {/* Decoratieve elementen achter het paneel */}
-              <div className="absolute -top-5 -right-5 w-full h-full border border-gray-200 rounded-3xl -z-10 transform -rotate-2 scale-105 bg-gray-50/50" />
+            {/* Invoice Creator */}
+            <Link href="/tools/invoice-creation" className="group flex-1">
+              <div className="h-full bg-white border border-slate-200/80 rounded-2xl p-5 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/[0.04] transition-all duration-300 hover:-translate-y-0.5">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center text-violet-600 group-hover:bg-violet-500 group-hover:text-white transition-colors shrink-0">
+                    <PenTool className="w-5 h-5" strokeWidth={1.75} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="text-base font-semibold text-slate-900 group-hover:text-slate-800 transition-colors">
+                        Factuur Maker
+                      </h3>
+                      <span className="text-[10px] font-bold text-violet-700 bg-violet-50 px-2 py-0.5 rounded-full border border-violet-200/60 uppercase tracking-wide">
+                        Gratis
+                      </span>
+                    </div>
+                    <p className="text-slate-500 text-sm leading-relaxed">
+                      PDF facturen in je browser
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* Coming Soon: Stacked */}
+            <div className="bg-slate-50/80 border border-slate-200/60 rounded-2xl p-5">
+              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                <Lock className="w-3 h-3" />
+                Binnenkort
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 shrink-0">
+                    <Scale className="w-4 h-4" />
+                  </div>
+                  <span className="text-sm text-slate-500 font-medium">
+                    Incasso Generator
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 shrink-0">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <span className="text-sm text-slate-500 font-medium">
+                    Offerte AI
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
