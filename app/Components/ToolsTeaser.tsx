@@ -24,20 +24,18 @@ export default function ToolsTeaser() {
         }}
       />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+      <div className="max-w-6xl  mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="h-px w-12 bg-gradient-to-r from-slate-300 to-transparent" />
-            <span className="text-xs font-semibold tracking-widest uppercase text-slate-400">
-              Tools
-            </span>
+        <div className="mb-12 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-6 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
+            <span className="text-sm font-medium text-gray-600">Tools</span>
           </div>
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+          <div className="flex text-left flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-3">
                 Praktische tools,{" "}
-                <span className="text-slate-400">direct bruikbaar</span>
+                <span className="text-[#3066be]">direct bruikbaar</span>
               </h2>
               <p className="text-slate-500 text-lg max-w-xl">
                 Van gratis calculators tot geavanceerde API's. Geen account
