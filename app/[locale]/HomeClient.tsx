@@ -1160,22 +1160,6 @@ export default function HomeClient() {
 
               <div className="p-8">
                 <div className="flex items-start gap-5 mb-6">
-                  {/* Avatar */}
-                  <div className="relative">
-                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-100">
-                      <Image
-                        src="/mark.png"
-                        alt="Mark"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    {/* Status dot */}
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-white flex items-center justify-center">
-                      <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                    </div>
-                  </div>
-
                   {/* Name & Title */}
                   <div className="pt-1">
                     <h3 className="text-xl font-bold text-gray-900">Mark</h3>
@@ -1243,22 +1227,6 @@ export default function HomeClient() {
 
               <div className="p-8">
                 <div className="flex items-start gap-5 mb-6">
-                  {/* Avatar */}
-                  <div className="relative">
-                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-100">
-                      <Image
-                        src="/faissal.png"
-                        alt="Faissal"
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    {/* Status dot */}
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-white flex items-center justify-center">
-                      <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                    </div>
-                  </div>
-
                   {/* Name & Title */}
                   <div className="pt-1">
                     <h3 className="text-xl font-bold text-gray-900">Faissal</h3>
