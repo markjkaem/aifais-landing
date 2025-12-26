@@ -657,7 +657,8 @@
   "agentApiPage": {
     "hero": {
       "badge": "Machine-to-Machine Economy",
-      "title": "Waar Agents zaken doen en met elkaar handelen",
+      "title": "Waar Agents zaken doen",
+      "titleHighlight": "met elkaar.",
       "subtitle": "Waarom zou u uw 'Bedrijfsbrein' beperken tot uw eigen medewerkers? Met de x402 standaard kunnen externe AI-agents veilig betalen voor uw data, analyses en tools. Volautomatisch. Micro-transacties. Directe settlement.",
       "ctaActivate": "Activeer x402",
       "ctaApi": "Bekijk de API"
