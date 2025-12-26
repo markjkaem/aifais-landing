@@ -11,9 +11,7 @@ import Footer from "../Components/Footer";
 import HeaderMockup from "../Components/Header";
 import { notFound } from "next/navigation";
 import { locales } from "@/i18n";
-import CookieBanner from "../Components/CookieBanner";
-import ExitIntentPopup from "../Components/ExitIntentPopup";
-import AIChatbot from "../Components/Aichatbot";
+import ClientSideAddons from "../Components/ClientSideAddons";
 import Script from "next/script";
 
 // ✅ Font Initialization
@@ -323,9 +321,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <HeaderMockup />
           {children}
           <Footer />
-          <CookieBanner />
-          <ExitIntentPopup />
-          <AIChatbot />
+          <ClientSideAddons />
         </NextIntlClientProvider>
       </body>
     </html>

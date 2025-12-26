@@ -3,10 +3,10 @@
 // Premium Fintech/Consultancy Aesthetic
 // ========================================
 
-import { AdvancedROICalculator } from "@/app/Components/ROICalculator";
 import { Metadata } from "next";
 import Link from "next/link";
 import { DM_Sans, Fraunces } from "next/font/google";
+import ROICalculatorPageClient from "./ROICalculatorPageClient";
 
 // Font loaders MUST be in module scope (outside component)
 const dmSans = DM_Sans({
@@ -115,13 +115,7 @@ export default function CalculatorPage() {
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Left: Calculator */}
             <div className="lg:col-span-7 xl:col-span-8 opacity-0 animate-fade-up delay-400">
-              <div className="relative">
-                {/* Subtle frame */}
-                <div className="absolute -inset-px bg-gradient-to-b from-gray-200 to-gray-300/50 rounded-2xl" />
-                <div className="relative bg-white rounded-2xl shadow-xl shadow-gray-200/50 overflow-hidden">
-                  <AdvancedROICalculator />
-                </div>
-              </div>
+              <ROICalculatorPageClient />
 
               <p className="font-body text-xs text-gray-400 mt-6 text-center">
                 Berekeningen gebaseerd op CBS-loondata 2024 en sectorgemiddelden

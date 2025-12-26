@@ -1,0 +1,126 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { Space_Grotesk } from "next/font/google";
+
+const h1 = Space_Grotesk({
+  weight: "700",
+  subsets: ["latin"],
+});
+
+export default function HeroSection() {
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden font-sans">
+      {/* Background Video / Overlay */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        {/* Base Background Color (Fallback) */}
+        <div className="absolute inset-0 bg-[#3066be]"></div>
+
+        {/* Gradient Overlay - Darkened for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#3066be] via-[#1e3a8a]/40 to-[#0f172a]/90" />
+
+        {/* Subtle Vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-4 flex flex-col h-full justify-center">
+        {/* Top Bar: Badge Left, Logo Right */}
+        <div className="flex w-full items-center justify-between mb-16 md:mb-8">
+          {/* Left Side: Tech Badge */}
+          <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-lg shadow-lg shadow-black/5 cursor-default hover:bg-white/10 transition-colors">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3066be] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#90eb91] shadow-[0_0_8px_#0cff10]"></span>
+            </span>
+            <span className="text-xs font-mono tracking-widest uppercase text-blue-100/80">
+              AI-Driven Workforce
+            </span>
+          </div>
+
+          {/* Right Side: Logo */}
+          <div className="relative group">
+            <Link
+              href="/"
+              className="block transition-transform duration-500 hover:scale-105"
+            >
+              <Image
+                src="/logo-official.png"
+                alt="Aifais Logo"
+                width={400}
+                height={100}
+                className="w-36 md:w-44 h-auto object-contain drop-shadow-lg opacity-90 group-hover:opacity-100 transition-opacity"
+                priority
+              />
+            </Link>
+          </div>
+        </div>
+
+        {/* Main Content Area */}
+        <div className="max-w-4xl">
+          {/* Main Headline */}
+          <h1
+            className={`${h1.className} text-5xl sm:text-6xl md:text-6xl lg:text-8xl font-bold tracking-tighter leading-[1.05] mb-8 text-white`}
+          >
+            <span className="block text-blue-100/90">Neem je eerste</span>
+
+            {/* Professional Gradient Text */}
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-200 to-white drop-shadow-sm pb-2">
+              Digitale Werknemer
+            </span>
+
+            <span className="block text-blue-100/90">aan.</span>
+          </h1>
+
+          {/* Subheadlines */}
+          <div className="space-y-6 mb-12">
+            <h2 className="text-xl md:text-2xl text-white font-semibold tracking-wide">
+              Meer tijd. Meer winst.{" "}
+              <span className="text-blue-300">Minder gedoe.</span>
+            </h2>
+
+            <p className="text-lg md:text-xl text-blue-100/70 leading-relaxed max-w-2xl font-light">
+              Wij automatiseren de taken die je tijd kosten, zodat jij je kunt
+              focussen op wat écht belangrijk is: je bedrijf laten groeien.
+              <br className="hidden md:block" />
+              <span className="inline-block mt-3 text-white font-medium border-b border-blue-400/30 pb-0.5">
+                Gratis analyse. Gratis plan. Niet goed, geld terug.
+              </span>
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-5">
+            <Link
+              href="/contact"
+              className="group relative px-8 py-4 bg-[#3066be] hover:bg-[#2554a3] text-white font-bold text-lg rounded-full transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(48,102,190,0.3)] hover:shadow-[0_0_30px_rgba(48,102,190,0.5)] transform hover:-translate-y-1"
+            >
+              <span>Plan gratis analyse</span>
+              <svg
+                className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </Link>
+
+            <Link
+              href="/tools/roi-calculator"
+              className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-medium hover:bg-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center backdrop-blur-md"
+            >
+              Bereken jaarlijkse voordeel
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
