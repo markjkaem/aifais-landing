@@ -246,11 +246,17 @@ export default async function LocaleLayout({ children, params }: Props) {
                 : "We automate repetitive business processes. Save 40+ hours per week for Dutch SME companies. No programming required.",
               url: BASE_URL,
               priceRange: "€2500 - €5000+", // Toegestaan op ProfessionalService
-              areaServed: {
-                "@type": "Country",
-                name: "Nederland",
-              },
-              // ✅ GECORRIGEERD: serviceType vervangen door knowsAbout
+              areaServed: [
+                { "@type": "City", "name": "Gouda", "containedIn": "Zuid-Holland" },
+                { "@type": "City", "name": "Rotterdam", "containedIn": "Zuid-Holland" },
+                { "@type": "City", "name": "Den Haag", "containedIn": "Zuid-Holland" },
+                { "@type": "City", "name": "Utrecht", "containedIn": "Utrecht" },
+                { "@type": "City", "name": "Leiden", "containedIn": "Zuid-Holland" },
+                { "@type": "City", "name": "Dordrecht", "containedIn": "Zuid-Holland" },
+                { "@type": "AdministrativeArea", "name": "Zuid-Holland" },
+                { "@type": "AdministrativeArea", "name": "Utrecht" },
+                { "@type": "Country", "name": "Nederland" }
+              ],
               knowsAbout: [
                 "Bedrijfsautomatisering",
                 "Proces Automatisering",

@@ -18,19 +18,17 @@ export const metadata: Metadata = {
     template: "%s | AIFAIS",
   },
   description:
-    "Automatiseer repetitieve taken en bedrijfsprocessen voor MKB. Bespaar direct 40+ uur per week. Geen programmeerkennis nodig. Vanaf €2.500, live binnen 2 weken.",
+    "Automatiseer repetitieve taken en bedrijfsprocessen voor MKB. Bespaar direct 40+ uur per week. Actief in Zuid-Holland en Utrecht: Rotterdam, Den Haag, Gouda & Utrecht.",
 
   keywords: [
-    "bedrijfsautomatisering",
-    "procesautomatisering mkb",
-    "tijd besparen automatisering",
-    "automatisering mkb",
-    "workflow management software", // Added high volume keyword
-    "administratie automatiseren",
-    "bedrijfsprocessen digitaliseren",
-    "automatisering kleine bedrijven",
-    "zapier specialist nederland", // Specific intent
-    "make.com expert", // Specific intent
+    "automatisering zuid-holland",
+    "bedrijfsautomatisering rotterdam",
+    "procesautomatisering den haag",
+    "ai automatisering utrecht",
+    "automatisering gouda",
+    "mkb automatisering randstad",
+    "zapier specialist nederland",
+    "make.com expert",
   ],
 
   // ✅ FIX: Explicit robots tag

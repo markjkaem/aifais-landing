@@ -11,7 +11,7 @@ export default function Footer() {
       itemScope
       itemType="https://schema.org/Organization"
     >
-      <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-4 gap-12 text-sm">
+      <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-3 lg:grid-cols-5 gap-12 text-sm">
         {/* COL 1: Company Info & Address */}
         <div className="flex flex-col gap-4">
           <Link href="/" className="inline-block" itemProp="url">
@@ -159,7 +159,38 @@ export default function Footer() {
           </nav>
         </div>
 
-        {/* COL 4: Legal & Trust */}
+        {/* COL 4: Locations (SEO) */}
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold text-gray-900 text-base">Landelijke Regio's</h3>
+          <nav className="flex flex-col gap-3">
+            <Link
+              href="/locatie/gouda"
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
+              Automatisering Gouda
+            </Link>
+            <Link
+              href="/locatie/rotterdam"
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
+              Automatisering Rotterdam
+            </Link>
+            <Link
+              href="/locatie/den-haag"
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
+              Automatisering Den Haag
+            </Link>
+            <Link
+              href="/locatie/utrecht"
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
+              Automatisering Utrecht
+            </Link>
+          </nav>
+        </div>
+
+        {/* COL 5: Legal & Trust */}
         <div className="flex flex-col gap-4">
           <h3 className="font-bold text-gray-900 text-base">
             Bedrijfsgegevens
@@ -215,7 +246,7 @@ export default function Footer() {
               Alle systemen operationeel
             </p>
             <span className="hidden md:inline">|</span>
-            <p>Specialist in Nederland</p>
+            <p className="font-medium text-gray-700">Actief in: Rotterdam • Den Haag • Utrecht • Gouda • Zuid-Holland</p>
           </div>
         </div>
       </div>
