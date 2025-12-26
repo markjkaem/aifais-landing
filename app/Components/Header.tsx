@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { projects } from "../[locale]/portfolio/data";
+import { getProjects, projects } from "../[locale]/portfolio/data";
 import { news } from "../[locale]/news/data";
 import { serviceLinks } from "./layout/headerData";
 import SearchOverlay from "./layout/SearchOverlay";
@@ -15,9 +15,17 @@ import LanguageSelector from "./layout/LanguageSelector";
 export default function Header() {
   const t = useTranslations("nav");
   const tEvent = useTranslations("event");
+  const tMega = useTranslations("megaMenu");
+  const tHeaderData = useTranslations("headerData");
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
+
+  const translatedServiceLinks = serviceLinks.map((service) => ({
+    ...service,
+    title: tHeaderData(service.title),
+    description: tHeaderData(service.description),
+  }));
 
   const [openDropdown, setOpenDropdown] = useState<
     "services" | "news" | "languages" | null
@@ -90,10 +98,14 @@ export default function Header() {
     window.location.href = newPath;
   };
 
+  const localizedProjects = getProjects(locale);
+  // Assuming news is an array for now as it was before, or if it has getNews, use that.
+  // For now I'll just use news as it is imported.
+
   const allSearchableContent = [
     { type: "page", title: "Home", slug: "/" },
-    ...serviceLinks.map((s) => ({ type: "service", title: s.title, slug: s.slug })),
-    ...(projects || []).map((p) => ({ type: "case", title: p.title, slug: `/portfolio/${p.slug}` })),
+    ...translatedServiceLinks.map((s) => ({ type: "service", title: s.title, slug: s.slug })),
+    ...(localizedProjects || []).map((p) => ({ type: "case", title: p.title, slug: `/portfolio/${p.slug}` })),
     ...(news || []).map((n) => ({ type: "news", title: n.title, slug: `/news/${n.slug}` })),
     { type: "page", title: "Tools", slug: "/tools" },
     { type: "page", title: "Contact", slug: "/contact" },
@@ -107,7 +119,7 @@ export default function Header() {
     <header className={`w-full bg-white/95 backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <nav className="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-600">
-          <Link href={getLocalizedPath("/")} className="hover:text-[#3066be] transition" onClick={closeAll}>Home</Link>
+          <Link href={getLocalizedPath("/")} className="hover:text-[#3066be] transition" onClick={closeAll}>{t("home")}</Link>
           <button onClick={() => handleDropdownToggle("services")} className={`hover:text-[#3066be] transition flex items-center gap-2 group ${openDropdown === "services" ? "text-[#3066be]" : ""}`}>
             {t("services")}
             <ChevronDownIcon className={`w-3 h-3 transition-transform ${openDropdown === "services" ? "rotate-180" : ""}`} />
@@ -127,16 +139,16 @@ export default function Header() {
             <SearchIcon className="w-5 h-5" />
           </button>
           <LanguageSelector locale={locale} openDropdown={openDropdown} handleDropdownToggle={handleDropdownToggle} switchLanguage={switchLanguage} />
-          <Link href={getLocalizedPath("/contact")} className="px-5 py-2.5 bg-[#3066be] hover:bg-[#234a8c] text-white font-semibold rounded-lg transition-all hover:scale-105 shadow-md shadow-[#3066be]/20" onClick={closeAll}>Analyse Gesprek</Link>
+          <Link href={getLocalizedPath("/contact")} className="px-5 py-2.5 bg-[#3066be] hover:bg-[#234a8c] text-white font-semibold rounded-lg transition-all hover:scale-105 shadow-md shadow-[#3066be]/20" onClick={closeAll}>{t("analyseCTA")}</Link>
         </div>
 
         <button className="lg:hidden text-gray-800 text-3xl hover:text-[#3066be] transition" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">{mobileOpen ? "✕" : "☰"}</button>
       </div>
 
-      {searchOpen && <SearchOverlay searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchResults={searchResults} getLocalizedPath={getLocalizedPath} closeAll={closeAll} locale={locale} />}
-      {openDropdown === "services" && <MegaMenuServices serviceLinks={serviceLinks} getLocalizedPath={getLocalizedPath} closeAll={closeAll} />}
-      {openDropdown === "news" && <MegaMenuNews news={news} getLocalizedPath={getLocalizedPath} closeAll={closeAll} tEvent={tEvent} />}
-      {mobileOpen && <MobileMenu locale={locale} searchQuery={searchQuery} setSearchQuery={setSearchQuery} openDropdown={openDropdown} handleDropdownToggle={handleDropdownToggle} serviceLinks={serviceLinks} getLocalizedPath={getLocalizedPath} closeAll={closeAll} switchLanguage={switchLanguage} t={t} router={router} />}
+      {searchOpen && <SearchOverlay searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchResults={searchResults} getLocalizedPath={getLocalizedPath} closeAll={closeAll} />}
+      {openDropdown === "services" && <MegaMenuServices serviceLinks={translatedServiceLinks} getLocalizedPath={getLocalizedPath} closeAll={closeAll} t={tMega} />}
+      {openDropdown === "news" && <MegaMenuNews news={news} getLocalizedPath={getLocalizedPath} closeAll={closeAll} tEvent={tEvent} tMega={tMega} />}
+      {mobileOpen && <MobileMenu locale={locale} searchQuery={searchQuery} setSearchQuery={setSearchQuery} openDropdown={openDropdown} handleDropdownToggle={handleDropdownToggle} serviceLinks={translatedServiceLinks} getLocalizedPath={getLocalizedPath} closeAll={closeAll} switchLanguage={switchLanguage} t={t} router={router} />}
 
       <style jsx global>{`
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }

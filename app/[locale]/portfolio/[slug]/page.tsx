@@ -1,77 +1,72 @@
-// ========================================
-// FILE: app/portfolio/[slug]/page.tsx - LIGHT THEME
-// ========================================
-
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { projects } from "../data";
+import { getTranslations } from "next-intl/server";
 
 // ✅ DYNAMIC METADATA
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+  const t = await getTranslations({ locale, namespace: "portfolioDetail" });
   const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
     return {
-      title: "Project Niet Gevonden | AIFAIS",
+      title: `${t("notFoundTitle")} | AIFAIS`,
       robots: { index: false, follow: false },
     };
   }
 
   return {
-    title: `${project.title} | Bedrijfsautomatisering Case | AIFAIS`,
-    description: `Case Study: ${project.description.substring(
-      0,
-      120
-    )}... Bekijk de resultaten en ROI voor dit Nederlandse MKB-bedrijf.`,
+    title: `${project.title} | ${t("resultsTitle")} Case Study | AIFAIS`,
+    description: t("metaDescription", { description: project.description.substring(0, 120) }),
 
     keywords: [
-      "automatisering case study",
+      t("resultsTitle"),
       project.title,
-      "n8n voorbeeld",
-      "bedrijfsautomatisering resultaten",
-      "mkb automatisering",
       ...(project.tags || []),
     ],
 
     openGraph: {
-      title: `${project.title} | Automatisering Case Study`,
+      title: `${project.title} | ${t("resultsTitle")}`,
       description: project.description,
-      url: `https://aifais.com/portfolio/${slug}`,
+      url: `https://aifais.com/${locale}/portfolio/${slug}`,
       type: "article",
-      locale: "nl_NL",
+      locale: locale === "nl" ? "nl_NL" : "en_US",
       siteName: "AIFAIS",
       images: [
         {
           url: `https://aifais.com${project.image}`,
           width: 1200,
           height: 630,
-          alt: `${project.title} - bedrijfsautomatisering case`,
+          alt: `${project.title} - ${t("resultsTitle")}`,
         },
       ],
     },
 
     twitter: {
       card: "summary_large_image",
-      title: `${project.title} | Automatisering Case Study`,
+      title: `${project.title} | ${t("resultsTitle")}`,
       description: project.description,
       images: [`https://aifais.com${project.image}`],
       creator: "@aifais",
     },
 
     alternates: {
-      canonical: `https://aifais.com/portfolio/${slug}`,
+      canonical: `https://aifais.com${locale === "nl" ? "" : "/" + locale}/portfolio/${slug}`,
+      languages: {
+        nl: `https://aifais.com/portfolio/${slug}`,
+        en: `https://aifais.com/en/portfolio/${slug}`,
+      },
     },
   };
 }
 
-// ✅ GENERATE STATIC PARAMS
 export function generateStaticParams() {
   return projects.map((project) => ({
     slug: project.slug,
@@ -81,16 +76,16 @@ export function generateStaticParams() {
 export default async function PortfolioItemPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+  const t = await getTranslations({ locale, namespace: "portfolioDetail" });
   const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
     notFound();
   }
 
-  // ✅ Find related projects (Prefer same category, fallback to random)
   const relatedProjects = projects
     .filter(
       (p) =>
@@ -118,7 +113,7 @@ export default async function PortfolioItemPage({
     author: {
       "@type": "Organization",
       name: "AIFAIS",
-      url: "https://aifais.com",
+      url: `https://aifais.com/${locale}`,
     },
     publisher: {
       "@type": "Organization",
@@ -130,7 +125,7 @@ export default async function PortfolioItemPage({
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://aifais.com/portfolio/${slug}`,
+      "@id": `https://aifais.com/${locale}/portfolio/${slug}`,
     },
   };
 
@@ -143,22 +138,24 @@ export default async function PortfolioItemPage({
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://aifais.com",
+        item: `https://aifais.com/${locale}`,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Portfolio",
-        item: "https://aifais.com/portfolio",
+        item: `https://aifais.com/${locale}/portfolio`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: project.title,
-        item: `https://aifais.com/portfolio/${slug}`,
+        item: `https://aifais.com/${locale}/portfolio/${slug}`,
       },
     ],
   };
+
+  const hrefPrefix = locale === "nl" ? "" : "/" + locale;
 
   return (
     <>
@@ -179,7 +176,7 @@ export default async function PortfolioItemPage({
         <div className="container mx-auto px-6 max-w-6xl">
           <ol className="flex items-center gap-2 text-sm text-gray-500">
             <li>
-              <Link href="/" className="hover:text-[#3066be] transition">
+              <Link href={`${hrefPrefix}/`} className="hover:text-[#3066be] transition">
                 Home
               </Link>
             </li>
@@ -200,7 +197,7 @@ export default async function PortfolioItemPage({
             </li>
             <li>
               <Link
-                href="/portfolio"
+                href={`${hrefPrefix}/portfolio`}
                 className="hover:text-[#3066be] transition"
               >
                 Portfolio
@@ -264,7 +261,7 @@ export default async function PortfolioItemPage({
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  {project.readTime} min lezen
+                  {t("readTime", { time: project.readTime || 5 })}
                 </span>
               )}
               {project.date && (
@@ -282,7 +279,7 @@ export default async function PortfolioItemPage({
                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                     />
                   </svg>
-                  {new Date(project.date).toLocaleDateString("nl-NL", {
+                  {new Date(project.date).toLocaleDateString(locale === "nl" ? "nl-NL" : "en-US", {
                     year: "numeric",
                     month: "long",
                   })}
@@ -295,7 +292,7 @@ export default async function PortfolioItemPage({
           <div className="relative rounded-2xl overflow-hidden border border-gray-200 shadow-xl bg-gray-50 aspect-video">
             <Image
               src={project.image}
-              alt={`${project.title} - bedrijfsautomatisering case study`}
+              alt={`${project.title} - ${t("resultsTitle")}`}
               fill
               priority
               className="object-cover"
@@ -311,7 +308,7 @@ export default async function PortfolioItemPage({
           <div className="container mx-auto px-6 max-w-5xl">
             <h2 className="text-2xl font-bold text-center mb-10 text-gray-900">
               <span className="border-b-2 border-[#3066be] pb-2">
-                Behaalde Resultaten
+                {t("resultsTitle")}
               </span>
             </h2>
 
@@ -322,7 +319,7 @@ export default async function PortfolioItemPage({
                     {project.results.timeSaved}
                   </div>
                   <p className="text-gray-500 font-medium text-sm uppercase tracking-wide">
-                    Tijd Bespaard
+                    {t("timeSaved")}
                   </p>
                 </div>
               )}
@@ -333,7 +330,7 @@ export default async function PortfolioItemPage({
                     {project.results.roiMonths} mnd
                   </div>
                   <p className="text-gray-500 font-medium text-sm uppercase tracking-wide">
-                    ROI Periode
+                    {t("roiPeriod")}
                   </p>
                 </div>
               )}
@@ -344,7 +341,7 @@ export default async function PortfolioItemPage({
                     {project.results.costSaving}
                   </div>
                   <p className="text-gray-500 font-medium text-sm uppercase tracking-wide">
-                    Jaarlijkse Besparing
+                    {t("annualSaving")}
                   </p>
                 </div>
               )}
@@ -359,7 +356,7 @@ export default async function PortfolioItemPage({
           {/* Details/Features */}
           <section className="max-w-none">
             <h2 className="text-3xl font-bold mb-8 text-gray-900">
-              De Oplossing & Impact
+              {t("solutionTitle")}
             </h2>
 
             <ul className="space-y-4">
@@ -383,7 +380,7 @@ export default async function PortfolioItemPage({
           {project.tags && project.tags.length > 0 && (
             <section className="mt-16 pt-12 border-t border-gray-200">
               <h3 className="text-lg font-bold mb-6 text-gray-500 uppercase tracking-wider text-sm">
-                Gebruikte Technologieën
+                {t("techTitle")}
               </h3>
               <div className="flex flex-wrap gap-3">
                 {project.tags.map((tag: string) => (
@@ -434,14 +431,14 @@ export default async function PortfolioItemPage({
         <section className="py-20 bg-white border-t border-gray-200">
           <div className="container mx-auto px-6 max-w-6xl">
             <h2 className="text-2xl font-bold mb-10 text-gray-900 flex items-center justify-center gap-3">
-              Meer Projecten
+              {t("moreProjects")}
             </h2>
 
             <div className="grid md:grid-cols-3 gap-8">
               {relatedProjects.map((related) => (
                 <Link
                   key={related.slug}
-                  href={`/portfolio/${related.slug}`}
+                  href={`${hrefPrefix}/portfolio/${related.slug}`}
                   className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-[#3066be]/30 hover:shadow-xl transition-all duration-300"
                 >
                   <div className="relative h-48 overflow-hidden">
@@ -463,7 +460,7 @@ export default async function PortfolioItemPage({
                       {related.description}
                     </p>
                     <span className="text-xs text-[#3066be] font-bold uppercase tracking-wider flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                      Bekijk Case{" "}
+                      {t("viewCase")}{" "}
                       <svg
                         className="w-3 h-3"
                         fill="none"
@@ -485,10 +482,10 @@ export default async function PortfolioItemPage({
 
             <div className="text-center mt-12">
               <Link
-                href="/portfolio"
+                href={`${hrefPrefix}/portfolio`}
                 className="inline-block px-8 py-3 border border-gray-300 bg-white text-gray-700 rounded-xl hover:bg-gray-50 hover:text-black transition font-medium"
               >
-                Terug naar Overzicht
+                {t("backOverview")}
               </Link>
             </div>
           </div>
@@ -501,34 +498,32 @@ export default async function PortfolioItemPage({
 
         <div className="container mx-auto px-6 max-w-4xl relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900">
-            Klaar Voor Jouw Eigen <br />
+            {t("cta.title")} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
-              Automatisering Succes?
+              {t("cta.titleHighlight")}
             </span>
           </h2>
           <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Net als dit project kunnen we jouw bedrijf helpen 40+ uur per maand
-            te besparen. Plan een gratis haalbaarheidscheck en ontdek jouw
-            mogelijkheden.
+            {t("cta.subtitle")}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/contact"
+              href={`${hrefPrefix}/contact`}
               className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg hover:shadow-xl"
             >
-              Gratis analyse gesprek →
+              {t("cta.button1")}
             </Link>
             <Link
-              href="/contact"
+              href={`${hrefPrefix}/contact`}
               className="px-8 py-4 border border-gray-300 bg-white text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition"
             >
-              Plan een Gesprek
+              {t("cta.button2")}
             </Link>
           </div>
 
           <p className="text-xs text-gray-500 mt-8 uppercase tracking-widest">
-            Reactie binnen 24 uur • Geen verplichtingen • Gratis consult
+            {t("cta.footer")}
           </p>
         </div>
       </section>

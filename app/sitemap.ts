@@ -5,55 +5,78 @@ import { services } from "./[locale]/diensten/data";
 
 const BASE_URL = "https://aifais.com";
 
+const locales = ["nl", "en"];
+const cities = ["rotterdam", "den-haag", "gouda", "utrecht"];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-// 1. Static Pages
-  const staticRoutes = [
+  const routes: MetadataRoute.Sitemap = [];
+
+  // 1. Static Routes
+  const staticPaths = [
     "",
     "/portfolio",
     "/diensten",
-    "/diensten/bedrijfsbrein",
-    "/news", // ✅ Ensure this is here
+    "/news",
     "/contact",
     "/tools",
-    "/tools/invoice-extraction", // ✅ Added: The scanner we built
-    "/#about", // Note: Hash links technically aren't separate sitemap pages, but '/over-ons' would be if it existed.
+    "/tools/roi-calculator",
     "/privacy",
     "/agv",
-  ].map((route) => ({
-    url: `${BASE_URL}${route.replace('/#about', '')}`, // Clean up hash from URL if you used it
-    lastModified: new Date(),
-    changeFrequency: route === "" ? ("weekly" as const) : ("monthly" as const),
-    priority: route === "" ? 1 : 0.8,
-  }));
-
-  // 2. Dynamic Services (High Priority - Money Pages)
-  const serviceRoutes = services.map((service) => ({
-    url: `${BASE_URL}/diensten/${service.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.9, // Higher priority than blog/portfolio
-  }));
-
-  // 3. Dynamic Portfolio
-  const projectRoutes = projects.map((project) => ({
-    url: `${BASE_URL}/portfolio/${project.slug}`,
-    lastModified: new Date(), // Ideally use project.date
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
-  // 4. Dynamic News
-  const newsRoutes = news.map((post) => ({
-    url: `${BASE_URL}/news/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: "weekly" as const,
-    priority: 0.6,
-  }));
-
-  return [
-    ...staticRoutes,
-    ...serviceRoutes,
-    ...projectRoutes,
-    ...newsRoutes,
   ];
+
+  locales.forEach((locale) => {
+    const prefix = locale === "nl" ? "" : `/${locale}`;
+
+    // Static Pages
+    staticPaths.forEach((route) => {
+      routes.push({
+        url: `${BASE_URL}${prefix}${route}`,
+        lastModified: new Date(),
+        changeFrequency: route === "" ? "weekly" : "monthly",
+        priority: route === "" ? 1 : 0.8,
+      });
+    });
+
+    // Regional Pages
+    cities.forEach((city) => {
+      routes.push({
+        url: `${BASE_URL}${prefix}/locatie/${city}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
+    });
+
+    // Dynamic Services
+    services.forEach((service) => {
+      routes.push({
+        url: `${BASE_URL}${prefix}/diensten/${service.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.9,
+      });
+    });
+
+    // Dynamic Portfolio
+    projects.forEach((project) => {
+      routes.push({
+        url: `${BASE_URL}${prefix}/portfolio/${project.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      });
+    });
+
+    // Dynamic News
+    news.forEach((post) => {
+      routes.push({
+        url: `${BASE_URL}${prefix}/news/${post.slug}`,
+        lastModified: new Date(post.date),
+        changeFrequency: "weekly",
+        priority: 0.6,
+      });
+    });
+  });
+
+  return routes;
 }

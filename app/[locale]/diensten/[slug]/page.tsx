@@ -1,19 +1,18 @@
-// ========================================
-// FILE: app/diensten/[slug]/page.tsx - LIGHT THEME
-// ========================================
-
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { services } from "../data";
+import { getServices } from "../data";
+import { getTranslations } from "next-intl/server";
 
-// 1. GENERATE METADATA
+interface Props {
+  params: Promise<{ locale: string; slug: string }>;
+}
+
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
+}: Props): Promise<Metadata> {
+  const { slug, locale } = await params;
+  const services = getServices(locale);
   const service = services.find((s) => s.slug === slug);
 
   if (!service) {
@@ -22,49 +21,54 @@ export async function generateMetadata({
 
   return {
     title: `${service.title} | AIFAIS Automatisering`,
-    // AEO FIX: Gebruik de snippet als description indien beschikbaar
     description: service.aeoSnippet || service.description,
     openGraph: {
       title: service.title,
       description: service.aeoSnippet || service.description,
       type: "website",
-      url: `https://aifais.com/diensten/${slug}`,
+      url: `https://aifais.com/${locale}/diensten/${slug}`,
     },
   };
 }
 
-// 2. STATIC PARAMS
-export function generateStaticParams() {
-  return services.map((service) => ({
-    slug: service.slug,
-  }));
+export async function generateStaticParams() {
+  const locales = ["nl", "en"];
+  const allParams = [];
+  
+  for (const locale of locales) {
+    const services = getServices(locale);
+    for (const service of services) {
+      allParams.push({ locale, slug: service.slug });
+    }
+  }
+  
+  return allParams;
 }
 
-// 3. PAGE COMPONENT
 export default async function ServiceDetailPage({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+}: Props) {
+  const { slug, locale } = await params;
+  const services = getServices(locale);
   const service = services.find((s) => s.slug === slug);
+  const t = await getTranslations({ locale, namespace: "serviceDetail" });
 
   if (!service) {
     notFound();
   }
 
-  // ✅ SCHEMA: Service + FAQ (100% AEO Ready)
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Service",
-        "@id": `https://aifais.com/diensten/${slug}#service`,
+        "@id": `https://aifais.com/${locale}/diensten/${slug}#service`,
+        padding: "service.title",
         name: service.title,
-        description: service.aeoSnippet, // Gebruik de AEO snippet hier!
+        description: service.aeoSnippet,
         serviceType: service.title,
         provider: {
-          "@type": "LocalBusiness", // Of ProfessionalService
+          "@type": "LocalBusiness",
           "@id": "https://aifais.com/#organization",
           name: "AIFAIS",
           image: "https://aifais.com/logo_official.png",
@@ -73,9 +77,10 @@ export default async function ServiceDetailPage({
             streetAddress: "Groningenweg 8",
             postalCode: "2803 PV",
             addressLocality: "Gouda",
+            addressRegion: "Zuid-Holland",
             addressCountry: "NL",
           },
-          priceRange: "$$", // Indicatie voor Google
+          priceRange: "€2500 - €5000+",
         },
         areaServed: {
           "@type": "Country",
@@ -83,7 +88,7 @@ export default async function ServiceDetailPage({
         },
         hasOfferCatalog: {
           "@type": "OfferCatalog",
-          name: "Functionaliteiten",
+          name: "Features",
           itemListElement: service.features.map((feature) => ({
             "@type": "Offer",
             itemOffered: {
@@ -95,7 +100,7 @@ export default async function ServiceDetailPage({
       },
       {
         "@type": "FAQPage",
-        "@id": `https://aifais.com/diensten/${slug}#faq`,
+        "@id": `https://aifais.com/${locale}/diensten/${slug}#faq`,
         mainEntity: service.faq.map((f) => ({
           "@type": "Question",
           name: f.question,
@@ -112,19 +117,19 @@ export default async function ServiceDetailPage({
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://aifais.com",
+            item: `https://aifais.com/${locale}`,
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Diensten",
-            item: "https://aifais.com/diensten",
+            item: `https://aifais.com/${locale}/diensten`,
           },
           {
             "@type": "ListItem",
             position: 3,
             name: service.title,
-            item: `https://aifais.com/diensten/${slug}`,
+            item: `https://aifais.com/${locale}/diensten/${slug}`,
           },
         ],
       },
@@ -144,10 +149,10 @@ export default async function ServiceDetailPage({
 
         <div className="container mx-auto px-6 max-w-4xl relative z-10 text-center">
           <Link
-            href="/diensten"
+            href={`/${locale}/diensten`}
             className="inline-block mb-6 text-sm text-gray-500 hover:text-[#3066be] transition"
           >
-            ← Terug naar alle diensten
+            ← {t("back")}
           </Link>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 leading-tight">
@@ -157,10 +162,9 @@ export default async function ServiceDetailPage({
             {service.subtitle}
           </p>
 
-          {/* 🔥 AEO VISUAL BOX (NIEUW) */}
           <div className="my-10 p-6 bg-[#3066be]/5 border-l-4 border-[#3066be] rounded-r-xl text-left max-w-3xl mx-auto">
             <h3 className="text-[#3066be] font-bold uppercase tracking-wider text-xs mb-2">
-              Onze Dienst in het kort
+              {t("shortIntro")}
             </h3>
             <p className="text-lg font-medium text-gray-800 leading-relaxed">
               {service.aeoSnippet}
@@ -169,16 +173,16 @@ export default async function ServiceDetailPage({
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/contact"
+              href={`/${locale}/contact`}
               className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:bg-[#234a8c] transition-all hover:-translate-y-1 shadow-lg shadow-[#3066be]/20"
             >
-              Vraag Advies Aan
+              {t("ctaTalk")}
             </Link>
             <Link
-              href="/contact"
+              href={`/${locale}/contact`}
               className="px-8 py-4 border border-gray-300 bg-white text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition"
             >
-              Gratis Analyse
+              {t("ctaAnalysis")}
             </Link>
           </div>
         </div>
@@ -191,7 +195,7 @@ export default async function ServiceDetailPage({
             {/* Features */}
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-8">
-                Wat we voor je doen
+                {t("featuresTitle")}
               </h2>
               <div className="space-y-6">
                 {service.features.map((feature, i) => (
@@ -211,7 +215,7 @@ export default async function ServiceDetailPage({
             {/* Benefits */}
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-8">
-                Het resultaat
+                {t("benefitsTitle")}
               </h2>
               <ul className="space-y-4">
                 {service.benefits.map((benefit, i) => (
@@ -236,17 +240,16 @@ export default async function ServiceDetailPage({
 
               <div className="mt-10 p-6 bg-white rounded-2xl border border-[#3066be]/20 shadow-md">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Klaar om te starten?
+                  {t("readyTitle")}
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  Ontdek hoeveel tijd jij kunt besparen met{" "}
-                  {service.title.toLowerCase()}.
+                  {t("readySubtitle", { service: service.title.toLowerCase() })}
                 </p>
                 <Link
-                  href="/contact"
+                  href={`/${locale}/contact`}
                   className="text-[#3066be] font-bold hover:text-[#234a8c] flex items-center gap-2"
                 >
-                  Plan een gratis sessie <span aria-hidden="true">→</span>
+                  {t("readyLink")} <span aria-hidden="true">→</span>
                 </Link>
               </div>
             </div>
@@ -258,7 +261,7 @@ export default async function ServiceDetailPage({
       <section className="py-20 bg-white border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-3xl">
           <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
-            Veelgestelde Vragen
+            {t("faqTitle")}
           </h2>
           <div className="space-y-6">
             {service.faq.map((item, i) => (
@@ -280,17 +283,16 @@ export default async function ServiceDetailPage({
       <section className="py-24 bg-gradient-to-b from-white to-white text-center border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Niet zeker of dit bij jou past?
+            {t("footerTitle")}
           </h2>
           <p className="text-gray-600 text-lg mb-8">
-            Geen probleem. Plan een vrijblijvend adviesgesprek in. We kijken
-            samen naar jouw processen en geven eerlijk advies.
+            {t("footerText")}
           </p>
           <Link
-            href="/contact"
+            href={`/${locale}/contact`}
             className="inline-flex items-center gap-2 px-8 py-4 bg-[#3066be] hover:bg-[#234a8c] text-white font-bold rounded-xl transition-all shadow-lg shadow-[#3066be]/20 hover:-translate-y-1"
           >
-            Plan Adviesgesprek
+            {t("footerCta")}
           </Link>
         </div>
       </section>

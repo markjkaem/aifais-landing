@@ -1,78 +1,42 @@
-// ========================================
-// FILE: app/portfolio/page.tsx - LIGHT THEME
-// ========================================
-
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image"; // ✅ CRITICAL IMPORT
-import { projects } from "./data";
+import Image from "next/image";
+import { getProjects } from "./data";
+import { getTranslations } from "next-intl/server";
 
-// ✅ SEO METADATA (Optimized for CTR)
-export const metadata: Metadata = {
-  title: "Portfolio AI Automatisering | 50+ MKB Cases | AIFAIS",
-  description:
-    "Bekijk concrete voorbeelden van bedrijfsautomatisering. Zie hoe wij Nederlandse MKB-bedrijven helpen 40+ uur per week te besparen met n8n en AI.",
+interface Props {
+  params: Promise<{ locale: string }>;
+}
 
-  keywords: [
-    "automatisering portfolio",
-    "automatisering voorbeelden",
-    "n8n cases nederland",
-    "bedrijfsautomatisering projecten",
-    "praktijkvoorbeelden ai mkb",
-    "workflow automatisering cases",
-  ],
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "portfolioPage.metadata" });
 
-  openGraph: {
-    title: "Portfolio | 50+ Bedrijfsautomatisering Cases | AIFAIS",
-    description:
-      "Bekijk onze succesvolle automatisering projecten voor Nederlandse MKB-bedrijven. Concrete resultaten en besparingen.",
-    url: "https://aifais.com/portfolio",
-    type: "website",
-    locale: "nl_NL",
-    siteName: "AIFAIS",
-    images: [
-      {
-        url: "https://aifais.com/og-portfolio.jpg", // Ensure this image exists!
-        width: 1200,
-        height: 630,
-        alt: "AIFAIS Portfolio - Bedrijfsautomatisering Cases",
-      },
-    ],
-  },
+  return {
+    title: t("title"),
+    description: t("description"),
+    keywords: t("keywords").split(","),
+  };
+}
 
-  twitter: {
-    card: "summary_large_image",
-    title: "Portfolio | Bedrijfsautomatisering Cases",
-    description: "Bekijk onze succesvolle automatisering projecten.",
-    images: ["https://aifais.com/og-portfolio.jpg"],
-    creator: "@aifais",
-  },
+export default async function Portfolio({ params }: Props) {
+  const { locale } = await params;
+  const projects = getProjects(locale);
+  const t = await getTranslations({ locale, namespace: "portfolioPage" });
 
-  alternates: {
-    canonical: "https://aifais.com/portfolio",
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
-
-export default function Portfolio() {
-  // ✅ SCHEMA: ItemList is better for listing pages than just HasPart
   const portfolioSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: "Portfolio - Bedrijfsautomatisering Cases",
     description:
       "Overzicht van succesvolle automatisering projecten voor MKB bedrijven",
-    url: "https://aifais.com/portfolio",
+    url: `https://aifais.com/${locale}/portfolio`,
     mainEntity: {
       "@type": "ItemList",
       itemListElement: projects.map((project, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `https://aifais.com/portfolio/${project.slug}`,
+        url: `https://aifais.com/${locale}/portfolio/${project.slug}`,
         name: project.title,
         image: `https://aifais.com${project.image}`,
         description: project.description,
@@ -100,19 +64,17 @@ export default function Portfolio() {
         <div className="container mx-auto px-6 max-w-6xl text-center relative z-10">
           <header className="max-w-4xl mx-auto">
             <span className="inline-block px-4 py-1.5 mb-6 border border-[#3066be]/20 bg-[#3066be]/5 text-[#3066be] rounded-full text-sm font-semibold tracking-wide uppercase">
-              Bewezen Resultaten
+              {t("hero.badge")}
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 tracking-tight">
-              Portfolio: Succesvolle{" "}
+              {t("hero.title")}{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
-                Automatisering
+                {t("hero.titleHighlight")}
               </span>{" "}
-              Projecten
+              {t("hero.titleSuffix")}
             </h1>
             <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-              Ontdek hoe we Nederlandse MKB-bedrijven helpen met het
-              automatiseren van repetitieve processen. Van lead-opvolging tot
-              complexe data-synchronisatie.
+              {t("hero.subtitle")}
             </p>
           </header>
         </div>
@@ -131,13 +93,13 @@ export default function Portfolio() {
                   <Link
                     href={`/portfolio/${project.slug}`}
                     className="flex flex-col h-full"
-                    aria-label={`Bekijk case: ${project.title}`}
+                    aria-label={`${t("grid.viewResult")}: ${project.title}`}
                   >
                     {/* ✅ OPTIMIZED IMAGE CONTAINER */}
                     <div className="relative h-56 overflow-hidden bg-gray-100">
                       <Image
                         src={project.image}
-                        alt={`${project.title} - bedrijfsautomatisering case study`}
+                        alt={`${project.title} - case study`}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -163,7 +125,7 @@ export default function Portfolio() {
 
                       <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
                         <span className="text-sm font-bold text-[#3066be] group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
-                          Bekijk Resultaten
+                          {t("grid.viewResult")}
                           <svg
                             className="w-4 h-4"
                             fill="none"
@@ -203,11 +165,10 @@ export default function Portfolio() {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Nog geen cases gepubliceerd
+                {t("grid.emptyTitle")}
               </h3>
               <p className="text-gray-500 max-w-md mx-auto">
-                We zijn druk bezig met het documenteren van onze recente
-                projecten. Kom binnenkort terug!
+                {t("grid.emptyDesc")}
               </p>
             </div>
           )}
@@ -218,14 +179,13 @@ export default function Portfolio() {
       <section className="py-24 bg-gradient-to-b from-white to-white text-center relative overflow-hidden border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900">
-            Jouw Bedrijf Ook In{" "}
+            {t("cta.title")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
-              Dit Portfolio?
+              {t("cta.titleHighlight")}
             </span>
           </h2>
           <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Net als deze bedrijven kun jij 40+ uur per maand besparen. Plan een
-            gratis haalbaarheidscheck en ontdek jouw mogelijkheden.
+            {t("cta.subtitle")}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -233,23 +193,22 @@ export default function Portfolio() {
               href="/contact"
               className="px-8 py-4 bg-[#3066be] text-white font-bold rounded-xl hover:bg-[#234a8c] transition-all shadow-lg hover:-translate-y-1"
             >
-              Gratis analyse gesprek →
+              {t("cta.button")}
             </Link>
             <Link
               href="/contact"
               className="px-8 py-4 border border-gray-300 bg-white text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition"
             >
-              Plan een Gesprek
+              {t("cta.buttonAlt")}
             </Link>
           </div>
 
           {/* Trust Signals */}
           <div className="mt-16 pt-8 border-t border-gray-200">
             <p className="text-sm text-gray-400 uppercase tracking-widest mb-6 font-semibold">
-              Technologieën die wij gebruiken
+              {t("cta.techTitle")}
             </p>
             <div className="flex flex-wrap gap-8 md:gap-12 justify-center items-center opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-              {/* ✅ SEO: Use Next/Image for these logos too */}
               <div className="relative h-8 w-24">
                 <Image
                   src="/n8n.svg"
@@ -261,7 +220,7 @@ export default function Portfolio() {
               <div className="relative h-8 w-24">
                 <Image
                   src="/openai.svg"
-                  alt="OpenAI GPT integratie"
+                  alt="OpenAI GPT"
                   fill
                   className="object-contain"
                 />
@@ -269,7 +228,7 @@ export default function Portfolio() {
               <div className="relative h-8 w-24">
                 <Image
                   src="/google.svg"
-                  alt="Google Workspace Automatisering"
+                  alt="Google Workspace"
                   fill
                   className="object-contain"
                 />

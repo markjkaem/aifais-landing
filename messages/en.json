@@ -1,49 +1,725 @@
 {
+  "hero": {
+    "badge": "AI-Driven Workforce",
+    "h1_1": "Hire your first",
+    "h1_highlight": "Digital Employee",
+    "h1_2": ".",
+    "h2_1": "More time. More profit.",
+    "h2_highlight": "Less hassle.",
+    "p": "We automate the tasks that cost you time, so you can focus on what's truly important: growing your business.",
+    "guarantee": "Free analysis. Free plan. Not good, money back.",
+    "cta": "Schedule free analysis",
+    "roi": "Calculate annual benefit"
+  },
   "nav": {
+    "home": "Home",
     "services": "Services",
     "news": "News",
-    "cases": "Cases",
+    "cases": "Portfolio",
     "about": "About us",
     "contact": "Contact",
     "tools": "Tools",
-    "language": "Language"
+    "language": "Language",
+    "analyseCTA": "Analysis Call",
+    "searchPlaceholder": "Search...",
+    "viewAllServices": "View All Services",
+    "ctaText": "Start Analysis Call"
   },
-  "hero": {
-    "badge": "Specialist in Dutch SME Automation",
-    "eyebrow": "n8n Workflow Automation",
-    "title": "Save",
-    "titleHighlight": "40+ Hours Per Week",
-    "subtitle": "With Smart Automation",
-    "description": "Stop manual work. Automate repetitive processes with n8n – from sending quotes to data synchronization.",
-    "descriptionBold": "Save costs, prevent errors, and scale without new employees.",
+  "footer": {
+    "description": "Specialist in business automation and AI integrations for Dutch SMEs.",
+    "servicesTitle": "Our Services",
+    "navTitle": "Navigation",
+    "locationsTitle": "Regional Areas",
+    "businessTitle": "Business Info",
+    "rights": "All rights reserved.",
+    "operational": "All systems operational",
+    "activeIn": "Active in:",
+    "legal": {
+      "terms": "Terms & Conditions",
+      "privacy": "Privacy & Cookie Policy"
+    },
+    "followLinkedIn": "Follow us on LinkedIn",
+    "services": {
+      "email": "AI Email Answering System",
+      "sales": "Sales Lead Automation",
+      "support": "Support Ticket Summarization System"
+    }
+  },
+  "locations": {
+    "gouda": "Automation Gouda",
+    "rotterdam": "Automation Rotterdam",
+    "denHaag": "Automation Den Hague",
+    "utrecht": "Automation Utrecht"
+  },
+  "explainer": {
+    "titlePrefix": "Software that",
+    "titleHighlight": "works",
+    "titleSuffix": "not software that",
+    "titleStrikethrough": "waits",
+    "p1": "Traditional software is passive: it waits for you to press the buttons.",
+    "p2": "A <bold>Digital Employee</bold> is proactive. It reads your mail, understands context, and performs actions — without you having to be there.",
+    "features": {
+      "execution": {
+        "title": "Autonomous Execution",
+        "desc": "No clicks needed. Your agent takes over the entire process, from start to finish."
+      },
+      "context": {
+        "title": "Contextual AI",
+        "desc": "Doesn't just understand data, but also nuance. Reads documents just like a human does."
+      },
+      "guarantee": {
+        "title": "Not Good, Money Back",
+        "desc": "We believe in results. Doesn't it work as agreed? Then you don't pay."
+      }
+    },
+    "visual": {
+      "label": "AI Processing",
+      "status": "Live",
+      "output": "Invoice processed & recorded",
+      "footer": "No human action required",
+      "active": "24/7 active",
+      "automatic": "100% automatic",
+      "steps": [
+        "Document analyzed",
+        "€2,450.00 extracted",
+        "Matched with PO #2024-0891"
+      ],
+      "input": "Input",
+      "outputLabel": "Output",
+      "poweredBy": "Claude 4.5 Powered"
+    }
+  },
+  "process": {
+    "badge": "Our Process",
+    "title": "How we",
+    "titleHighlight": "work",
+    "subtitle": "No black box. Transparent, honest, and without surprises.",
+    "steps": {
+      "step1": {
+        "label": "Step 1",
+        "title": "Coffee & Critical Questions",
+        "desc": "It starts with a conversation. Where are you losing time? What are the annoying tasks? We ask the right questions.",
+        "free": "100% Free",
+        "card": {
+          "title": "Free Introduction",
+          "info": "30 minutes • Online or on-site",
+          "points": [
+            "Which tasks cost you the most time?",
+            "Which software do you already use?",
+            "What would you like to automate most?"
+          ]
+        }
+      },
+      "step2": {
+        "label": "Step 2",
+        "title": "Concrete Proposal",
+        "desc": "We automate <highlight>{this_auto}</highlight>, it delivers <highlight>{this_yield}</highlight>, it costs <highlight>{this_cost}</highlight>.",
+        "auto": "this",
+        "yield": "this",
+        "cost": "this",
+        "subText": "Don't like it? Then we shake hands and move on. No hard feelings.",
+        "card": {
+          "label": "Proposal Example",
+          "what": "What we build",
+          "agent": "Email Agent",
+          "savings": "Time savings",
+          "hours": "~15 hours/week",
+          "duration": "Duration",
+          "time": "2 weeks"
+        }
+      },
+      "step3": {
+        "label": "Step 3",
+        "title": "Build & Test",
+        "desc": "You pay 50% upfront, we start building. We keep you informed and test together until it works perfectly.",
+        "card": {
+          "working": "Mark & Faissal at work",
+          "avgTime": "Average duration: 2 weeks"
+        }
+      },
+      "step4": {
+        "label": "Step 4",
+        "title": "Live & Guarantee",
+        "desc": "Your Digital Employee goes live and runs 24/7. Upon delivery, you pay the rest — only if everything works.",
+        "guarantee": {
+          "title": "Our Guarantee",
+          "subtitle": "No risk for you",
+          "text": "Doesn't it work as agreed? Then you get your money back. It's that simple.",
+          "mobile": "Not good? Money back."
+        }
+      }
+    },
     "cta": {
-      "primary": "Calculate Your Savings",
-      "secondary": "View Examples"
+      "text": "Ready to start?",
+      "button": "Plan free call"
+    }
+  },
+  "team": {
+    "badge": "The Team",
+    "title": "Engineering &",
+    "titleHighlight": "Strategy",
+    "subtitle": "Technical depth meets business insight. We build solutions that work and deliver ROI.",
+    "mark": {
+      "role": "Head of Engineering",
+      "bio": "Technology shouldn't be complicated. With years of experience as a software engineer, Mark builds smart systems that are usable for everyone. The quiet force behind every solution we deliver.",
+      "skills": ["System Architecture", "AI Integration", "Blockchain"]
+    },
+    "faissal": {
+      "role": "Business Logic Architect",
+      "bio": "Translates complex operational issues into logical workflows that can be executed by AI. Focus on ROI and process optimization for every project.",
+      "skills": ["Workflow Design", "Business Analysis", "ROI Optimization"]
     },
     "stats": {
-      "hoursSaved": "Hours saved/week",
-      "implementation": "To implementation",
-      "roi": "Average ROI",
-      "lessErrors": "Less errors"
-    },
-    "benefits": {
-      "operational": "operational",
-      "withinWeeks": "Within 2 weeks",
-      "noCoding": "No coding",
-      "needed": "required",
-      "integrations": "400+ integrations",
-      "available": "available",
-      "dataOwnership": "100% data ownership",
-      "guaranteed": "guaranteed"
-    },
-    "trust": {
-      "free": "Free feasibility check",
-      "response": "Response within 24 hours",
-      "noObligations": "No obligations"
+      "founders": "Founders",
+      "location": "South Holland, NL",
+      "bootstrapped": "Bootstrapped",
+      "response": "Response Time"
+    }
+  },
+  "techStack": {
+    "badge": "Our Stack",
+    "title": "The foundation of",
+    "titleHighlight": "innovation",
+    "subtitle": "We only work with proven, scalable, and secure technologies.",
+    "enterprise": "Enterprise stack for every business",
+    "techs": {
+      "solana": "Settlement",
+      "claude": "Intelligence",
+      "stripe": "Fiat Rails",
+      "mcp": "Connectivity"
+    }
+  },
+  "portfolio": {
+    "badge": "Portfolio",
+    "title": "Digital Employees",
+    "titleHighlight": "in action",
+    "subtitle": "No concepts, but agents that are already running in production today.",
+    "viewCase": "View case",
+    "viewAll": "View all cases",
+    "status": "Live",
+    "tags": {
+      "automation": "Automation",
+      "agent": "AI Agent"
     }
   },
   "event": {
-    "title": "AI Event — Dec 2, 2025",
-    "subtitle": "Fully up-to-date in 1 day"
+    "title": "Masterclass: AI in Practice",
+    "cta": "Register →"
+  },
+  "megaMenu": {
+    "solutions": "Our Solutions",
+    "allServices": "View all other services",
+    "articles": "Latest Articles",
+    "knowledgeBase": "View Knowledge Base →",
+    "analysisTitle": "Free analysis of your automation opportunities",
+    "analysisSub": "Discover within 2 minutes where your biggest gain lies.",
+    "analysisCTA": "Start Now"
+  },
+  "servicesPage": {
+    "metadata": {
+      "title": "Our Services | Digital Employees & AI Agents | AIFAIS",
+      "description": "We build Digital Employees: autonomous AI agents that take over your tasks. Email reply, document processing, sales automation. Money back guarantee.",
+      "keywords": "digital employee,build ai agent,autonomous automation,ai email answering,document processing ai,sales automation,smb automation"
+    },
+    "exampleAgents": {
+      "email": {
+        "title": "Email Agent",
+        "description": "Reads, understands, and answers emails with context from your knowledge base."
+      },
+      "document": {
+        "title": "Document Agent",
+        "description": "Processes invoices, contracts, and forms automatically."
+      },
+      "sales": {
+        "title": "Sales Agent",
+        "description": "Qualifies leads and keeps your CRM automatically up to date."
+      },
+      "support": {
+        "title": "Support Agent",
+        "description": "Answers tickets and escalates only when necessary."
+      },
+      "viewCase": "View Case"
+    },
+    "steps": [
+      {
+        "number": "01",
+        "title": "Coffee & Critical Questions",
+        "description": "Where are you losing time? What are the annoying tasks? 100% free conversation."
+      },
+      {
+        "number": "02",
+        "title": "Concrete Proposal",
+        "description": "This is what we'll automate, this is the benefit, this is the cost. No fine print."
+      },
+      {
+        "number": "03",
+        "title": "Build & Test",
+        "description": "We build your agent. Half upfront, the rest upon delivery."
+      },
+      {
+        "number": "04",
+        "title": "Live & Warranty",
+        "description": "Your agent runs 24/7. Not working? Money back."
+      }
+    ],
+    "hero": {
+      "badge": "Digital Employees",
+      "title": "We build the agent",
+      "titleHighlight": "you need",
+      "subtitle": "Any task that costs you time can become a Digital Employee. Tell us what you need — we build it.",
+      "ctaTalk": "Discuss your agent",
+      "ctaView": "View what we've built"
+    },
+    "intro": {
+      "title": "One service.",
+      "titleHighlight": "Infinite possibilities.",
+      "p": "We build custom autonomous AI agents. Not standard software, but a Digital Employee that does exactly what your business needs.",
+      "capTitle": "What can an agent do for you?",
+      "capNote": "And everything in between. If it's a process, we can automate it."
+    },
+    "capabilities": [
+      "Read and reply to emails",
+      "Process documents and extract data",
+      "Qualify and follow up on leads",
+      "Handle support tickets",
+      "Manage calendars and schedule meetings",
+      "Generate and send reports",
+      "Synchronize data between systems",
+      "Process and book invoices"
+    ],
+    "visual": {
+      "label": "agent.exe",
+      "step1": "New invoice received via email",
+      "step2": "Data extracted: €2,450.00 from Supplier Ltd.",
+      "step3": "Validated against purchase order #2024-0891",
+      "step4": "Recorded in Exact Online",
+      "step5": "Payment scheduled for 15-01-2025",
+      "footer": "Done in 3.2 seconds — no human action required"
+    },
+    "examples": {
+      "title": "Agents we've already built",
+      "subtitle": "For inspiration — your agent can be completely different.",
+      "viewCase": "View case",
+      "other": "Need something else?",
+      "talk": "Let's talk →"
+    },
+    "why": {
+      "title": "Why a Digital Employee?",
+      "tradTitle": "Traditional Software",
+      "tradPoints": [
+        "Waits for you to press buttons",
+        "Requires manual data entry",
+        "Doesn't understand context or nuance",
+        "Only runs when you work"
+      ],
+      "agentTitle": "Digital Employee",
+      "agentPoints": [
+        "Proactively takes over tasks",
+        "Reads and understands documents itself",
+        "Uses your knowledge base for context",
+        "Runs 24/7, even while you sleep"
+      ]
+    },
+    "process": {
+      "title": "How we work",
+      "subtitle": "Transparent and without surprises."
+    },
+    "stats": [
+      { "value": "40+", "label": "Hours saved per week" },
+      { "value": "<2", "label": "Weeks turnaround time" },
+      { "value": "100%", "label": "Not good, money back" },
+      { "value": "24/7", "label": "Your agent keeps running" }
+    ],
+    "cta": {
+      "title": "Which task costs you too much time?",
+      "subtitle": "Tell us. Within 30 minutes you'll know if we can make an agent for it — and what the yield is.",
+      "button": "Schedule Free Call",
+      "viewCases": "View Cases",
+      "enterprise": "Built on enterprise standards"
+    }
+  },
+  "serviceDetail": {
+    "back": "Back to all services",
+    "shortIntro": "Our Service in short",
+    "ctaTalk": "Request Advice",
+    "ctaAnalysis": "Free Analysis",
+    "featuresTitle": "What we do for you",
+    "benefitsTitle": "The result",
+    "readyTitle": "Ready to start?",
+    "readySubtitle": "Discover how much time you can save with {service}.",
+    "readyLink": "Schedule a free session",
+    "faqTitle": "Frequently Asked Questions",
+    "footerTitle": "Not sure if this fits you?",
+    "footerText": "No problem. Schedule a non-binding advisory call. We will look at your processes together and provide honest advice.",
+    "footerCta": "Schedule Advisory Call"
+  },
+  "contact": {
+    "hero": {
+      "badge": "Free Consultation",
+      "title": "Ready to",
+      "titleHighlight": "start?",
+      "subtitle": "Tell us what you're losing time on. Within 24 hours you'll have a concrete plan."
+    },
+    "form": {
+      "title": "Send a message",
+      "subtitle": "Fill in your details — we respond quickly.",
+      "nameLabel": "Name",
+      "namePlaceholder": "Your name",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "name@company.com",
+      "phoneLabel": "Phone",
+      "phoneOptional": "(optional)",
+      "phonePlaceholder": "+31 6 12345678",
+      "messageLabel": "How can we help you?",
+      "messagePlaceholder": "Describe your challenge or question...",
+      "submitButton": "Send Request",
+      "sendingButton": "Sending...",
+      "trustIndicator": "Your data is 100% secure"
+    },
+    "errors": {
+      "nameRequired": "Name is required",
+      "emailInvalid": "Enter a valid email address",
+      "messageMinLength": "Message must contain at least 10 characters",
+      "generalError": "Something went wrong",
+      "tryAgain": "Please try again or email us directly."
+    },
+    "success": {
+      "title": "Message received!",
+      "subtitle": "We will contact you within 24 hours.",
+      "sendAnother": "Send another message →"
+    },
+    "sidebar": {
+      "nextTitle": "What happens next?",
+      "steps": [
+        {
+          "title": "Analysis",
+          "desc": "We review your request and check if we are a match."
+        },
+        {
+          "title": "Introduction",
+          "desc": "Short call (15-30 min) to go through your processes."
+        },
+        {
+          "title": "Proposal",
+          "desc": "You receive a plan with a fixed price and expected ROI."
+        }
+      ],
+      "mailLabel": "Email us",
+      "callLabel": "Call directly",
+      "responseTime": "Average response time: within 4 hours"
+    }
+  },
+  "portfolioPage": {
+    "metadata": {
+      "title": "Portfolio AI Automation | 50+ SMB Cases | AIFAIS",
+      "description": "View concrete examples of business automation. See how we help companies save 40+ hours per week with n8n and AI.",
+      "keywords": "automation portfolio,automation examples,n8n cases,business automation projects,ai smb case studies,workflow automation cases"
+    },
+    "hero": {
+      "badge": "Proven Results",
+      "title": "Portfolio: Successful",
+      "titleHighlight": "Automation",
+      "titleSuffix": "Projects",
+      "subtitle": "Discover how we help companies automate repetitive processes. From lead follow-up to complex data synchronization."
+    },
+    "grid": {
+      "viewResult": "View Results",
+      "emptyTitle": "No cases published yet",
+      "emptyDesc": "We are busy documenting our recent projects. Come back soon!"
+    },
+    "cta": {
+      "title": "Your Business Also In",
+      "titleHighlight": "This Portfolio?",
+      "subtitle": "Like these companies, you can save 40+ hours per month. Schedule a free feasibility check and discover your possibilities.",
+      "button": "Free analysis call →",
+      "buttonAlt": "Schedule a Call",
+      "techTitle": "Technologies we use",
+      "enterprise": "Response within 24 hours • No obligations • Free consultation"
+    }
+  },
+  "newsPage": {
+    "metadata": {
+      "title": "Knowledge Base & News | AI & Automation Insights | AIFAIS",
+      "description": "Stay up to date with the latest trends in business automation, n8n tutorials, AI integrations, and practical tips for SMBs.",
+      "keywords": "automation blog,n8n tutorials,ai news smb,optimizing business processes tips,chatgpt business use,aifais knowledge base"
+    },
+    "hero": {
+      "badge": "Knowledge Base",
+      "title": "Insights into",
+      "titleHighlight": "Smart Automation",
+      "subtitle": "Practical guides, updates on AI technology, and tips to make your business more efficient."
+    },
+    "article": {
+      "readTime": "{time} min read",
+      "readMore": "Read Article",
+      "empty": "No articles have been posted yet. Come back soon!"
+    },
+    "cta": {
+      "title": "Ready to start automating immediately?",
+      "subtitle": "Reading is good, doing is better. Discover within 2 minutes where your opportunities lie with our free analysis.",
+      "button": "Schedule analysis call"
+    }
+  },
+  "homePage": {
+    "metadata": {
+      "title": "AI & Process Automation for SMBs | Save 40+ Hours/Week | AIFAIS",
+      "description": "Automate repetitive tasks and business processes for SMBs. Save 40+ hours per week immediately. Active across the Netherlands.",
+      "keywords": "automation netherlands,business automation,process automation,ai automation smb,mkb automation"
+    },
+    "faq": {
+      "q1": "What is the turnaround time from intake to live automation?",
+      "a1": "Average 2 weeks from intake to live. Simple automations are often live within 1 week.",
+      "q2": "Do I need technical knowledge?",
+      "a2": "No. We build and implement everything. You get a simple dashboard where you can make adjustments in plain language.",
+      "q3": "What does automation cost on average?",
+      "a3": "Starting from €2,500 for standard automation. Complex processes from €5,000. Always a transparent quote upfront.",
+      "q4": "Does this work with my current systems?",
+      "a4": "Yes. We connect with 400+ tools such as Google Workspace, Excel, HubSpot, Exact Online, Salesforce, Slack, and more."
+    },
+    "schemas": {
+      "serviceType": "Business Automation for SMBs",
+      "orgDescription": "Specialist in business automation and AI integrations for SMBs in the Netherlands.",
+      "standardService": "Standard Business Automation",
+      "standardDesc": "Automate repetitive tasks such as quotes, administration, invoicing, and reports.",
+      "complexService": "Complex Process Automation",
+      "complexDesc": "Advanced automation with multiple systems, complex decision logic, and AI integrations."
+    }
+  },
+  "cityPage": {
+    "cta": "Free Analysis in {city}",
+    "regionInfo": "Your partner for automation in the {city} region",
+    "subText": "Based in the Randstad area, we provide personal service and on-site support where needed."
+  },
+  "faq": {
+    "badge": "❓ FREQUENTLY ASKED QUESTIONS",
+    "title": "Everything You Need to Know",
+    "subtitle": "Still have doubts? These are the questions we get most often. Is your question not listed?",
+    "contactLink": "Contact us",
+    "ctaTitle": "More questions?",
+    "ctaSubtitle": "We would be happy to answer them in a non-binding 30-minute call.",
+    "ctaButton": "Start Free Analysis Call",
+    "ctaSecondary": "Ask Your Question",
+    "responseTime": "Average response time: within 4 hours",
+    "items": [
+      {
+        "question": "How quickly can I see results?",
+        "answer": "This varies per situation. Sometimes you see the first results within two weeks, for larger custom-made workflows it can take up to three months. It depends on what needs to be built. But one thing is certain: we only start when we have established a clear goal together."
+      },
+      {
+        "question": "Do I need to be technical to use this?",
+        "answer": "Absolutely not. Everything we build is designed to be used by everyone, without technical knowledge. You only need to know what you want to achieve, we take care of the rest."
+      },
+      {
+        "question": "What are the costs?",
+        "answer": "That depends on what is needed. During the free introductory meeting, we map out what is possible. Afterwards, you will receive a non-binding plan with a clear price indication. No surprises afterwards."
+      },
+      {
+        "question": "Does this work with our current software?",
+        "answer": "Yes. We can work with almost all software. And if your system is not standardly included, we often integrate via APIs or webhooks. In short: we always find a way."
+      },
+      {
+        "question": "What if it doesn't work as agreed?",
+        "answer": "Then you get your money back. It's that simple. We believe in what we make and strive to deliver the best work for our customers. Doesn't it work? Then you don't pay."
+      },
+      {
+        "question": "How do I know if automation is for us?",
+        "answer": "Do you have tasks that repeat and cost a lot of time? Then there is likely something to automate. Think of reading and answering emails, summarizing dossiers, creating quotes, drafting contracts, sending messages, or managing calendars. From back office to front office, from law firm to cafeteria. Every business has annoying chores that can be done faster and smarter."
+      }
+    ]
+  },
+  "tools": {
+    "badge": "Tools",
+    "title": "Practical tools,",
+    "titleHighlight": "immediately usable",
+    "subtitle": "From free calculators to advanced APIs. No account needed.",
+    "viewAll": "View all tools",
+    "invoiceScanner": {
+      "title": "Invoice Scanner",
+      "description": "Drag invoices, get structured data. With Chamber of Commerce verification and Excel export. A showcase tool running on blockchain infrastructure.",
+      "stackLabel": "Blockchain Stack",
+      "status": "Online",
+      "cta": "Try now"
+    },
+    "roiCalculator": {
+      "title": "Savings Calculator",
+      "label": "Free",
+      "description": "Calculate your ROI on automation"
+    },
+    "invoiceCreator": {
+      "title": "Invoice Maker",
+      "label": "Free",
+      "description": "PDF invoices in your browser"
+    },
+    "comingSoon": {
+      "label": "Coming Soon",
+      "debtGenerator": "Debt Collection Generator",
+      "proposalAi": "Proposal AI"
+    }
+  },
+  "toolsPage": {
+    "title": "Practical AI tools",
+    "subtitle": "for daily use",
+    "description": "From free calculators to automated APIs. Immediately usable, no account needed.",
+    "backLink": "Back to Aifais",
+    "toolsLabel": "Tools",
+    "footerText": "More tools in development.",
+    "suggestions": "Suggestions?",
+    "status": {
+      "free": "Free",
+      "api": "Live API",
+      "soon": "Coming Soon"
+    },
+    "items": {
+      "roiCalculator": {
+        "title": "Savings Calculator",
+        "description": "Calculate how much time and money automation saves you. Instant insight, PDF report.",
+        "href": "/tools/roi-calculator"
+      },
+      "invoiceScanner": {
+        "title": "Invoice Scanner",
+        "description": "Drag invoices, get structured data. Chamber of Commerce verification, Excel export. x402 MCP protocol.",
+        "href": "/tools/invoice-extraction"
+      },
+      "invoiceCreator": {
+        "title": "Invoice Maker",
+        "description": "Professional PDF invoices in seconds. No account, no storage. Fully in your browser.",
+        "href": "/tools/invoice-creation"
+      },
+      "debtCollection": {
+        "title": "Debt Collection Generator",
+        "description": "Legally correct dunning letters with AI support. From reminder to summons.",
+        "href": "#"
+      },
+      "proposalAi": {
+        "title": "Proposal AI",
+        "description": "From keywords to convincing proposal. Professional text that converts.",
+        "href": "#"
+      }
+    },
+    "open": "Open"
+  },
+  "searchOverlay": {
+    "placeholder": "Search services, cases or news..."
+  },
+  "headerData": {
+    "voice": {
+        "title": "Phone Assistants",
+        "description": "Replace selection menus with fluid, human conversations."
+    },
+    "brain": {
+        "title": "Company Brain & Memory",
+        "description": "All your business data searchable and linked via GraphRAG."
+    },
+    "agents": {
+        "title": "AI Employees (Agents)",
+        "description": "Autonomous digital colleagues that execute processes for you."
+    },
+    "api": {
+        "title": "Agent API (x402)",
+        "description": "Where Agents do business with each other"
+    }
+  },
+  "portfolioDetail": {
+    "notFoundTitle": "Project Not Found",
+    "metaDescription": "Case Study: {description}... View results and ROI for this SMB.",
+    "resultsTitle": "Achieved Results",
+    "timeSaved": "Time Saved",
+    "roiPeriod": "ROI Period",
+    "annualSaving": "Annual Saving",
+    "solutionTitle": "The Solution & Impact",
+    "techTitle": "Technologies Used",
+    "moreProjects": "More Projects",
+    "viewCase": "View Case",
+    "backOverview": "Back to Overview",
+    "readTime": "{time} min read",
+    "cta": {
+       "title": "Ready For Your Own",
+       "titleHighlight": "Automation Success?",
+       "subtitle": "Just like this project, we can help your business save 40+ hours per month. Schedule a free feasibility check and discover your possibilities.",
+       "button1": "Free analysis call →",
+       "button2": "Schedule a Call",
+       "footer": "Response within 24 hours • No obligations • Free consultation"
+    }
+  },
+  "agentApiPage": {
+    "hero": {
+      "badge": "Machine-to-Machine Economy",
+      "title": "Where Agents Do Business",
+      "titleHighlight": "with each other.",
+      "subtitle": "Why limit your 'Company Brain' to your own employees? With the x402 standard, external AI agents can securely pay for your data, analyses, and tools. Fully automated. Micro-transactions. Instant settlement.",
+      "ctaActivate": "Activate x402",
+      "ctaApi": "View API"
+    },
+    "demo": {
+      "step1": { "label": "Request", "desc": "Agent X asks: 'Scan this contract'" },
+      "step2": { "label": "402 Payment Required", "desc": "Witted API: 'That costs 2.00 USDC'" },
+      "step3": { "label": "Payment", "desc": "Agent X pays directly via Wallet" },
+      "step4": { "label": "Response", "desc": "Witted API delivers analysis" },
+      "step5": { "label": "Done", "desc": "Transaction completed in 400ms" }
+    },
+    "useCase": {
+      "title": "The First 'Contract Scan' API on the Blockchain",
+      "subtitle": "This is not science fiction. We can make your legal models available to agents worldwide today.",
+      "card1": { "title": "Universal Access", "desc": "A purchasing agent from New York can call your Dutch labor law expertise to check a contract. No account needed." },
+      "card2": { "title": "Pay-per-Request", "desc": "No monthly subscriptions. The agent pays per page, per scan, or per millisecond of compute. Directly in USDC." },
+      "card3": { "title": "Zero-Trust Security", "desc": "If no payment is made, the API delivers nothing. The '402 Payment Required' protocol enforces payment before delivery." }
+    },
+    "tech": {
+      "title": "Integrate in 5 Minutes.",
+      "description": "We build the x402 gateway for you. To the outside world, it looks like a standard REST API, but underneath it handles complex crypto transactions.",
+      "check1": { "title": "Compatible with Everything", "desc": "Works with Python (LangChain), Node.js, or curl." },
+      "check2": { "title": "Automatic Invoicing", "desc": "Every transaction is logged for your accounting." }
+    },
+    "cta": {
+      "title": "Your Data as a Profit Model?",
+      "subtitle": "Unlock the value of your corporate knowledge for the next generation of AI.",
+      "button": "Start with x402 Integration"
+    }
+  },
+  "bedrijfsbreinPage": {
+    "meta": {
+      "title": "The Company Brain | AI with Long-Term Memory | AIFAIS",
+      "description": "Stop searching. Our AI builds a continuously learning corporate memory (Knowledge Graph) of all your data, emails, and notes."
+    },
+    "hero": {
+      "back": "Back to all services",
+      "badge": "New: GraphRAG Technology",
+      "title": "The First AI System That",
+      "titleHighlight": "Never Forgets Anything",
+      "subtitle": "Standard AI reads documents but doesn't understand context. Our Enterprise Brain builds a network of relationships between your customers, projects, and appointments.",
+      "ctaDemo": "Request Demo",
+      "ctaHow": "How does it work?"
+    },
+    "problemSolution": {
+      "title": "From 'Plain Text' to",
+      "titleHighlight": "Deep Knowledge",
+      "p1": "If you ask ChatGPT: 'What did we agree with Peter?', it searches for the name Peter in files.",
+      "p2": "Our Company Brain works differently. It knows that Peter is the CEO of Company X, that he dislikes phone calls, and that his project is waiting for approval from Finance.",
+      "step1": "You upload notes, emails, or PDFs.",
+      "step2": "Graphiti AI automatically makes connections (who knows whom?).",
+      "step3": "You chat with your company data as if it were a colleague.",
+      "visualTag": "Powered by LangGraph",
+      "visualNodes": {
+        "center": "Client X",
+        "node1": "Project Omega",
+        "node2": "Likes Emailing",
+        "node3": "Budget €50k"
+      }
+    },
+    "useCases": {
+      "title": "What Do You Use This For?",
+      "case1": { "title": "Second Brain", "desc": "Never forget a detail from a meeting 3 months ago. The AI links notes to action items." },
+      "case2": { "title": "CRM on Steroids", "desc": "Upload your email history and let the AI build profiles of every customer: communication style, pain points, and history." },
+      "case3": { "title": "Compliance & HR", "desc": "Ask questions to your employee handbook or legal documents and get answers with source citations." }
+    },
+    "techStack": {
+      "title": "Built on Next-Gen Infrastructure"
+    },
+    "cta": {
+      "title": "Your Company Knowledge,",
+      "titleHighlight": "Directly Accessible.",
+      "subtitle": "This is not standard software. This is custom architecture. We build this specifically for your data streams.",
+      "button": "Plan a Strategy Session"
+    }
   }
 }

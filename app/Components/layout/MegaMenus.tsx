@@ -21,19 +21,21 @@ interface MegaMenuServicesProps {
   serviceLinks: ServiceLink[];
   getLocalizedPath: (path: string) => string;
   closeAll: () => void;
+  t: (key: string) => string;
 }
 
 export function MegaMenuServices({
   serviceLinks,
   getLocalizedPath,
   closeAll,
+  t,
 }: MegaMenuServicesProps) {
   return (
     <div className="hidden lg:block w-full bg-white/98 backdrop-blur-xl border-b border-gray-200 shadow-2xl py-8 animate-slideDown">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 gap-8">
         <div className="col-span-2">
           <h4 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4 px-4">
-            Onze Oplossingen
+            {t("solutions")}
           </h4>
           <div className="grid grid-cols-2 gap-4">
             {serviceLinks.map((service) => (
@@ -63,7 +65,7 @@ export function MegaMenuServices({
               className="text-gray-500 text-sm font-semibold hover:text-[#3066be] transition flex items-center gap-1"
               onClick={closeAll}
             >
-              Bekijk alle overige diensten{" "}
+              {t("allServices")}{" "}
               <ArrowRightIcon className="w-4 h-4" />
             </Link>
           </div>
@@ -73,17 +75,17 @@ export function MegaMenuServices({
           <div className="bg-gradient-to-br from-[#3066be]/5 to-blue-50 border border-[#3066be]/20 rounded-2xl p-6 hover:border-[#3066be]/40 transition cursor-pointer w-full relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#3066be]/10 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-[#3066be]/20"></div>
             <p className="font-semibold text-lg text-gray-900 mb-2 relative z-10">
-              Gratis analyse van jouw automatiseringskansen
+              {t("analysisTitle")}
             </p>
             <p className="text-sm text-gray-600 mb-6 relative z-10">
-              Ontdek binnen 2 minuten waar jouw grootste winst ligt.
+              {t("analysisSub")}
             </p>
             <Link
               href={getLocalizedPath("/contact")}
               onClick={closeAll}
               className="block w-full py-3 bg-[#3066be] text-white text-center rounded-lg font-medium hover:bg-[#234a8c] transition relative z-10 shadow-lg shadow-blue-900/10"
             >
-              Start Nu
+              {t("analysisCTA")}
             </Link>
           </div>
         </div>
@@ -97,6 +99,7 @@ interface MegaMenuNewsProps {
   getLocalizedPath: (path: string) => string;
   closeAll: () => void;
   tEvent: (key: string) => string;
+  tMega: (key: string) => string;
 }
 
 export function MegaMenuNews({
@@ -104,13 +107,14 @@ export function MegaMenuNews({
   getLocalizedPath,
   closeAll,
   tEvent,
+  tMega,
 }: MegaMenuNewsProps) {
   return (
     <div className="hidden lg:block w-full bg-white/98 backdrop-blur-xl border-b border-gray-200 shadow-2xl py-8 animate-slideDown">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 gap-8">
         <div className="col-span-2">
           <h4 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4 px-4">
-            Nieuwste Artikelen
+            {tMega("articles")}
           </h4>
           <div className="grid grid-cols-2 gap-4">
             {(news || [])
@@ -137,7 +141,7 @@ export function MegaMenuNews({
               className="text-gray-500 text-sm font-semibold hover:text-[#3066be] transition flex items-center gap-1"
               onClick={closeAll}
             >
-              Bekijk Kennisbank →
+              {tMega("knowledgeBase")}
             </Link>
           </div>
         </div>
@@ -159,7 +163,7 @@ export function MegaMenuNews({
               onClick={closeAll}
               className="text-sm text-gray-500 hover:text-[#3066be] transition"
             >
-              Inschrijven →
+              {tEvent("cta")}
             </Link>
           </div>
         </div>

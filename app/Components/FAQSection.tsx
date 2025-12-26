@@ -1,48 +1,17 @@
-"use client";
-
 import { useState } from "react";
+import { useTranslations, useLocale } from "next-intl";
 
 interface FAQItem {
   question: string;
   answer: string;
 }
 
-// ✅ JOUW TEKSTEN
-const faqData: FAQItem[] = [
-  {
-    question: "Hoe snel kan ik resultaat zien?",
-    answer:
-      "Dat verschilt per situatie. Soms zie je binnen twee weken al de eerste resultaten, bij grotere custom made workflows kan het tot drie maanden duren. Het hangt af van wat er gebouwd moet worden. Maar één ding is zeker: we werken pas wanneer we samen een duidelijk doel hebben vastgesteld.",
-  },
-  {
-    question: "Moet ik technisch zijn om dit te gebruiken?",
-    answer:
-      "Absoluut niet. Alles wat wij bouwen is gemaakt om door iedereen gebruikt te worden, zonder technische kennis. Jij hoeft alleen te weten wat je wilt bereiken, wij regelen de rest.",
-  },
-  {
-    question: "Wat zijn de kosten?",
-    answer:
-      "Dat hangt af van wat er nodig is. Tijdens het gratis kennismakingsgesprek brengen we in kaart wat er mogelijk is. Daarna ontvang je een vrijblijvend plan met een heldere prijsindicatie. Geen verrassingen achteraf.",
-  },
-  {
-    question: "Werkt dit met onze huidige software?",
-    answer:
-      "Ja. Wij kunnen met vrijwel alle software werken. En mocht jouw systeem er niet standaard tussen zitten, dan integreren we vaak alsnog via APIs of webhooks. Kortom: we vinden altijd een manier.",
-  },
-  {
-    question: "Wat als het niet werkt zoals afgesproken?",
-    answer:
-      "Dan krijg je je geld terug. Zo simpel is het. Wij geloven in wat we maken en streven ernaar om het beste werk voor onze klanten neer te zetten. Werkt het niet? Dan betaal je niet.",
-  },
-  {
-    question: "Hoe weet ik of automatisering iets voor ons is?",
-    answer:
-      "Heb je taken die steeds terugkomen en veel tijd kosten? Dan is er waarschijnlijk iets te automatiseren. Denk aan e-mails lezen en beantwoorden, dossiers samenvatten, offertes maken, contracten opstellen, berichten versturen of agenda's beheren. Van backoffice tot frontoffice, van advocatenkantoor tot cafetaria. Elk bedrijf heeft vervelende klusjes die sneller en slimmer kunnen.",
-  },
-];
-
 export default function FAQSection() {
+  const t = useTranslations("faq");
+  const locale = useLocale();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const faqData = t.raw("items") as FAQItem[];
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -64,23 +33,22 @@ export default function FAQSection() {
         <div className="text-center mb-16">
           <div className="inline-block mb-4 px-4 py-2 bg-[#3066be]/10 border border-[#3066be]/20 rounded-full">
             <span className="text-[#3066be] text-sm font-semibold tracking-wide">
-              ❓ VEELGESTELDE VRAGEN
+              {t("badge")}
             </span>
           </div>
           <h2
             id="faq-heading"
             className="text-4xl md:text-5xl font-bold mb-4 text-gray-900"
           >
-            Alles Wat Je Moet Weten
+            {t("title")}
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Nog twijfels? Deze vragen krijgen we het meest. Staat jouw vraag er
-            niet tussen?
+            {t("subtitle")}
             <a
-              href="/contact"
+              href={`/${locale}/contact`}
               className="text-[#3066be] hover:text-[#234a8c] ml-1 underline font-medium"
             >
-              Neem contact op
+              {t("contactLink")}
             </a>
           </p>
         </div>
@@ -151,17 +119,17 @@ export default function FAQSection() {
         {/* Bottom CTA */}
         <div className="mt-16 text-center p-8 bg-white border border-gray-200 rounded-2xl shadow-sm">
           <h3 className="text-2xl font-bold text-gray-900 mb-3">
-            Nog meer vragen?
+            {t("ctaTitle")}
           </h3>
           <p className="text-gray-600 mb-6">
-            We beantwoorden ze graag in een vrijblijvend gesprek van 30 minuten.
+            {t("ctaSubtitle")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/contact"
+              href={`/${locale}/contact`}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#3066be] text-white font-semibold rounded-lg hover:bg-[#234a8c] transition-all shadow-lg shadow-[#3066be]/20 hover:-translate-y-1"
             >
-              <span>Start Gratis Analyse Gesprek</span>
+              <span>{t("ctaButton")}</span>
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -177,10 +145,10 @@ export default function FAQSection() {
               </svg>
             </a>
             <a
-              href="/contact"
+              href={`/${locale}/contact`}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-50 border border-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-white hover:border-gray-300 transition-all"
             >
-              <span>Stel Je Vraag</span>
+              <span>{t("ctaSecondary")}</span>
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -212,7 +180,7 @@ export default function FAQSection() {
                 clipRule="evenodd"
               />
             </svg>
-            <span>Gemiddelde responstijd: binnen 4 uur</span>
+            <span>{t("responseTime")}</span>
           </p>
         </div>
       </div>

@@ -3,8 +3,14 @@
 // ========================================
 
 import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
 
 export default function Footer() {
+  const t = useTranslations("footer");
+  const tLoc = useTranslations("locations");
+  const tNav = useTranslations("nav");
+  const locale = useLocale();
+
   return (
     <footer
       className="text-gray-600 bg-white  border-t border-gray-200"
@@ -14,7 +20,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-3 lg:grid-cols-5 gap-12 text-sm">
         {/* COL 1: Company Info & Address */}
         <div className="flex flex-col gap-4">
-          <Link href="/" className="inline-block" itemProp="url">
+          <Link href={`/${locale}`} className="inline-block" itemProp="url">
             <span
               className="font-bold text-2xl text-gray-900 tracking-tight"
               itemProp="name"
@@ -23,8 +29,7 @@ export default function Footer() {
             </span>
           </Link>
           <p className="text-gray-500 leading-relaxed">
-            Specialist in bedrijfsautomatisering en AI-integraties voor het
-            Nederlandse MKB.
+            {t("description")}
           </p>
 
           <address
@@ -42,7 +47,7 @@ export default function Footer() {
               NL
             </span>
             <p className="text-xs text-gray-400 mt-1">
-              Gevestigd in Zuid-Holland
+              {t("description")}
             </p>
           </address>
 
@@ -91,131 +96,122 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* COL 2: Services */}
         <div className="flex flex-col gap-4">
-          <h3 className="font-bold text-gray-900 text-base">Onze Diensten</h3>
+          <h3 className="font-bold text-gray-900 text-base">{t("servicesTitle")}</h3>
           <nav className="flex flex-col gap-3">
             <Link
-              href="/diensten/email-reply-ai-agent"
+              href={`/${locale}/diensten/email-reply-ai-agent`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              AI Email Beantwoording Systeem
+              {t("services.email")}
             </Link>
             <Link
-              href="/diensten/sales-lead-automation"
+              href={`/${locale}/diensten/sales-lead-automation`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Sales Lead Automatisering
+              {t("services.sales")}
             </Link>
             <Link
-              href="/diensten/support-ticket-samenvatting-systeem"
+              href={`/${locale}/diensten/support-ticket-samenvatting-systeem`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Support Ticket Samenvatting Systeem
+              {t("services.support")}
             </Link>
             <Link
-              href="/diensten"
+              href={`/${locale}/diensten`}
               className="text-[#3066be] hover:text-[#234a8c] transition font-medium mt-2 text-xs uppercase tracking-wider"
             >
-              Bekijk alle diensten →
+              {tNav("services")} →
             </Link>
           </nav>
         </div>
 
-        {/* COL 3: Quick Links */}
         <div className="flex flex-col gap-4">
-          <h3 className="font-bold text-gray-900 text-base">Navigatie</h3>
+          <h3 className="font-bold text-gray-900 text-base">{t("navTitle")}</h3>
           <nav className="flex flex-col gap-3">
             <Link
-              href="/portfolio"
+              href={`/${locale}/portfolio`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Portfolio & Cases
+              {tNav("cases")}
             </Link>
             <Link
-              href="/news"
+              href={`/${locale}/news`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Kennisbank & Nieuws
+              {tNav("news")}
             </Link>
             <Link
-              href="/#about"
+              href={`/${locale}/#about`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Over Ons
+              {tNav("about")}
             </Link>
             <Link
-              href="/tools"
+              href={`/${locale}/tools`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Tools
+              {tNav("tools")}
             </Link>
             <Link
-              href="/contact"
+              href={`/${locale}/contact`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Contact & Advies
+              {tNav("contact")}
             </Link>
           </nav>
         </div>
 
         {/* COL 4: Locations (SEO) */}
         <div className="flex flex-col gap-4">
-          <h3 className="font-bold text-gray-900 text-base">Landelijke Regio's</h3>
+          <h3 className="font-bold text-gray-900 text-base">{t("locationsTitle")}</h3>
           <nav className="flex flex-col gap-3">
             <Link
-              href="/locatie/gouda"
+              href={`/${locale}/locatie/gouda`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Automatisering Gouda
+              {tLoc("gouda")}
             </Link>
             <Link
-              href="/locatie/rotterdam"
+              href={`/${locale}/locatie/rotterdam`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Automatisering Rotterdam
+              {tLoc("rotterdam")}
             </Link>
             <Link
-              href="/locatie/den-haag"
+              href={`/${locale}/locatie/den-haag`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Automatisering Den Haag
+              {tLoc("denHaag")}
             </Link>
             <Link
-              href="/locatie/utrecht"
+              href={`/${locale}/locatie/utrecht`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
-              Automatisering Utrecht
+              {tLoc("utrecht")}
             </Link>
           </nav>
         </div>
 
-        {/* COL 5: Legal & Trust */}
         <div className="flex flex-col gap-4">
           <h3 className="font-bold text-gray-900 text-base">
-            Bedrijfsgegevens
+            {t("businessTitle")}
           </h3>
           <div className="flex flex-col gap-2 text-gray-500">
-            {/* <p>
-              KvK: <span className="text-gray-700">27199999</span>
-            </p>
-            <p>
-              BTW: <span className="text-gray-700">NL000099998B57</span>
-            </p> */}
           </div>
 
           <div className="mt-4 pt-4 border-t border-gray-200 flex flex-col gap-2">
             <Link
-              href="/agv"
+              href={`/${locale}/agv`}
               className="hover:text-[#3066be] transition text-xs text-gray-600"
             >
-              Algemene Voorwaarden
+              {t("legal.terms")}
             </Link>
             <Link
-              href="/privacy"
+              href={`/${locale}/privacy`}
               className="hover:text-[#3066be] transition text-xs text-gray-600"
             >
-              Privacy & Cookie Policy
+              {t("legal.privacy")}
             </Link>
           </div>
 
@@ -226,7 +222,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-[#3066be] transition"
-              aria-label="Volg ons op LinkedIn"
+              aria-label={t("followLinkedIn")}
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -239,14 +235,14 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-gray-200 bg-white py-6">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-          <p>© {new Date().getFullYear()} AIFAIS. Alle rechten voorbehouden.</p>
+          <p>© {new Date().getFullYear()} AIFAIS. {t("rights")}</p>
           <div className="flex items-center gap-4">
             <p className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-              Alle systemen operationeel
+              {t("operational")}
             </p>
             <span className="hidden md:inline">|</span>
-            <p className="font-medium text-gray-700">Actief in: Rotterdam • Den Haag • Utrecht • Gouda • Zuid-Holland</p>
+            <p className="font-medium text-gray-700">{t("activeIn")} Rotterdam • Den Haag • Utrecht • Gouda • Zuid-Holland</p>
           </div>
         </div>
       </div>

@@ -39,7 +39,7 @@ export default function MobileMenu({
       <div className="pb-4 border-b border-gray-200">
         <input
           type="text"
-          placeholder={locale === "nl" ? "Zoeken..." : "Search..."}
+          placeholder={t("searchPlaceholder")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:border-[#3066be] focus:outline-none"
@@ -83,7 +83,7 @@ export default function MobileMenu({
               className="block py-2 text-[#3066be] font-semibold"
               onClick={closeAll}
             >
-              Alle Diensten Bekijken
+              {t("viewAllServices")}
             </Link>
           </div>
         )}
@@ -134,7 +134,7 @@ export default function MobileMenu({
         className="block mt-4 px-6 py-3 bg-[#3066be] text-white font-bold rounded-lg text-center active:bg-[#234a8c]"
         onClick={closeAll}
       >
-        Start Analyse Gesprek
+        {t("ctaText")}
       </Link>
 
       <div className="pt-4 border-t border-gray-200">

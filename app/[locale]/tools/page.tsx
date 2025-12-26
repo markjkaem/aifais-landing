@@ -16,59 +16,28 @@ import {
   CircleDot,
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Tools | Aifais – AI Software voor MKB",
-  description:
-    "Direct aan de slag met onze AI tools. Factuur scanners, juridische checks en ROI calculators. Geen abonnement nodig.",
-};
+import { getTranslations } from "next-intl/server";
 
-const tools = [
-  {
-    title: "Besparings Calculator",
-    description:
-      "Bereken hoeveel tijd en geld automatisering jou oplevert. Instant inzicht, PDF rapport.",
-    href: "/tools/roi-calculator",
-    icon: Calculator,
-    status: "free" as const,
-    accent: "emerald",
-  },
-  {
-    title: "Factuur Scanner",
-    description:
-      "Sleep facturen, krijg gestructureerde data. KvK verificatie, Excel export. x402 MCP protocol.",
-    href: "/tools/invoice-extraction",
-    icon: ScanLine,
-    status: "api" as const,
-    accent: "blue",
-  },
-  {
-    title: "Factuur Maker",
-    description:
-      "Professionele PDF facturen in seconden. Geen account, geen opslag. Volledig in je browser.",
-    href: "/tools/invoice-creation",
-    icon: PenTool,
-    status: "free" as const,
-    accent: "violet",
-  },
-  {
-    title: "Incasso Generator",
-    description:
-      "Juridisch correcte aanmaningen met AI ondersteuning. Van herinnering tot sommatie.",
-    href: "#",
-    icon: Scale,
-    status: "soon" as const,
-    accent: "slate",
-  },
-  {
-    title: "Offerte AI",
-    description:
-      "Van steekwoorden naar overtuigende offerte. Professionele tekst die converteert.",
-    href: "#",
-    icon: Mail,
-    status: "soon" as const,
-    accent: "slate",
-  },
-];
+interface Props {
+  params: Promise<{ locale: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "toolsPage" });
+
+  return {
+    title: `${t("title")} | Aifais – AI Software`,
+    description: t("description"),
+    alternates: {
+      canonical: `https://aifais.com${locale === "nl" ? "" : "/" + locale}/tools`,
+      languages: {
+        nl: "https://aifais.com/tools",
+        en: "https://aifais.com/en/tools",
+      },
+    },
+  };
+}
 
 const accentStyles = {
   emerald: {
@@ -105,12 +74,12 @@ const accentStyles = {
   },
 };
 
-function StatusBadge({ status }: { status: "free" | "api" | "soon" }) {
+function StatusBadge({ status, t }: { status: "free" | "api" | "soon"; t: any }) {
   if (status === "free") {
     return (
       <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-wide uppercase text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/60">
         <CircleDot className="w-3 h-3" />
-        Gratis
+        {t("status.free")}
       </span>
     );
   }
@@ -118,19 +87,19 @@ function StatusBadge({ status }: { status: "free" | "api" | "soon" }) {
     return (
       <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-wide uppercase text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-200/60">
         <Sparkles className="w-3 h-3" />
-        Live API
+        {t("status.api")}
       </span>
     );
   }
   return (
     <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-wide uppercase text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200/60">
       <Lock className="w-3 h-3" />
-      Binnenkort
+      {t("status.soon")}
     </span>
   );
 }
 
-function ToolCard({ tool }: { tool: (typeof tools)[0] }) {
+function ToolCard({ tool, t }: { tool: any; t: any }) {
   const styles = accentStyles[tool.accent as keyof typeof accentStyles];
   const isDisabled = tool.status === "soon";
   const Icon = tool.icon;
@@ -186,7 +155,7 @@ function ToolCard({ tool }: { tool: (typeof tools)[0] }) {
 
       {/* Footer */}
       <div className="flex items-center justify-between mt-6 pt-5 border-t border-slate-100">
-        <StatusBadge status={tool.status} />
+        <StatusBadge status={tool.status} t={t} />
         {!isDisabled && (
           <span
             className={`
@@ -194,7 +163,7 @@ function ToolCard({ tool }: { tool: (typeof tools)[0] }) {
               ${styles.text} group-hover:gap-2
             `}
           >
-            Open
+            {t("open")}
             <ArrowRight className="w-4 h-4" />
           </span>
         )}
@@ -213,7 +182,54 @@ function ToolCard({ tool }: { tool: (typeof tools)[0] }) {
   );
 }
 
-export default function ToolsPage() {
+export default async function ToolsPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "toolsPage" });
+  const hrefPrefix = locale === "nl" ? "" : "/" + locale;
+
+  const tools = [
+    {
+      title: t("items.roiCalculator.title"),
+      description: t("items.roiCalculator.description"),
+      href: `${hrefPrefix}/tools/roi-calculator`,
+      icon: Calculator,
+      status: "free" as const,
+      accent: "emerald",
+    },
+    {
+      title: t("items.invoiceScanner.title"),
+      description: t("items.invoiceScanner.description"),
+      href: `${hrefPrefix}/tools/invoice-extraction`,
+      icon: ScanLine,
+      status: "api" as const,
+      accent: "blue",
+    },
+    {
+      title: t("items.invoiceCreator.title"),
+      description: t("items.invoiceCreator.description"),
+      href: `${hrefPrefix}/tools/invoice-creation`,
+      icon: PenTool,
+      status: "free" as const,
+      accent: "violet",
+    },
+    {
+      title: t("items.debtCollection.title"),
+      description: t("items.debtCollection.description"),
+      href: "#",
+      icon: Scale,
+      status: "soon" as const,
+      accent: "slate",
+    },
+    {
+      title: t("items.proposalAi.title"),
+      description: t("items.proposalAi.description"),
+      href: "#",
+      icon: Mail,
+      status: "soon" as const,
+      accent: "slate",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-slate-50/50">
       {/* Subtle background texture */}
@@ -228,11 +244,11 @@ export default function ToolsPage() {
       {/* Navigation */}
       <nav className="relative z-10 px-6 py-8 max-w-5xl mx-auto">
         <Link
-          href="/"
+          href={`${hrefPrefix}/`}
           className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors font-medium"
         >
           <ArrowRight className="w-4 h-4 rotate-180" />
-          <span>Terug naar Aifais</span>
+          <span>{t("backLink")}</span>
         </Link>
       </nav>
 
@@ -243,36 +259,35 @@ export default function ToolsPage() {
           <div className="flex items-center gap-3 mb-4">
             <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-slate-300 to-transparent" />
             <span className="text-xs font-semibold tracking-widest uppercase text-slate-400">
-              Tools
+              {t("toolsLabel")}
             </span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4">
-            Praktische AI tools
+            {t("title")}
             <br />
-            <span className="text-slate-400">voor dagelijks gebruik</span>
+            <span className="text-slate-400">{t("subtitle")}</span>
           </h1>
           <p className="text-lg text-slate-500 max-w-xl leading-relaxed">
-            Van gratis calculators tot geautomatiseerde API's. Direct bruikbaar,
-            geen account nodig.
+            {t("description")}
           </p>
         </header>
 
         {/* Tools Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {tools.map((tool) => (
-            <ToolCard key={tool.title} tool={tool} />
+            <ToolCard key={tool.title} tool={tool} t={t} />
           ))}
         </div>
 
         {/* Footer note */}
         <div className="mt-16 text-center">
           <p className="text-sm text-slate-400">
-            Meer tools in ontwikkeling.{" "}
+            {t("footerText")}{" "}
             <Link
-              href="/#contact"
+              href={`${hrefPrefix}/#contact`}
               className="text-slate-600 hover:text-slate-900 underline underline-offset-2 transition-colors"
             >
-              Suggesties?
+              {t("suggestions")}
             </Link>
           </p>
         </div>

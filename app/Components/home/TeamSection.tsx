@@ -1,21 +1,25 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export default function TeamSection() {
+  const t = useTranslations("team");
+
   const team = [
     {
       name: "Mark",
-      role: "Head of Engineering",
-      bio: "Techniek moet niet ingewikkeld zijn. Met jarenlange ervaring als software engineer bouwt Mark slimme systemen die voor iedereen bruikbaar zijn. De stille kracht achter elke oplossing die we opleveren.",
-      skills: ["System Architecture", "AI Integration", "Blockchain"],
+      role: t("mark.role"),
+      bio: t("mark.bio"),
+      skills: t.raw("mark.skills") as string[],
       link: "https://www.linkedin.com/in/mark-v-898408309/",
       linkText: "LinkedIn",
       linkType: "linkedin",
     },
     {
       name: "Faissal",
-      role: "Business Logic Architect",
-      bio: "Vertaalt complexe operationele vraagstukken naar logische workflows die door AI kunnen worden uitgevoerd. Focus op ROI en procesoptimalisatie voor elk project.",
-      skills: ["Workflow Design", "Business Analysis", "ROI Optimization"],
+      role: t("faissal.role"),
+      bio: t("faissal.bio"),
+      skills: t.raw("faissal.skills") as string[],
       link: "mailto:faissal@aifais.com",
       linkText: "Email",
       linkType: "email",
@@ -31,20 +35,19 @@ export default function TeamSection() {
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-6 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
             <span className="text-sm font-medium text-gray-600">
-              Het Team
+              {t("badge")}
             </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
-            Engineering &{" "}
+            {t("title")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">
-              Strategie
+              {t("titleHighlight")}
             </span>
           </h2>
 
           <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Technische diepgang meets bedrijfskundig inzicht. Wij bouwen
-            oplossingen die werken én renderen.
+            {t("subtitle")}
           </p>
         </div>
 
@@ -96,10 +99,10 @@ export default function TeamSection() {
         <div className="mt-16 pt-12 border-t border-gray-100">
           <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 text-center">
             {[
-              { val: "2", label: "Founders" },
-              { val: "Gouda", label: "Zuid-Holland, NL" },
-              { val: "100%", label: "Bootstrapped" },
-              { val: "24h", label: "Response Time" },
+              { val: "2", label: t("stats.founders") },
+              { val: "Gouda", label: t("stats.location") },
+              { val: "100%", label: t("stats.bootstrapped") },
+              { val: "24h", label: t("stats.response") },
             ].map((stat, idx) => (
               <div key={idx} className="flex flex-wrap items-center gap-x-12">
                 <div>

@@ -1,10 +1,14 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export default function ExplainerSection() {
+  const t = useTranslations("explainer");
+
   const features = [
     {
-      title: "Autonome Uitvoering",
-      desc: "Geen kliks nodig. Je agent neemt het volledige proces over, van start tot finish.",
+      title: t("features.execution.title"),
+      desc: t("features.execution.desc"),
       icon: (
         <svg
           className="w-5 h-5"
@@ -23,8 +27,8 @@ export default function ExplainerSection() {
       color: "blue" as const,
     },
     {
-      title: "Contextuele AI",
-      desc: "Begrijpt niet alleen data, maar ook nuance. Leest documenten zoals een mens dat doet.",
+      title: t("features.context.title"),
+      desc: t("features.context.desc"),
       icon: (
         <svg
           className="w-5 h-5"
@@ -43,8 +47,8 @@ export default function ExplainerSection() {
       color: "purple" as const,
     },
     {
-      title: "Niet Goed, Geld Terug",
-      desc: "Wij geloven in resultaat. Werkt het niet zoals afgesproken? Dan betaal je niet.",
+      title: t("features.guarantee.title"),
+      desc: t("features.guarantee.desc"),
       icon: (
         <svg
           className="w-5 h-5"
@@ -83,18 +87,18 @@ export default function ExplainerSection() {
           <div className="order-2 lg:order-1">
             {/* Heading with visual flair */}
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-gray-900 tracking-tight leading-[1.1]">
-              Software die{" "}
+              {t("titlePrefix")}{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500">
-                  werkt
+                  {t("titleHighlight")}
                 </span>
                 <span className="absolute bottom-1 left-0 w-full h-3 bg-blue-100 -z-0 rounded" />
               </span>
               ,
               <br />
-              niet software die{" "}
+              {t("titleSuffix")}{" "}
               <span className="text-gray-300 line-through decoration-2">
-                wacht
+                {t("titleStrikethrough")}
               </span>
               .
             </h2>
@@ -102,16 +106,12 @@ export default function ExplainerSection() {
             {/* Description */}
             <div className="space-y-4 mb-10">
               <p className="text-xl text-gray-500 leading-relaxed">
-                Traditionele software is passief: het wacht tot jij op de
-                knoppen drukt.
+                {t("p1")}
               </p>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Een{" "}
-                <span className="font-semibold text-gray-900">
-                  Digitale Werknemer
-                </span>{" "}
-                is proactief. Hij leest je mail, begrijpt context, en voert
-                acties uit — zonder dat jij erbij hoeft te zijn.
+                {t.rich("p2", {
+                  bold: (children) => <span className="font-semibold text-gray-900">{children}</span>
+                })}
               </p>
             </div>
 
@@ -168,7 +168,7 @@ export default function ExplainerSection() {
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
                     <span className="text-xs text-emerald-600 font-medium">
-                      Live
+                      {t("visual.status")}
                     </span>
                   </div>
                 </div>
@@ -178,7 +178,7 @@ export default function ExplainerSection() {
                   {/* Input Section */}
                   <div className="bg-gray-50 rounded-xl p-4">
                     <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                      Input
+                      {t("visual.input")}
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <div className="inline-flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-gray-200 text-sm">
@@ -215,7 +215,7 @@ export default function ExplainerSection() {
                               </svg>
                             </div>
                             <span className="font-semibold text-gray-900">
-                              AI Processing
+                              {t("visual.label")}
                             </span>
                           </div>
                           <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full font-medium">
@@ -224,11 +224,7 @@ export default function ExplainerSection() {
                         </div>
 
                         <div className="space-y-2 font-mono text-sm">
-                          {[
-                            "Document geanalyseerd",
-                            "€2.450,00 geëxtraheerd",
-                            "Matched met PO #2024-0891",
-                          ].map((text, idx) => (
+                          {(t.raw("visual.steps") as string[]).map((text, idx) => (
                             <div key={idx} className="flex items-center gap-2 text-gray-500">
                               <svg
                                 className="w-4 h-4 text-emerald-500"
@@ -256,10 +252,10 @@ export default function ExplainerSection() {
                   <div className="bg-emerald-50 rounded-xl p-4 flex items-center justify-between">
                     <div>
                       <div className="text-xs font-semibold text-emerald-600/70 uppercase tracking-wider mb-1">
-                        Output
+                        {t("visual.outputLabel")}
                       </div>
                       <div className="text-emerald-900 font-semibold">
-                        Factuur verwerkt & ingeboekt
+                        {t("visual.output")}
                       </div>
                     </div>
                     <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center">
@@ -284,10 +280,10 @@ export default function ExplainerSection() {
                 <div className="px-6 py-4 border-t border-gray-100 bg-gray-50/30">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-400">
-                      Geen menselijke actie nodig
+                      {t("visual.footer")}
                     </span>
                     <span className="text-gray-500 font-medium">
-                      24/7 actief
+                      {t("visual.active")}
                     </span>
                   </div>
                 </div>
@@ -295,11 +291,11 @@ export default function ExplainerSection() {
 
               {/* Floating badges */}
               <div className="absolute -top-3 -right-3 px-3 py-1.5 bg-white rounded-full border border-gray-200 shadow-lg text-xs font-semibold text-gray-600">
-                100% automatisch
+                {t("visual.automatic")}
               </div>
 
               <div className="absolute -bottom-3 -left-3 px-3 py-1.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-lg text-xs font-semibold text-white">
-                Claude 4.5 Powered
+                {t("visual.poweredBy")}
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { projects } from "./portfolio/data";
+import { Project } from "./portfolio/data";
 import FAQSection from "../Components/FAQSection";
 import ToolsTeaser from "../Components/ToolsTeaser";
 import HeroSection from "../Components/home/HeroSection";
@@ -10,7 +10,11 @@ import TechStackSection from "../Components/home/TechStackSection";
 import PortfolioSection from "../Components/home/PortfolioSection";
 import TeamSection from "../Components/home/TeamSection";
 
-export default function HomeClient() {
+interface HomeClientProps {
+  projects: Project[];
+}
+
+export default function HomeClient({ projects }: HomeClientProps) {
   return (
     <main className="bg-white text-gray-900 min-h-screen transition-colors duration-500">
       <HeroSection />

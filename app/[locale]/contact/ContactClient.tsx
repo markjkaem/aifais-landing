@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import VoiceInput from "@/app/Components/VoiceInput";
+import { useTranslations } from "next-intl";
 
 export default function ContactClient() {
+  const t = useTranslations("contact");
+  
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -27,18 +30,18 @@ export default function ContactClient() {
     let isValid = true;
 
     if (!form.name.trim()) {
-      newErrors.name = "Naam is verplicht";
+      newErrors.name = t("errors.nameRequired");
       isValid = false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!form.email.trim() || !emailRegex.test(form.email)) {
-      newErrors.email = "Voer een geldig emailadres in";
+      newErrors.email = t("errors.emailInvalid");
       isValid = false;
     }
 
     if (!form.message.trim() || form.message.trim().length < 10) {
-      newErrors.message = "Bericht moet minimaal 10 karakters bevatten";
+      newErrors.message = t("errors.messageMinLength");
       isValid = false;
     }
 
@@ -59,7 +62,7 @@ export default function ContactClient() {
         body: JSON.stringify(form),
       });
 
-      if (!res.ok) throw new Error("Er ging iets mis.");
+      if (!res.ok) throw new Error(t("errors.generalError"));
 
       setStatus("ok");
       setForm({ name: "", email: "", phone: "", message: "" });
@@ -85,20 +88,19 @@ export default function ContactClient() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
             <span className="text-sm font-medium text-gray-600">
-              Gratis Adviesgesprek
+              {t("hero.badge")}
             </span>
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 tracking-tight">
-            Klaar om te{" "}
+            {t("hero.title")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              starten?
+              {t("hero.titleHighlight")}
             </span>
           </h1>
 
           <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Vertel ons waar je tijd aan verliest. Binnen 24 uur heb je een
-            concreet plan.
+            {t("hero.subtitle")}
           </p>
         </header>
 
@@ -125,16 +127,16 @@ export default function ContactClient() {
                     </svg>
                   </div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                    Bericht ontvangen!
+                    {t("success.title")}
                   </h2>
                   <p className="text-gray-500 mb-6">
-                    We nemen binnen 24 uur contact met je op.
+                    {t("success.subtitle")}
                   </p>
                   <button
                     onClick={() => setStatus("idle")}
                     className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
                   >
-                    Nog een bericht sturen →
+                    {t("success.sendAnother")}
                   </button>
                 </div>
               ) : (
@@ -142,10 +144,10 @@ export default function ContactClient() {
                 <>
                   <div className="mb-8">
                     <h2 className="text-2xl font-bold text-gray-900">
-                      Stuur een bericht
+                      {t("form.title")}
                     </h2>
                     <p className="text-gray-500 text-sm mt-1">
-                      Vul je gegevens in — we reageren snel.
+                      {t("form.subtitle")}
                     </p>
                   </div>
 
@@ -160,13 +162,13 @@ export default function ContactClient() {
                         htmlFor="name"
                         className="block text-sm font-medium text-gray-700 mb-1.5"
                       >
-                        Naam <span className="text-red-400">*</span>
+                        {t("form.nameLabel")} <span className="text-red-400">*</span>
                       </label>
                       <input
                         id="name"
                         type="text"
                         required
-                        placeholder="Jouw naam"
+                        placeholder={t("form.namePlaceholder")}
                         value={form.name}
                         onChange={(e) => {
                           setForm({ ...form, name: e.target.value });
@@ -206,13 +208,13 @@ export default function ContactClient() {
                           htmlFor="email"
                           className="block text-sm font-medium text-gray-700 mb-1.5"
                         >
-                          E-mailadres <span className="text-red-400">*</span>
+                          {t("form.emailLabel")} <span className="text-red-400">*</span>
                         </label>
                         <input
                           id="email"
                           type="email"
                           required
-                          placeholder="naam@bedrijf.nl"
+                          placeholder={t("form.emailPlaceholder")}
                           value={form.email}
                           onChange={(e) => {
                             setForm({ ...form, email: e.target.value });
@@ -251,15 +253,15 @@ export default function ContactClient() {
                           htmlFor="phone"
                           className="block text-sm font-medium text-gray-700 mb-1.5"
                         >
-                          Telefoon{" "}
+                          {t("form.phoneLabel")}{" "}
                           <span className="text-gray-400 font-normal">
-                            (optioneel)
+                            {t("form.phoneOptional")}
                           </span>
                         </label>
                         <input
                           id="phone"
                           type="tel"
-                          placeholder="06 12345678"
+                          placeholder={t("form.phonePlaceholder")}
                           value={form.phone}
                           onChange={(e) =>
                             setForm({ ...form, phone: e.target.value })
@@ -276,7 +278,7 @@ export default function ContactClient() {
                           htmlFor="message"
                           className="block text-sm font-medium text-gray-700"
                         >
-                          Waar kunnen we je mee helpen?{" "}
+                          {t("form.messageLabel")}{" "}
                           <span className="text-red-400">*</span>
                         </label>
                         <VoiceInput
@@ -292,7 +294,7 @@ export default function ContactClient() {
                       <textarea
                         id="message"
                         required
-                        placeholder="Beschrijf je uitdaging of vraag..."
+                        placeholder={t("form.messagePlaceholder")}
                         value={form.message}
                         onChange={(e) => {
                           setForm({ ...form, message: e.target.value });
@@ -336,11 +338,11 @@ export default function ContactClient() {
                       {status === "sending" ? (
                         <>
                           <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          <span>Versturen...</span>
+                          <span>{t("form.sendingButton")}</span>
                         </>
                       ) : (
                         <>
-                          <span>Verstuur Aanvraag</span>
+                          <span>{t("form.submitButton")}</span>
                           <svg
                             className="w-5 h-5 group-hover:translate-x-1 transition-transform"
                             fill="none"
@@ -378,10 +380,10 @@ export default function ContactClient() {
                         </div>
                         <div>
                           <p className="text-red-800 font-medium text-sm">
-                            Er ging iets mis
+                            {t("errors.generalError")}
                           </p>
                           <p className="text-red-600 text-sm">
-                            Probeer het opnieuw of mail ons direct.
+                            {t("errors.tryAgain")}
                           </p>
                         </div>
                       </div>
@@ -402,7 +404,7 @@ export default function ContactClient() {
                           d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                         />
                       </svg>
-                      Je gegevens zijn 100% veilig
+                      {t("form.trustIndicator")}
                     </p>
                   </form>
                 </>
@@ -415,35 +417,18 @@ export default function ContactClient() {
             {/* What happens next */}
             <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg shadow-gray-200/30">
               <h3 className="text-lg font-bold text-gray-900 mb-6">
-                Wat gebeurt er hierna?
+                {t("sidebar.nextTitle")}
               </h3>
 
               <div className="space-y-6">
-                {[
-                  {
-                    step: "1",
-                    title: "Analyse",
-                    desc: "We bekijken je aanvraag en checken of we een match zijn.",
-                    color: "bg-blue-500",
-                  },
-                  {
-                    step: "2",
-                    title: "Kennismaking",
-                    desc: "Kort gesprek (15-30 min) om je processen door te nemen.",
-                    color: "bg-purple-500",
-                  },
-                  {
-                    step: "3",
-                    title: "Voorstel",
-                    desc: "Je ontvangt een plan met vaste prijs en verwachte ROI.",
-                    color: "bg-emerald-500",
-                  },
-                ].map((item, i) => (
+                {(t.raw("sidebar.steps") as { title: string; desc: string }[]).map((item, i) => (
                   <div key={i} className="flex items-start gap-4">
                     <div
-                      className={`w-8 h-8 rounded-lg ${item.color} flex items-center justify-center text-white text-sm font-bold shrink-0`}
+                      className={`w-8 h-8 rounded-lg ${
+                        i === 0 ? "bg-blue-500" : i === 1 ? "bg-purple-500" : "bg-emerald-500"
+                      } flex items-center justify-center text-white text-sm font-bold shrink-0`}
                     >
-                      {item.step}
+                      {i + 1}
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900">
@@ -478,7 +463,7 @@ export default function ContactClient() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 font-medium">Mail ons</p>
+                  <p className="text-xs text-gray-400 font-medium">{t("sidebar.mailLabel")}</p>
                   <p className="text-gray-900 font-semibold">
                     contact@aifais.com
                   </p>
@@ -506,7 +491,7 @@ export default function ContactClient() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-400 font-medium">
-                    Bel direct
+                    {t("sidebar.callLabel")}
                   </p>
                   <p className="text-gray-900 font-semibold">+31 6 1842 4470</p>
                 </div>
@@ -528,7 +513,7 @@ export default function ContactClient() {
                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span>Gemiddelde responstijd: binnen 4 uur</span>
+              <span>{t("sidebar.responseTime")}</span>
             </div>
           </div>
         </div>

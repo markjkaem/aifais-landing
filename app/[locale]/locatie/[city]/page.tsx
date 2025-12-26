@@ -2,9 +2,11 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Space_Grotesk } from "next/font/google";
-import HomeClient from "@/app/[locale]/HomeClient"; // Reuse homepage sections or create specific ones
+import HomeClient from "@/app/[locale]/HomeClient"; 
+import { getTranslations } from "next-intl/server";
+import { getProjects } from "@/app/[locale]/portfolio/data";
 
-const h1 = Space_Grotesk({
+const h1_font = Space_Grotesk({
   weight: "700",
   subsets: ["latin"],
 });
@@ -53,6 +55,41 @@ const cityData: Record<string, CityData> = {
   },
 };
 
+const cityDataEn: Record<string, CityData> = {
+  rotterdam: {
+    name: "Rotterdam",
+    title: "AI & Business Automation Rotterdam",
+    description: "Optimize your business processes in Rotterdam with AI. From logistics to professional services. Save 40+ hours per week with AIFAIS.",
+    intro: "As an innovative city, Rotterdam demands smart solutions. We help Rotterdam entrepreneurs with automating complex workflows and AI integrations.",
+    h1: "Digital Employees for Rotterdam Entrepreneurs",
+    keywords: ["automation rotterdam", "AI agency rotterdam", "process automation rotterdam"],
+  },
+  "den-haag": {
+    name: "Den Hague",
+    title: "Process Automation & AI in Den Hague",
+    description: "Smart automation for businesses in Den Hague. We help consultancy, legal and SME companies with AI-driven efficiency.",
+    intro: "In the city of peace and justice, we bring peace to your administration. Our AI solutions in Den Hague ensure you have more time for your core activities.",
+    h1: "Work More Efficiently in Den Hague with AI",
+    keywords: ["automation den hague", "AI consultant den hague", "business automation den hague"],
+  },
+  gouda: {
+    name: "Gouda",
+    title: "Automation & AI Specialist in Gouda",
+    description: "Your local partner in Gouda for business automation. Based in the region, we help local SME companies with scalable AI solutions.",
+    intro: "As a proud Gouda-based company, we know the local market best. We help our neighbors in Gouda and surroundings towards a future-proof company.",
+    h1: "Your AI & Automation Partner in Gouda",
+    keywords: ["automation gouda", "AI specialist gouda", "ICT automation gouda"],
+  },
+  utrecht: {
+    name: "Utrecht",
+    title: "AI & Workflow Automation Utrecht",
+    description: "Accelerate your growth in Utrecht with intelligent automation. We connect your systems and implement AI assistants.",
+    intro: "Utrecht is the beating heart of the Dutch business market. We ensure your business in Utrecht can scale without additional personnel pressure.",
+    h1: "Smart Automation for Businesses in Utrecht",
+    keywords: ["automation utrecht", "AI implementation utrecht", "process optimization utrecht"],
+  },
+};
+
 export function generateStaticParams() {
   return [
     { city: "rotterdam" },
@@ -65,8 +102,8 @@ export function generateStaticParams() {
 type Params = Promise<{ locale: string; city: string }>;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const { city } = await params;
-  const data = cityData[city.toLowerCase()];
+  const { city, locale } = await params;
+  const data = locale === 'en' ? cityDataEn[city.toLowerCase()] : cityData[city.toLowerCase()];
   
   if (!data) return {};
 
@@ -77,9 +114,14 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   };
 }
 
-export default async function CityPage({ params }: { params: Params }) {
+export default async function CityPage({
+  params,
+}: {
+  params: Params;
+}) {
   const { city, locale } = await params;
-  const data = cityData[city.toLowerCase()];
+  const data = locale === 'en' ? cityDataEn[city.toLowerCase()] : cityData[city.toLowerCase()];
+  const t = await getTranslations({ locale, namespace: "cityPage" });
 
   if (!data) {
     notFound();
@@ -87,6 +129,7 @@ export default async function CityPage({ params }: { params: Params }) {
 
   const BASE_URL = "https://aifais.com";
   const citySlug = city.toLowerCase();
+  const projects = getProjects(locale);
 
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -125,7 +168,7 @@ export default async function CityPage({ params }: { params: Params }) {
       <section className="bg-gradient-to-br from-[#3066be] to-[#1e3a8a] py-24 text-white">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="max-w-4xl">
-            <h1 className={`${h1.className} text-5xl md:text-7xl font-bold mb-8 leading-tight`}>
+            <h1 className={`${h1_font.className} text-5xl md:text-7xl font-bold mb-8 leading-tight`}>
               {data.h1}
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 mb-10 leading-relaxed">
@@ -136,7 +179,7 @@ export default async function CityPage({ params }: { params: Params }) {
                 href={`/${locale}/contact`}
                 className="px-8 py-4 bg-white text-[#3066be] font-bold rounded-full text-center hover:bg-blue-50 transition-colors"
               >
-                Plan gratis analyse in {data.name}
+                {t("cta", { city: data.name })}
               </Link>
             </div>
           </div>
@@ -144,14 +187,14 @@ export default async function CityPage({ params }: { params: Params }) {
       </section>
 
       {/* Main Content Component - Reusing sections from HomeClient but could be unique */}
-      <HomeClient />
+      <HomeClient projects={projects} />
       
       {/* Localized Footer Signal */}
       <section className="py-16 bg-gray-50 border-t border-gray-200">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-2xl font-bold mb-4">Ook actief in de regio rondom {data.name}</h2>
+          <h2 className="text-2xl font-bold mb-4">{t("regionInfo", { city: data.name })}</h2>
           <p className="text-gray-600">
-            Wij helpen ondernemers door heel Zuid-Holland en Utrecht met slimme automatisering.
+            {t("subText")}
           </p>
         </div>
       </section>

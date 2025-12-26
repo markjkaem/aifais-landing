@@ -1,127 +1,100 @@
 import { Metadata } from "next";
 import HomeClient from "./HomeClient";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { getProjects } from "./portfolio/data";
 
-// --- 1. DEFINITIONS AND CONSTANTS ---
+interface Props {
+  params: Promise<{ locale: string }>;
+}
+
 const BASE_URL = "https://aifais.com";
-// Ensure this image exists in your public folder
 const OG_IMAGE_URL = "/og-image.jpg";
 
-// --- 2. SEO METADATA (Optimized for MKB/ROI) ---
-export const metadata: Metadata = {
-  // ✅ FIX: Define metadataBase to resolve relative URLs for OG images
-  metadataBase: new URL(BASE_URL),
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "homePage.metadata" });
 
-  title: {
-    default:
-      "AI & Procesautomatisering voor MKB | Bespaar 40+ Uur/Week | AIFAIS",
-    template: "%s | AIFAIS",
-  },
-  description:
-    "Automatiseer repetitieve taken en bedrijfsprocessen voor MKB. Bespaar direct 40+ uur per week. Actief in Zuid-Holland en Utrecht: Rotterdam, Den Haag, Gouda & Utrecht.",
-
-  keywords: [
-    "automatisering zuid-holland",
-    "bedrijfsautomatisering rotterdam",
-    "procesautomatisering den haag",
-    "ai automatisering utrecht",
-    "automatisering gouda",
-    "mkb automatisering randstad",
-    "zapier specialist nederland",
-    "make.com expert",
-  ],
-
-  // ✅ FIX: Explicit robots tag
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+  return {
+    metadataBase: new URL(BASE_URL),
+    title: {
+      default: t("title"),
+      template: "%s | AIFAIS",
+    },
+    description: t("description"),
+    keywords: t("keywords").split(","),
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-
-  openGraph: {
-    title: "AI & Procesautomatisering voor MKB | Bespaar 40+ Uur/Week",
-    description:
-      "Automatiseer handmatig werk voor MKB bedrijven. Bespaar tijd, voorkom fouten, schaal zonder extra personeel. Live binnen 2 weken.",
-    url: BASE_URL,
-    siteName: "AIFAIS",
-    locale: "nl_NL",
-    type: "website",
-    images: [
-      {
-        url: OG_IMAGE_URL,
-        width: 1200,
-        height: 630,
-        alt: "AIFAIS Procesautomatisering MKB - Bespaar 40+ uur per week",
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
       },
-    ],
-  },
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: `${BASE_URL}/${locale}`,
+      siteName: "AIFAIS",
+      locale: locale === "nl" ? "nl_NL" : "en_US",
+      type: "website",
+      images: [
+        {
+          url: OG_IMAGE_URL,
+          width: 1200,
+          height: 630,
+          alt: "AIFAIS",
+        },
+      ],
+    },
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        'en': '/en',
+        'nl': '/',
+      },
+    },
+  };
+}
 
-  twitter: {
-    card: "summary_large_image",
-    title: "AI & Procesautomatisering voor MKB | Bespaar 40+ Uur/Week",
-    description:
-      "Automatiseer handmatig werk voor MKB. Stop met repetitieve taken. Live binnen 2 weken, vanaf €2.500.",
-    images: [OG_IMAGE_URL],
-    // creator: "@aifais", // Uncomment if you have a Twitter handle
-  },
-
-  alternates: {
-    canonical: BASE_URL,
-    // ✅ TIP: If you have English pages, enable this:
-    // languages: {
-    //   'en-US': '/en',
-    //   'nl-NL': '/nl',
-    // },
-  },
-
-  // verification: {
-  //   google: "YOUR_GOOGLE_VERIFICATION_TOKEN",
-  // },
-};
-
-// --- 3. SCHEMA COMPONENTS (Optimized for Rich Snippets & E-E-A-T) ---
-
-const FAQSchema = () => {
+async function FAQSchema({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: "homePage.faq" });
   const faqData = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
       {
         "@type": "Question",
-        name: "Wat is de doorlooptijd van intake tot livegang van de automatisering?",
+        name: t("q1"),
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Gemiddeld 2 weken van intake tot livegang. Simpele automatiseringen zijn vaak al binnen 1 week live. Het proces omvat intake, bouwen, testen, en training.",
+          text: t("a1"),
         },
       },
       {
         "@type": "Question",
-        name: "Moet ik technische kennis hebben?",
+        name: t("q2"),
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Nee. Wij bouwen en implementeren alles. Jij krijgt een eenvoudig dashboard waar je in gewone taal aanpassingen kunt maken.",
+          text: t("a2"),
         },
       },
       {
         "@type": "Question",
-        name: "Wat kost automatisering gemiddeld?",
+        name: t("q3"),
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Vanaf €2.500 voor standaard automatisering (facturen, offertes, data-invoer). Complexe processen vanaf €5.000. Altijd transparante offerte vooraf.",
+          text: t("a3"),
         },
       },
       {
         "@type": "Question",
-        name: "Werkt dit met mijn huidige systemen?",
+        name: t("q4"),
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Ja. We koppelen met 400+ tools zoals Google Workspace, Excel, HubSpot, Exact Online, Salesforce, Slack, en meer.",
+          text: t("a4"),
         },
       },
     ],
@@ -133,13 +106,14 @@ const FAQSchema = () => {
       dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
     />
   );
-};
+}
 
-const ServiceSchema = () => {
+async function ServiceSchema({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: "homePage.schemas" });
   const serviceData = {
     "@context": "https://schema.org",
     "@type": "Service",
-    serviceType: "Bedrijfsautomatisering voor MKB",
+    serviceType: t("serviceType"),
     provider: {
       "@type": "LocalBusiness",
       "@id": `${BASE_URL}/#organization`,
@@ -156,9 +130,8 @@ const ServiceSchema = () => {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Standaard Bedrijfsautomatisering",
-            description:
-              "Automatiseer repetitieve taken zoals offertes, administratie, facturatie en rapportages. Bespaar direct 40+ uur per week.",
+            name: t("standardService"),
+            description: t("standardDesc"),
           },
           price: "2500.00",
           priceCurrency: "EUR",
@@ -167,9 +140,8 @@ const ServiceSchema = () => {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Complexe Proces Automatisering",
-            description:
-              "Geavanceerde automatisering met meerdere systemen, complexe beslissingslogica en AI-integraties.",
+            name: t("complexService"),
+            description: t("complexDesc"),
           },
           price: "5000.00",
           priceCurrency: "EUR",
@@ -184,19 +156,19 @@ const ServiceSchema = () => {
       dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceData) }}
     />
   );
-};
+}
 
-const OrganizationSchema = () => {
+async function OrganizationSchema({ locale }: { locale: string }) {
+  const t = await getTranslations({ locale, namespace: "homePage.schemas" });
   const orgData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": `${BASE_URL}/#organization`,
     name: "AIFAIS Bedrijfsautomatisering",
-    url: BASE_URL,
+    url: `${BASE_URL}/${locale}`,
     logo: `${BASE_URL}/logo-official.png`,
-    image: `${BASE_URL}/og-image.jpg`, // Added Image property
-    description:
-      "Specialist in bedrijfsautomatisering en AI-integraties voor het MKB in Nederland.",
+    image: `${BASE_URL}/og-image.jpg`,
+    description: t("orgDescription"),
     areaServed: {
       "@type": "Country",
       name: "Nederland",
@@ -210,7 +182,6 @@ const OrganizationSchema = () => {
       postalCode: "2803 PV",
       addressCountry: "NL",
     },
-    // ✅ FIX: Contact info is crucial for Local SEO trust
     contactPoint: {
       "@type": "ContactPoint",
       telephone: "+31 6 1842 4470",
@@ -220,7 +191,7 @@ const OrganizationSchema = () => {
       availableLanguage: ["Dutch", "English"],
     },
     sameAs: [
-      "https://www.linkedin.com/company/aifais", // Verify this URL
+      "https://www.linkedin.com/company/aifais",
     ],
   };
 
@@ -230,20 +201,19 @@ const OrganizationSchema = () => {
       dangerouslySetInnerHTML={{ __html: JSON.stringify(orgData) }}
     />
   );
-};
+}
 
-// --- 4. SERVER COMPONENT ---
-export default function HomePage() {
-  const t = useTranslations("hero");
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params;
+  const projects = getProjects(locale);
 
   return (
     <>
-      <FAQSchema />
-      <ServiceSchema />
-      <OrganizationSchema />
+      <FAQSchema locale={locale} />
+      <ServiceSchema locale={locale} />
+      <OrganizationSchema locale={locale} />
 
-      {/* Client Component */}
-      <HomeClient />
+      <HomeClient projects={projects} />
     </>
   );
 }

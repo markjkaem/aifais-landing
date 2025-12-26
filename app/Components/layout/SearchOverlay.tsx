@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 interface SearchResult {
@@ -14,7 +15,6 @@ interface SearchOverlayProps {
   searchResults: SearchResult[];
   getLocalizedPath: (path: string) => string;
   closeAll: () => void;
-  locale: string;
 }
 
 export default function SearchOverlay({
@@ -23,8 +23,9 @@ export default function SearchOverlay({
   searchResults,
   getLocalizedPath,
   closeAll,
-  locale,
 }: SearchOverlayProps) {
+  const t = useTranslations("searchOverlay");
+
   return (
     <div className="absolute top-full left-0 right-0 bg-white/98 backdrop-blur-xl border-b border-gray-200 shadow-xl animate-slideDown">
       <div className="max-w-3xl mx-auto px-6 py-6">
@@ -44,11 +45,7 @@ export default function SearchOverlay({
           </svg>
           <input
             type="text"
-            placeholder={
-              locale === "nl"
-                ? "Zoek diensten, cases of nieuws..."
-                : "Search services, cases or news..."
-            }
+            placeholder={t("placeholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-12 pr-4 py-4 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:border-[#3066be] focus:outline-none text-lg shadow-inner"

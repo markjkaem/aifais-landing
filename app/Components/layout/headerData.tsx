@@ -1,8 +1,8 @@
 export const serviceLinks = [
   {
-    title: "Telefonische Assistenten",
+    title: "voice.title",
     slug: "/diensten/human-parity-voice",
-    description: "Vervang keuzemenu's door vloeiende, menselijke conversaties.",
+    description: "voice.description",
     icon: (
       <svg
         className="w-6 h-6"
@@ -20,9 +20,9 @@ export const serviceLinks = [
     ),
   },
   {
-    title: "Bedrijfsbrein & Geheugen",
+    title: "brain.title",
     slug: "/diensten/bedrijfsbrein",
-    description: "Al uw bedrijfsdata doorzoekbaar en gekoppeld via GraphRAG.",
+    description: "brain.description",
     icon: (
       <svg
         className="w-6 h-6"
@@ -40,9 +40,9 @@ export const serviceLinks = [
     ),
   },
   {
-    title: "AI Medewerkers (Agents)",
+    title: "agents.title",
     slug: "/diensten/ai-integratie",
-    description: "Autonome digitale collega's die processen voor u uitvoeren.",
+    description: "agents.description",
     icon: (
       <svg
         className="w-6 h-6"
@@ -60,9 +60,9 @@ export const serviceLinks = [
     ),
   },
   {
-    title: "Agent API (x402)",
+    title: "api.title",
     slug: "/diensten/agent-api",
-    description: "Waar Agents zaken doen met elkaar",
+    description: "api.description",
     icon: (
       <svg
         className="w-6 h-6"

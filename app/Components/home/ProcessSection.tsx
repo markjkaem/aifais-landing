@@ -1,8 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
 
 export default function ProcessSection() {
+  const t = useTranslations("process");
+  const locale = useLocale();
+
   return (
     <section className="relative py-24 md:py-32 bg-gray-50 overflow-hidden">
       {/* Subtle background */}
@@ -15,19 +19,19 @@ export default function ProcessSection() {
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-6 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
             <span className="text-sm font-medium text-gray-600">
-              Ons Proces
+              {t("badge")}
             </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
-            Hoe wij{" "}
+            {t("title")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">
-              werken
+              {t("titleHighlight")}
             </span>
           </h2>
 
           <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Geen black box. Transparant, eerlijk, en zonder verrassingen.
+            {t("subtitle")}
           </p>
         </div>
 
@@ -43,15 +47,14 @@ export default function ProcessSection() {
               <div className="max-w-md text-right">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full mb-4">
                   <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
-                    Stap 1
+                    {t("steps.step1.label")}
                   </span>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                  Koffie & Kritische Vragen
+                  {t("steps.step1.title")}
                 </h3>
                 <p className="text-gray-500 leading-relaxed mb-4">
-                  Het begint met een gesprek. Waar verlies je tijd? Wat zijn
-                  de vervelende klusjes? We stellen de juiste vragen.
+                  {t("steps.step1.desc")}
                 </p>
                 <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-medium">
                   <svg
@@ -67,7 +70,7 @@ export default function ProcessSection() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  100% Gratis
+                  {t("steps.step1.free")}
                 </span>
               </div>
             </div>
@@ -98,15 +101,14 @@ export default function ProcessSection() {
               <div className="md:hidden mb-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full mb-3">
                   <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
-                    Stap 1
+                    {t("steps.step1.label")}
                   </span>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Koffie & Kritische Vragen
+                  {t("steps.step1.title")}
                 </h3>
                 <p className="text-gray-500 leading-relaxed mb-3">
-                  Het begint met een gesprek. Waar verlies je tijd? Wat zijn
-                  de vervelende klusjes?
+                  {t("steps.step1.desc")}
                 </p>
                 <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-medium">
                   <svg
@@ -122,7 +124,7 @@ export default function ProcessSection() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  100% Gratis
+                  {t("steps.step1.free")}
                 </span>
               </div>
 
@@ -133,26 +135,20 @@ export default function ProcessSection() {
                   </div>
                   <div>
                     <div className="text-sm font-medium text-gray-900">
-                      Gratis Kennismaking
+                      {t("steps.step1.card.title")}
                     </div>
                     <div className="text-xs text-gray-400">
-                      30 minuten • Online of op locatie
+                      {t("steps.step1.card.info")}
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2 text-sm text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-gray-300" />
-                    Welke taken kosten je de meeste tijd?
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-gray-300" />
-                    Welke software gebruik je al?
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-gray-300" />
-                    Wat zou je het liefst automatiseren?
-                  </div>
+                  {(t.raw("steps.step1.card.points") as string[]).map((point, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gray-300" />
+                      {point}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -163,24 +159,24 @@ export default function ProcessSection() {
             <div className="hidden md:flex w-1/2 justify-end pr-12">
               <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg shadow-gray-200/50 max-w-sm">
                 <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">
-                  Voorstel Voorbeeld
+                  {t("steps.step2.card.label")}
                 </div>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center space-x-4 py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Wat we bouwen</span>
+                    <span className="text-gray-600">{t("steps.step2.card.what")}</span>
                     <span className="font-medium text-gray-900">
-                      Email Agent
+                      {t("steps.step2.card.agent")}
                     </span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Tijdsbesparing</span>
+                    <span className="text-gray-600">{t("steps.step2.card.savings")}</span>
                     <span className="font-medium text-emerald-600">
-                      ~15 uur/week
+                      {t("steps.step2.card.hours")}
                     </span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Doorlooptijd</span>
-                    <span className="font-medium text-gray-900">2 weken</span>
+                    <span className="text-gray-600">{t("steps.step2.card.duration")}</span>
+                    <span className="font-medium text-gray-900">{t("steps.step2.card.time")}</span>
                   </div>
                 </div>
               </div>
@@ -209,21 +205,22 @@ export default function ProcessSection() {
             <div className="w-full md:w-1/2 pl-20 md:pl-12">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-50 rounded-full mb-4">
                 <span className="text-xs font-semibold text-purple-600 uppercase tracking-wide">
-                  Stap 2
+                  {t("steps.step2.label")}
                 </span>
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
-                Concreet Voorstel
+                {t("steps.step2.title")}
               </h3>
               <p className="text-gray-500 leading-relaxed mb-4">
-                <strong className="text-gray-700">Dit</strong> automatiseren
-                we, <strong className="text-gray-700">dit</strong> levert het
-                op, <strong className="text-gray-700">dit</strong> kost het.
-                Geen kleine lettertjes.
+                {t.rich("steps.step2.desc", {
+                  highlight: (children) => <strong className="text-gray-700">{children}</strong>,
+                  this_auto: t("steps.step2.auto"),
+                  this_yield: t("steps.step2.yield"),
+                  this_cost: t("steps.step2.cost")
+                })}
               </p>
               <p className="text-gray-400 text-sm">
-                Vind je het niks? Dan schudden we handen en gaan we verder.
-                Geen harde feelings.
+                {t("steps.step2.subText")}
               </p>
             </div>
           </div>
@@ -234,15 +231,14 @@ export default function ProcessSection() {
               <div className="max-w-md text-right">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full mb-4">
                   <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
-                    Stap 3
+                    {t("steps.step3.label")}
                   </span>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                  Bouwen & Testen
+                  {t("steps.step3.title")}
                 </h3>
                 <p className="text-gray-500 leading-relaxed">
-                  Je betaalt 50% vooraf, wij gaan bouwen. We houden je op de
-                  hoogte en testen samen tot het perfect werkt.
+                  {t("steps.step3.desc")}
                 </p>
               </div>
             </div>
@@ -277,15 +273,14 @@ export default function ProcessSection() {
               <div className="md:hidden mb-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full mb-3">
                   <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
-                    Stap 3
+                    {t("steps.step3.label")}
                   </span>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Bouwen & Testen
+                  {t("steps.step3.title")}
                 </h3>
                 <p className="text-gray-500 leading-relaxed">
-                  50% vooraf, wij bouwen. We testen samen tot het perfect
-                  werkt.
+                  {t("steps.step3.desc")}
                 </p>
               </div>
 
@@ -300,7 +295,7 @@ export default function ProcessSection() {
                     </div>
                   </div>
                   <div className="text-sm text-gray-500">
-                    Mark & Faissal aan het werk
+                    {t("steps.step3.card.working")}
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -313,7 +308,7 @@ export default function ProcessSection() {
                     </span>
                   </div>
                   <div className="text-xs text-gray-400">
-                    Gemiddelde doorlooptijd: 2 weken
+                    {t("steps.step3.card.avgTime")}
                   </div>
                 </div>
               </div>
@@ -341,15 +336,14 @@ export default function ProcessSection() {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-semibold">Onze Garantie</div>
+                    <div className="font-semibold">{t("steps.step4.guarantee.title")}</div>
                     <div className="text-sm text-gray-400">
-                      Geen risico voor jou
+                      {t("steps.step4.guarantee.subtitle")}
                     </div>
                   </div>
                 </div>
                 <p className="text-gray-300 text-sm leading-relaxed">
-                  Werkt het niet zoals afgesproken? Dan krijg je je geld
-                  terug. Zo simpel is het.
+                  {t("steps.step4.guarantee.text")}
                 </p>
               </div>
             </div>
@@ -375,15 +369,14 @@ export default function ProcessSection() {
             <div className="w-full md:w-1/2 pl-20 md:pl-12">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 rounded-full mb-4">
                 <span className="text-xs font-semibold text-emerald-600 uppercase tracking-wide">
-                  Stap 4
+                  {t("steps.step4.label")}
                 </span>
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
-                Live & Garantie
+                {t("steps.step4.title")}
               </h3>
               <p className="text-gray-500 leading-relaxed mb-4">
-                Je Digitale Werknemer gaat live en draait 24/7. Bij oplevering
-                betaal je de rest — alleen als alles werkt.
+                {t("steps.step4.desc")}
               </p>
 
               <div className="md:hidden bg-gray-900 rounded-xl p-4 text-white">
@@ -402,7 +395,7 @@ export default function ProcessSection() {
                     />
                   </svg>
                   <span className="font-semibold">
-                    Niet goed? Geld terug.
+                    {t("steps.step4.guarantee.mobile")}
                   </span>
                 </div>
               </div>
@@ -410,15 +403,14 @@ export default function ProcessSection() {
           </div>
         </div>
 
-        {/* Bottom CTA */}
         <div className="mt-20 text-center">
           <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-2 bg-white rounded-full border border-gray-200 shadow-lg">
-            <span className="text-gray-600 px-4">Klaar om te beginnen?</span>
+            <span className="text-gray-600 px-4">{t("cta.text")}</span>
             <Link
-              href="/contact"
+              href={`/${locale}/contact`}
               className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-all"
             >
-              Plan gratis gesprek
+              {t("cta.button")}
               <svg
                 className="w-4 h-4"
                 fill="none"

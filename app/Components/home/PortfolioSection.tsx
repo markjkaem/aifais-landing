@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
 
 interface Project {
   slug: string;
@@ -15,6 +16,9 @@ interface PortfolioSectionProps {
 }
 
 export default function PortfolioSection({ projects }: PortfolioSectionProps) {
+  const t = useTranslations("portfolio");
+  const locale = useLocale();
+
   return (
     <section id="cases" className="relative py-24 md:py-32 bg-gray-50 overflow-hidden">
       {/* Subtle background */}
@@ -26,19 +30,19 @@ export default function PortfolioSection({ projects }: PortfolioSectionProps) {
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-6 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
             <span className="text-sm font-medium text-gray-600">
-              Portfolio
+              {t("badge")}
             </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
-            Digitale Werknemers{" "}
+            {t("title")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-600">
-              in actie
+              {t("titleHighlight")}
             </span>
           </h2>
 
           <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Geen concepten, maar agents die vandaag al draaien in productie.
+            {t("subtitle")}
           </p>
         </header>
 
@@ -47,7 +51,7 @@ export default function PortfolioSection({ projects }: PortfolioSectionProps) {
           {projects.slice(0, 3).map((project, index) => (
             <Link
               key={project.slug || index}
-              href={`/portfolio/${project.slug}`}
+              href={`/${locale}/portfolio/${project.slug}`}
               className="group flex flex-col bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300"
             >
               {/* Image */}
@@ -66,7 +70,7 @@ export default function PortfolioSection({ projects }: PortfolioSectionProps) {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                   </span>
                   <span className="text-xs font-semibold text-gray-700">
-                    Live
+                    {t("status")}
                   </span>
                 </div>
               </div>
@@ -76,10 +80,10 @@ export default function PortfolioSection({ projects }: PortfolioSectionProps) {
                 {/* Tags */}
                 <div className="flex gap-2 mb-3">
                   <span className="text-xs font-medium text-gray-500 px-2 py-1 bg-gray-100 rounded-md">
-                    Automatisering
+                    {t("tags.automation")}
                   </span>
                   <span className="text-xs font-medium text-blue-600 px-2 py-1 bg-blue-50 rounded-md">
-                    AI Agent
+                    {t("tags.agent")}
                   </span>
                 </div>
 
@@ -96,7 +100,7 @@ export default function PortfolioSection({ projects }: PortfolioSectionProps) {
                 {/* Link indicator */}
                 <div className="mt-6 pt-5 border-t border-gray-100 flex items-center justify-between">
                   <span className="text-sm font-semibold text-gray-900 group-hover:text-gray-600 transition-colors">
-                    Bekijk case
+                    {t("viewCase")}
                   </span>
                   <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-900 group-hover:text-white transition-all duration-300">
                     <svg
@@ -122,10 +126,10 @@ export default function PortfolioSection({ projects }: PortfolioSectionProps) {
         {/* View All Button */}
         <div className="mt-12 text-center">
           <Link
-            href="/portfolio"
+            href={`/${locale}/portfolio`}
             className="inline-flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 rounded-full text-gray-900 font-semibold hover:bg-gray-50 hover:border-gray-300 hover:shadow-md transition-all duration-300 group"
           >
-            Bekijk alle cases
+            {t("viewAll")}
             <svg
               className="w-4 h-4 text-gray-400 group-hover:translate-x-1 transition-transform"
               fill="none"

@@ -1,61 +1,40 @@
-// ========================================
-// FILE: app/news/page.tsx - LIGHT THEME
-// ========================================
-
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { news } from "./data"; // Adjust path if your data is elsewhere
+import { news } from "./data";
+import { getTranslations } from "next-intl/server";
 
-// ✅ SEO METADATA
-export const metadata: Metadata = {
-  title: "Kennisbank & Nieuws | AI & Automatisering Inzichten | AIFAIS",
-  description:
-    "Blijf op de hoogte van de laatste trends in bedrijfsautomatisering, n8n tutorials, AI-integraties en praktische tips voor het MKB.",
-  keywords: [
-    "automatisering blog",
-    "n8n tutorials nederlands",
-    "ai nieuws mkb",
-    "bedrijfsprocessen optimaliseren tips",
-    "chatgpt zakelijk gebruik",
-    "aifais kennisbank",
-  ],
-  openGraph: {
-    title: "AIFAIS Kennisbank | Slimmer Werken met Automatisering",
-    description:
-      "Praktische tips, cases en nieuws over AI en workflow automatisering.",
-    url: "https://aifais.com/news",
-    type: "website",
-    locale: "nl_NL",
-    siteName: "AIFAIS",
-    images: [
-      {
-        url: "https://aifais.com/og-news.jpg",
-        width: 1200,
-        height: 630,
-        alt: "AIFAIS Kennisbank Overview",
-      },
-    ],
-  },
-  alternates: {
-    canonical: "https://aifais.com/news",
-  },
-};
+interface Props {
+  params: Promise<{ locale: string }>;
+}
 
-export default function NewsIndexPage() {
-  // ✅ SCHEMA: CollectionPage
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "newsPage.metadata" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    keywords: t("keywords").split(","),
+  };
+}
+
+export default async function NewsIndexPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "newsPage" });
+
   const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: "AIFAIS Kennisbank",
     description: "Artikelen en handleidingen over bedrijfsautomatisering.",
-    url: "https://aifais.com/news",
+    url: `https://aifais.com/${locale}/news`,
     mainEntity: {
       "@type": "ItemList",
       itemListElement: news.map((article, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `https://aifais.com/news/${article.slug}`,
+        url: `https://aifais.com/${locale}/news/${article.slug}`,
         name: article.title,
       })),
     },
@@ -75,17 +54,16 @@ export default function NewsIndexPage() {
 
         <div className="container mx-auto px-6 max-w-6xl text-center relative z-10">
           <span className="inline-block px-4 py-1.5 mb-6 border border-[#3066be]/20 bg-[#3066be]/5 text-[#3066be] rounded-full text-sm font-semibold tracking-wide uppercase">
-            Kennisbank
+            {t("hero.badge")}
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 leading-tight">
-            Inzichten in <br />
+            {t("hero.title")} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
-              Slimme Automatisering
+              {t("hero.titleHighlight")}
             </span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            Praktische gidsen, updates over AI-technologie en tips om jouw
-            bedrijf efficiënter te maken.
+            {t("hero.subtitle")}
           </p>
         </div>
       </section>
@@ -128,17 +106,19 @@ export default function NewsIndexPage() {
                     {/* Meta Data */}
                     <div className="flex items-center gap-3 text-xs text-gray-500 mb-3 font-medium">
                       <time dateTime={new Date(article.date).toISOString()}>
-                        {new Date(article.date).toLocaleDateString("nl-NL", {
+                        {new Date(article.date).toLocaleDateString(locale === "nl" ? "nl-NL" : "en-US", {
                           day: "numeric",
                           month: "long",
                           year: "numeric",
                         })}
                       </time>
                       <span>•</span>
-                      <span>{article.readTime || 5} min lezen</span>
+                      <span>{t("article.readTime", { time: article.readTime || 5 })}</span>
                     </div>
 
                     <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#3066be] transition-colors line-clamp-2">
+                       {/* If we had translated content in article object, we would use it here. 
+                          For now, we use the article properties as is. */}
                       {article.title}
                     </h2>
                     <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
@@ -146,7 +126,7 @@ export default function NewsIndexPage() {
                     </p>
 
                     <div className="flex items-center text-sm font-bold text-[#3066be] group-hover:translate-x-1 transition-transform pt-4 border-t border-gray-100 mt-auto">
-                      Lees Artikel
+                      {t("article.readMore")}
                       <svg
                         className="w-4 h-4 ml-2"
                         fill="none"
@@ -171,7 +151,7 @@ export default function NewsIndexPage() {
           {news.length === 0 && (
             <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 shadow-sm">
               <p className="text-gray-500">
-                Er zijn nog geen artikelen geplaatst. Kom binnenkort terug!
+                {t("article.empty")}
               </p>
             </div>
           )}
@@ -182,18 +162,17 @@ export default function NewsIndexPage() {
       <section className="py-20 bg-white border-t border-gray-200">
         <div className="container mx-auto px-6 max-w-4xl text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Direct aan de slag met automatiseren?
+            {t("cta.title")}
           </h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Lezen is goed, doen is beter. Ontdek binnen 2 minuten waar jouw
-            kansen liggen met onze gratis analyse.
+            {t("cta.subtitle")}
           </p>
           <div className="flex justify-center gap-4">
             <Link
               href="/contact"
               className="px-8 py-3 bg-[#3066be] hover:bg-[#234a8c] text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg shadow-[#3066be]/20"
             >
-              Plan analyse gesprek
+              {t("cta.button")}
             </Link>
           </div>
         </div>

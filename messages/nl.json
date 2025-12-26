@@ -1,49 +1,737 @@
 {
+  "hero": {
+    "badge": "AI-Driven Workforce",
+    "h1_1": "Neem je eerste",
+    "h1_highlight": "Digitale Werknemer",
+    "h1_2": "aan.",
+    "h2_1": "Meer tijd. Meer winst.",
+    "h2_highlight": "Minder gedoe.",
+    "p": "Wij automatiseren de taken die je tijd kosten, zodat jij je kunt focussen op wat écht belangrijk is: je bedrijf laten groeien.",
+    "guarantee": "Gratis analyse. Gratis plan. Niet goed, geld terug.",
+    "cta": "Plan gratis analyse",
+    "roi": "Bereken jaarlijkse voordeel"
+  },
   "nav": {
+    "home": "Home",
     "services": "Diensten",
     "news": "Nieuws",
     "cases": "Portfolio",
     "about": "Over ons",
     "contact": "Contact",
     "tools": "Tools",
-    "language": "Taal"
+    "language": "Taal",
+    "analyseCTA": "Analyse Gesprek",
+    "searchPlaceholder": "Zoeken...",
+    "viewAllServices": "Alle Diensten Bekijken",
+    "ctaText": "Start Analyse Gesprek"
   },
-  "hero": {
-    "badge": "Specialist in Nederlandse MKB Automatisering",
-    "eyebrow": "n8n Workflow Automatisering",
-    "title": "Bespaar",
-    "titleHighlight": "40+ Uur Per Week",
-    "subtitle": "Met Slimme Automatisering",
-    "description": "Stop met handmatig werk. Automatiseer repetitieve processen met n8n – van offertes versturen tot data-synchronisatie.",
-    "descriptionBold": "Bespaar kosten, voorkom fouten, en schaal zonder nieuwe medewerkers.",
+  "footer": {
+    "description": "Specialist in bedrijfsautomatisering en AI-integraties voor het Nederlandse MKB.",
+    "servicesTitle": "Onze Diensten",
+    "navTitle": "Navigatie",
+    "locationsTitle": "Landelijke Regio's",
+    "businessTitle": "Bedrijfsgegevens",
+    "rights": "Alle rechten voorbehouden.",
+    "operational": "Alle systemen operationeel",
+    "activeIn": "Actief in:",
+    "legal": {
+      "terms": "Algemene Voorwaarden",
+      "privacy": "Privacy & Cookie Beleid"
+    },
+    "followLinkedIn": "Volg ons op LinkedIn",
+    "services": {
+      "email": "AI Email Beantwoording Systeem",
+      "sales": "Sales Lead Automatisering",
+      "support": "Support Ticket Samenvatting Systeem"
+    }
+  },
+  "locations": {
+    "gouda": "Automatisering Gouda",
+    "rotterdam": "Automatisering Rotterdam",
+    "denHaag": "Automatisering Den Haag",
+    "utrecht": "Automatisering Utrecht"
+  },
+  "explainer": {
+    "titlePrefix": "Software die",
+    "titleHighlight": "werkt",
+    "titleSuffix": "niet software die",
+    "titleStrikethrough": "wacht",
+    "p1": "Traditionele software is passief: het wacht tot jij op de knoppen drukt.",
+    "p2": "Een <bold>Digitale Werknemer</bold> is proactief. Hij leest je mail, begrijpt context, en voert acties uit — zonder dat jij erbij hoeft te zijn.",
+    "features": {
+      "execution": {
+        "title": "Autonome Uitvoering",
+        "desc": "Geen kliks nodig. Je agent neemt het volledige proces over, van start tot finish."
+      },
+      "context": {
+        "title": "Contextuele AI",
+        "desc": "Begrijpt niet alleen data, maar ook nuance. Leest documenten zoals een mens dat doet."
+      },
+      "guarantee": {
+        "title": "Niet Goed, Geld Terug",
+        "desc": "Wij geloven in resultaat. Werkt het niet zoals afgesproken? Dan betaal je niet."
+      }
+    },
+    "visual": {
+      "label": "AI Verwerking",
+      "status": "Live",
+      "output": "Factuur verwerkt & ingeboekt",
+      "footer": "Geen menselijke actie nodig",
+      "active": "24/7 actief",
+      "automatic": "100% automatisch",
+      "steps": [
+        "Document geanalyseerd",
+        "€2.450,00 geëxtraheerd",
+        "Matched met PO #2024-0891"
+      ],
+      "input": "Input",
+      "outputLabel": "Output",
+      "poweredBy": "Claude 4.5 Powered"
+    }
+  },
+  "process": {
+    "badge": "Ons Proces",
+    "title": "Hoe wij",
+    "titleHighlight": "werken",
+    "subtitle": "Geen black box. Transparant, eerlijk, en zonder verrassingen.",
+    "steps": {
+      "step1": {
+        "label": "Stap 1",
+        "title": "Koffie & Kritische Vragen",
+        "desc": "Het begint met een gesprek. Waar verlies je tijd? Wat zijn de vervelende klusjes? We stellen de juiste vragen.",
+        "free": "100% Gratis",
+        "card": {
+          "title": "Gratis Kennismaking",
+          "info": "30 minuten • Online of op locatie",
+          "points": [
+            "Welke taken kosten je de meeste tijd?",
+            "Welke software gebruik je al?",
+            "Wat zou je het liefst automatiseren?"
+          ]
+        }
+      },
+      "step2": {
+        "label": "Stap 2",
+        "title": "Concreet Voorstel",
+        "desc": "<highlight>{this_auto}</highlight> automatiseren we, <highlight>{this_yield}</highlight> levert het op, <highlight>{this_cost}</highlight> kost het.",
+        "auto": "Dit",
+        "yield": "dit",
+        "cost": "dit",
+        "subText": "Vind je het niks? Dan schudden we handen en gaan we verder. Geen harde feelings.",
+        "card": {
+          "label": "Voorstel Voorbeeld",
+          "what": "Wat we bouwen",
+          "agent": "Email Agent",
+          "savings": "Tijdsbesparing",
+          "hours": "~15 uur/week",
+          "duration": "Doorlooptijd",
+          "time": "2 weken"
+        }
+      },
+      "step3": {
+        "label": "Stap 3",
+        "title": "Bouwen & Testen",
+        "desc": "Je betaalt 50% vooraf, wij gaan bouwen. We houden je op de hoogte en testen samen tot het perfect werkt.",
+        "card": {
+          "working": "Mark & Faissal aan het werk",
+          "avgTime": "Gemiddelde doorlooptijd: 2 weken"
+        }
+      },
+      "step4": {
+        "label": "Stap 4",
+        "title": "Live & Garantie",
+        "desc": "Je Digitale Werknemer gaat live en draait 24/7. Bij oplevering betaal je de rest — alleen als alles werkt.",
+        "guarantee": {
+          "title": "Onze Garantie",
+          "subtitle": "Geen risico voor jou",
+          "text": "Werkt het niet zoals afgesproken? Dan krijg je je geld terug. Zo simpel is het.",
+          "mobile": "Niet goed? Geld terug."
+        }
+      }
+    },
     "cta": {
-      "primary": "Bereken Jouw Besparing",
-      "secondary": "Bekijk Voorbeelden"
+      "text": "Klaar om te beginnen?",
+      "button": "Plan gratis gesprek"
+    }
+  },
+  "team": {
+    "badge": "Het Team",
+    "title": "Engineering &",
+    "titleHighlight": "Strategie",
+    "subtitle": "Technische diepgang meets bedrijfskundig inzicht. Wij bouwen oplossingen die werken én renderen.",
+    "mark": {
+      "role": "Hoofd Engineering",
+      "bio": "Techniek moet niet ingewikkeld zijn. Met jarenlange ervaring als software engineer bouwt Mark slimme systemen die voor iedereen bruikbaar zijn. De stille kracht achter elke oplossing die we opleveren.",
+      "skills": ["Systeem Architectuur", "AI Integratie", "Blockchain"]
+    },
+    "faissal": {
+      "role": "Business Logic Architect",
+      "bio": "Vertaalt complexe operationele vraagstukken naar logische workflows die door AI kunnen worden uitgevoerd. Focus op ROI en procesoptimalisatie voor elk project.",
+      "skills": ["Workflow Ontwerp", "Business Analyse", "ROI Optimalisatie"]
     },
     "stats": {
-      "hoursSaved": "Uur bespaard/week",
-      "implementation": "Tot implementatie",
-      "roi": "Gemiddelde ROI",
-      "lessErrors": "Minder fouten"
-    },
-    "benefits": {
-      "operational": "operationeel",
-      "withinWeeks": "Binnen 2 weken",
-      "noCoding": "Geen programmeren",
-      "needed": "nodig",
-      "integrations": "400+ integraties",
-      "available": "beschikbaar",
-      "dataOwnership": "100% data-eigendom",
-      "guaranteed": "gegarandeerd"
-    },
-    "trust": {
-      "free": "Gratis haalbaarheidscheck",
-      "response": "Reactie binnen 24 uur",
-      "noObligations": "Geen verplichtingen"
+      "founders": "Founders",
+      "location": "Zuid-Holland, NL",
+      "bootstrapped": "Bootstrapped",
+      "response": "Response Time"
+    }
+  },
+  "techStack": {
+    "badge": "Onze Stack",
+    "title": "Het fundament van",
+    "titleHighlight": "innovatie",
+    "subtitle": "Wij werken alleen met bewezen, schaalbare en schaalbare technologieën.",
+    "enterprise": "Enterprise stack voor elke onderneming",
+    "techs": {
+      "solana": "Afwikkeling",
+      "claude": "Intelligentie",
+      "stripe": "Betaalverkeer",
+      "mcp": "Connectiviteit"
+    }
+  },
+  "portfolio": {
+    "badge": "Portfolio",
+    "title": "Digitale Werknemers",
+    "titleHighlight": "in actie",
+    "subtitle": "Geen concepten, maar agents die vandaag al draaien in productie.",
+    "viewCase": "Bekijk case",
+    "viewAll": "Bekijk alle cases",
+    "status": "Live",
+    "tags": {
+      "automation": "Automatisering",
+      "agent": "AI Agent"
     }
   },
   "event": {
-    "title": "AI Event — 2 Dec 2025",
-    "subtitle": "In 1 dag helemaal up-to-date"
+    "title": "Masterclass: AI in de Praktijk",
+    "cta": "Inschrijven →"
+  },
+  "megaMenu": {
+    "solutions": "Onze Oplossingen",
+    "allServices": "Bekijk alle overige diensten",
+    "articles": "Nieuwste Artikelen",
+    "knowledgeBase": "Bekijk Kennisbank →",
+    "analysisTitle": "Gratis analyse van jouw automatiseringskansen",
+    "analysisSub": "Ontdek binnen 2 minuten waar jouw grootste winst ligt.",
+    "analysisCTA": "Start Nu"
+  },
+  "servicesPage": {
+    "metadata": {
+      "title": "Onze Diensten | Digitale Werknemers & AI Agents | AIFAIS",
+      "description": "Wij bouwen Digitale Werknemers: autonome AI agents die jouw taken overnemen. Email beantwoording, document verwerking, sales automatisering. Niet goed, geld terug.",
+      "keywords": "digitale werknemer,ai agent bouwen,autonome automatisering,ai email beantwoording,document verwerking ai,sales automatisering,mkb automatisering nederland"
+    },
+    "exampleAgents": {
+      "email": {
+        "title": "Email Agent",
+        "description": "Leest, begrijpt en beantwoordt emails met context uit je kennisbank."
+      },
+      "document": {
+        "title": "Document Agent",
+        "description": "Verwerkt facturen, contracten en formulieren automatisch."
+      },
+      "sales": {
+        "title": "Sales Agent",
+        "description": "Kwalificeert leads en houdt je CRM automatisch actueel."
+      },
+      "support": {
+        "title": "Support Agent",
+        "description": "Beantwoordt tickets en escaleert alleen wanneer nodig."
+      },
+      "viewCase": "Bekijk Case"
+    },
+    "steps": [
+      {
+        "number": "01",
+        "title": "Koffie & Kritische Vragen",
+        "description": "Waar verlies je tijd? Wat zijn de vervelende klusjes? 100% gratis gesprek."
+      },
+      {
+        "number": "02",
+        "title": "Concreet Voorstel",
+        "description": "Dit automatiseren we, dit levert het op, dit kost het. Geen kleine lettertjes."
+      },
+      {
+        "number": "03",
+        "title": "Bouwen & Testen",
+        "description": "Wij bouwen je agent. Helft vooraf, de rest bij oplevering."
+      },
+      {
+        "number": "04",
+        "title": "Live & Garantie",
+        "description": "Je agent draait 24/7. Werkt het niet? Geld terug."
+      }
+    ],
+    "hero": {
+      "badge": "Digitale Werknemers",
+      "title": "Wij bouwen the agent",
+      "titleHighlight": "die jij nodig hebt",
+      "subtitle": "Elke taak die je tijd kost kan een Digitale Werknemer worden. Vertel ons wat je nodig hebt — wij bouwen het.",
+      "ctaTalk": "Bespreek jouw agent",
+      "ctaView": "Bekijk wat we gebouwd hebben"
+    },
+    "intro": {
+      "title": "Één dienst.",
+      "titleHighlight": "Oneindig veel mogelijkheden.",
+      "p": "Wij bouwen autonome AI agents op maat. Geen standaard software, maar een Digitale Werknemer die precies doet wat jouw bedrijf nodig heeft.",
+      "capTitle": "Wat kan een agent voor jou doen?",
+      "capNote": "En alles daartussenin. Als het een proces is, kunnen we het automatiseren."
+    },
+    "capabilities": [
+      "Emails lezen en beantwoorden",
+      "Documenten verwerken en data extraheren",
+      "Leads kwalificeren en opvolgen",
+      "Support tickets afhandelen",
+      "Agenda's beheren en afspraken plannen",
+      "Rapporten genereren en versturen",
+      "Data synchroniseren tussen systemen",
+      "Facturen verwerken en boeken"
+    ],
+    "visual": {
+      "label": "agent.exe",
+      "step1": "Nieuwe factuur ontvangen via email",
+      "step2": "Data geëxtraheerd: €2.450,00 van Leverancier B.V.",
+      "step3": "Gevalideerd tegen inkooporder #2024-0891",
+      "step4": "Ingeboekt in Exact Online",
+      "step5": "Betaling gepland voor 15-01-2025",
+      "footer": "Klaar in 3.2 seconden — geen menselijke actie nodig"
+    },
+    "examples": {
+      "title": "Agents die we al gebouwd hebben",
+      "subtitle": "Ter inspiratie — jouw agent kan compleet anders zijn.",
+      "viewCase": "Bekijk case",
+      "other": "Iets anders nodig?",
+      "talk": "Laten we praten →"
+    },
+    "why": {
+      "title": "Waarom een Digitale Werknemer?",
+      "tradTitle": "Traditionele Software",
+      "tradPoints": [
+        "Wacht tot jij op knoppen drukt",
+        "Vereist handmatige data-invoer",
+        "Begrijpt geen context of nuance",
+        "Draait alleen wanneer jij werkt"
+      ],
+      "agentTitle": "Digitale Werknemer",
+      "agentPoints": [
+        "Neem proactief taken over",
+        "Leest en begrijpt documenten zelf",
+        "Gebruikt je kennisbank voor context",
+        "Draait 24/7, ook als jij slaapt"
+      ]
+    },
+    "process": {
+      "title": "Hoe wij werken",
+      "subtitle": "Transparant en zonder verrassingen."
+    },
+    "stats": [
+      { "value": "40+", "label": "Uur bespaard per week" },
+      { "value": "<2", "label": "Weken doorlooptijd" },
+      { "value": "100%", "label": "Niet goed, geld terug" },
+      { "value": "24/7", "label": "Je agent draait door" }
+    ],
+    "cta": {
+      "title": "Welke taak kost jou te veel tijd?",
+      "subtitle": "Vertel het ons. Binnen 30 minuten weet je of we er een agent van kunnen maken — en wat het oplevert.",
+      "button": "Plan Gratis Gesprek",
+      "viewCases": "Bekijk Cases",
+      "enterprise": "Gebouwd op enterprise standaarden"
+    }
+  },
+  "serviceDetail": {
+    "back": "Terug naar alle diensten",
+    "shortIntro": "Onze Dienst in het kort",
+    "ctaTalk": "Vraag Advies Aan",
+    "ctaAnalysis": "Gratis Analyse",
+    "featuresTitle": "Wat we voor je doen",
+    "benefitsTitle": "Het resultaat",
+    "readyTitle": "Klaar om te starten?",
+    "readySubtitle": "Ontdek hoeveel tijd jij kunt besparen met {service}.",
+    "readyLink": "Plan een gratis sessie",
+    "faqTitle": "Veelgestelde Vragen",
+    "footerTitle": "Niet zeker of dit bij jou past?",
+    "footerText": "Geen probleem. Plan een vrijblijvend adviesgesprek in. We kijken samen naar jouw processen en geven eerlijk advies.",
+    "footerCta": "Plan Adviesgesprek"
+  },
+  "contact": {
+    "hero": {
+      "badge": "Gratis Adviesgesprek",
+      "title": "Klaar om te",
+      "titleHighlight": "starten?",
+      "subtitle": "Vertel ons waar je tijd aan verliest. Binnen 24 uur heb je een concreet plan."
+    },
+    "form": {
+      "title": "Stuur een bericht",
+      "subtitle": "Vul je gegevens in — we reageren snel.",
+      "nameLabel": "Naam",
+      "namePlaceholder": "Jouw naam",
+      "emailLabel": "E-mailadres",
+      "emailPlaceholder": "naam@bedrijf.nl",
+      "phoneLabel": "Telefoon",
+      "phoneOptional": "(optioneel)",
+      "phonePlaceholder": "06 12345678",
+      "messageLabel": "Waar kunnen we je mee helpen?",
+      "messagePlaceholder": "Beschrijf je uitdaging of vraag...",
+      "submitButton": "Verstuur Aanvraag",
+      "sendingButton": "Versturen...",
+      "trustIndicator": "Je gegevens zijn 100% veilig"
+    },
+    "errors": {
+      "nameRequired": "Naam is verplicht",
+      "emailInvalid": "Voer een geldig emailadres in",
+      "messageMinLength": "Bericht moet minimaal 10 karakters bevatten",
+      "generalError": "Er ging iets mis",
+      "tryAgain": "Probeer het opnieuw of mail ons direct."
+    },
+    "success": {
+      "title": "Bericht ontvangen!",
+      "subtitle": "We nemen binnen 24 uur contact met je op.",
+      "sendAnother": "Nog een bericht sturen →"
+    },
+    "sidebar": {
+      "nextTitle": "Wat gebeurt er hierna?",
+      "steps": [
+        {
+          "title": "Analyse",
+          "desc": "We bekijken je aanvraag en checken of we een match zijn."
+        },
+        {
+          "title": "Kennismaking",
+          "desc": "Kort gesprek (15-30 min) om je processen door te nemen."
+        },
+        {
+          "title": "Voorstel",
+          "desc": "Je ontvangt een plan met vaste prijs en verwachte ROI."
+        }
+      ],
+      "mailLabel": "Mail ons",
+      "callLabel": "Bel direct",
+      "responseTime": "Gemiddelde responstijd: binnen 4 uur"
+    }
+  },
+  "portfolioPage": {
+    "metadata": {
+      "title": "Portfolio AI Automatisering | 50+ MKB Cases | AIFAIS",
+      "description": "Bekijk concrete voorbeelden van bedrijfsautomatisering. Zie hoe wij Nederlandse MKB-bedrijven helpen 40+ uur per week te besparen met n8n en AI.",
+      "keywords": "automatisering portfolio,automatisering voorbeelden,n8n cases nederland,bedrijfsautomatisering projecten,praktijkvoorbeelden ai mkb,workflow automatisering cases"
+    },
+    "hero": {
+      "badge": "Bewezen Resultaten",
+      "title": "Portfolio: Succesvolle",
+      "titleHighlight": "Automatisering",
+      "titleSuffix": "Projecten",
+      "subtitle": "Ontdek hoe we Nederlandse MKB-bedrijven helpen met het automatiseren van repetitieve processen. Van lead-opvolging tot complexe data-synchronisatie."
+    },
+    "grid": {
+      "viewResult": "Bekijk Resultaten",
+      "emptyTitle": "Nog geen cases gepubliceerd",
+      "emptyDesc": "We zijn druk bezig met het documenteren van onze recente projecten. Kom binnenkort terug!"
+    },
+    "cta": {
+      "title": "Jouw Bedrijf Ook In",
+      "titleHighlight": "Dit Portfolio?",
+      "subtitle": "Net als deze bedrijven kun jij 40+ uur per maand besparen. Plan een gratis haalbaarheidscheck en ontdek jouw mogelijkheden.",
+      "button": "Gratis analyse gesprek →",
+      "buttonAlt": "Plan een Gesprek",
+      "techTitle": "Technologieën die wij gebruiken",
+      "enterprise": "Reactie binnen 24 uur • Geen verplichtingen • Gratis consult"
+    },
+    "readyTitle": "Klaar Voor Jouw Eigen",
+    "readyTitleHighlight": "Automatisering Succes?",
+    "readySubtitle": "Net als dit project kunnen we jouw bedrijf helpen 40+ uur per maand te besparen. Plan een gratis haalbaarheidscheck en ontdek jouw mogelijkheden.",
+    "resultsTitle": "Behaalde Resultaten",
+    "solutionTitle": "De Oplossing & Impact",
+    "techTitle": "Gebruikte Technologieën",
+    "moreProjects": "Meer Projecten",
+    "backOverview": "Terug naar Overzicht",
+    "stats": {
+        "timeSaved": "Tijd Bespaard",
+        "roiPeriod": "ROI Periode",
+        "annualSaving": "Jaarlijkse Besparing"
+    }
+  },
+  "newsPage": {
+    "metadata": {
+      "title": "Kennisbank & Nieuws | AI & Automatisering Inzichten | AIFAIS",
+      "description": "Blijf op de hoogte van de laatste trends in bedrijfsautomatisering, n8n tutorials, AI-integraties en praktische tips voor het MKB.",
+      "keywords": "automatisering blog,n8n tutorials nederlands,ai nieuws mkb,bedrijfsprocessen optimaliseren tips,chatgpt zakelijk gebruik,aifais kennisbank"
+    },
+    "hero": {
+      "badge": "Kennisbank",
+      "title": "Inzichten in",
+      "titleHighlight": "Slimme Automatisering",
+      "subtitle": "Praktische gidsen, updates over AI-technologie en tips om jouw bedrijf efficiënter te maken."
+    },
+    "article": {
+      "readTime": "{time} min lezen",
+      "readMore": "Lees Artikel",
+      "empty": "Er zijn nog geen artikelen geplaatst. Kom binnenkort terug!"
+    },
+    "cta": {
+      "title": "Direct aan de slag met automatiseren?",
+      "subtitle": "Lezen is goed, doen is beter. Ontdek binnen 2 minuten waar jouw kansen liggen met onze gratis analyse.",
+      "button": "Plan analyse gesprek"
+    }
+  },
+  "homePage": {
+    "metadata": {
+      "title": "AI & Procesautomatisering voor MKB | Bespaar 40+ Uur/Week | AIFAIS",
+      "description": "Automatiseer repetitieve taken en bedrijfsprocessen voor MKB. Bespaar direct 40+ uur per week. Actief in Zuid-Holland en Utrecht.",
+      "keywords": "automatisering zuid-holland,bedrijfsautomatisering rotterdam,procesautomatisering den haag,ai automatisering utrecht,automatisering gouda,mkb automatisering randstad"
+    },
+    "faq": {
+      "q1": "Wat is de doorlooptijd van intake tot livegang van de automatisering?",
+      "a1": "Gemiddeld 2 weken van intake tot livegang. Simpele automatiseringen zijn vaak al binnen 1 week live.",
+      "q2": "Moet ik technische kennis hebben?",
+      "a2": "Nee. Wij bouwen en implementeren alles. Jij krijgt een eenvoudig dashboard waar je in gewone taal aanpassingen kunt maken.",
+      "q3": "Wat kost automatisering gemiddeld?",
+      "a3": "Vanaf €2.500 voor standaard automatisering. Complexe processen vanaf €5.000. Altijd transparante offerte vooraf.",
+      "q4": "Werkt dit met mijn huidige systemen?",
+      "a4": "Ja. We koppelen met 400+ tools zoals Google Workspace, Excel, HubSpot, Exact Online, Salesforce, Slack, en meer."
+    },
+    "schemas": {
+      "serviceType": "Bedrijfsautomatisering voor MKB",
+      "orgDescription": "Specialist in bedrijfsautomatisering en AI-integraties voor het MKB in Nederland.",
+      "standardService": "Standaard Bedrijfsautomatisering",
+      "standardDesc": "Automatiseer repetitieve taken zoals offertes, administratie, facturatie en rapportages.",
+      "complexService": "Complexe Proces Automatisering",
+      "complexDesc": "Geavanceerde automatisering met meerdere systemen, complexe beslissingslogica en AI-integraties."
+    }
+  },
+  "cityPage": {
+    "cta": "Gratis Analyse in {city}",
+    "regionInfo": "Uw partner voor automatisering in regio {city}",
+    "subText": "Gevestigd in de Randstad, leveren wij persoonlijke service en on-site ondersteuning waar nodig."
+  },
+  "faq": {
+    "badge": "❓ VEELGESTELDE VRAGEN",
+    "title": "Alles Wat Je Moet Weten",
+    "subtitle": "Nog twijfels? Deze vragen krijgen we het meest. Staat jouw vraag er niet tussen?",
+    "contactLink": "Neem contact op",
+    "ctaTitle": "Nog meer vragen?",
+    "ctaSubtitle": "We beantwoorden ze graag in een vrijblijvend gesprek van 30 minuten.",
+    "ctaButton": "Start Gratis Analyse Gesprek",
+    "ctaSecondary": "Stel Je Vraag",
+    "responseTime": "Gemiddelde responstijd: binnen 4 uur",
+    "items": [
+      {
+        "question": "Hoe snel kan ik resultaat zien?",
+        "answer": "Dat verschilt per situatie. Soms zie je binnen twee weken al de eerste resultaten, bij grotere custom made workflows kan het tot drie maanden duren. Het hangt af van wat er gebouwd moet worden. Maar één ding is zeker: we werken pas wanneer we samen een duidelijk doel hebben vastgesteld."
+      },
+      {
+        "question": "Moet ik technisch zijn om dit te gebruiken?",
+        "answer": "Absoluut niet. Alles wat wij bouwen is gemaakt om door iedereen gebruikt te worden, zonder technische kennis. Jij hoeft alleen te weten wat je wilt bereiken, wij regelen de rest."
+      },
+      {
+        "question": "Wat zijn de kosten?",
+        "answer": "Dat hangt af van wat er nodig is. Tijdens het gratis kennismakingsgesprek brengen we in kaart wat er mogelijk is. Daarna ontvang je een vrijblijvend plan met een heldere prijsindicatie. Geen verrassingen achteraf."
+      },
+      {
+        "question": "Werkt dit met onze huidige software?",
+        "answer": "Ja. Wij kunnen met vrijwel alle software werken. En mocht jouw systeem er niet standaard tussen zitten, dan integreren we vaak alsnog via APIs of webhooks. Kortom: we vinden altijd een manier."
+      },
+      {
+        "question": "Wat als het niet werkt zoals afgesproken?",
+        "answer": "Dan krijg je je geld terug. Zo simpel is het. Wij geloven in wat we maken en streven ernaar om het beste werk voor onze klanten neer te zetten. Werkt het niet? Dan betaal je niet."
+      },
+      {
+        "question": "Hoe weet ik of automatisering iets voor ons is?",
+        "answer": "Heb je taken die steeds terugkomen en veel tijd kosten? Dan is er waarschijnlijk iets te automatiseren. Denk aan e-mails lezen en beantwoorden, dossiers samenvatten, offertes maken, contracten opstellen, berichten versturen of agenda's beheren. Van backoffice tot frontoffice, van advocatenkantoor tot cafetaria. Elk bedrijf heeft vervelende klusjes die sneller en slimmer kunnen."
+      }
+    ]
+  },
+  "tools": {
+    "badge": "Tools",
+    "title": "Praktische tools,",
+    "titleHighlight": "direct bruikbaar",
+    "subtitle": "Van gratis calculators tot geavanceerde API's. Geen account nodig.",
+    "viewAll": "Bekijk alle tools",
+    "invoiceScanner": {
+      "title": "Factuur Scanner",
+      "description": "Sleep facturen, krijg gestructureerde data. Met KvK verificatie en Excel export. Een showcase tool die draait op blockchain infrastructuur.",
+      "stackLabel": "Blockchain Stack",
+      "status": "Online",
+      "cta": "Probeer nu"
+    },
+    "roiCalculator": {
+      "title": "Besparings Calculator",
+      "label": "Gratis",
+      "description": "Bereken je ROI op automatisering"
+    },
+    "invoiceCreator": {
+      "title": "Factuur Maker",
+      "label": "Gratis",
+      "description": "PDF facturen in je browser"
+    },
+    "comingSoon": {
+      "label": "Binnenkort",
+      "debtGenerator": "Incasso Generator",
+      "proposalAi": "Offerte AI"
+    }
+  },
+  "toolsPage": {
+    "title": "Praktische AI tools",
+    "subtitle": "voor dagelijks gebruik",
+    "description": "Van gratis calculators tot geautomatiseerde API's. Direct bruikbaar, geen account nodig.",
+    "backLink": "Terug naar Aifais",
+    "toolsLabel": "Tools",
+    "footerText": "Meer tools in ontwikkeling.",
+    "suggestions": "Suggesties?",
+    "status": {
+      "free": "Gratis",
+      "api": "Live API",
+      "soon": "Binnenkort"
+    },
+    "items": {
+      "roiCalculator": {
+        "title": "Besparings Calculator",
+        "description": "Bereken hoeveel tijd en geld automatisering jou oplevert. Instant inzicht, PDF rapport.",
+        "href": "/tools/roi-calculator"
+      },
+      "invoiceScanner": {
+        "title": "Factuur Scanner",
+        "description": "Sleep facturen, krijg gestructureerde data. KvK verificatie, Excel export. x402 MCP protocol.",
+        "href": "/tools/invoice-extraction"
+      },
+      "invoiceCreator": {
+        "title": "Factuur Maker",
+        "description": "Professionele PDF facturen in seconden. Geen account, geen opslag. Volledig in je browser.",
+        "href": "/tools/invoice-creation"
+      },
+      "debtCollection": {
+        "title": "Incasso Generator",
+        "description": "Juridisch correcte aanmaningen met AI ondersteuning. Van herinnering tot sommatie.",
+        "href": "#"
+      },
+      "proposalAi": {
+        "title": "Offerte AI",
+        "description": "Van steekwoorden naar overtuigende offerte. Professionele tekst die converteert.",
+        "href": "#"
+      }
+    },
+    "open": "Open"
+  },
+  "searchOverlay": {
+    "placeholder": "Zoek diensten, cases of nieuws..."
+  },
+  "headerData": {
+    "voice": {
+        "title": "Telefonische Assistenten",
+        "description": "Vervang keuzemenu's door vloeiende, menselijke conversaties."
+    },
+    "brain": {
+        "title": "Bedrijfsbrein & Geheugen",
+        "description": "Al uw bedrijfsdata doorzoekbaar en gekoppeld via GraphRAG."
+    },
+    "agents": {
+        "title": "AI Medewerkers (Agents)",
+        "description": "Autonome digitale collega's die processen voor u uitvoeren."
+    },
+    "api": {
+        "title": "Agent API (x402)",
+        "description": "Waar Agents zaken doen met elkaar"
+    }
+  },
+  "portfolioDetail": {
+    "notFoundTitle": "Project Niet Gevonden",
+    "metaDescription": "Case Study: {description}... Bekijk de resultaten en ROI voor dit Nederlandse MKB-bedrijf.",
+    "resultsTitle": "Behaalde Resultaten",
+    "timeSaved": "Tijd Bespaard",
+    "roiPeriod": "ROI Periode",
+    "annualSaving": "Jaarlijkse Besparing",
+    "solutionTitle": "De Oplossing & Impact",
+    "techTitle": "Gebruikte Technologieën",
+    "moreProjects": "Meer Projecten",
+    "viewCase": "Bekijk Case",
+    "backOverview": "Terug naar Overzicht",
+    "readTime": "{time} min lezen",
+    "cta": {
+       "title": "Klaar Voor Jouw Eigen",
+       "titleHighlight": "Automatisering Succes?",
+       "subtitle": "Net als dit project kunnen we jouw bedrijf helpen 40+ uur per maand te besparen. Plan een gratis haalbaarheidscheck en ontdek jouw mogelijkheden.",
+       "button1": "Gratis analyse gesprek →",
+       "button2": "Plan een Gesprek",
+       "footer": "Reactie binnen 24 uur • Geen verplichtingen • Gratis consult"
+    }
+  },
+  "agentApiPage": {
+    "hero": {
+      "badge": "Machine-to-Machine Economy",
+      "title": "Waar Agents zaken doen en met elkaar handelen",
+      "subtitle": "Waarom zou u uw 'Bedrijfsbrein' beperken tot uw eigen medewerkers? Met de x402 standaard kunnen externe AI-agents veilig betalen voor uw data, analyses en tools. Volautomatisch. Micro-transacties. Directe settlement.",
+      "ctaActivate": "Activeer x402",
+      "ctaApi": "Bekijk de API"
+    },
+    "demo": {
+      "step1": { "label": "Request", "desc": "Agent X vraagt: 'Scan dit contract'" },
+      "step2": { "label": "402 Payment Required", "desc": "Witted API: 'Dat kost 2.00 USDC'" },
+      "step3": { "label": "Payment", "desc": "Agent X betaalt direct via Wallet" },
+      "step4": { "label": "Response", "desc": "Witted API levert analyse" },
+      "step5": { "label": "Done", "desc": "Transactie voltooid in 400ms" }
+    },
+    "useCase": {
+      "title": "De eerste 'Contract Scan' API op de Blockchain",
+      "subtitle": "Dit is geen toekomstmuziek. Wij kunnen uw juridische modellen vandaag nog beschikbaar maken voor agents wereldwijd.",
+      "card1": { "title": "Universele Toegang", "desc": "Een inkoop-agent uit New York kan uw Nederlandse arbeidsrecht-expertise aanroepen om een contract te checken. Geen account nodig." },
+      "card2": { "title": "Pay-per-Request", "desc": "Geen maandelijkse abonnementen. De agent betaalt per pagina, per scan of per milliseconde compute. Direct in USDC." },
+      "card3": { "title": "Zero-Trust Security", "desc": "Als er niet betaald wordt, levert de API niets. Het '402 Payment Required' protocol dwingt betaling af vóór levering." }
+    },
+    "tech": {
+      "title": "Integreer in 5 minuten.",
+      "description": "Wij bouwen de x402-gateway voor u. Voor de buitenwereld ziet het eruit als een standaard REST API, maar onder water handelt het complexe crypto-transacties af.",
+      "check1": { "title": "Compatibel met alles", "desc": "Werkt met Python (LangChain), Node.js, of curl." },
+      "check2": { "title": "Automatische Facturatie", "desc": "Elke transactie wordt gelogd voor uw boekhouding." }
+    },
+    "cta": {
+      "title": "Uw data als winstmodel?",
+      "subtitle": "Ontsluit de waarde van uw bedrijfskennis voor de volgende generatie AI.",
+      "button": "Start met x402 Integratie"
+    }
+  },
+  "bedrijfsbreinPage": {
+    "meta": {
+      "title": "Het Bedrijfsbrein | AI met Lange-Termijn Geheugen | AIFAIS",
+      "description": "Stop met zoeken. Onze AI bouwt een continu lerend bedrijfsgeheugen (Knowledge Graph) van al jouw data, emails en notities."
+    },
+    "hero": {
+      "back": "Terug naar alle diensten",
+      "badge": "Nieuw: GraphRAG Technologie",
+      "title": "Het Eerste AI Systeem Dat",
+      "titleHighlight": "Nooit Meer Iets Vergeet",
+      "subtitle": "Standaard AI leest documenten, maar snapt de context niet. Onze Enterprise Brain bouwt een netwerk van relaties tussen jouw klanten, projecten en afspraken.",
+      "ctaDemo": "Demo Aanvragen",
+      "ctaHow": "Hoe werkt het?"
+    },
+    "problemSolution": {
+      "title": "Van 'Platte Tekst' naar",
+      "titleHighlight": "Diepe Kennis",
+      "p1": "Als jij aan ChatGPT vraagt: 'Wat hebben we afgesproken met Pieter?', zoekt hij naar de naam Pieter in bestanden.",
+      "p2": "Ons Bedrijfsbrein werkt anders. Het weet dat Pieter de CEO is van Bedrijf X, dat hij niet van bellen houdt, en dat zijn project wacht op goedkeuring van de afdeling Finance.",
+      "step1": "Jij uploadt notities, emails of PDFs.",
+      "step2": "Graphiti AI legt automatisch verbanden (wie kent wie?).",
+      "step3": "Je chat met je bedrijfsdata alsof het een collega is.",
+      "visualTag": "Powered by LangGraph",
+      "visualNodes": {
+        "center": "Klant X",
+        "node1": "Project Omega",
+        "node2": "Houdt van Mailen",
+        "node3": "Budget €50k"
+      }
+    },
+    "useCases": {
+      "title": "Waar gebruik je dit voor?",
+      "case1": { "title": "Second Brain", "desc": "Vergeet nooit meer een detail uit een meeting van 3 maanden geleden. De AI verbindt notities aan actiepunten." },
+      "case2": { "title": "CRM on Steroids", "desc": "Upload je mailgeschiedenis en laat de AI profielen opbouwen van elke klant: communicatiestijl, pijnpunten en geschiedenis." },
+      "case3": { "title": "Compliance & HR", "desc": "Stel vragen aan je personeelshandboek of juridische documenten en krijg antwoorden met bronvermelding." }
+    },
+    "techStack": {
+      "title": "Gebouwd op Next-Gen Infrastructuur"
+    },
+    "cta": {
+      "title": "Jouw Bedrijfskennis,",
+      "titleHighlight": "Direct Toegankelijk.",
+      "subtitle": "Dit is geen standaard software. Dit is maatwerk architectuur. We bouwen dit specifiek voor jouw datastromen.",
+      "button": "Plan een Strategie Sessie"
+    }
   }
 }

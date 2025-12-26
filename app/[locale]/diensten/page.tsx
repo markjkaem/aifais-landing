@@ -1,22 +1,33 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Onze Diensten | Digitale Werknemers & AI Agents | AIFAIS",
-  description:
-    "Wij bouwen Digitale Werknemers: autonome AI agents die jouw taken overnemen. Email beantwoording, document verwerking, sales automatisering. Niet goed, geld terug.",
-  keywords: [
-    "digitale werknemer",
-    "ai agent bouwen",
-    "autonome automatisering",
-    "ai email beantwoording",
-    "document verwerking ai",
-    "sales automatisering",
-    "mkb automatisering nederland",
-  ],
-};
+interface Props {
+  params: Promise<{ locale: string }>;
+}
 
-export default function ServicesPage() {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "servicesPage.metadata" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    keywords: t("keywords").split(","),
+    alternates: {
+      canonical: `https://aifais.com${locale === "nl" ? "" : "/" + locale}/diensten`,
+      languages: {
+        nl: "https://aifais.com/diensten",
+        en: "https://aifais.com/en/diensten",
+      },
+    },
+  };
+}
+
+export default async function ServicesPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "servicesPage" });
+
   const servicesSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -61,10 +72,9 @@ export default function ServicesPage() {
           />
         </svg>
       ),
-      title: "Email Agent",
-      description:
-        "Leest, begrijpt en beantwoordt emails met context uit je kennisbank.",
-      link: "/portfolio/email-reply-ai-agent",
+      title: t("exampleAgents.email.title"),
+      description: t("exampleAgents.email.description"),
+      link: `/${locale}/portfolio/email-reply-ai-agent`,
     },
     {
       icon: (
@@ -82,9 +92,9 @@ export default function ServicesPage() {
           />
         </svg>
       ),
-      title: "Document Agent",
-      description: "Verwerkt facturen, contracten en formulieren automatisch.",
-      link: "/portfolio/data-pipeline-and-reporting-automation",
+      title: t("exampleAgents.document.title"),
+      description: t("exampleAgents.document.description"),
+      link: `/${locale}/portfolio/data-pipeline-and-reporting-automation`,
     },
     {
       icon: (
@@ -102,9 +112,9 @@ export default function ServicesPage() {
           />
         </svg>
       ),
-      title: "Sales Agent",
-      description: "Kwalificeert leads en houdt je CRM automatisch actueel.",
-      link: "/portfolio/sales-lead-automation",
+      title: t("exampleAgents.sales.title"),
+      description: t("exampleAgents.sales.description"),
+      link: `/${locale}/portfolio/sales-lead-automation`,
     },
     {
       icon: (
@@ -122,48 +132,13 @@ export default function ServicesPage() {
           />
         </svg>
       ),
-      title: "Support Agent",
-      description: "Beantwoordt tickets en escaleert alleen wanneer nodig.",
-      link: "/portfolio/support-ticket-summarizer",
+      title: t("exampleAgents.support.title"),
+      description: t("exampleAgents.support.description"),
+      link: `/${locale}/portfolio/support-ticket-summarizer`,
     },
   ];
 
-  // What agents can do
-  const capabilities = [
-    "Emails lezen en beantwoorden",
-    "Documenten verwerken en data extraheren",
-    "Leads kwalificeren en opvolgen",
-    "Support tickets afhandelen",
-    "Agenda's beheren en afspraken plannen",
-    "Rapporten genereren en versturen",
-    "Data synchroniseren tussen systemen",
-    "Facturen verwerken en boeken",
-  ];
-
-  const steps = [
-    {
-      number: "01",
-      title: "Koffie & Kritische Vragen",
-      description:
-        "Waar verlies je tijd? Wat zijn de vervelende klusjes? 100% gratis gesprek.",
-    },
-    {
-      number: "02",
-      title: "Concreet Voorstel",
-      description:
-        "Dit automatiseren we, dit levert het op, dit kost het. Geen kleine lettertjes.",
-    },
-    {
-      number: "03",
-      title: "Bouwen & Testen",
-      description: "Wij bouwen je agent. Helft vooraf, de rest bij oplevering.",
-    },
-    {
-      number: "04",
-      title: "Live & Garantie",
-      description: "Je agent draait 24/7. Werkt het niet? Geld terug.",
-    },
-  ];
+  const steps = t.raw("steps") as { number: string; title: string; description: string }[];
 
   return (
     <main className="bg-white text-gray-900 min-h-screen selection:bg-gray-900 selection:text-white">
@@ -182,29 +157,28 @@ export default function ServicesPage() {
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-8 shadow-sm">
               <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
               <span className="text-sm font-medium text-gray-600">
-                Digitale Werknemers
+                {t("hero.badge")}
               </span>
             </div>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 text-gray-900 tracking-tight leading-[1.1]">
-              Wij bouwen de agent
+              {t("hero.title")}
               <br />
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                die jij nodig hebt
+                {t("hero.titleHighlight")}
               </span>
             </h1>
 
             <p className="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto leading-relaxed font-light mb-12">
-              Elke taak die je tijd kost kan een Digitale Werknemer worden.
-              Vertel ons wat je nodig hebt — wij bouwen het.
+              {t("hero.subtitle")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/contact"
+                href={`/${locale}/contact`}
                 className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-all shadow-lg shadow-gray-900/20 hover:shadow-xl hover:shadow-gray-900/30 hover:-translate-y-0.5"
               >
-                Bespreek jouw agent
+                {t("hero.ctaTalk")}
                 <svg
                   className="w-4 h-4 group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -220,10 +194,10 @@ export default function ServicesPage() {
                 </svg>
               </Link>
               <Link
-                href="/portfolio"
+                href={`/${locale}/portfolio`}
                 className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-700 font-semibold rounded-full border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all"
               >
-                Bekijk wat we gebouwd hebben
+                {t("hero.ctaView")}
               </Link>
             </div>
           </div>
@@ -237,25 +211,23 @@ export default function ServicesPage() {
             {/* Left: Explanation */}
             <div>
               <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-                Één dienst.
+                {t("intro.title")}
                 <br />
                 <span className="text-gray-400">
-                  Oneindig veel mogelijkheden.
+                  {t("intro.titleHighlight")}
                 </span>
               </h2>
 
               <p className="text-xl text-gray-500 mb-8 leading-relaxed">
-                Wij bouwen autonome AI agents op maat. Geen standaard software,
-                maar een Digitale Werknemer die precies doet wat jouw bedrijf
-                nodig heeft.
+                {t("intro.p")}
               </p>
 
               <div className="space-y-4 mb-10">
                 <p className="text-gray-600 font-medium">
-                  Wat kan een agent voor jou doen?
+                  {t("intro.capTitle")}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {capabilities.map((capability, i) => (
+                  {(t.raw("capabilities") as string[]).map((capability, i) => (
                     <div
                       key={i}
                       className="flex items-center gap-3 text-gray-600"
@@ -268,8 +240,7 @@ export default function ServicesPage() {
               </div>
 
               <p className="text-gray-500 text-sm italic">
-                En alles daartussenin. Als het een proces is, kunnen we het
-                automatiseren.
+                {t("intro.capNote")}
               </p>
             </div>
 
@@ -283,7 +254,7 @@ export default function ServicesPage() {
                   <div className="w-3 h-3 rounded-full bg-yellow-500" />
                   <div className="w-3 h-3 rounded-full bg-green-500" />
                   <span className="text-gray-500 text-sm ml-2 font-mono">
-                    agent.exe
+                    {t("visual.label")}
                   </span>
                 </div>
 
@@ -291,36 +262,36 @@ export default function ServicesPage() {
                   <div className="flex items-start gap-3">
                     <span className="text-emerald-400">→</span>
                     <span className="text-gray-300">
-                      Nieuwe factuur ontvangen via email
+                      {t("visual.step1")}
                     </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-blue-400">⚡</span>
                     <span className="text-gray-300">
-                      Data geëxtraheerd: €2.450,00 van Leverancier B.V.
+                      {t("visual.step2")}
                     </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-purple-400">✓</span>
                     <span className="text-gray-300">
-                      Gevalideerd tegen inkooporder #2024-0891
+                      {t("visual.step3")}
                     </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-emerald-400">✓</span>
                     <span className="text-gray-300">
-                      Ingeboekt in Exact Online
+                      {t("visual.step4")}
                     </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-emerald-400">✓</span>
                     <span className="text-gray-300">
-                      Betaling gepland voor 15-01-2025
+                      {t("visual.step5")}
                     </span>
                   </div>
                   <div className="mt-6 pt-4 border-t border-gray-700">
                     <span className="text-gray-500">
-                      Klaar in 3.2 seconden — geen menselijke actie nodig
+                      {t("visual.footer")}
                     </span>
                   </div>
                 </div>
@@ -335,10 +306,10 @@ export default function ServicesPage() {
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
-              Agents die we al gebouwd hebben
+              {t("examples.title")}
             </h2>
             <p className="text-xl text-gray-500">
-              Ter inspiratie — jouw agent kan compleet anders zijn.
+              {t("examples.subtitle")}
             </p>
           </div>
 
@@ -359,7 +330,7 @@ export default function ServicesPage() {
                   {agent.description}
                 </p>
                 <div className="mt-4 text-sm font-medium text-gray-400 group-hover:text-gray-900 transition-colors flex items-center gap-1">
-                  Bekijk case
+                  {t("examples.viewCase")}
                   <svg
                     className="w-4 h-4 group-hover:translate-x-1 transition-transform"
                     fill="none"
@@ -380,12 +351,12 @@ export default function ServicesPage() {
 
           <div className="mt-12 text-center">
             <div className="inline-flex items-center gap-4 px-6 py-4 bg-white rounded-full border border-gray-200 shadow-sm">
-              <span className="text-gray-600">Iets anders nodig?</span>
+              <span className="text-gray-600">{t("examples.other")}</span>
               <Link
-                href="/contact"
+                href={`/${locale}/contact`}
                 className="text-gray-900 font-semibold hover:underline"
               >
-                Laten we praten →
+                {t("examples.talk")}
               </Link>
             </div>
           </div>
@@ -397,7 +368,7 @@ export default function ServicesPage() {
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Waarom een Digitale Werknemer?
+              {t("why.title")}
             </h2>
           </div>
 
@@ -407,25 +378,15 @@ export default function ServicesPage() {
                 <span className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center text-xs">
                   ✕
                 </span>
-                Traditionele Software
+                {t("why.tradTitle")}
               </div>
               <ul className="space-y-4 text-gray-600">
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300 mt-2 flex-shrink-0" />
-                  Wacht tot jij op knoppen drukt
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300 mt-2 flex-shrink-0" />
-                  Vereist handmatige data-invoer
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300 mt-2 flex-shrink-0" />
-                  Begrijpt geen context of nuance
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300 mt-2 flex-shrink-0" />
-                  Draait alleen wanneer jij werkt
-                </li>
+                {(t.raw("why.tradPoints") as string[]).map((point, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-300 mt-2 flex-shrink-0" />
+                    {point}
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -434,25 +395,15 @@ export default function ServicesPage() {
                 <span className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs">
                   ✓
                 </span>
-                Digitale Werknemer
+                {t("why.agentTitle")}
               </div>
               <ul className="space-y-4 text-gray-300">
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0" />
-                  Neemt proactief taken over
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0" />
-                  Leest en begrijpt documenten zelf
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0" />
-                  Gebruikt je kennisbank voor context
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0" />
-                  Draait 24/7, ook als jij slaapt
-                </li>
+                {(t.raw("why.agentPoints") as string[]).map((point, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0" />
+                    {point}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -464,10 +415,10 @@ export default function ServicesPage() {
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="text-center mb-20">
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-              Hoe wij werken
+              {t("process.title")}
             </h2>
             <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-              Transparant en zonder verrassingen.
+              {t("process.subtitle")}
             </p>
           </div>
 
@@ -502,12 +453,7 @@ export default function ServicesPage() {
       <section className="py-20 bg-white border-y border-gray-100">
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-            {[
-              { value: "40+", label: "Uur bespaard per week" },
-              { value: "<2", label: "Weken doorlooptijd" },
-              { value: "100%", label: "Niet goed, geld terug" },
-              { value: "24/7", label: "Je agent draait door" },
-            ].map((stat, index) => (
+            {(t.raw("stats") as { value: string; label: string }[]).map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-2">
                   {stat.value}
@@ -529,21 +475,18 @@ export default function ServicesPage() {
         <div className="container mx-auto px-6 max-w-4xl relative">
           <div className="text-center">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight">
-              Welke taak kost jou
-              <br />
-              te veel tijd?
+              {t("cta.title")}
             </h2>
             <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Vertel het ons. Binnen 30 minuten weet je of we er een agent van
-              kunnen maken — en wat het oplevert.
+              {t("cta.subtitle")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/contact"
+                href={`/${locale}/contact`}
                 className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-gray-900 font-bold rounded-full hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-0.5"
               >
-                Plan Gratis Gesprek
+                {t("cta.button")}
                 <svg
                   className="w-4 h-4 group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -559,16 +502,16 @@ export default function ServicesPage() {
                 </svg>
               </Link>
               <Link
-                href="/portfolio"
+                href={`/${locale}/portfolio`}
                 className="inline-flex items-center justify-center px-8 py-4 text-white font-semibold rounded-full border border-white/20 hover:bg-white/10 transition-all"
               >
-                Bekijk Cases
+                {t("cta.viewCases")}
               </Link>
             </div>
 
             <div className="mt-16 pt-12 border-t border-white/10">
               <p className="text-gray-500 text-sm mb-6">
-                Gebouwd op enterprise standaarden
+                {t("cta.enterprise")}
               </p>
               <div className="flex flex-wrap items-center justify-center gap-8 text-gray-400">
                 <div className="flex items-center gap-2">

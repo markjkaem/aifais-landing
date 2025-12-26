@@ -3,13 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Space_Grotesk } from "next/font/google";
+import { useTranslations, useLocale } from "next-intl";
 
-const h1 = Space_Grotesk({
+const h1_font = Space_Grotesk({
   weight: "700",
   subsets: ["latin"],
 });
 
 export default function HeroSection() {
+  const t = useTranslations("hero");
+  const locale = useLocale();
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden font-sans">
       {/* Background Video / Overlay */}
@@ -35,7 +39,7 @@ export default function HeroSection() {
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#90eb91] shadow-[0_0_8px_#0cff10]"></span>
             </span>
             <span className="text-xs font-mono tracking-widest uppercase text-blue-100/80">
-              AI-Driven Workforce
+              {t("badge")}
             </span>
           </div>
 
@@ -61,31 +65,30 @@ export default function HeroSection() {
         <div className="max-w-4xl">
           {/* Main Headline */}
           <h1
-            className={`${h1.className} text-5xl sm:text-6xl md:text-6xl lg:text-8xl font-bold tracking-tighter leading-[1.05] mb-8 text-white`}
+            className={`${h1_font.className} text-5xl sm:text-6xl md:text-6xl lg:text-8xl font-bold tracking-tighter leading-[1.05] mb-8 text-white`}
           >
-            <span className="block text-blue-100/90">Neem je eerste</span>
+            <span className="block text-blue-100/90">{t("h1_1")}</span>
 
             {/* Professional Gradient Text */}
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-200 to-white drop-shadow-sm pb-2">
-              Digitale Werknemer
+              {t("h1_highlight")}
             </span>
 
-            <span className="block text-blue-100/90">aan.</span>
+            <span className="block text-blue-100/90">{t("h1_2")}</span>
           </h1>
 
           {/* Subheadlines */}
           <div className="space-y-6 mb-12">
             <h2 className="text-xl md:text-2xl text-white font-semibold tracking-wide">
-              Meer tijd. Meer winst.{" "}
-              <span className="text-blue-300">Minder gedoe.</span>
+              {t("h2_1")}{" "}
+              <span className="text-blue-300">{t("h2_highlight")}</span>
             </h2>
 
             <p className="text-lg md:text-xl text-blue-100/70 leading-relaxed max-w-2xl font-light">
-              Wij automatiseren de taken die je tijd kosten, zodat jij je kunt
-              focussen op wat écht belangrijk is: je bedrijf laten groeien.
+              {t("p")}
               <br className="hidden md:block" />
               <span className="inline-block mt-3 text-white font-medium border-b border-blue-400/30 pb-0.5">
-                Gratis analyse. Gratis plan. Niet goed, geld terug.
+                {t("guarantee")}
               </span>
             </p>
           </div>
@@ -93,10 +96,10 @@ export default function HeroSection() {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-5">
             <Link
-              href="/contact"
+              href={`/${locale}/contact`}
               className="group relative px-8 py-4 bg-[#3066be] hover:bg-[#2554a3] text-white font-bold text-lg rounded-full transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(48,102,190,0.3)] hover:shadow-[0_0_30px_rgba(48,102,190,0.5)] transform hover:-translate-y-1"
             >
-              <span>Plan gratis analyse</span>
+              <span>{t("cta")}</span>
               <svg
                 className="w-5 h-5 group-hover:translate-x-1 transition-transform"
                 fill="none"
@@ -113,10 +116,10 @@ export default function HeroSection() {
             </Link>
 
             <Link
-              href="/tools/roi-calculator"
+              href={`/${locale}/tools/roi-calculator`}
               className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-medium hover:bg-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center backdrop-blur-md"
             >
-              Bereken jaarlijkse voordeel
+              {t("roi")}
             </Link>
           </div>
         </div>
