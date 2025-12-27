@@ -30,10 +30,11 @@ export async function generateMetadata({
 
   return {
     title: `${article.title} | AIFAIS`,
-    // AEO FIX: Gebruik de geoptimaliseerde snippet als description indien beschikbaar
     description: article.aeoSnippet || article.excerpt,
     authors: [{ name: article.author }],
     keywords: article.tags || [],
+    
+    // ✅ OPEN GRAPH (Facebook, LinkedIn, etc.)
     openGraph: {
       title: article.title,
       description: article.aeoSnippet || article.excerpt,
@@ -42,6 +43,18 @@ export async function generateMetadata({
       images: [{ url: ogImage, width: 1200, height: 630, alt: article.title }],
       siteName: "AIFAIS",
       locale: "nl_NL",
+      publishedTime: new Date(article.date).toISOString(),
+      authors: [article.author],
+    },
+    
+    // ✅ TWITTER/X CARD - Dit ontbrak!
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.aeoSnippet || article.excerpt,
+      images: [ogImage],
+      creator: "@aabornie", // Vervang met jullie Twitter handle
+      site: "@aifais_nl",   // Vervang met jullie Twitter handle
     },
   };
 }
