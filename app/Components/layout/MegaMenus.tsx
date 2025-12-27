@@ -135,13 +135,21 @@ export function MegaMenuNews({
                 </Link>
               ))}
           </div>
-          <div className="mt-4 px-4">
+          <div className="mt-4 px-4 flex flex-col gap-2">
             <Link
               href={getLocalizedPath("/news")}
               className="text-gray-500 text-sm font-semibold hover:text-[#3066be] transition flex items-center gap-1"
               onClick={closeAll}
             >
               {tMega("knowledgeBase")}
+            </Link>
+            <Link
+              href={getLocalizedPath("/news/visa-ai-agents-autonome-aankopen")}
+              className="text-[#3066be] text-xs font-medium hover:underline flex items-center gap-1"
+              onClick={closeAll}
+            >
+              <span className="bg-[#3066be]/10 px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wide">NEW</span>
+              Visa AI Agents & Autonome Aankopen
             </Link>
           </div>
         </div>
