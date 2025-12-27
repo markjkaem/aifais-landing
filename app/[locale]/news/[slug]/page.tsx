@@ -1,5 +1,5 @@
 // ========================================
-// FILE: app/news/[slug]/page.tsx
+// FILE: app/[locale]/news/[slug]/page.tsx
 // ========================================
 
 import Link from "next/link";
@@ -7,15 +7,15 @@ import Image from "next/image";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ClientWrapper } from "./ClientWrapper";
-import { news } from "../data"; // Zorg dat dit pad klopt
+import { news } from "../data";
 
 const SITE_URL = "https://aifais.com";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale?: string }>;
 }
 
-// ✅ SEO METADATA
+// ✅ SEO METADATA - Met volledige override van layout defaults
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -24,37 +24,64 @@ export async function generateMetadata({
 
   if (!article) return { title: "Niet gevonden", robots: { index: false } };
 
+  // ✅ Absolute URL voor afbeelding - cruciaal voor Twitter
   const ogImage = article.image
-    ? `${SITE_URL}${article.image}`
+    ? `${SITE_URL}${article.image.startsWith('/') ? '' : '/'}${article.image}`
     : `${SITE_URL}/og-news.jpg`;
+  
+  const articleUrl = `${SITE_URL}/news/${slug}`;
+  const articleTitle = article.title;
+  const articleDescription = article.aeoSnippet || article.excerpt;
 
   return {
-    title: `${article.title} | AIFAIS`,
-    description: article.aeoSnippet || article.excerpt,
+    // ✅ Basis metadata
+    title: `${articleTitle} | AIFAIS`,
+    description: articleDescription,
     authors: [{ name: article.author }],
     keywords: article.tags || [],
     
-    // ✅ OPEN GRAPH (Facebook, LinkedIn, etc.)
+    // ✅ Dit zorgt dat relative URLs correct worden
+    metadataBase: new URL(SITE_URL),
+    
+    // ✅ OPEN GRAPH - Volledig overschrijven
     openGraph: {
-      title: article.title,
-      description: article.aeoSnippet || article.excerpt,
+      title: articleTitle,
+      description: articleDescription,
       type: "article",
-      url: `${SITE_URL}/news/${slug}`,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: article.title }],
+      url: articleUrl,
       siteName: "AIFAIS",
       locale: "nl_NL",
       publishedTime: new Date(article.date).toISOString(),
+      modifiedTime: article.updatedAt ? new Date(article.updatedAt).toISOString() : undefined,
       authors: [article.author],
+      images: [
+        {
+          url: ogImage,
+          secureUrl: ogImage,
+          width: 1200,
+          height: 630,
+          alt: articleTitle,
+          type: "image/jpeg",
+        }
+      ],
     },
     
-    // ✅ TWITTER/X CARD - Dit ontbrak!
+    // ✅ TWITTER - Volledig overschrijven (dit was het probleem!)
     twitter: {
       card: "summary_large_image",
-      title: article.title,
-      description: article.aeoSnippet || article.excerpt,
-      images: [ogImage],
-      creator: "@aabornie", // Vervang met jullie Twitter handle
-      site: "@aifais_nl",   // Vervang met jullie Twitter handle
+      site: "@aifais",
+      creator: "@aifais",
+      title: articleTitle,
+      description: articleDescription,
+      images: {
+        url: ogImage,
+        alt: articleTitle,
+      },
+    },
+    
+    // ✅ Canonical URL voor dit specifieke artikel
+    alternates: {
+      canonical: articleUrl,
     },
   };
 }
@@ -77,7 +104,7 @@ export default async function NewsArticlePage({ params }: PageProps) {
   const articleUrl = `${SITE_URL}/news/${slug}`;
   const imageUrl = article.image ? `${SITE_URL}${article.image}` : undefined;
 
-  // 1. Blog Posting Schema (Bestaand)
+  // 1. Blog Posting Schema
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -85,16 +112,20 @@ export default async function NewsArticlePage({ params }: PageProps) {
     description: article.aeoSnippet || article.excerpt,
     image: imageUrl ? [imageUrl] : [],
     datePublished: new Date(article.date).toISOString(),
+    dateModified: article.updatedAt ? new Date(article.updatedAt).toISOString() : new Date(article.date).toISOString(),
     author: { "@type": "Person", name: article.author },
     publisher: {
       "@type": "Organization",
       name: "AIFAIS",
       logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
     },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": articleUrl,
+    },
   };
 
-  // 2. FAQ Page Schema (NIEUW: Voor AEO!)
-  // Dit vertelt Google/AI precies welke vragen beantwoord worden
+  // 2. FAQ Page Schema
   const faqSchema = article.faq
     ? {
         "@context": "https://schema.org",
@@ -124,10 +155,9 @@ export default async function NewsArticlePage({ params }: PageProps) {
         />
       )}
 
-      {/* Navigatie (Ongewijzigd) */}
+      {/* Navigatie */}
       <nav className="bg-white/95 py-4 border-b border-gray-200 sticky top-0 z-40 backdrop-blur-md">
         <div className="container mx-auto px-6 max-w-4xl">
-          {/* ... jouw bestaande breadcrumbs ... */}
           <div className="text-sm text-gray-500">
             <Link href="/">Home</Link> / <Link href="/news">Kennisbank</Link> /{" "}
             <span className="text-gray-900 font-medium">{article.title}</span>
