@@ -437,6 +437,40 @@
       "enterprise": "Response within 24 hours • No obligations • Free consultation"
     }
   },
+  "aboutPage": {
+    "metadata": {
+      "title": "About AIFAIS | Our Story & Vision",
+      "description": "Discover the story behind AIFAIS. We are a team of engineers and strategists dedicated to automating business processes for SMEs.",
+      "keywords": "about aifais, team aifais, automation experts, ai consultants"
+    },
+    "hero": {
+      "badge": "Our Story",
+      "title": "We are",
+      "titleHighlight": "AIFAIS",
+      "subtitle": "A team of passionate engineers and business strategists with one goal: making automation accessible for every company."
+    },
+    "story": {
+      "badge": "Our Mission",
+      "title": "Why we",
+      "titleHighlight": "exist",
+      "p1": "We noticed that many SMEs struggle with the same problem: valuable time is lost to repetitive, administrative tasks.",
+      "p2": "Software should complex tasks simple, not create more work. That's why we started AIFAIS.",
+      "values": {
+        "transparency": {
+          "title": "Transparency",
+          "desc": "No black boxes. You know exactly what we build and what it costs."
+        },
+        "quality": {
+          "title": "Quality",
+          "desc": "We build enterprise-grade software, scaled for your business."
+        },
+        "results": {
+          "title": "Results",
+          "desc": "We focus on ROI. If it doesn't save time or money, we don't build it."
+        }
+      }
+    }
+  },
   "newsPage": {
     "metadata": {
       "title": "Knowledge Base & News | AI & Automation Insights | AIFAIS",

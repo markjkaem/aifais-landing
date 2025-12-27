@@ -473,6 +473,40 @@
       "button": "Plan analyse gesprek"
     }
   },
+  "aboutPage": {
+    "metadata": {
+      "title": "Over AIFAIS | Ons Verhaal & Visie",
+      "description": "Ontdek het verhaal achter AIFAIS. Wij zijn een team van engineers en strategen die bedrijfsprocessen automatiseren voor het MKB.",
+      "keywords": "over aifais, team aifais, automatisering experts, ai consultants"
+    },
+    "hero": {
+      "badge": "Ons Verhaal",
+      "title": "Wij zijn",
+      "titleHighlight": "AIFAIS",
+      "subtitle": "Een team van gepassioneerde engineers en bedrijfsstrategen met één doel: automatisering toegankelijk maken voor elk bedrijf."
+    },
+    "story": {
+      "badge": "Onze Missie",
+      "title": "Waarom wij",
+      "titleHighlight": "bestaan",
+      "p1": "Wij merkten dat veel MKB-bedrijven met hetzelfde probleem worstelen: kostbare tijd gaat verloren aan repetitieve, administratieve taken.",
+      "p2": "Software moet complexe taken simpel maken, niet meer werk creëren. Daarom zijn wij AIFAIS gestart.",
+      "values": {
+        "transparency": {
+          "title": "Transparantie",
+          "desc": "Geen black boxes. U weet precies wat we bouwen en wat het kost."
+        },
+        "quality": {
+          "title": "Kwaliteit",
+          "desc": "Wij bouwen enterprise-kwaliteit software, geschaald voor uw bedrijf."
+        },
+        "results": {
+          "title": "Resultaat",
+          "desc": "Wij focussen op ROI. Als het geen tijd of geld bespaart, bouwen we het niet."
+        }
+      }
+    }
+  },
   "homePage": {
     "metadata": {
       "title": "AI & Procesautomatisering voor MKB | Bespaar 40+ Uur/Week | AIFAIS",

@@ -129,7 +129,7 @@ export default function Header() {
             <ChevronDownIcon className={`w-3 h-3 transition-transform ${openDropdown === "news" ? "rotate-180" : ""}`} />
           </button>
           <Link href={getLocalizedPath("/portfolio")} className="hover:text-[#3066be] transition" onClick={closeAll}>{t("cases")}</Link>
-          <Link href={getLocalizedPath("/#about")} className="hover:text-[#3066be] transition" onClick={(e) => { e.preventDefault(); router.push(getLocalizedPath("/#about")); closeAll(); }}>{t("about")}</Link>
+          <Link href={getLocalizedPath("/about")} className="hover:text-[#3066be] transition" onClick={closeAll}>{t("about")}</Link>
           <Link href={getLocalizedPath("/tools")} className="hover:text-[#3066be] transition" onClick={closeAll}>{t("tools")}</Link>
           <Link href={getLocalizedPath("/contact")} className="hover:text-[#3066be] transition" onClick={closeAll}>{t("contact")}</Link>
         </nav>

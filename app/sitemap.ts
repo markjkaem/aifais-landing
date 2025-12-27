@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/roi-calculator",
     "/privacy",
     "/agv",
+    "/about",
   ];
 
   locales.forEach((locale) => {

@@ -142,7 +142,7 @@ export default function Footer() {
               {tNav("news")}
             </Link>
             <Link
-              href={`/${locale}/#about`}
+              href={`/${locale}/about`}
               className="hover:text-[#3066be] transition text-gray-600"
             >
               {tNav("about")}

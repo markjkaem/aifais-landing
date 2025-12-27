@@ -101,7 +101,7 @@ export async function generateMetadata({
       creator: TWITTER_CREATOR,
     },
     verification: {
-      google: "jouw-google-verification-code",
+      google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
     },
     alternates: {
       canonical: `${BASE_URL}${localePath}`,
