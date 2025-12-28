@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export default function TeamSection() {
   const t = useTranslations("team");
@@ -11,6 +12,7 @@ export default function TeamSection() {
       role: t("mark.role"),
       bio: t("mark.bio"),
       skills: t.raw("mark.skills") as string[],
+      image: "/mark.png",
       link: "https://www.linkedin.com/in/mark-v-898408309/",
       linkText: "LinkedIn",
       linkType: "linkedin",
@@ -20,6 +22,7 @@ export default function TeamSection() {
       role: t("faissal.role"),
       bio: t("faissal.bio"),
       skills: t.raw("faissal.skills") as string[],
+      image: "/faissal.png",
       link: "mailto:faissal@aifais.com",
       linkText: "Email",
       linkType: "email",
@@ -56,7 +59,16 @@ export default function TeamSection() {
             <div key={idx} className="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300">
               <div className={`h-1 bg-gradient-to-r ${idx === 0 ? "from-blue-300 to-blue-600" : "from-blue-500 to-blue-800"}`} />
               <div className="p-8">
-                <div className="flex items-start gap-5 mb-6">
+                <div className="flex items-center gap-5 mb-6">
+                  <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border border-gray-100 shadow-sm">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover"
+                      sizes="56px"
+                    />
+                  </div>
                   <div className="pt-1">
                     <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
                     <p className="text-sm text-gray-500">{member.role}</p>
