@@ -1,5 +1,7 @@
 "use client";
 
+// Force re-render to fix hydration mismatch
+
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
