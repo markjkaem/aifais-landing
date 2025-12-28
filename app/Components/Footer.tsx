@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
+import { news } from "../[locale]/news/data";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -141,13 +142,16 @@ export default function Footer() {
             >
               {tNav("news")}
             </Link>
-            <Link
-              href={`/${locale}/news/visa-ai-agents-autonome-aankopen`}
-              className="text-gray-400 hover:text-[#3066be] transition text-xs flex items-center gap-1"
-            >
-              <svg className="w-3 h-3 text-[#3066be]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-              Visa AI Agents
-            </Link>
+            {news.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/${locale}/news/${item.slug}`}
+                className="hover:text-[#3066be] transition text-gray-600 truncate"
+                title={item.title}
+              >
+                {item.title}
+              </Link>
+            ))}
             <Link
               href={`/${locale}/about`}
               className="hover:text-[#3066be] transition text-gray-600"

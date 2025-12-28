@@ -59,12 +59,83 @@ export async function POST(request: Request) {
 
     const mailBody = `Nieuw contactformulier:\n\nNaam: ${name}\nEmail: ${email}\nTelefoon: ${phone}\n\nBericht:\n${message}`;
 
+    // Send email
     await transporter.sendMail({
       from: `${name} <${email}>`,
       to: TO_EMAIL,
       subject: `Contactformulier: ${name} via Aifais`,
       text: mailBody,
     });
+
+    // Add to Notion CRM
+    const NOTION_API_KEY = process.env.NOTION_API_KEY;
+    const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID;
+
+    if (NOTION_API_KEY && NOTION_DATABASE_ID) {
+      try {
+        await fetch("https://api.notion.com/v1/pages", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${NOTION_API_KEY}`,
+            "Content-Type": "application/json",
+            "Notion-Version": "2022-06-28",
+          },
+          body: JSON.stringify({
+            parent: {
+              type: "database_id",
+              database_id: NOTION_DATABASE_ID,
+            },
+            properties: {
+              "Naam": {
+                title: [
+                  {
+                    text: {
+                      content: name || "Geen naam",
+                    },
+                  },
+                ],
+              },
+              "Email": {
+                email: email,
+              },
+              "Telefoon": {
+                phone_number: phone || null,
+              },
+              "Bericht": {
+                rich_text: [
+                  {
+                    text: {
+                      content: message || "",
+                    },
+                  },
+                ],
+              },
+              "Status": {
+                select: {
+                  name: "Nieuw",
+                },
+              },
+              "Bron": {
+                select: {
+                  name: "Website contactformulier",
+                },
+              },
+              "Prioriteit": {
+                select: {
+                  name: "Normaal",
+                },
+              },
+            },
+          }),
+        });
+        console.log("✅ Lead toegevoegd aan Notion CRM");
+      } catch (notionError) {
+        console.error("⚠️ Notion fout (email wel verzonden):", notionError);
+        // Don't fail the request if Notion fails
+      }
+    } else {
+      console.warn("⚠️ Notion niet geconfigureerd - alleen email verzonden");
+    }
 
     return new Response(JSON.stringify({ ok: true }), { status: 200 });
   } catch (err) {

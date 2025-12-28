@@ -117,17 +117,20 @@ export function MegaMenuNews({
             {tMega("articles")}
           </h4>
           <div className="grid grid-cols-2 gap-4">
-            {(news || [])
-              .filter((item) => item.id < 5)
-              .map((blog) => (
+            {news.slice(0, 4).map((blog, index) => (
                 <Link
                   key={blog.slug}
                   href={getLocalizedPath(`/news/${blog.slug}`)}
                   className="group p-4 rounded-xl hover:bg-gray-50 transition border border-transparent hover:border-gray-200"
                   onClick={closeAll}
                 >
-                  <h3 className="text-gray-900 font-semibold mb-1 group-hover:text-[#3066be] transition line-clamp-1">
+                  <h3 className="text-gray-900 font-semibold mb-1 group-hover:text-[#3066be] transition line-clamp-1 flex items-center gap-2">
                     {blog.title}
+                    {index === 0 && (
+                      <span className="bg-[#3066be]/10 text-[#3066be] px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wide">
+                        NEW
+                      </span>
+                    )}
                   </h3>
                   <p className="text-sm text-gray-500 line-clamp-2">
                     {blog.excerpt}
@@ -142,14 +145,6 @@ export function MegaMenuNews({
               onClick={closeAll}
             >
               {tMega("knowledgeBase")}
-            </Link>
-            <Link
-              href={getLocalizedPath("/news/visa-ai-agents-autonome-aankopen")}
-              className="text-[#3066be] text-xs font-medium hover:underline flex items-center gap-1"
-              onClick={closeAll}
-            >
-              <span className="bg-[#3066be]/10 px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wide">NEW</span>
-              Visa AI Agents & Autonome Aankopen
             </Link>
           </div>
         </div>
