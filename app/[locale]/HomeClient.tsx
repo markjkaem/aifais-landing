@@ -4,6 +4,7 @@ import { Project } from "./portfolio/data";
 import FAQSection from "../Components/FAQSection";
 import ToolsTeaser from "../Components/ToolsTeaser";
 import HeroSection from "../Components/home/HeroSection";
+import IntroVideoSection from "../Components/home/IntroVideoSection";
 import ExplainerSection from "../Components/home/ExplainerSection";
 import ProcessSection from "../Components/home/ProcessSection";
 import TechStackSection from "../Components/home/TechStackSection";
@@ -24,6 +25,8 @@ export default function HomeClient({ projects }: HomeClientProps) {
       <ProcessSection />
       
       <TechStackSection />
+      
+      <IntroVideoSection />
       
       <PortfolioSection projects={projects} />
       

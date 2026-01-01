@@ -87,6 +87,12 @@
       "input": "Input",
       "outputLabel": "Output",
       "poweredBy": "Claude 4.5 Powered"
+    },
+    "introVideo": {
+      "badge": "Bekijk Het In Actie",
+      "title": "Kijk naar de",
+      "titleHighlight": "Toekomst",
+      "subtitle": "Zie hoe onze AI-agents repetitieve taken overnemen en uw workflow binnen enkele minuten transformeren."
     }
   },
   "process": {

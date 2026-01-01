@@ -87,6 +87,12 @@
       "input": "Input",
       "outputLabel": "Output",
       "poweredBy": "Claude 4.5 Powered"
+    },
+    "introVideo": {
+      "badge": "See It In Action",
+      "title": "Watch the",
+      "titleHighlight": "Future",
+      "subtitle": "See how our AI agents take over repetitive tasks and transform your workflow in minutes."
     }
   },
   "process": {
