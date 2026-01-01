@@ -18,7 +18,7 @@ export default function Footer() {
       itemScope
       itemType="https://schema.org/Organization"
     >
-      <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-3 lg:grid-cols-5 gap-12 text-sm">
+      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-12 text-sm">
         {/* COL 1: Company Info & Address */}
         <div className="flex flex-col gap-4">
           <Link href={`/${locale}`} className="inline-block" itemProp="url">
@@ -127,9 +127,9 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 min-w-0">
           <h3 className="font-bold text-gray-900 text-base">{t("navTitle")}</h3>
-          <nav className="flex flex-col gap-3">
+          <nav className="flex flex-col gap-3 min-w-0">
             <Link
               href={`/${locale}/portfolio`}
               className="hover:text-[#3066be] transition text-gray-600"
@@ -142,14 +142,14 @@ export default function Footer() {
             >
               {tNav("news")}
             </Link>
-            {news.map((item) => (
+            {news.slice(0, 3).map((item) => (
               <Link
                 key={item.slug}
                 href={`/${locale}/news/${item.slug}`}
-                className="hover:text-[#3066be] transition text-gray-600 truncate"
+                className="hover:text-[#3066be] transition text-gray-600 truncate block text-xs"
                 title={item.title}
               >
-                {item.title}
+                • {item.title}
               </Link>
             ))}
             <Link
@@ -253,10 +253,15 @@ export default function Footer() {
               {t("operational")}
             </p>
             <span className="hidden md:inline">|</span>
-            <p className="font-medium text-gray-700">{t("activeIn")} Rotterdam • Den Haag • Utrecht • Gouda • Zuid-Holland</p>
+            <p className="font-medium text-gray-700 text-center md:text-left leading-relaxed">
+              {t("activeIn")} Rotterdam • Den Haag • Utrecht • Gouda • Zuid-Holland
+            </p>
           </div>
         </div>
       </div>
+    </footer>
+  );
+}
     </footer>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
@@ -118,6 +119,16 @@ export default function Header() {
   return (
     <header className={`w-full bg-white/95 backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50 transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <Link href={getLocalizedPath("/")} className="flex items-center gap-2 group shrink-0" onClick={closeAll}>
+          <Image 
+            src="/logo-official.png" 
+            alt="AI Faiss Logo" 
+            width={120} 
+            height={40} 
+            className="h-14 md:hidden w-auto object-contain transition-transform group-hover:scale-105 invert" 
+            priority
+          />
+        </Link>
         <nav className="hidden lg:flex items-center space-x-8 text-sm font-medium text-gray-600">
           <Link href={getLocalizedPath("/")} className="hover:text-[#3066be] transition" onClick={closeAll}>{t("home")}</Link>
           <button onClick={() => handleDropdownToggle("services")} className={`hover:text-[#3066be] transition flex items-center gap-2 group ${openDropdown === "services" ? "text-[#3066be]" : ""}`}>

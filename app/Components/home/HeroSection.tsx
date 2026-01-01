@@ -54,7 +54,7 @@ export default function HeroSection() {
                 alt="Aifais Logo"
                 width={400}
                 height={100}
-                className="w-36 md:w-44 h-auto object-contain drop-shadow-lg opacity-90 group-hover:opacity-100 transition-opacity"
+                className="hidden md:flex md:w-44 h-auto object-contain drop-shadow-lg opacity-90 group-hover:opacity-100 transition-opacity"
                 priority
               />
             </Link>
