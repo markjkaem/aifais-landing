@@ -172,6 +172,10 @@ export default async function LocaleLayout({ children, params }: Props) {
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
+        <link
+          href="https://assets.calendly.com/assets/external/widget.css"
+          rel="stylesheet"
+        />
 
         {/* ---------------------------------------------------- */}
         {/* ✅ SCHEMA.ORG: LOCAL BUSINESS (E-E-A-T & Local SEO) */}
@@ -321,6 +325,11 @@ export default async function LocaleLayout({ children, params }: Props) {
             }(document,"script","https://chimpstatic.com/mcjs-connected/js/users/c66f45e7f503cc57bbaf5e5db/9a532f162e3351306564318b7.js");
           `,
           }}
+        />
+        <Script
+          id="calendly-script"
+          src="https://assets.calendly.com/assets/external/widget.js"
+          strategy="lazyOnload"
         />
 
         <NextIntlClientProvider messages={messages} locale={locale}>

@@ -94,14 +94,14 @@ export default function HeroSection() {
           </div>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-5">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-4">
             <Link
               href={`/${locale}/contact`}
-              className="group relative px-8 py-4 bg-[#3066be] hover:bg-[#2554a3] text-white font-bold text-lg rounded-full transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(48,102,190,0.3)] hover:shadow-[0_0_30px_rgba(48,102,190,0.5)] transform hover:-translate-y-1"
+              className="group relative px-6 py-3.5 bg-[#3066be] hover:bg-[#2554a3] text-white font-bold text-base rounded-full transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(48,102,190,0.2)] hover:shadow-[0_0_30px_rgba(48,102,190,0.4)] transform hover:-translate-y-1"
             >
               <span>{t("cta")}</span>
               <svg
-                className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -115,9 +115,32 @@ export default function HeroSection() {
               </svg>
             </Link>
 
+            <button
+              onClick={() => {
+                // @ts-ignore
+                if (window.Calendly) {
+                  // @ts-ignore
+                  window.Calendly.initPopupWidget({
+                    url: "https://calendly.com/markteekenschannel2/30min",
+                  });
+                }
+              }}
+              className="px-6 py-3.5 bg-white text-gray-900 font-bold text-base rounded-full hover:bg-gray-100 transition-all duration-300 flex items-center justify-center gap-3 transform hover:-translate-y-1 shadow-lg border border-gray-200"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="w-5 h-5 shrink-0"
+                fill="#0069ff"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm2.5-5c0 1.38-1.12 2.5-2.5 2.5S9.5 13.38 9.5 12s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5z" />
+              </svg>
+              <span>{t("bookMeeting")}</span>
+            </button>
+
             <Link
               href={`/${locale}/tools/roi-calculator`}
-              className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-medium hover:bg-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center backdrop-blur-md"
+              className="px-6 py-3.5 bg-white/5 border border-white/10 rounded-full text-white font-medium text-base hover:bg-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center backdrop-blur-md"
             >
               {t("roi")}
             </Link>
