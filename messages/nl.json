@@ -190,10 +190,18 @@
     "subtitle": "Wij werken alleen met bewezen, schaalbare en schaalbare technologieën.",
     "enterprise": "Enterprise stack voor elke onderneming",
     "techs": {
-      "solana": "Afwikkeling",
-      "claude": "Intelligentie",
-      "stripe": "Betaalverkeer",
-      "mcp": "Connectiviteit"
+      "solana": "Blockchain",
+      "n8n": "Workflow Engine",
+      "zapier": "Integraties",
+      "make": "Automatisering",
+      "hubspot": "CRM Logica",
+      "slack": "Communicatie",
+      "airtable": "Data Operaties",
+      "langchain": "AI Orchestratie",
+      "google": "Gemini AI",
+      "microsoft": "Azure AI",
+      "claude": "Claude AI",
+      "stripe": "Betaalsysteem"
     }
   },
   "portfolio": {

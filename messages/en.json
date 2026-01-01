@@ -190,10 +190,18 @@
     "subtitle": "We only work with proven, scalable, and secure technologies.",
     "enterprise": "Enterprise stack for every business",
     "techs": {
-      "solana": "Settlement",
-      "claude": "Intelligence",
-      "stripe": "Fiat Rails",
-      "mcp": "Connectivity"
+      "solana": "Blockchain",
+      "n8n": "Workflow Engine",
+      "zapier": "Integrations",
+      "make": "Automation",
+      "hubspot": "CRM Logic",
+      "slack": "Communications",
+      "airtable": "Data Ops",
+      "langchain": "AI Orchestration",
+      "google": "Gemini AI",
+      "microsoft": "Azure AI",
+      "claude": "Claude AI",
+      "stripe": "Payment Rails"
     }
   },
   "portfolio": {
