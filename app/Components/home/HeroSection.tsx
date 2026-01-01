@@ -22,7 +22,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-[#000000]"></div>
 
         {/* Gradient Overlay - Darkened for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#000000] via-black/20 to-[#3066be]/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#000000] via-[#3066be]/20 to-[#3066be]/30" />
 
         {/* Subtle Vignette */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
