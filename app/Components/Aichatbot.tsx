@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function WhatsAppButton() {
   const [isHovered, setIsHovered] = useState(false);
 
-  const phoneNumber = "310627467225";
+  const phoneNumber = "310618424470";
   const prefilledMessage = encodeURIComponent(
     "Hallo, ik heb een vraag over jullie automatiseringsoplossingen."
   );
