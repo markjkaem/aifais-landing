@@ -10,6 +10,7 @@ import ProcessSection from "../Components/home/ProcessSection";
 import TechStackSection from "../Components/home/TechStackSection";
 import PortfolioSection from "../Components/home/PortfolioSection";
 import TeamSection from "../Components/home/TeamSection";
+import NewsletterCTA from "../Components/home/NewsletterCTA";
 
 interface HomeClientProps {
   projects: Project[];
@@ -37,6 +38,7 @@ export default function HomeClient({ projects }: HomeClientProps) {
       </div>
 
       <FAQSection />
+      <NewsletterCTA />
     </main>
   );
 }
