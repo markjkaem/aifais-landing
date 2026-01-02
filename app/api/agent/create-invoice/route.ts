@@ -6,6 +6,7 @@ import autoTable from "jspdf-autotable";
 
 // Zorg dat deze paden kloppen met jouw bestandsstructuur!
 import { gatekeepPayment } from "@/lib/payment-gatekeeper";
+import { sanitizeObject } from "@/lib/sanitize";
 // Of als je ze in utils hebt staan: import { checkPayment, markPaymentUsed } from "@/utils/x402-guard";
 
 // Helper voor valuta
@@ -15,15 +16,16 @@ export async function POST(req: NextRequest) {
   console.log("--- API START: /api/agent/create-invoice ---");
 
   try {
-    const body = await req.json();
-    const { 
-        signature, 
-        stripeSessionId, 
-        ownName, 
-        clientName, 
-        invoiceNumber, 
-        items, 
-        notes 
+    const rawBody = await req.json();
+    const body = sanitizeObject(rawBody);
+    const {
+        signature,
+        stripeSessionId,
+        ownName,
+        clientName,
+        invoiceNumber,
+        items,
+        notes
     } = body;
 
     let paymentMethod = "";
