@@ -6,7 +6,7 @@
     "h1_2": "aan.",
     "h2_1": "Meer tijd. Meer winst.",
     "h2_highlight": "Minder gedoe.",
-    "p": "Wij automatiseren de taken die je tijd kosten, zodat jij je kunt focussen op wat écht belangrijk is: je bedrijf laten groeien.",
+    "p": "AIFAIS helpt MKB-bedrijven door administratieve taken te automatiseren: email, Excel-processen en documentverwerking. Focus op wat écht belangrijk is: je bedrijf laten groeien.",
     "guarantee": "Gratis analyse. Gratis plan. Niet goed, geld terug.",
     "cta": "Plan gratis analyse",
     "roi": "Bereken jaarlijkse voordeel",
@@ -27,7 +27,7 @@
     "ctaText": "Start Analyse Gesprek"
   },
   "footer": {
-    "description": "Specialist in bedrijfsautomatisering en AI-integraties voor het Nederlandse MKB.",
+    "description": "AIFAIS helpt MKB-bedrijven met AI-procesautomatisering. Automatiseer administratie, Excel-processen en repetitieve taken met Digitale Werknemers.",
     "servicesTitle": "Onze Diensten",
     "navTitle": "Navigatie",
     "locationsTitle": "Landelijke Regio's",
@@ -585,7 +585,19 @@
       },
       {
         "question": "Hoe weet ik of automatisering iets voor ons is?",
-        "answer": "Heb je taken die steeds terugkomen en veel tijd kosten? Dan is er waarschijnlijk iets te automatiseren. Denk aan e-mails lezen en beantwoorden, dossiers samenvatten, offertes maken, contracten opstellen, berichten versturen of agenda's beheren. Van backoffice tot frontoffice, van advocatenkantoor tot cafetaria. Elk bedrijf heeft vervelende klusjes die sneller en slimmer kunnen."
+        "answer": "Heb je taken die steeds terugkomen en veel tijd kosten? Dan is er waarschijnlijk iets te automatiseren. Denk aan e-mails lezen en beantwoorden, dossiers samenvatte, offertes maken, contracten opstellen, berichten versturen of agenda's beheren. Van backoffice tot frontoffice, van advocatenkantoor tot cafetaria. Elk bedrijf heeft vervelende klusjes die sneller en slimmer kunnen."
+      },
+      {
+        "question": "Wat is AI-automatisering voor het MKB?",
+        "answer": "AI-automatisering voor het MKB betekent het inzetten van kunstmatige intelligentie om repetitieve taken te automatiseren. AIFAIS bouwt hiervoor 'Digitale Werknemers': AI-agents die zelfstandig emails beantwoorden, documenten verwerken en administratie uitvoeren."
+      },
+      {
+        "question": "Welke taken kan AIFAIS automatiseren?",
+        "answer": "AIFAIS automatiseert administratieve taken zoals: email beantwoording, factuurverwerking, Excel-processen, lead opvolging, contractanalyse en rapportage. Elke taak die repetitief is en tijd kost, kan een Digitale Werknemer worden."
+      },
+      {
+        "question": "Wie helpt met AI-automatisering voor MKB in Nederland?",
+        "answer": "AIFAIS is specialist in AI-automatisering voor het Nederlandse MKB. Gevestigd in Gouda (Zuid-Holland), helpen wij bedrijven in de Randstad met het bouwen van Digitale Werknemers die 40+ uur per week besparen."
       }
     ]
   },

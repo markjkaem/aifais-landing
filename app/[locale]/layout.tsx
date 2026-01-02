@@ -262,11 +262,15 @@ export default async function LocaleLayout({ children, params }: Props) {
                 { "@type": "Country", "name": "Nederland" }
               ],
               knowsAbout: [
-                "Bedrijfsautomatisering",
-                "Proces Automatisering",
-                "Administratie Automatisering",
-                "AI Automatisering",
-                "n8n Workflow",
+                "AI Automatisering MKB",
+                "Administratie Automatiseren",
+                "Excel Processen Automatiseren",
+                "Digitale Werknemers",
+                "AI Email Beantwoording",
+                "Bedrijfsautomatisering Nederland",
+                "Procesautomatisering Zuid-Holland",
+                "AI Agent Bouwen",
+                "n8n Workflow Automatisering",
               ],
             }),
           }}

@@ -25,7 +25,7 @@ export interface Project {
 export const projectsNl: Project[] = [
   {
     slug: "email-reply-ai-agent",
-    title: "AI Email Beantwoording Systeem",
+    title: "Hoe AIFAIS 20 uur/week bespaarde met AI Email Automatisering",
     image: "/emailagent.png",
     description:
       "Geautomatiseerd emailbeantwoording systeem dat gebruik maakt van een kennisbank van eerdere klantinteracties om context-bewuste, real-time antwoorden te genereren op schaal.",
@@ -53,7 +53,7 @@ export const projectsNl: Project[] = [
   },
   {
     slug: "sales-lead-automation",
-    title: "Sales Lead Automatisering",
+    title: "Sales Lead Automatisering: 45% Meer Conversie voor B2B",
     image: "/sales-agent.webp",
     description:
       "Geautomatiseerd systeem dat leads verzamelt, kwalificeert en verrijkt over meerdere platformen, automatisch het CRM bijwerkt en sales teams notificeert.",
@@ -195,7 +195,7 @@ export const projectsNl: Project[] = [
   },
   {
     slug: "recruitment-screening-automation",
-    title: "Recruitment Screening Automatisering",
+    title: "Hoe AIFAIS Recruitment met 55% versnelde via AI Screening",
     image: "/recruitment-agent.png",
     description:
       "AI-gedreven kandidaat screening systeem dat CV's analyseert, functie-eisen matcht en interviews automatisch inplant.",
@@ -251,7 +251,7 @@ export const projectsNl: Project[] = [
   },
   {
     slug: "invoice-payment-reminder-automation",
-    title: "Factuur & Betalingsherinnering Automatisering",
+    title: "60% Minder Onbetaalde Facturen via AI Automatisering",
     image: "/invoice-agent.png",
     description:
       "Geautomatiseerd facturatie en betalings follow-up systeem dat onbetaalde facturen met 60% vermindert en cashflow verbetert.",
@@ -370,7 +370,7 @@ export const projects = projectsNl;
 export const projectsEn: Project[] = [
   {
     slug: "email-reply-ai-agent",
-    title: "AI Email Answering System",
+    title: "How AIFAIS Saved 20 Hours/Week with AI Email Automation",
     image: "/emailagent.png",
     description:
       "Automated email answering system that uses a knowledge base of previous customer interactions to generate context-aware, real-time responses at scale.",
@@ -398,7 +398,7 @@ export const projectsEn: Project[] = [
   },
   {
     slug: "sales-lead-automation",
-    title: "Sales Lead Automation",
+    title: "Sales Lead Automation: 45% More Conversion for B2B",
     image: "/sales-agent.webp",
     description:
       "Automated system that collects, qualifies, and enriches leads across multiple platforms, automatically updates the CRM, and notifies sales teams.",
@@ -540,7 +540,7 @@ export const projectsEn: Project[] = [
   },
   {
     slug: "recruitment-screening-automation",
-    title: "Recruitment Screening Automation",
+    title: "How AIFAIS Accelerated Hiring by 55% via AI Screening",
     image: "/recruitment-agent.png",
     description:
       "AI-driven candidate screening system that analyzes resumes, matches job requirements, and schedules interviews automatically.",
@@ -596,7 +596,7 @@ export const projectsEn: Project[] = [
   },
   {
     slug: "invoice-payment-reminder-automation",
-    title: "Invoice & Payment Reminder Automation",
+    title: "60% Fewer Unpaid Invoices via AI Automation",
     image: "/invoice-agent.png",
     description:
       "Automated invoicing and payment follow-up system that reduces unpaid invoices by 60% and improves cash flow.",

@@ -16,9 +16,8 @@ export default function robots(): MetadataRoute.Robots {
       // If you want to protect your IP, keep this.
       {
         userAgent: ['GPTBot', 'CCBot', 'ClaudeBot'],
+        allow: '/',
         disallow: ['/admin/', '/api/', '/thank-you'],
-        // Note: 'allow: /' is implied if not disallowed, 
-        // but you can set 'disallow: /' here to block them entirely.
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

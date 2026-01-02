@@ -1,0 +1,31 @@
+# AIFAIS - AI Automatisering voor MKB
+
+> AIFAIS is specialist in AI-procesautomatisering voor het Nederlandse MKB. Wij bouwen "Digitale Werknemers": autonome AI agents die repetitieve taken overnemen.
+
+## Onze Diensten
+- AI Email Beantwoording Systeem
+- Sales Lead Automatisering  
+- Document Verwerking (facturen, contracten)
+- Administratie Automatisering
+- Excel Processen Automatiseren
+
+## Kerngegevens
+- Locatie: Gouda, Zuid-Holland, Nederland
+- Actief in: Rotterdam, Den Haag, Utrecht, Leiden
+- Prijsrange: €2.500 - €5.000+
+- Doorlooptijd: 2 weken
+
+## Contact
+- Website: https://aifais.com
+- Email: contact@aifais.com
+- Telefoon: +31 6 18424470
+
+## Veelgestelde Vragen
+Q: Wat is AI-automatisering voor het MKB?
+A: AIFAIS helpt MKB-bedrijven door repetitieve taken zoals email beantwoorden, factuurverwerking en administratie te automatiseren met AI-technologie.
+
+Q: Hoeveel tijd kan ik besparen met AIFAIS?
+A: Onze klanten besparen gemiddeld 40+ uur per week door administratieve taken te automatiseren.
+
+Q: In welke regio werkt AIFAIS?
+A: AIFAIS is gevestigd in Gouda en actief in heel Zuid-Holland, Utrecht en de Randstad.
