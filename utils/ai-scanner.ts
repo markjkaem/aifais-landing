@@ -51,7 +51,6 @@ export async function scanInvoiceWithClaude(invoiceBase64: string, mimeType: str
 
   // 3. Verwerk het antwoord
   let text = msg.content[0].type === 'text' ? msg.content[0].text : "";
-  console.log("DEBUG: Claude Raw Response:", text); // Zie wat Claude echt zegt
 
   // Zoek naar de JSON (soms kletst Claude eromheen)
   const jsonMatch = text.match(/\{[\s\S]*\}/);
@@ -60,17 +59,11 @@ export async function scanInvoiceWithClaude(invoiceBase64: string, mimeType: str
 
 // Dit stukje is nu kritiek:
 if (!jsonMatch) {
-    // Voeg gedetailleerde logging toe als de regex faalt
-    console.error("AI DEBUG: Regex kon geen JSON vinden. Volledige response:", text);
     throw new Error("AI kon geen JSON-structuur vinden in de response. Controleer of de prompt duidelijk is en de afbeelding leesbaar.");
 }
 
 try {
     const rawJsonText = jsonMatch[0];
-    console.log("AI DEBUG: Poging tot parsen van:", rawJsonText); // <-- BELANGRIJKE NIEUWE LOG
-
-    // Binnen scanInvoiceWithClaude, in het try blok
-// ...
     const data = JSON.parse(rawJsonText); 
     
     // Check of Claude onze error instructie heeft gevolgd
@@ -83,10 +76,7 @@ try {
 
 } catch (e: any) {
     // Dit vangt alleen ECHTE JSON parse errors af
-    console.error("AI DEBUG: JSON Parse Failed op tekst:", jsonMatch[0]);
-    console.error("AI DEBUG: JSON Parse Error:", e.message);
-    // Hier moet je nog steeds een fout throwen, maar één die de API als 500 ziet.
-    throw new Error("Ongeldig JSON formaat ontvangen van AI."); 
+    throw new Error("Ongeldig JSON formaat ontvangen van AI.");
 }
 
 // ... (rest van de functie)

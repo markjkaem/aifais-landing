@@ -42,7 +42,6 @@ export const PACKAGE_CONFIG = {
 export async function getSolPriceInEur(): Promise<number> {
   // ✅ In devnet mode, gebruik een fake prijs
   if (DEVNET_MODE) {
-    console.log("🧪 DEVNET MODE: Using fake SOL price");
     return 1000; // Fake prijs: €1000/SOL (maakt niet uit voor devnet)
   }
 
@@ -50,13 +49,12 @@ export async function getSolPriceInEur(): Promise<number> {
     const response = await fetch(
       "https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=eur"
     );
-    
+
     if (!response.ok) throw new Error("CoinGecko API failed");
-    
+
     const data: PriceData = await response.json();
     return data.solana.eur;
   } catch (error) {
-    console.error("Failed to fetch SOL price, using fallback:", error);
     // ⚠️ Fallback prijs - update deze regelmatig of haal van je eigen API
     return 216.5; // €216.50 per SOL (laatst geupdate: dec 2024)
   }
@@ -129,15 +127,7 @@ export function verifyPaymentAmount(
 ): boolean {
   const minAcceptable = expectedSol * 0.90; // 10% marge
   const maxAcceptable = expectedSol * 1.10; // 10% marge naar boven
-  
-  console.log("Payment verification:", {
-    receivedSol,
-    expectedSol,
-    minAcceptable,
-    maxAcceptable,
-    valid: receivedSol >= minAcceptable && receivedSol <= maxAcceptable,
-  });
-  
+
   return receivedSol >= minAcceptable && receivedSol <= maxAcceptable;
 }
 
@@ -157,15 +147,7 @@ export async function getScansForAmount(receivedSol: number): Promise<number> {
     if (verifyPaymentAmount(receivedSol, PACKAGE_CONFIG.SINGLE.devnetPriceSol)) {
       return PACKAGE_CONFIG.SINGLE.scans;
     }
-    
-    console.warn("❌ Devnet payment doesn't match any package:", {
-      receivedSol,
-      expected: {
-        single: PACKAGE_CONFIG.SINGLE.devnetPriceSol,
-        batch10: PACKAGE_CONFIG.BATCH_10.devnetPriceSol,
-        batch20: PACKAGE_CONFIG.BATCH_20.devnetPriceSol,
-      }
-    });
+
     return 0;
   }
 
@@ -185,12 +167,7 @@ export async function getScansForAmount(receivedSol: number): Promise<number> {
   if (verifyPaymentAmount(receivedSol, expectedSolSingle)) {
     return PACKAGE_CONFIG.SINGLE.scans;
   }
-  
+
   // Geen match gevonden
-  const receivedEur = receivedSol * solPrice;
-  console.warn("Payment amount doesn't match any package:", {
-    receivedSol,
-    receivedEur,
-  });
   return 0;
 }

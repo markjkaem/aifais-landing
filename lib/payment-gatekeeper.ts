@@ -20,15 +20,11 @@ export type PaymentResult =
 export async function gatekeepPayment(reqBody: any): Promise<PaymentResult> {
   const { signature, stripeSessionId } = reqBody;
 
-  console.log(`🔒 GATEKEEPER: Checking payment. Sig=${!!signature}, Session=${!!stripeSessionId}`);
-
   // --- OPTIE A: SOLANA (X402) ---
   if (signature) {
-    console.log("LOGIC: Checking Solana Signature.");
     const payCheck = await checkPayment(signature, connection);
 
     if (payCheck.status === "error") {
-      console.warn(`PAYMENT REJECTED: ${payCheck.message}`);
       return { 
         success: false, 
         error: payCheck.message, 
@@ -37,20 +33,17 @@ export async function gatekeepPayment(reqBody: any): Promise<PaymentResult> {
       };
     }
 
-    console.log(`Payment Verified. Marking signature as used...`);
     await markPaymentUsed(signature);
     return { success: true, method: "solana_x402" };
   }
 
   // --- OPTIE B: STRIPE (iDEAL/CARD) ---
   else if (stripeSessionId) {
-    console.log(`LOGIC: Checking Stripe Session: ${stripeSessionId.slice(0, 10)}...`);
     const paymentKey = `stripe:${stripeSessionId}`;
 
     // 1. Replay Check
     const isUsed = await redis.get(paymentKey);
     if (isUsed) {
-      console.warn(`STRIPE REPLAY DETECTED.`);
       return { success: false, error: "Double spend: Session already used.", status: 409 };
     }
 
@@ -68,7 +61,6 @@ export async function gatekeepPayment(reqBody: any): Promise<PaymentResult> {
     try {
       await redis.set(paymentKey, "used", 'EX', 86400); // 24 uur
     } catch (e) {
-      console.error("REDIS ERROR", e);
       return { success: false, error: "Internal Server Error (Redis)", status: 500 };
     }
 
@@ -78,7 +70,6 @@ export async function gatekeepPayment(reqBody: any): Promise<PaymentResult> {
   // --- GEEN BETALING ---
   else {
     const walletAddress = process.env.NEXT_PUBLIC_SOLANA_WALLET;
-    console.error(`NO PAYMENT PROOF.`);
     return {
       success: false,
       error: "Payment Required",
