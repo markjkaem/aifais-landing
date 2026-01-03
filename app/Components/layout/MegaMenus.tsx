@@ -72,7 +72,7 @@ export function MegaMenuServices({
         </div>
 
         <div className="flex items-start">
-          <div className="bg-gradient-to-br from-[#3066be]/5 to-blue-50 border border-[#3066be]/20 rounded-2xl p-6 hover:border-[#3066be]/40 transition cursor-pointer w-full relative overflow-hidden group">
+          <div className="bg-linear-to-br from-[#3066be]/5 to-blue-50 border border-[#3066be]/20 rounded-2xl p-6 hover:border-[#3066be]/40 transition cursor-pointer w-full relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#3066be]/10 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-[#3066be]/20"></div>
             <p className="font-semibold text-lg text-gray-900 mb-2 relative z-10">
               {t("analysisTitle")}
@@ -117,22 +117,47 @@ export function MegaMenuNews({
             {tMega("articles")}
           </h4>
           <div className="grid grid-cols-2 gap-4">
-            {news.slice(0, 4).map((blog, index) => (
+            {news.slice(0, 1).map((blog) => (
+                <Link
+                  key={blog.slug}
+                  href={getLocalizedPath(`/news/${blog.slug}`)}
+                  className="group col-span-2 p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-[#3066be]/30 transition-all flex gap-6"
+                  onClick={closeAll}
+                >
+                  <div className="relative w-1/3 aspect-video rounded-lg overflow-hidden shrink-0 border border-white">
+                    <Image
+                      src={news[0].slug === "ai-trends-2026-kansen-mkb" ? "/ai_trends_2026.png" : "/lesson.jpg"}
+                      alt={blog.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-center">
+                    <div className="flex items-center gap-2 mb-2">
+                       <span className="bg-blue-600 text-white px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase">
+                        Trend 2026
+                      </span>
+                    </div>
+                    <h3 className="text-gray-900 font-bold text-xl mb-2 group-hover:text-[#3066be] transition">
+                      {blog.title}
+                    </h3>
+                    <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">
+                      {blog.excerpt}
+                    </p>
+                  </div>
+                </Link>
+            ))}
+            {news.slice(1, 4).map((blog) => (
                 <Link
                   key={blog.slug}
                   href={getLocalizedPath(`/news/${blog.slug}`)}
                   className="group p-4 rounded-xl hover:bg-gray-50 transition border border-transparent hover:border-gray-200"
                   onClick={closeAll}
                 >
-                  <h3 className="text-gray-900 font-semibold mb-1 group-hover:text-[#3066be] transition line-clamp-1 flex items-center gap-2">
+                  <h3 className="text-gray-900 font-semibold mb-1 group-hover:text-[#3066be] transition line-clamp-1">
                     {blog.title}
-                    {index === 0 && (
-                      <span className="bg-[#3066be]/10 text-[#3066be] px-1.5 py-0.5 rounded text-[10px] font-bold tracking-wide">
-                        NEW
-                      </span>
-                    )}
                   </h3>
-                  <p className="text-sm text-gray-500 line-clamp-2">
+                  <p className="text-sm text-gray-500 line-clamp-1">
                     {blog.excerpt}
                   </p>
                 </Link>

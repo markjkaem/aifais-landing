@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { news } from "../[locale]/news/data";
+import { sectorData, sectorDataEn } from "../[locale]/mkb/data";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -18,7 +19,7 @@ export default function Footer() {
       itemScope
       itemType="https://schema.org/Organization"
     >
-      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-12 text-sm">
+      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-12 text-sm">
         {/* COL 1: Company Info & Address */}
         <div className="flex flex-col gap-4">
           <Link href={`/${locale}`} className="inline-block" itemProp="url">
@@ -142,14 +143,19 @@ export default function Footer() {
             >
               {tNav("news")}
             </Link>
-            {news.slice(0, 3).map((item) => (
+            {news.slice(0, 3).map((item, index) => (
               <Link
                 key={item.slug}
                 href={`/${locale}/news/${item.slug}`}
-                className="hover:text-[#3066be] transition text-gray-600 truncate block text-xs"
+                className="group hover:text-[#3066be] transition text-gray-600 truncate text-xs flex items-center gap-2"
                 title={item.title}
               >
                 • {item.title}
+                {index === 0 && item.slug === "ai-trends-2026-kansen-mkb" && (
+                  <span className="bg-blue-600 text-white px-1 py-0.5 rounded-[3px] text-[8px] font-bold uppercase tracking-tighter shrink-0">
+                    Trend 2026
+                  </span>
+                )}
               </Link>
             ))}
             <Link
@@ -157,6 +163,12 @@ export default function Footer() {
               className="hover:text-[#3066be] transition text-gray-600"
             >
               {tNav("about")}
+            </Link>
+            <Link
+              href={`/${locale}/developers`}
+              className="hover:text-[#3066be] transition text-gray-600 font-bold"
+            >
+              Developers
             </Link>
             <Link
               href={`/${locale}/tools`}
@@ -173,7 +185,24 @@ export default function Footer() {
           </nav>
         </div>
 
-        {/* COL 4: Locations (SEO) */}
+        {/* COL 4: Sectors (SEO) */}
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold text-gray-900 text-base">{locale === 'en' ? 'Sectors' : 'MKB Sectoren'}</h3>
+          <nav className="flex flex-col gap-3">
+            {Object.values(locale === 'en' ? sectorDataEn : sectorData).map((sector) => (
+              <Link
+                key={sector.slug}
+                href={`/${locale}/mkb/${sector.slug}`}
+                className="hover:text-[#3066be] transition text-gray-600 truncate"
+                title={sector.name}
+              >
+                {sector.name}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        {/* COL 5: Locations (SEO) */}
         <div className="flex flex-col gap-4">
           <h3 className="font-bold text-gray-900 text-base">{t("locationsTitle")}</h3>
           <nav className="flex flex-col gap-3">

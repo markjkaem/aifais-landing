@@ -7,6 +7,23 @@ const BASE_URL = "https://aifais.com";
 
 const locales = ["nl", "en"];
 const cities = ["rotterdam", "den-haag", "gouda", "utrecht", "leiden", "alphen-aan-den-rijn", "woerden", "zoetermeer"];
+const sectors = [
+  "accountants",
+  "advocaten",
+  "e-commerce",
+  "makelaars",
+  "hypotheekadviseurs",
+  "installatiebedrijven",
+  "bouwbedrijven",
+  "horeca",
+  "logistiek",
+  "hr-recruitment",
+  "zorg",
+  "fitness-sport",
+  "marketing-bureaus",
+  "architecten",
+  "productiebedrijven",
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes: MetadataRoute.Sitemap = [];
@@ -20,9 +37,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/tools",
     "/tools/roi-calculator",
+    "/tools/benchmark",
     "/privacy",
     "/agv",
     "/about",
+    "/developers",
+    "/developers/docs",
+    "/developers/mcp",
   ];
 
   locales.forEach((locale) => {
@@ -45,6 +66,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: 0.8,
+      });
+    });
+
+    // Sector Pages
+    sectors.forEach((sector) => {
+      routes.push({
+        url: `${BASE_URL}${prefix}/mkb/${sector}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.85,
       });
     });
 

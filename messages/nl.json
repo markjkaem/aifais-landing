@@ -685,6 +685,11 @@
         "title": "Offerte AI",
         "description": "Van steekwoorden naar overtuigende offerte. Professionele tekst die converteert.",
         "href": "#"
+      },
+      "benchmarkTool": {
+        "title": "AI Benchmark Tool",
+        "description": "Vergelijk uw digitale volwassenheid met +500 andere MKB bedrijven. Direct inzicht in uw verbeterpunten.",
+        "href": "/tools/benchmark"
       }
     },
     "open": "Open"

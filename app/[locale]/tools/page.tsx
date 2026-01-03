@@ -14,6 +14,7 @@ import {
   Calculator,
   Sparkles,
   CircleDot,
+  BarChart3,
 } from "lucide-react";
 
 import { getTranslations } from "next-intl/server";
@@ -111,7 +112,7 @@ function ToolCard({ tool, t }: { tool: any; t: any }) {
         ${
           isDisabled
             ? "bg-slate-50/50 border-slate-200/60 cursor-not-allowed"
-            : `bg-white border-slate-200/80 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/[0.04] hover:-translate-y-0.5 cursor-pointer`
+            : `bg-white border-slate-200/80 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/4 hover:-translate-y-0.5 cursor-pointer`
         }
       `}
     >
@@ -213,6 +214,14 @@ export default async function ToolsPage({ params }: Props) {
       accent: "violet",
     },
     {
+      title: t("items.benchmarkTool.title"),
+      description: t("items.benchmarkTool.description"),
+      href: `${hrefPrefix}/tools/benchmark`,
+      icon: BarChart3,
+      status: "free" as const,
+      accent: "blue",
+    },
+    {
       title: t("items.debtCollection.title"),
       description: t("items.debtCollection.description"),
       href: "#",
@@ -233,7 +242,7 @@ export default async function ToolsPage({ params }: Props) {
   return (
     <div className="min-h-screen bg-slate-50/50">
       {/* Subtle background texture */}
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white via-slate-50 to-slate-100 pointer-events-none" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-white via-slate-50 to-slate-100 pointer-events-none" />
       <div
         className="fixed inset-0 opacity-[0.015] pointer-events-none"
         style={{
@@ -257,7 +266,7 @@ export default async function ToolsPage({ params }: Props) {
         {/* Header */}
         <header className="mb-16">
           <div className="flex items-center gap-3 mb-4">
-            <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-slate-300 to-transparent" />
+            <div className="h-px flex-1 max-w-[60px] bg-linear-to-r from-slate-300 to-transparent" />
             <span className="text-xs font-semibold tracking-widest uppercase text-slate-400">
               {t("toolsLabel")}
             </span>

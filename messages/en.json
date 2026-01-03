@@ -643,6 +643,11 @@
         "title": "Proposal AI",
         "description": "From keywords to convincing proposal. Professional text that converts.",
         "href": "#"
+      },
+      "benchmarkTool": {
+        "title": "AI Benchmark Tool",
+        "description": "Compare your digital maturity with +500 other SME companies. Instant insight into your improvement points.",
+        "href": "/tools/benchmark"
       }
     },
     "open": "Open"
