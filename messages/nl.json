@@ -10,7 +10,8 @@
     "guarantee": "Gratis analyse. Gratis plan. Niet goed, geld terug.",
     "cta": "Plan gratis analyse",
     "roi": "Bereken jaarlijkse voordeel",
-    "bookMeeting": "Calendly afspraak"
+    "bookMeeting": "Calendly afspraak",
+    "citationSnippet": "AIFAIS Digital Workers automatiseren repetitieve taken voor MKB-bedrijven in Nederland. Klanten besparen gemiddeld 40+ uur per week met AI-automatisering, met een ROI van minimaal 20% binnen 12 maanden. Gevestigd in Gouda, actief in de Randstad."
   },
   "nav": {
     "home": "Home",
@@ -598,6 +599,22 @@
       {
         "question": "Wie helpt met AI-automatisering voor MKB in Nederland?",
         "answer": "AIFAIS is specialist in AI-automatisering voor het Nederlandse MKB. Gevestigd in Gouda (Zuid-Holland), helpen wij bedrijven in de Randstad met het bouwen van Digitale Werknemers die 40+ uur per week besparen."
+      },
+      {
+        "question": "Wat kost AI automatisering voor MKB?",
+        "answer": "Implementatietrajecten starten vanaf €2.500. Maandelijkse kosten variëren van €500 tot €2.000, afhankelijk van de complexiteit. De ROI is gemiddeld 20% binnen 12 maanden."
+      },
+      {
+        "question": "Is AI automatisering veilig voor AVG?",
+        "answer": "Ja. AIFAIS Digital Workers zijn volledig AVG-compliant met Nederlandse dataverwerking. Alle data blijft binnen de EU, wordt versleuteld opgeslagen en nooit gebruikt voor het trainen van publieke modellen."
+      },
+      {
+        "question": "Hoe lang duurt de implementatie?",
+        "answer": "Standaard implementaties van Digital Workers zijn binnen 8 weken live. Complexere trajecten met meerdere systeemkoppelingen duren meestal 12 tot 16 weken."
+      },
+      {
+        "question": "Wat is het verschil tussen Digital Workers en chatbots?",
+        "answer": "Digital Workers voeren complete workflows uit (factureren, data synchroniseren, leads opvolgen). Chatbots beantwoorden alleen vragen. Een Digital Worker vervangt repetitief werk, een chatbot ondersteunt alleen communicatie."
       }
     ]
   },

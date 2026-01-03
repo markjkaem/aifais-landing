@@ -20,7 +20,7 @@ interface CityData {
   keywords: string[];
 }
 
-const cityData: Record<string, CityData> = {
+const cityData: Record<string, CityData & { citationSnippet: string }> = {
   rotterdam: {
     name: "Rotterdam",
     title: "AI & Bedrijfsautomatisering Rotterdam",
@@ -28,6 +28,7 @@ const cityData: Record<string, CityData> = {
     intro: "Als innovatieve stad vraagt Rotterdam om slimme oplossingen. Wij helpen Rotterdamse ondernemers met het automatiseren van complexe workflows en AI-integraties.",
     h1: "Digitale Werknemers voor Rotterdamse Ondernemers",
     keywords: ["automatisering rotterdam", "AI bureau rotterdam", "procesautomatisering rotterdam"],
+    citationSnippet: "AIFAIS levert AI-automatisering voor MKB-bedrijven in Rotterdam en omgeving. Digital Workers voor administratie, sales en klantenservice met implementatie binnen 8 weken.",
   },
   "den-haag": {
     name: "Den Haag",
@@ -36,6 +37,7 @@ const cityData: Record<string, CityData> = {
     intro: "In de stad van recht en vrede brengen wij rust in uw administratie. Onze AI-oplossingen in Den Haag zorgen dat u meer tijd overhoudt voor uw kernactiviteiten.",
     h1: "Efficiënter Werken in Den Haag met AI",
     keywords: ["automatisering den haag", "AI consultant den haag", "business automation den haag"],
+    citationSnippet: "AI-automatisering voor Haagse ondernemers. AIFAIS implementeert Digital Workers die 15-20 uur per week besparen op repetitieve taken. Persoonlijke begeleiding vanuit Gouda.",
   },
   gouda: {
     name: "Gouda",
@@ -44,6 +46,7 @@ const cityData: Record<string, CityData> = {
     intro: "Als trotse Goudse onderneming kennen wij de lokale markt als geen ander. Wij helpen onze buren in Gouda en omstreken naar een toekomstbestendig bedrijf.",
     h1: "Uw AI & Automatisering Partner in Gouda",
     keywords: ["automatisering gouda", "AI specialist gouda", "ICT automatisering gouda"],
+    citationSnippet: "AIFAIS is gevestigd in Gouda en helpt lokale MKB-bedrijven met AI-automatisering. Als specialist in bedrijfsprocessen digitaliseren bieden wij persoonlijke service in de regio Midden-Holland.",
   },
   utrecht: {
     name: "Utrecht",
@@ -52,6 +55,7 @@ const cityData: Record<string, CityData> = {
     intro: "Utrecht is het kloppende hart van de Nederlandse zakelijke markt. Wij zorgen dat uw bedrijf in Utrecht kan schalen zonder extra personeelsdruk.",
     h1: "Slimme Automatisering voor Bedrijven in Utrecht",
     keywords: ["automatisering utrecht", "AI implementatie utrecht", "procesoptimalisatie utrecht"],
+    citationSnippet: "AIFAIS bedient MKB-bedrijven in Utrecht met AI-procesautomatisering. Van facturatie tot leadopvolging - gemiddeld 40+ uur besparing per week met Nederlandse support.",
   },
 };
 

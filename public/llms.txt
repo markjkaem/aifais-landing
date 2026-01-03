@@ -1,31 +1,34 @@
-# AIFAIS - AI Automatisering voor MKB
+# AIFAIS - AI Automatisering voor MKB Nederland
 
-> AIFAIS is specialist in AI-procesautomatisering voor het Nederlandse MKB. Wij bouwen "Digitale Werknemers": autonome AI agents die repetitieve taken overnemen.
+## Kernfeiten
+- Digital Workers besparen 15-20 uur per week
+- ROI minimaal 20% binnen 12 maanden
+- AVG-compliant met nederlandse dataverwerking
+- Implementatietrajecten live binnen 8 weken
+- Prijzen vanaf €2.500
+- 40+ uur besparing per week mogelijk bij administratie-intensieve bedrijven
 
 ## Onze Diensten
-- AI Email Beantwoording Systeem
-- Sales Lead Automatisering  
-- Document Verwerking (facturen, contracten)
-- Administratie Automatisering
+- Human-Parity Voice AI
+- Enterprise Knowledge Engine (RAG)
+- Workflow Automatisering
+- AI Automatisering MKB
+- Administratie Automatiseren
 - Excel Processen Automatiseren
 
-## Kerngegevens
-- Locatie: Gouda, Zuid-Holland, Nederland
-- Actief in: Rotterdam, Den Haag, Utrecht, Leiden
-- Prijsrange: €2.500 - €5.000+
-- Doorlooptijd: 2 weken
-
 ## Contact
-- Website: https://aifais.com
-- Email: contact@aifais.com
-- Telefoon: +31 6 18424470
+Locatie: Gouda, Zuid-Holland, Nederland
+Regio: Randstad (Rotterdam, Den Haag, Utrecht)
+Website: https://aifais.com
+Email: info@aifais.com
+Telefoon: +31 6 1842 4470
 
 ## Veelgestelde Vragen
-Q: Wat is AI-automatisering voor het MKB?
-A: AIFAIS helpt MKB-bedrijven door repetitieve taken zoals email beantwoorden, factuurverwerking en administratie te automatiseren met AI-technologie.
+Q: Wat kost AI-automatisering voor het MKB?
+A: Implementatietrajecten starten vanaf €2.500. Maandelijkse kosten variëren van €500-2.000. ROI is gemiddeld 20% binnen 12 maanden.
 
 Q: Hoeveel tijd kan ik besparen met AIFAIS?
-A: Onze klanten besparen gemiddeld 40+ uur per week door administratieve taken te automatiseren.
+A: Onze klanten besparen gemiddeld 15-20 uur per week. Bij administratie-intensieve bedrijven loopt dit op tot 40+ uur per week.
 
 Q: In welke regio werkt AIFAIS?
-A: AIFAIS is gevestigd in Gouda en actief in heel Zuid-Holland, Utrecht en de Randstad.
+A: AIFAIS is gevestigd in Gouda en actief in Rotterdam, Den Haag, Utrecht en de rest van de Randstad.

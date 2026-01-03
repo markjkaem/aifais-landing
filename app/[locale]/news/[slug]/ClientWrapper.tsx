@@ -55,11 +55,23 @@ export function ClientWrapper({
         return (
           <h2
             id={id}
-            className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 scroll-mt-24"
+            className="text-2xl md:text-3xl font-bold text-[#1e3a8a] mt-16 mb-6 scroll-mt-24 border-b pb-2 border-gray-100"
             {...props}
           >
             {children}
           </h2>
+        );
+      },
+      h3: ({ children, ...props }: any) => {
+        const id = slugify(children?.toString() || "");
+        return (
+          <h3
+            id={id}
+            className="text-xl md:text-2xl font-bold text-[#3066be] mt-10 mb-4"
+            {...props}
+          >
+            {children}
+          </h3>
         );
       },
       p: ({ ...props }: any) => (
@@ -71,6 +83,24 @@ export function ClientWrapper({
           {...props}
         />
       ),
+      table: ({ ...props }: any) => (
+        <div className="not-prose my-10 overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
+          <table className="w-full border-collapse text-left text-sm md:text-base" {...props} />
+        </div>
+      ),
+      thead: ({ ...props }: any) => (
+        <thead className="bg-[#3066be]/5 border-b border-[#3066be]/10" {...props} />
+      ),
+      th: ({ ...props }: any) => (
+        <th className="px-6 py-4 font-bold text-gray-900 border-r border-[#3066be]/10 last:border-r-0 whitespace-nowrap" {...props} />
+      ),
+      td: ({ ...props }: any) => (
+        <td className="px-6 py-4 text-gray-700 border-t border-gray-100 border-r last:border-r-0" {...props} />
+      ),
+      tr: ({ ...props }: any) => (
+        <tr className="even:bg-gray-50/30 transition-colors" {...props} />
+      ),
+
       // ... voeg je andere custom components hier toe (img, code, etc) ...
     }),
     []
