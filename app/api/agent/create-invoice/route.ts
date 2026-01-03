@@ -167,7 +167,7 @@ export async function POST(req: NextRequest) {
           return NextResponse.json({ error: error.message }, { status: 409 });
     }
     
-    console.error("--- API END: CRITICAL ERROR (500) ---", error);
-    return NextResponse.json({ error: "Internal Server Error during invoice generation", details: error.message }, { status: 500 });
+    console.error(`--- API END: CRITICAL ERROR (500) --- \nError: ${error.message}`);
+    return NextResponse.json({ error: "Internal Server Error during invoice generation." }, { status: 500 });
   }
 }
