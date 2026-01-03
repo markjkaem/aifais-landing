@@ -6,7 +6,7 @@ import { services } from "./[locale]/diensten/data";
 const BASE_URL = "https://aifais.com";
 
 const locales = ["nl", "en"];
-const cities = ["rotterdam", "den-haag", "gouda", "utrecht"];
+const cities = ["rotterdam", "den-haag", "gouda", "utrecht", "leiden", "alphen-aan-den-rijn", "woerden", "zoetermeer"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes: MetadataRoute.Sitemap = [];
