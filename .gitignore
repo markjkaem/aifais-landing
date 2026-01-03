@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/aifais-mcp-server
 /.pnp
 .pnp.*
 .yarn/*
