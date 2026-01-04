@@ -17,7 +17,13 @@ export const metadata: Metadata = {
   description: "Volledige technische documentatie voor de AIFAIS API en MCP tools. Authenticatie, endpoints en response formats.",
 };
 
-export default function DocsPage() {
+export default async function DocsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
   const endpoints = [
     {
       method: "POST",
@@ -57,7 +63,7 @@ export default function DocsPage() {
       <div className="border-b border-white/5 bg-[#0c0c0c]/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link href="/developers" className={`${mono.className} text-white/40 hover:text-emerald-400 transition-colors text-sm flex items-center gap-2`}>
+            <Link href={`/${locale}/developers`} className={`${mono.className} text-white/40 hover:text-emerald-400 transition-colors text-sm flex items-center gap-2`}>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
@@ -126,24 +132,36 @@ export default function DocsPage() {
                   </div>
                   <h2 className={`${h1_font.className} text-2xl font-bold text-white`}>Authenticatie</h2>
                 </div>
-                <p className="text-white/50 mb-8 leading-relaxed">
-                  De AIFAIS API gebruikt Bearer tokens voor authenticatie. Stuur je API key mee in de header van elk verzoek.
-                  Je kunt een API key aanmaken via het dashboard (coming soon) of door contact op te nemen.
-                </p>
-                <div className="relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 blur-xl rounded-xl opacity-50" />
-                  <div className={`${mono.className} relative bg-[#0a0a0a] rounded-xl border border-white/10 p-6 text-sm`}>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-white/30 text-xs">HTTP Header</span>
-                      <button className="text-white/30 hover:text-white transition-colors">
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                      </button>
+                <div className="space-y-6">
+                  <p className="text-white/50 leading-relaxed">
+                    AIFAIS hanteert een strikte scheiding tussen AI agents en menselijke gebruikers om workflows zo eenvoudig mogelijk te houden.
+                  </p>
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="p-6 bg-white/2 border border-white/10 rounded-2xl">
+                      <h4 className={`${mono.className} text-emerald-400 font-bold mb-3 flex items-center gap-2`}>
+                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                        AI Agents (X402)
+                      </h4>
+                      <p className="text-sm text-white/40 leading-relaxed">
+                        Agents gebruiken het X402 protocol. Authenticatie vindt plaats via de **Solana transaction signature**. Geen API key nodig.
+                      </p>
                     </div>
-                    <code className="text-emerald-300">Authorization: Bearer </code>
-                    <code className="text-cyan-300">YOUR_API_KEY</code>
+                    
+                    <div className="p-6 bg-white/2 border border-white/10 rounded-2xl">
+                      <h4 className={`${mono.className} text-blue-400 font-bold mb-3 flex items-center gap-2`}>
+                        <span className="w-2 h-2 rounded-full bg-blue-500" />
+                        Human Users (Web)
+                      </h4>
+                      <p className="text-sm text-white/40 leading-relaxed">
+                        Gebruikers op de website betalen via Stripe (iDEAL/Card). Authenticatie vindt plaats via een **Stripe Session ID**.
+                      </p>
+                    </div>
                   </div>
+
+                  <p className="text-sm text-white/30 italic">
+                    * Enterprise klanten kunnen contact opnemen voor API keys met maandelijkse facturatie.
+                  </p>
                 </div>
               </section>
 
@@ -158,8 +176,8 @@ export default function DocsPage() {
                   <h2 className={`${h1_font.className} text-2xl font-bold text-white`}>X402: Pay-per-Call Infrastructure</h2>
                 </div>
                 <p className="text-white/50 mb-8 leading-relaxed">
-                  Wij ondersteunen de 402 Payment Required standaard voor AI agents. Als je een call maakt zonder geldig abonnement,
-                  ontvang je een 402 error met betalingsinstructies (Solana). Na betaling stuur je de <code className={`${mono.className} bg-white/5 px-2 py-0.5 rounded text-violet-400`}>signature</code> mee om de taak te voltooien.
+                  Wij ondersteunen de 402 Payment Required standaard voor AI agents. Als je een call maakt zonder betaling,
+                  ontvang je een 402 error met Solana betalingsinstructies. Na betaling stuur je de <code className={`${mono.className} bg-white/5 px-2 py-0.5 rounded text-violet-400`}>signature</code> mee om de taak te voltooien.
                 </p>
                 <div className="bg-amber-500/5 border border-amber-500/20 p-6 rounded-xl">
                   <div className="flex items-start gap-4">
@@ -189,7 +207,7 @@ export default function DocsPage() {
 
                 {endpoints.map((e, i) => (
                   <div key={i} id={e.path} className="scroll-mt-24">
-                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-colors">
+                    <div className="bg-white/2 border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-colors">
                       {/* Endpoint header */}
                       <div className="px-6 py-4 border-b border-white/5 flex items-center gap-4">
                         <span className={`${mono.className} px-2.5 py-1 rounded-md text-xs font-bold ${
@@ -212,7 +230,7 @@ export default function DocsPage() {
                             </h4>
                             <div className="space-y-3">
                               {e.params.map((p, pi) => (
-                                <div key={pi} className="flex items-start gap-4 p-4 bg-white/[0.02] rounded-xl">
+                                <div key={pi} className="flex items-start gap-4 p-4 bg-white/2 rounded-xl">
                                   <div className="flex items-center gap-2">
                                     <span className={`${mono.className} text-cyan-400 font-bold`}>{p.name}</span>
                                     {p.required && (
@@ -245,7 +263,7 @@ export default function DocsPage() {
                   <h2 className={`${h1_font.className} text-3xl font-bold text-white`}>Usage-Based Pricing</h2>
                 </div>
 
-                <div className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden">
+                <div className="bg-white/2 border border-white/5 rounded-2xl overflow-hidden">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-white/5">
@@ -293,7 +311,7 @@ export default function DocsPage() {
                     { code: 409, title: "Conflict / Double Spend", desc: "Deze transactie signature is al eerder gebruikt.", color: "amber" },
                     { code: 500, title: "Internal Server Error", desc: "Er is iets misgegaan aan onze kant. Probeer het later opnieuw.", color: "red" }
                   ].map((err, i) => (
-                    <div key={i} className="flex gap-6 p-6 bg-white/[0.02] border border-white/5 rounded-xl hover:border-white/10 transition-colors">
+                    <div key={i} className="flex gap-6 p-6 bg-white/2 border border-white/5 rounded-xl hover:border-white/10 transition-colors">
                       <div className={`${mono.className} text-2xl font-bold ${
                         err.color === 'red' ? 'text-red-400' :
                         err.color === 'violet' ? 'text-violet-400' :

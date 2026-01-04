@@ -65,7 +65,7 @@ export default async function DevelopersLanding({
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:72px_72px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[72px_72px]" />
 
         {/* Gradient orbs */}
         <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[128px]" />
@@ -80,7 +80,7 @@ export default async function DevelopersLanding({
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span className="opacity-50">$</span> npx @aifais/mcp-server --status
+              <span className="opacity-50">$</span> npx github:aifais/aifais-mcp-server --status
               <span className="text-emerald-300">OPERATIONAL</span>
             </div>
 
@@ -88,7 +88,7 @@ export default async function DevelopersLanding({
             <h1 className={`${h1_font.className} text-6xl md:text-7xl lg:text-8xl font-extrabold mb-8 tracking-tight leading-[0.95]`}>
               <span className="text-white/90">Agent-Ready</span>
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 via-cyan-400 to-violet-400">
                 Infrastructure
               </span>
             </h1>
@@ -102,7 +102,7 @@ export default async function DevelopersLanding({
             <div className="flex flex-col sm:flex-row gap-4 mb-20">
               <Link
                 href={`/${locale}/developers/docs`}
-                className="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-black font-bold rounded-xl transition-all shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:scale-[1.02] flex items-center justify-center gap-3"
+                className="group px-8 py-4 bg-linear-to-r from-emerald-500 to-cyan-500 text-black font-bold rounded-xl transition-all shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:scale-[1.02] flex items-center justify-center gap-3"
               >
                 <span>Start Building</span>
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,12 +133,12 @@ export default async function DevelopersLanding({
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/20">
           <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-white/20 to-transparent" />
+          <div className="w-px h-12 bg-linear-to-b from-white/20 to-transparent" />
         </div>
       </section>
 
       {/* Features Strip */}
-      <section className="py-20 border-y border-white/5 bg-white/[0.01]">
+      <section className="py-20 border-y border-white/5 bg-white/1">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             {features.map((feature, i) => (
@@ -179,7 +179,7 @@ export default async function DevelopersLanding({
               {tools.map((tool, i) => (
                 <div
                   key={i}
-                  className="group relative bg-white/[0.02] border border-white/5 rounded-2xl p-8 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300"
+                  className="group relative bg-white/2 border border-white/5 rounded-2xl p-8 hover:bg-white/4 hover:border-white/10 transition-all duration-300"
                 >
                   {/* Status badge */}
                   <div className="flex justify-between items-start mb-8">
@@ -233,7 +233,7 @@ export default async function DevelopersLanding({
                 <h2 className={`${h1_font.className} text-4xl md:text-5xl font-bold mb-8 text-white leading-tight`}>
                   Gebouwd voor
                   <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-400">Agentic Flows</span>
+                  <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-violet-400">Agentic Flows</span>
                 </h2>
 
                 <p className="text-lg text-white/40 leading-relaxed mb-10">
@@ -263,7 +263,7 @@ export default async function DevelopersLanding({
 
               {/* Right - Terminal */}
               <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-violet-500/10 blur-2xl rounded-3xl opacity-50" />
+                <div className="absolute -inset-4 bg-linear-to-r from-emerald-500/10 via-cyan-500/10 to-violet-500/10 blur-2xl rounded-3xl opacity-50" />
 
                 <div className="relative bg-[#0a0a0a] rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
                   {/* Terminal header */}
@@ -279,14 +279,13 @@ export default async function DevelopersLanding({
 
                   {/* Terminal content */}
                   <div className={`${mono.className} p-6 text-sm leading-relaxed`}>
-                    <div className="text-white/30 mb-4"># Scan an invoice with AIFAIS</div>
+                    <div className="text-white/30 mb-4"># Scan an invoice with AIFAIS (X402)</div>
 
                     <div className="text-emerald-400 mb-1">
                       <span className="text-cyan-400">$</span> curl -X POST https://api.aifais.com/v1/scan \
                     </div>
-                    <div className="text-white/60 pl-4 mb-1">-H "Authorization: Bearer $API_KEY" \</div>
                     <div className="text-white/60 pl-4 mb-1">-H "Content-Type: application/json" \</div>
-                    <div className="text-white/60 pl-4 mb-4">-d '{"{"}"invoice": "base64..."{"}"}' </div>
+                    <div className="text-white/60 pl-4 mb-4">-d '{"{"}"invoiceBase64": "...", "signature": "SOL_SIG"{"}"}' </div>
 
                     <div className="text-white/30 mb-2"># Response (42ms)</div>
                     <div className="text-amber-300">{"{"}</div>
@@ -325,8 +324,8 @@ export default async function DevelopersLanding({
                   key={i}
                   className={`relative p-8 rounded-2xl border transition-all ${
                     plan.highlight
-                      ? 'bg-gradient-to-b from-emerald-500/10 to-transparent border-emerald-500/30'
-                      : 'bg-white/[0.02] border-white/5 hover:border-white/10'
+                      ? 'bg-linear-to-b from-emerald-500/10 to-transparent border-emerald-500/30'
+                      : 'bg-white/2 border-white/5 hover:border-white/10'
                   }`}
                 >
                   {plan.highlight && (
@@ -356,13 +355,13 @@ export default async function DevelopersLanding({
 
       {/* CTA Section */}
       <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-cyan-500/5 to-violet-500/10" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:48px_48px]" />
+        <div className="absolute inset-0 bg-linear-to-r from-emerald-500/10 via-cyan-500/5 to-violet-500/10" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-size-[48px_48px]" />
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <div className={`${mono.className} inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm mb-8`}>
-              <span className="text-emerald-400">$</span> npm install @aifais/sdk
+              <span className="text-emerald-400">$</span> npx github:aifais/aifais-mcp-server
             </div>
 
             <h2 className={`${h1_font.className} text-4xl md:text-6xl font-bold mb-8 text-white`}>
@@ -370,7 +369,7 @@ export default async function DevelopersLanding({
             </h2>
 
             <p className="text-xl text-white/40 mb-12 leading-relaxed">
-              Krijg direct toegang tot 100 gratis API calls en begin vandaag nog met het automatiseren van Nederlandse MKB workflows.
+              Geen sign-up nodig voor agents. Integreer de MCP server direct in Cursor of Claude en begin vandaag nog.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -378,7 +377,7 @@ export default async function DevelopersLanding({
                 href={`/${locale}/developers/docs`}
                 className="px-10 py-5 bg-white text-black font-bold rounded-xl hover:bg-white/90 transition-all shadow-2xl shadow-white/10"
               >
-                Get API Key
+                Get Started
               </Link>
               <Link
                 href={`/${locale}/contact`}

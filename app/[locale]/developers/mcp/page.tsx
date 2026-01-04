@@ -17,7 +17,13 @@ export const metadata: Metadata = {
   description: "Configureer de AIFAIS MCP server voor je AI agents. Directe integratie met Cursor, Claude Desktop en meer.",
 };
 
-export default function MCPPage() {
+export default async function MCPPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
   const tools = [
     {
       name: "scan_invoice",
@@ -45,7 +51,7 @@ export default function MCPPage() {
       <div className="border-b border-white/5 bg-[#0c0c0c]/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link href="/developers" className={`${mono.className} text-white/40 hover:text-emerald-400 transition-colors text-sm flex items-center gap-2`}>
+            <Link href={`/${locale}/developers`} className={`${mono.className} text-white/40 hover:text-emerald-400 transition-colors text-sm flex items-center gap-2`}>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
@@ -66,7 +72,7 @@ export default function MCPPage() {
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden">
         {/* Background effects */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:48px_48px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[48px_48px]" />
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-[150px]" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[100px]" />
 
@@ -76,7 +82,7 @@ export default function MCPPage() {
           <h1 className={`${h1_font.className} text-5xl md:text-7xl font-extrabold mb-8 text-white tracking-tight leading-[1.1]`}>
             MCP Server
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-cyan-400 to-emerald-400">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 via-cyan-400 to-emerald-400">
               voor AI Agents
             </span>
           </h1>
@@ -88,11 +94,11 @@ export default function MCPPage() {
 
           {/* Quick install */}
           <div className="relative mb-12">
-            <div className="absolute -inset-1 bg-gradient-to-r from-violet-500/20 via-cyan-500/20 to-emerald-500/20 blur-xl rounded-2xl opacity-50" />
+            <div className="absolute -inset-1 bg-linear-to-r from-violet-500/20 via-cyan-500/20 to-emerald-500/20 blur-xl rounded-2xl opacity-50" />
             <div className={`${mono.className} relative bg-[#0a0a0a] rounded-xl border border-white/10 p-4 flex items-center justify-between gap-4`}>
               <div className="flex items-center gap-4 overflow-x-auto">
                 <span className="text-violet-400">$</span>
-                <code className="text-white/80 whitespace-nowrap">npx -y @aifais/mcp-server</code>
+                <code className="text-white/80 whitespace-nowrap">npx -y github:aifais/aifais-mcp-server</code>
               </div>
               <button className="shrink-0 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-white/60 hover:text-white transition-colors text-sm flex items-center gap-2">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -100,6 +106,18 @@ export default function MCPPage() {
                 </svg>
                 Copy
               </button>
+            </div>
+          </div>
+
+          <div className="bg-emerald-500/5 border border-emerald-500/20 p-6 rounded-2xl mb-12">
+            <div className="flex items-start gap-4">
+              <span className="text-2xl">⚡</span>
+              <div>
+                <h4 className={`${mono.className} font-bold text-emerald-400 mb-2`}>No API Key Required</h4>
+                <p className="text-sm text-white/50 leading-relaxed">
+                  Onze MCP server werkt direct via het X402 protocol. Betalingen worden per call afgehandeld via Solana. Je hebt geen API key of account nodig om te beginnen.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -124,7 +142,7 @@ export default function MCPPage() {
             {/* Claude Desktop Config */}
             <div>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500/20 to-violet-500/5 border border-violet-500/20 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-violet-500/20 to-violet-500/5 border border-violet-500/20 flex items-center justify-center">
                   <svg className="w-6 h-6 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
@@ -154,10 +172,7 @@ export default function MCPPage() {
                       <span className="text-violet-400 pl-4">"mcpServers"</span><span className="text-white/30">: {"{"}</span>{"\n"}
                       <span className="text-cyan-400 pl-8">"aifais"</span><span className="text-white/30">: {"{"}</span>{"\n"}
                       <span className="text-emerald-400 pl-12">"command"</span><span className="text-white/30">: </span><span className="text-amber-300">"npx"</span><span className="text-white/30">,</span>{"\n"}
-                      <span className="text-emerald-400 pl-12">"args"</span><span className="text-white/30">: [</span><span className="text-amber-300">"-y"</span><span className="text-white/30">, </span><span className="text-amber-300">"@aifais/mcp-server"</span><span className="text-white/30">],</span>{"\n"}
-                      <span className="text-emerald-400 pl-12">"env"</span><span className="text-white/30">: {"{"}</span>{"\n"}
-                      <span className="text-violet-400 pl-16">"AIFAIS_API_KEY"</span><span className="text-white/30">: </span><span className="text-amber-300">"your_key"</span>{"\n"}
-                      <span className="text-white/30 pl-12">{"}"}</span>{"\n"}
+                      <span className="text-emerald-400 pl-12">"args"</span><span className="text-white/30">: [</span><span className="text-amber-300">"-y"</span><span className="text-white/30">, </span><span className="text-amber-300">"github:aifais/aifais-mcp-server"</span><span className="text-white/30">]</span>{"\n"}
                       <span className="text-white/30 pl-8">{"}"}</span>{"\n"}
                       <span className="text-white/30 pl-4">{"}"}</span>{"\n"}
                       <span className="text-white/30">{"}"}</span>
@@ -170,7 +185,7 @@ export default function MCPPage() {
             {/* Cursor IDE Config */}
             <div>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/20 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/20 flex items-center justify-center">
                   <svg className="w-6 h-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                   </svg>
@@ -181,7 +196,7 @@ export default function MCPPage() {
                 </div>
               </div>
 
-              <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-8 h-[calc(100%-80px)]">
+              <div className="bg-white/2 border border-white/10 rounded-2xl p-8 h-[calc(100%-80px)]">
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shrink-0 mt-1">
@@ -199,7 +214,7 @@ export default function MCPPage() {
                     </div>
                     <div>
                       <h4 className="font-bold text-white mb-1">Add Server</h4>
-                      <p className="text-white/50 text-sm">Klik op "Add MCP Server" en voeg <code className={`${mono.className} bg-white/5 px-2 py-0.5 rounded text-cyan-400`}>@aifais/mcp-server</code> toe</p>
+                      <p className="text-white/50 text-sm">Klik op "Add MCP Server" en gebruik type "command"</p>
                     </div>
                   </div>
 
@@ -208,8 +223,8 @@ export default function MCPPage() {
                       <span className={`${mono.className} text-cyan-400 text-sm font-bold`}>3</span>
                     </div>
                     <div>
-                      <h4 className="font-bold text-white mb-1">Configure API Key</h4>
-                      <p className="text-white/50 text-sm">Voeg je <code className={`${mono.className} bg-white/5 px-2 py-0.5 rounded text-cyan-400`}>AIFAIS_API_KEY</code> toe aan de environment variables</p>
+                      <h4 className="font-bold text-white mb-1">Command</h4>
+                      <p className="text-white/50 text-sm">Voer in: <code className={`${mono.className} bg-white/5 px-2 py-0.5 rounded text-cyan-400`}>npx -y github:aifais/aifais-mcp-server</code></p>
                     </div>
                   </div>
 
@@ -232,7 +247,7 @@ export default function MCPPage() {
       </section>
 
       {/* Available Tools Section */}
-      <section className="py-24 border-t border-white/5 bg-white/[0.01]">
+      <section className="py-24 border-t border-white/5 bg-white/1">
         <div className="container mx-auto px-6 max-w-5xl">
           <div className={`${mono.className} text-emerald-400 text-sm mb-4`}>// Available MCP Tools</div>
           <h2 className={`${h1_font.className} text-4xl font-bold mb-12 text-white`}>
@@ -243,7 +258,7 @@ export default function MCPPage() {
             {tools.map((tool, i) => (
               <div
                 key={i}
-                className="group relative bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300"
+                className="group relative bg-white/2 border border-white/5 rounded-2xl p-6 hover:bg-white/4 hover:border-white/10 transition-all duration-300"
               >
                 {/* Status badge */}
                 <div className="flex justify-between items-start mb-6">
@@ -298,7 +313,7 @@ export default function MCPPage() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Custom Agents Card */}
             <div className="group relative overflow-hidden rounded-3xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-linear-to-br from-emerald-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 h-full">
                 <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6">
                   <svg className="w-7 h-7 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -324,7 +339,7 @@ export default function MCPPage() {
 
             {/* REST API Card */}
             <div className="group relative overflow-hidden rounded-3xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-linear-to-br from-violet-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 h-full">
                 <div className="w-14 h-14 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-6">
                   <svg className="w-7 h-7 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -355,7 +370,7 @@ export default function MCPPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 via-cyan-500/5 to-emerald-500/5" />
 
         <div className="container mx-auto px-6 max-w-3xl relative z-10 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500/20 to-cyan-500/20 border border-white/10 flex items-center justify-center mx-auto mb-8">
+          <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-violet-500/20 to-cyan-500/20 border border-white/10 flex items-center justify-center mx-auto mb-8">
             <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -372,7 +387,7 @@ export default function MCPPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="px-8 py-4 bg-gradient-to-r from-violet-500 to-cyan-500 text-black font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-violet-500/20"
+              className="px-8 py-4 bg-linear-to-r from-violet-500 to-cyan-500 text-black font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-violet-500/20"
             >
               Contact Developer Support
             </Link>
