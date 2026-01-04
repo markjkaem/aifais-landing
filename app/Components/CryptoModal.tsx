@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { QRCodeSVG } from "qrcode.react";
 import { X, CheckCircle2, Loader2, ExternalLink, Copy } from "lucide-react";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
@@ -193,8 +194,11 @@ export default function CryptoModal({
     }
   };
 
-  return (
-    <div className="absolute inset-0 z-50 bg-black/95 flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-200">
+  // Use portal to render at document.body level
+  if (typeof window === "undefined") return null;
+  
+  return createPortal(
+    <div className="fixed inset-0 z-9999 bg-black/95 flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-200">
       <div className="w-full max-w-md bg-[#0A0A0A] border border-white/10 rounded-2xl p-8 relative">
         {/* Close button */}
         {!isPaid && (
@@ -310,6 +314,7 @@ export default function CryptoModal({
           </>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
