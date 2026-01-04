@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest"
+    "test": "vitest",
+    "generate:mcp-readme": "node scripts/generate-mcp-readme.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.0",

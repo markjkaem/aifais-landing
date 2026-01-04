@@ -1,0 +1,29 @@
+name: Sync MCP Server to Public Repo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'aifais-mcp-server/**'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to aifais/aifais-mcp-server
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.AIFAIS_PAT }}
+        with:
+          source-directory: 'aifais-mcp-server'
+          destination-github-username: 'aifais'
+          destination-repository-name: 'aifais-mcp-server'
+          target-branch: main
+          user-email: ci@aifais.com
+          user-name: 'AIFAIS CI Bot'
+          commit-message: 'chore: sync from main repo'
