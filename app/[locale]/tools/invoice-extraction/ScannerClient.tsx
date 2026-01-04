@@ -83,7 +83,7 @@ export default function ScannerClient() {
       const file = e.target.files[0];
       setSelectedFile(file);
       setScanResult(null);
-      setError(null);
+      setError(null); // Clear any previous error
 
       if (scanResult) setPaymentProof(null);
 
@@ -153,6 +153,17 @@ export default function ScannerClient() {
       const data = await response.json();
 
       if (!response.ok) {
+        // Check if this is a double-spend / replay attack error
+        const isDoubleSpend = response.status === 409 || 
+          data.error?.toLowerCase().includes('double spend') ||
+          data.error?.toLowerCase().includes('already used');
+        
+        if (isDoubleSpend) {
+          // Payment signature is no longer valid, user needs to pay again
+          setPaymentProof(null);
+          throw new Error("Deze betaling is al gebruikt. Betaal opnieuw om door te gaan.");
+        }
+        
         throw new Error(data.error || "Scan failed");
       }
 
@@ -165,11 +176,19 @@ export default function ScannerClient() {
     }
   };
 
+  const retryWithNewFile = () => {
+    setSelectedFile(null);
+    setPreviewUrl(null);
+    setError(null);
+    // Keep paymentProof so user doesn't have to pay again
+  };
+
   const reset = () => {
     setSelectedFile(null);
     setScanResult(null);
     setPaymentProof(null);
     setPreviewUrl(null);
+    setError(null);
   };
 
   return (
@@ -358,21 +377,29 @@ export default function ScannerClient() {
                 <ArrowRight className="w-5 h-5" />
               </button>
             ) : (
-              <button
-                onClick={
-                  paymentProof.type === "stripe"
-                    ? handleStripeContinue
-                    : () => {}
-                }
-                disabled={isScanning}
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg py-4 rounded-xl transition flex items-center justify-center gap-3 shadow-lg shadow-green-500/20"
-              >
-                {isScanning ? (
-                  <Loader2 className="w-6 h-6 animate-spin" />
-                ) : (
-                  <span>Betaling ontvangen! Start Scan</span>
+              <div className="space-y-3">
+                <button
+                  onClick={() => performScan(paymentProof)}
+                  disabled={isScanning}
+                  className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg py-4 rounded-xl transition flex items-center justify-center gap-3 shadow-lg shadow-green-500/20"
+                >
+                  {isScanning ? (
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                  ) : error ? (
+                    <span>Opnieuw Proberen</span>
+                  ) : (
+                    <span>Betaling ontvangen! Start Scan</span>
+                  )}
+                </button>
+                {error && (
+                  <button
+                    onClick={retryWithNewFile}
+                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 rounded-xl transition text-sm"
+                  >
+                    Ander bestand kiezen
+                  </button>
                 )}
-              </button>
+              </div>
             )}
 
             {!paymentProof && (
