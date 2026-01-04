@@ -11,10 +11,22 @@ import {
   Coins,
   ArrowRight,
   CreditCard,
-  Download, 
-  Copy, 
-  FileJson, 
-  Check
+  Download,
+  Copy,
+  FileJson,
+  Check,
+  Upload,
+  Sparkles,
+  FileSpreadsheet,
+  RotateCcw,
+  Plus,
+  File,
+  Image as ImageIcon,
+  ScanLine,
+  Shield,
+  Clock,
+  TrendingUp,
+  ArrowDown,
 } from "lucide-react";
 import CryptoModal from "@/app/Components/CryptoModal";
 import { convertToCSV } from "@/utils/csv-formatter";
@@ -30,27 +42,206 @@ const SCAN_CONFIG = {
   name: "AI Factuur Scan",
 };
 
-interface ScanResult {
-  supplier_name?: string;
-  invoice_date?: string;
-  total_amount?: number;
-  invoice_number?: string;
-  currency?: string;
-  vat_amount?: number;
-  [key: string]: any;
+// --- FEATURE DATA ---
+const FEATURES = [
+  {
+    icon: ScanLine,
+    title: "KvK & BTW Herkenning",
+    description: "Automatische extractie van alle bedrijfsgegevens"
+  },
+  {
+    icon: FileSpreadsheet,
+    title: "Bulk Verwerking",
+    description: "Tot 10 facturen tegelijk scannen"
+  },
+  {
+    icon: Download,
+    title: "Excel & CSV Export",
+    description: "Direct klaar voor je boekhouding"
+  },
+  {
+    icon: Shield,
+    title: "99% Nauwkeurigheid",
+    description: "Powered by Claude 3.5 Sonnet AI"
+  },
+];
+
+const USE_CASES = [
+  "Administratie automatiseren",
+  "Boekhouding versnellen",
+  "Facturen digitaliseren",
+  "Gegevens extraheren",
+];
+
+export default function InvoiceScannerPage() {
+  return (
+    <div className="min-h-screen bg-white">
+      {/* HERO SECTION */}
+      <section className="relative overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-white" />
+        
+        {/* Subtle grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgb(0 0 0) 1px, transparent 0)`,
+            backgroundSize: '32px 32px',
+          }}
+        />
+
+        {/* Decorative blurs */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px]" />
+        <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
+
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+          {/* Badge */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-200/50 rounded-full">
+              <Sparkles className="w-4 h-4 text-emerald-600" />
+              <span className="text-sm font-medium text-emerald-700">AI-Powered Tool</span>
+            </div>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-center text-zinc-900 tracking-tight mb-6">
+            Factuur Scanner
+          </h1>
+
+          {/* Description */}
+          <p className="text-lg sm:text-xl text-zinc-500 text-center max-w-2xl mx-auto mb-8 leading-relaxed">
+            Upload je facturen en ontvang direct alle gegevens in een overzichtelijk Excel of CSV bestand. Van KvK-nummers tot BTW-bedragen.
+          </p>
+
+          {/* Price badge */}
+          <div className="flex justify-center mb-12">
+            <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-white border border-zinc-200 rounded-full shadow-sm">
+              <span className="text-sm text-zinc-500">Vanaf</span>
+              <span className="text-lg font-bold text-zinc-900">0.001 SOL</span>
+              <span className="text-xs text-zinc-400">per batch</span>
+            </div>
+          </div>
+
+          {/* Scroll indicator */}
+          <div className="flex justify-center">
+            <div className="flex flex-col items-center gap-2 text-zinc-400">
+              <span className="text-xs font-medium uppercase tracking-wider">Start hieronder</span>
+              <ArrowDown className="w-4 h-4 animate-bounce" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SCANNER SECTION */}
+      <section className="relative py-12 sm:py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScannerClient />
+        </div>
+      </section>
+
+      {/* FEATURES SECTION */}
+      <section className="py-16 sm:py-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section header */}
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-tight mb-4">
+              Belangrijkste Features
+            </h2>
+            <p className="text-zinc-500 max-w-xl mx-auto">
+              Alles wat je nodig hebt om facturen snel en nauwkeurig te verwerken
+            </p>
+          </div>
+
+          {/* Features grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {FEATURES.map((feature, idx) => {
+              const Icon = feature.icon;
+              return (
+                <div 
+                  key={idx}
+                  className="group relative bg-white border border-zinc-200 rounded-2xl p-6 hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-emerald-100 transition-colors">
+                      <Icon className="w-6 h-6 text-emerald-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-zinc-900 mb-1">{feature.title}</h3>
+                      <p className="text-sm text-zinc-500">{feature.description}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* USE CASES SECTION */}
+      <section className="py-16 sm:py-24 bg-zinc-50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-tight mb-8">
+              Wanneer gebruik je deze tool?
+            </h2>
+            
+            <div className="flex flex-wrap justify-center gap-3">
+              {USE_CASES.map((useCase, idx) => (
+                <span 
+                  key={idx}
+                  className="px-5 py-2.5 bg-white border border-zinc-200 rounded-full text-sm font-medium text-zinc-700 hover:border-emerald-300 hover:text-emerald-700 transition-colors cursor-default"
+                >
+                  {useCase}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA SECTION */}
+      <section className="py-16 sm:py-24">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full text-sm font-medium text-emerald-700 mb-6">
+            <Zap className="w-4 h-4" />
+            Geen account nodig
+          </div>
+          
+          <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-tight mb-4">
+            Klaar om te beginnen?
+          </h2>
+          <p className="text-zinc-500 mb-8">
+            Upload je eerste factuur en ervaar hoe eenvoudig het is.
+          </p>
+          
+          <a 
+            href="#scanner"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 text-white font-semibold rounded-xl hover:bg-zinc-800 transition-colors"
+          >
+            Start nu
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+      </section>
+    </div>
+  );
 }
 
-export default function ScannerClient() {
+
+// ============================================
+// SCANNER CLIENT COMPONENT
+// ============================================
+
+function ScannerClient() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<{ [key: string]: string }>({});
+  const [isDragging, setIsDragging] = useState(false);
 
-  // State
   const [isScanning, setIsScanning] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showCryptoQR, setShowCryptoQR] = useState(false);
   const [copied, setCopied] = useState<string | null>(null);
 
-  // Results can now be an array or single object (backward compat)
   const [scanResults, setScanResults] = useState<any[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [paymentProof, setPaymentProof] = useState<{
@@ -77,43 +268,58 @@ export default function ScannerClient() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
-
     if (sessionId) {
       setPaymentProof({ type: "stripe", id: sessionId });
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
 
-  // --- BESTAND LOGIC ---
+  // --- DRAG & DROP ---
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      processNewFiles(Array.from(e.dataTransfer.files));
+    }
+  };
+
+  const processNewFiles = (newFiles: File[]) => {
+    const combinedFiles = [...selectedFiles, ...newFiles].slice(0, 10);
+    setSelectedFiles(combinedFiles);
+    setScanResults(null);
+    setError(null);
+    if (scanResults) setPaymentProof(null);
+
+    newFiles.forEach(file => {
+      if (file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setPreviews(prev => ({ ...prev, [file.name]: e.target?.result as string }));
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const newFiles = Array.from(e.target.files);
-      const combinedFiles = [...selectedFiles, ...newFiles].slice(0, 10); // Max 10 files
-      
-      setSelectedFiles(combinedFiles);
-      setScanResults(null);
-      setError(null);
-      if (scanResults) setPaymentProof(null);
-
-      // Generate previews
-      newFiles.forEach(file => {
-        if (file.type.startsWith("image/")) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            setPreviews(prev => ({ ...prev, [file.name]: e.target?.result as string }));
-          };
-          reader.readAsDataURL(file);
-        }
-      });
+      processNewFiles(Array.from(e.target.files));
     }
   };
 
   const removeFile = (index: number) => {
     const fileToRemove = selectedFiles[index];
-    const newFiles = selectedFiles.filter((_, i) => i !== index);
-    setSelectedFiles(newFiles);
-    
-    // Cleanup preview
+    setSelectedFiles(selectedFiles.filter((_, i) => i !== index));
     if (fileToRemove) {
       const newPreviews = { ...previews };
       delete newPreviews[fileToRemove.name];
@@ -121,27 +327,21 @@ export default function ScannerClient() {
     }
   };
 
-  const convertFileToBase64 = async (
-    file: File
-  ): Promise<{ base64: string; mimeType: string }> => {
+  const convertFileToBase64 = async (file: File): Promise<{ base64: string; mimeType: string }> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () =>
-        resolve({
-          base64: (reader.result as string).split(",")[1],
-          mimeType:
-            file.type === "application/pdf" ? "application/pdf" : file.type,
-        });
+      reader.onload = () => resolve({
+        base64: (reader.result as string).split(",")[1],
+        mimeType: file.type === "application/pdf" ? "application/pdf" : file.type,
+      });
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
   };
 
-  // --- DOWNLOAD & COPY LOGIC ---
   const handleCopyJSON = () => {
     if (!scanResults) return;
-    const json = JSON.stringify(scanResults, null, 2);
-    navigator.clipboard.writeText(json);
+    navigator.clipboard.writeText(JSON.stringify(scanResults, null, 2));
     setCopied("json");
     setTimeout(() => setCopied(null), 2000);
   };
@@ -172,7 +372,6 @@ export default function ScannerClient() {
     document.body.removeChild(link);
   };
 
-  // --- SCAN LOGIC ---
   const handleCryptoSuccess = async (signature: string) => {
     setShowCryptoQR(false);
     setShowPaymentModal(false);
@@ -180,63 +379,42 @@ export default function ScannerClient() {
     await performScan({ type: "crypto", id: signature });
   };
 
-  const performScan = async (proof: {
-    type: "crypto" | "stripe";
-    id: string;
-  }) => {
+  const performScan = async (proof: { type: "crypto" | "stripe"; id: string }) => {
     if (selectedFiles.length === 0) return;
-
     setIsScanning(true);
     setError(null);
 
     try {
-      // Process all files
-      const invoices = await Promise.all(
-        selectedFiles.map(file => convertFileToBase64(file))
-      );
-
+      const invoices = await Promise.all(selectedFiles.map(file => convertFileToBase64(file)));
       const response = await fetch("/api/v1/finance/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           signature: proof.type === "crypto" ? proof.id : undefined,
           stripeSessionId: proof.type === "stripe" ? proof.id : undefined,
-          invoices: invoices // Send array of invoices
+          invoices: invoices
         }),
       });
 
       const data = await response.json();
-
       if (!response.ok) {
-        // Check for double spend
         const isDoubleSpend = response.status === 409 || 
           data.error?.toLowerCase().includes('double spend') ||
           data.error?.toLowerCase().includes('already used');
-        
         if (isDoubleSpend) {
           setPaymentProof(null);
           throw new Error("Deze betaling is al gebruikt. Betaal opnieuw om door te gaan.");
         }
-        
         throw new Error(data.error || "Scan failed");
       }
 
-      // Ensure data is array
-      const results = Array.isArray(data.data) ? data.data : [data.data];
-      setScanResults(results);
-
+      setScanResults(Array.isArray(data.data) ? data.data : [data.data]);
     } catch (err: any) {
       console.error(err);
       setError(err.message || "Er is iets misgegaan bij het scannen.");
     } finally {
       setIsScanning(false);
     }
-  };
-
-  const retryWithNewFile = () => {
-    setSelectedFiles([]);
-    setPreviews({});
-    setError(null);
   };
 
   const reset = () => {
@@ -247,39 +425,55 @@ export default function ScannerClient() {
     setError(null);
   };
 
+  const successCount = scanResults?.filter(r => r.success).length || 0;
+  const failCount = scanResults?.filter(r => !r.success).length || 0;
+
   return (
-    <div className="w-full max-w-4xl relative">
-      <div className="relative bg-white border border-gray-200 rounded-xl p-8 shadow-sm overflow-hidden min-h-[400px]">
+    <div id="scanner" className="scroll-mt-8">
+      {/* Main Card */}
+      <div className="relative bg-white rounded-3xl shadow-2xl shadow-zinc-900/10 border border-zinc-200/80 overflow-hidden">
+        
         {/* PAYMENT MODAL */}
         {showPaymentModal && !showCryptoQR && (
-          <div className="absolute inset-0 z-50 bg-white/90 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in">
-            <div className="bg-white border border-gray-200 rounded-xl p-6 w-full max-w-sm shadow-xl">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-gray-900 font-bold">Kies betaalmethode</h3>
-                <button onClick={() => setShowPaymentModal(false)}>
-                  <X className="text-gray-400 hover:text-gray-600" />
+          <div className="absolute inset-0 z-50 bg-white/90 backdrop-blur-md flex items-center justify-center p-6">
+            <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl border border-zinc-200 overflow-hidden">
+              <div className="px-6 py-5 border-b border-zinc-100 flex justify-between items-center">
+                <div>
+                  <h3 className="text-lg font-bold text-zinc-900">Betaalmethode</h3>
+                  <p className="text-sm text-zinc-500">{selectedFiles.length} facturen scannen</p>
+                </div>
+                <button onClick={() => setShowPaymentModal(false)} className="p-2 hover:bg-zinc-100 rounded-xl transition-colors">
+                  <X className="w-5 h-5 text-zinc-400" />
                 </button>
               </div>
 
-              <button
-                onClick={() => (window.location.href = STRIPE_LINK_SINGLE)}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl flex items-center justify-between px-4 mb-3 transition shadow-md shadow-blue-600/10"
-              >
-                <div className="flex items-center gap-3">
-                  <CreditCard className="w-5 h-5" /> iDEAL / Card
-                </div>
-                <span>€ {SCAN_CONFIG.priceEur.toFixed(2)}</span>
-              </button>
+              <div className="p-6 space-y-3">
+                <button
+                  onClick={() => (window.location.href = STRIPE_LINK_SINGLE)}
+                  className="group w-full bg-zinc-900 hover:bg-zinc-800 text-white font-semibold py-4 px-5 rounded-xl flex items-center justify-between transition-all shadow-lg"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-white/10 rounded-lg">
+                      <CreditCard className="w-5 h-5" />
+                    </div>
+                    <span>iDEAL / Card</span>
+                  </div>
+                  <span className="text-lg">€{SCAN_CONFIG.priceEur.toFixed(2)}</span>
+                </button>
 
-              <button
-                onClick={() => setShowCryptoQR(true)}
-                className="w-full bg-gray-50 border border-gray-200 hover:bg-gray-100 text-gray-700 font-bold py-4 rounded-xl flex items-center justify-between px-4 transition"
-              >
-                <div className="flex items-center gap-3">
-                  <Coins className="w-5 h-5 text-green-500" /> Solana Pay
-                </div>
-                <span>{SCAN_CONFIG.priceSol} SOL</span>
-              </button>
+                <button
+                  onClick={() => setShowCryptoQR(true)}
+                  className="group w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-4 px-5 rounded-xl flex items-center justify-between transition-all shadow-lg"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-white/20 rounded-lg">
+                      <Coins className="w-5 h-5" />
+                    </div>
+                    <span>Solana Pay</span>
+                  </div>
+                  <span className="text-lg">{SCAN_CONFIG.priceSol} SOL</span>
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -290,258 +484,247 @@ export default function ScannerClient() {
             priceInSol={SCAN_CONFIG.priceSol}
             scansAmount={selectedFiles.length}
             label={SCAN_CONFIG.name}
-            onClose={() => {
-              setShowCryptoQR(false);
-              setShowPaymentModal(false);
-            }}
+            onClose={() => { setShowCryptoQR(false); setShowPaymentModal(false); }}
             onSuccess={handleCryptoSuccess}
             priceInEur={0}
           />
         )}
 
-        {/* HEADER */}
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center border border-blue-100">
-              <Zap className="w-5 h-5 text-blue-600" />
-            </div>
-            AI Invoice Scanner
-            {selectedFiles.length > 0 && <span className="text-sm bg-gray-100 text-gray-600 px-2 py-1 rounded-full">{selectedFiles.length}/10</span>}
-          </h2>
-          {scanResults && (
-            <button onClick={reset} className="text-xs text-gray-500 hover:text-[#3066be] font-medium">Nieuw</button>
-          )}
-        </div>
-
-        {/* --- STATE 1: UPLOAD --- */}
-        {selectedFiles.length === 0 && (
-          <div className="animate-in fade-in duration-300">
-            {paymentProof && (
-              <div className="mb-6 bg-green-50 border border-green-200 p-4 rounded-xl flex items-center gap-3">
-                <CheckCircle2 className="w-6 h-6 text-green-600 shrink-0" />
-                <div>
-                  <h3 className="text-green-700 font-bold text-sm">Betaling Succesvol!</h3>
-                  <p className="text-green-600 text-xs">Selecteer je bestanden om te starten.</p>
+        {/* Content */}
+        <div className="p-6 sm:p-8 lg:p-10">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-emerald-500 rounded-2xl blur-xl opacity-25" />
+                <div className="relative w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/25">
+                  <Zap className="w-7 h-7 text-white" />
                 </div>
               </div>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">AI Factuur Scanner</h2>
+                <p className="text-sm text-zinc-500">Powered by Claude 3.5 Sonnet</p>
+              </div>
+            </div>
+            
+            {selectedFiles.length > 0 && !scanResults && (
+              <span className="hidden sm:flex px-4 py-2 bg-zinc-100 text-zinc-600 rounded-full text-sm font-medium">
+                {selectedFiles.length}/10
+              </span>
             )}
-
-            <div className="relative group cursor-pointer">
-              <input
-                type="file"
-                onChange={handleFileChange}
-                accept="image/*, application/pdf"
-                multiple // Enable multiple files
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-              />
-
-              <div className={`h-64 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center transition-all duration-300 ${
-                paymentProof ? "border-green-500/50 bg-green-50" : "border-gray-300 group-hover:border-[#3066be]/50 group-hover:bg-[#3066be]/5"
-              }`}>
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                  <FileText className={`w-8 h-8 ${paymentProof ? "text-green-600" : "text-gray-400 group-hover:text-[#3066be]"}`} />
-                </div>
-                <p className="text-gray-600 font-medium">
-                  {paymentProof ? "Selecteer facturen (max 10)" : "Sleep facturen hierheen"}
-                </p>
-                <p className="text-xs text-gray-400 mt-2">PDF, JPG of PNG • Max 10 bestanden</p>
-              </div>
-            </div>
-
-            {!paymentProof && (
-              <div className="mt-6 flex items-center justify-center gap-6 text-xs text-gray-500">
-                <div className="flex items-center gap-2">
-                  <Coins className="w-4 h-4 text-green-500" />
-                  0.001 SOL per batch (max 10)
-                </div>
-                <div className="flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-[#3066be]" />
-                  Claude 3.5 Sonnet
-                </div>
-              </div>
+            {scanResults && (
+              <button onClick={reset} className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-colors">
+                <RotateCcw className="w-4 h-4" />
+                <span className="hidden sm:inline">Nieuw</span>
+              </button>
             )}
           </div>
-        )}
 
-        {/* --- STATE 2: PREVIEW & ACTION --- */}
-        {selectedFiles.length > 0 && !scanResults && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
-            {/* File List Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 max-h-[400px] overflow-y-auto p-1">
-              {selectedFiles.map((file, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-xl p-3 border border-gray-200 flex items-center gap-3 relative group">
-                  <div className="w-10 h-10 bg-white border border-gray-200 rounded-lg flex items-center justify-center overflow-hidden shrink-0">
-                    {previews[file.name] ? (
-                      <img src={previews[file.name]} className="w-full h-full object-cover" />
-                    ) : (
-                      <FileText className="text-gray-400 w-5 h-5" />
-                    )}
+          {/* STATE 1: UPLOAD */}
+          {selectedFiles.length === 0 && (
+            <div className="space-y-6">
+              {paymentProof && (
+                <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center gap-4">
+                  <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-gray-900 font-medium truncate text-sm">{file.name}</p>
-                    <p className="text-gray-500 text-xs">{(file.size / 1024).toFixed(0)} KB</p>
+                  <div>
+                    <h3 className="text-emerald-800 font-semibold">Betaling succesvol!</h3>
+                    <p className="text-emerald-600 text-sm">Selecteer je facturen om te starten.</p>
                   </div>
-                  <button 
-                    onClick={() => removeFile(idx)}
-                    disabled={isScanning}
-                    className="p-1 hover:bg-gray-200 rounded-lg text-gray-400 hover:text-red-500 transition"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
                 </div>
-              ))}
-              
-              {/* Add more button */}
-              {selectedFiles.length < 10 && (
-                 <div className="relative border-2 border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center justify-center min-h-[70px] hover:border-[#3066be]/50 hover:bg-[#3066be]/5 transition cursor-pointer">
-                    <input
-                      type="file"
-                      onChange={handleFileChange}
-                      accept="image/*, application/pdf"
-                      multiple
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    />
-                    <span className="text-2xl text-gray-400 font-light">+</span>
-                    <span className="text-xs text-gray-500">Toevoegen</span>
-                 </div>
+              )}
+
+              <div 
+                className="relative"
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  accept="image/*, application/pdf"
+                  multiple
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                />
+
+                <div className={`
+                  relative h-64 sm:h-72 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center transition-all duration-300
+                  ${isDragging ? "border-emerald-500 bg-emerald-50 scale-[1.01]" : "border-zinc-300 bg-zinc-50/50 hover:border-zinc-400 hover:bg-zinc-100/50"}
+                `}>
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-all ${isDragging ? "bg-emerald-500 text-white" : "bg-zinc-200 text-zinc-400"}`}>
+                    <Upload className="w-7 h-7" />
+                  </div>
+                  
+                  <p className="text-base sm:text-lg font-semibold text-zinc-700 mb-1">
+                    {isDragging ? "Laat los om te uploaden" : "Sleep facturen hierheen"}
+                  </p>
+                  <p className="text-sm text-zinc-500">
+                    of <span className="text-emerald-600 font-medium">klik om te bladeren</span>
+                  </p>
+                  
+                  <div className="flex items-center gap-4 mt-4 text-xs text-zinc-400">
+                    <span className="flex items-center gap-1.5"><File className="w-3.5 h-3.5" /> PDF</span>
+                    <span className="flex items-center gap-1.5"><ImageIcon className="w-3.5 h-3.5" /> JPG, PNG</span>
+                    <span>Max 10 bestanden</span>
+                  </div>
+                </div>
+              </div>
+
+              {!paymentProof && (
+                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-zinc-100 rounded-full">
+                    <Coins className="w-4 h-4 text-emerald-500" />
+                    <span className="text-sm text-zinc-600 font-medium">0.001 SOL / batch</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-zinc-100 rounded-full">
+                    <Sparkles className="w-4 h-4 text-violet-500" />
+                    <span className="text-sm text-zinc-600 font-medium">Claude AI</span>
+                  </div>
+                </div>
               )}
             </div>
+          )}
 
-            {error && (
-              <div className="mb-6 bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 shrink-0" />
-                <span className="text-sm">{error}</span>
+          {/* STATE 2: PREVIEW & ACTION */}
+          {selectedFiles.length > 0 && !scanResults && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[300px] overflow-y-auto">
+                {selectedFiles.map((file, idx) => (
+                  <div key={idx} className="group bg-zinc-50 hover:bg-zinc-100 rounded-xl p-3 border border-zinc-200 flex items-center gap-3 transition-colors">
+                    <div className="w-11 h-11 bg-white border border-zinc-200 rounded-lg flex items-center justify-center overflow-hidden shrink-0">
+                      {previews[file.name] ? (
+                        <img src={previews[file.name]} className="w-full h-full object-cover" alt="" />
+                      ) : (
+                        <FileText className="text-zinc-400 w-5 h-5" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-zinc-900 font-medium truncate text-sm">{file.name}</p>
+                      <p className="text-zinc-400 text-xs">{(file.size / 1024).toFixed(0)} KB</p>
+                    </div>
+                    <button onClick={() => removeFile(idx)} disabled={isScanning} className="p-2 opacity-0 group-hover:opacity-100 hover:bg-red-100 rounded-lg text-zinc-400 hover:text-red-500 transition-all">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+                
+                {selectedFiles.length < 10 && (
+                  <div className="relative group">
+                    <input type="file" onChange={handleFileChange} accept="image/*, application/pdf" multiple className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                    <div className="h-full min-h-[68px] border-2 border-dashed border-zinc-300 rounded-xl flex flex-col items-center justify-center hover:border-emerald-400 hover:bg-emerald-50/50 transition-all cursor-pointer">
+                      <Plus className="w-5 h-5 text-zinc-400 group-hover:text-emerald-500 transition-colors" />
+                      <span className="text-xs text-zinc-400 group-hover:text-emerald-600 mt-1">Toevoegen</span>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
 
-            {/* ACTION BUTTONS */}
-            {!paymentProof ? (
-              <button
-                onClick={() => setShowPaymentModal(true)}
-                disabled={isScanning}
-                className="w-full bg-[#3066be] hover:bg-[#234a8c] text-white font-bold text-lg py-4 rounded-xl transition flex items-center justify-center gap-3 shadow-lg shadow-[#3066be]/20"
-              >
-                <span>Scan {selectedFiles.length} Facturen & Pay</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            ) : (
-              <div className="space-y-3">
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-red-700 font-medium text-sm">Er ging iets mis</p>
+                    <p className="text-red-600 text-sm">{error}</p>
+                  </div>
+                </div>
+              )}
+
+              {!paymentProof ? (
+                <button
+                  onClick={() => setShowPaymentModal(true)}
+                  disabled={isScanning}
+                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 rounded-xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/20"
+                >
+                  <span>Scan {selectedFiles.length} {selectedFiles.length === 1 ? 'factuur' : 'facturen'}</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              ) : (
                 <button
                   onClick={() => performScan(paymentProof!)}
                   disabled={isScanning}
-                  className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg py-4 rounded-xl transition flex items-center justify-center gap-3 shadow-lg shadow-green-500/20"
+                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 rounded-xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/20 disabled:opacity-70"
                 >
                   {isScanning ? (
-                    <>
-                      <Loader2 className="w-6 h-6 animate-spin" />
-                    </>
-                  ) : error ? (
-                    <span>Opnieuw Proberen</span>
+                    <><Loader2 className="w-5 h-5 animate-spin" /><span>Scannen...</span></>
                   ) : (
-                    <span>Start Bulk Scan ({selectedFiles.length})</span>
+                    <><Zap className="w-5 h-5" /><span>Start scan</span></>
                   )}
                 </button>
-                 {error && (
-                  <button
-                    onClick={retryWithNewFile}
-                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 rounded-xl transition text-sm"
-                  >
-                    Andere bestanden kiezen
-                  </button>
-                )}
-              </div>
-            )}
-            
-            {!paymentProof && (
-               <p className="text-center text-xs text-gray-400 mt-4">
-                 Betaal één keer 0.001 SOL voor de hele batch.
-               </p>
-             )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
 
-        {/* --- STATE 3: RESULTS (BULK) --- */}
-        {scanResults && (
-           <div className="animate-in zoom-in-95 duration-300 space-y-4">
-             <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center justify-between gap-3 flex-wrap">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-green-600 shrink-0" />
-                  <div>
-                    <h3 className="text-green-700 font-bold">Bulk Scan Voltooid!</h3>
-                    <p className="text-xs text-green-600">
-                      {scanResults.filter(r => r.success).length} geslaagd, {scanResults.filter(r => !r.success).length} gefaald
-                    </p>
+          {/* STATE 3: RESULTS */}
+          {scanResults && (
+            <div className="space-y-6">
+              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                      <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-emerald-800">Scan voltooid!</h3>
+                      <p className="text-sm text-emerald-600">{successCount} geslaagd{failCount > 0 && `, ${failCount} gefaald`}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button onClick={handleCopyJSON} className="px-3 py-2 bg-white border border-emerald-200 text-emerald-700 rounded-lg text-sm font-medium hover:bg-emerald-50 transition-colors flex items-center gap-2">
+                      {copied === "json" ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                      <span className="hidden sm:inline">Kopieer</span>
+                    </button>
+                    <button onClick={handleDownloadJSON} className="px-3 py-2 bg-white border border-emerald-200 text-emerald-700 rounded-lg text-sm font-medium hover:bg-emerald-50 transition-colors flex items-center gap-2">
+                      <FileJson className="w-4 h-4" />
+                      <span className="hidden sm:inline">JSON</span>
+                    </button>
+                    <button onClick={handleDownloadCSV} className="px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors flex items-center gap-2 shadow-sm">
+                      <FileSpreadsheet className="w-4 h-4" />
+                      CSV
+                      <Download className="w-3 h-3" />
+                    </button>
                   </div>
                 </div>
-
-                <div className="flex items-center gap-2">
-                   {/* COPY JSON */}
-                   <button 
-                     onClick={handleCopyJSON}
-                     className="px-3 py-2 bg-white border border-green-200 text-green-700 rounded-lg text-xs font-medium hover:bg-green-100 transition flex items-center gap-2"
-                     title="Kopieer ruwe JSON naar klembord"
-                   >
-                     {copied === "json" ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                     JSON
-                   </button>
-
-                   {/* DOWNLOAD JSON */}
-                   <button 
-                     onClick={handleDownloadJSON}
-                     className="px-3 py-2 bg-white border border-green-200 text-green-700 rounded-lg text-xs font-medium hover:bg-green-100 transition flex items-center gap-2"
-                     title="Download JSON bestand"
-                   >
-                     <FileJson className="w-3 h-3" />
-                     Save JSON
-                   </button>
-
-                   {/* DOWNLOAD CSV */}
-                   <button 
-                     onClick={handleDownloadCSV}
-                     className="px-3 py-2 bg-green-600 text-white border border-green-600 rounded-lg text-xs font-medium hover:bg-green-700 transition flex items-center gap-2 shadow-sm"
-                     title="Download CSV voor Excel/Boekhouding"
-                   >
-                     <Download className="w-3 h-3" />
-                     Download CSV
-                   </button>
-                </div>
               </div>
 
-              <div className="max-h-[500px] overflow-y-auto space-y-4 pr-1">
+              <div className="space-y-3 max-h-[350px] overflow-y-auto">
                 {scanResults.map((result, idx) => (
-                  <div key={idx} className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                    <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex justify-between items-center">
-                      <span className="font-medium text-sm text-gray-700 truncate max-w-[200px]">
-                        {/* Try to find filename match or use index */}
-                        {selectedFiles[idx]?.name || `Resultaat #${idx + 1}`}
+                  <div key={idx} className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
+                    <div className="bg-zinc-50 px-4 py-3 border-b border-zinc-100 flex justify-between items-center">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${result.success ? 'bg-emerald-100' : 'bg-red-100'}`}>
+                          {result.success ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <AlertTriangle className="w-4 h-4 text-red-500" />}
+                        </div>
+                        <span className="font-medium text-sm text-zinc-700 truncate max-w-[200px]">
+                          {selectedFiles[idx]?.name || `Resultaat #${idx + 1}`}
+                        </span>
+                      </div>
+                      <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${result.success ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>
+                        {result.success ? 'Succes' : 'Fout'}
                       </span>
-                      {result.success ? (
-                         <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Succes</span>
-                      ) : (
-                         <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">Error</span>
-                      )}
                     </div>
-                    <div className="p-3 bg-gray-50/50">
+                    <div className="p-4">
                       {result.success ? (
-                        <pre className="text-[10px] font-mono text-gray-600 overflow-x-auto">
+                        <pre className="text-xs font-mono text-zinc-600 overflow-x-auto bg-zinc-50 rounded-lg p-3 border border-zinc-100">
                           {JSON.stringify(result.result, null, 2)}
                         </pre>
                       ) : (
-                        <p className="text-xs text-red-500">{result.error}</p>
+                        <p className="text-sm text-red-600">{result.error}</p>
                       )}
                     </div>
                   </div>
                 ))}
               </div>
 
-              <button
-                onClick={reset}
-                className="w-full mt-6 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-xl transition"
-              >
-                Nieuwe Batch Scannen
+              <button onClick={reset} className="w-full bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-semibold py-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+                <RotateCcw className="w-4 h-4" />
+                Nieuwe batch scannen
               </button>
-           </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
