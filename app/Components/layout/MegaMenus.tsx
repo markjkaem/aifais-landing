@@ -15,6 +15,7 @@ interface NewsItem {
   slug: string;
   title: string;
   excerpt: string;
+  image?: string;
 }
 
 interface MegaMenuServicesProps {
@@ -126,7 +127,7 @@ export function MegaMenuNews({
                 >
                   <div className="relative w-1/3 aspect-video rounded-lg overflow-hidden shrink-0 border border-white">
                     <Image
-                      src={news[0].slug === "ai-trends-2026-kansen-mkb" ? "/ai_trends_2026.png" : "/lesson.jpg"}
+                      src={blog.image || "/lesson1.jpg"}
                       alt={blog.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
