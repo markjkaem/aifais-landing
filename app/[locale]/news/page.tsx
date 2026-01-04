@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { news } from "./data";
 import { getTranslations } from "next-intl/server";
+import NewsletterCTA from "@/app/Components/home/NewsletterCTA";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -58,7 +59,7 @@ export default async function NewsIndexPage({ params }: Props) {
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 leading-tight">
             {t("hero.title")} <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-[#3066be] to-purple-600">
               {t("hero.titleHighlight")}
             </span>
           </h1>
@@ -92,7 +93,7 @@ export default async function NewsIndexPage({ params }: Props) {
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-60" />
 
                     {/* Category Badge */}
                     {article.category && (
@@ -102,7 +103,7 @@ export default async function NewsIndexPage({ params }: Props) {
                     )}
                   </div>
 
-                  <div className="p-6 flex flex-col flex-grow">
+                  <div className="p-6 flex flex-col grow">
                     {/* Meta Data */}
                     <div className="flex items-center gap-3 text-xs text-gray-500 mb-3 font-medium">
                       <time dateTime={new Date(article.date).toISOString()}>
@@ -121,7 +122,7 @@ export default async function NewsIndexPage({ params }: Props) {
                           For now, we use the article properties as is. */}
                       {article.title}
                     </h2>
-                    <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3 grow">
                       {article.excerpt}
                     </p>
 
@@ -158,25 +159,9 @@ export default async function NewsIndexPage({ params }: Props) {
         </div>
       </section>
 
-      {/* ✅ NEWSLETTER / CTA (Light Theme) */}
-      <section className="py-20 bg-white border-t border-gray-200">
-        <div className="container mx-auto px-6 max-w-4xl text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            {t("cta.title")}
-          </h2>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            {t("cta.subtitle")}
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link
-              href="/contact"
-              className="px-8 py-3 bg-[#3066be] hover:bg-[#234a8c] text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg shadow-[#3066be]/20"
-            >
-              {t("cta.button")}
-            </Link>
-          </div>
-        </div>
-      </section>
+
+      {/* ✅ NEWSLETTER / CTA (Premium Design) */}
+      <NewsletterCTA />
     </main>
   );
 }

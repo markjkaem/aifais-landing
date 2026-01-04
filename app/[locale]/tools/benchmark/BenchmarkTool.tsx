@@ -27,6 +27,29 @@ export default function BenchmarkTool({ locale }: { locale: string }) {
     return Math.round(answers.reduce((a, b) => a + b, 0) / answers.length);
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    try {
+      await fetch("/api/internal/benchmark", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          sector: selectedSector?.name,
+          score: finalScore,
+          benchmark: benchmark
+        }),
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Failed to submit benchmark lead:", err);
+      // Fallback: still show "submitted" UI so user isn't blocked
+      setSubmitted(true);
+    }
+  };
+
   const finalScore = calculateFinalScore();
   const benchmark = selectedSector?.avgDigitalScore || 50;
 
@@ -131,7 +154,7 @@ export default function BenchmarkTool({ locale }: { locale: string }) {
               We hebben een gedetailleerde analyse voor u klaarstaan met 3 specifieke verbeterpunten voor uw organisatie.
             </p>
             <form 
-              onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
+              onSubmit={handleSubmit}
               className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
             >
               <input 
