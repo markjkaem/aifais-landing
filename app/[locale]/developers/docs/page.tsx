@@ -28,15 +28,6 @@ export default function DocsPage() {
         { name: "mimeType", type: "string", required: true, desc: "image/jpeg, image/png of application/pdf." },
         { name: "signature", type: "string", required: false, desc: "Solana transaction signature voor X402 payment." },
       ]
-    },
-    {
-      method: "POST",
-      path: "/api/v1/create-invoice",
-      desc: "Genereert een professionele PDF factuur op basis van JSON data.",
-      params: [
-        { name: "clientName", type: "string", required: true, desc: "Naam van de klant." },
-        { name: "items", type: "array", required: true, desc: "Lijst met factuurregels (description, quantity, price)." },
-      ]
     }
   ];
 
