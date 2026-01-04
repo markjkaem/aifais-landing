@@ -7,10 +7,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { getProjects, projects } from "../[locale]/portfolio/data";
 import { news } from "../[locale]/news/data";
-import { serviceLinks } from "./layout/headerData";
+import { serviceLinks, toolLinks } from "./layout/headerData";
 import SearchOverlay from "./layout/SearchOverlay";
 import MobileMenu from "./layout/MobileMenu";
-import { MegaMenuServices, MegaMenuNews } from "./layout/MegaMenus";
+import { MegaMenuServices, MegaMenuNews, MegaMenuTools } from "./layout/MegaMenus";
 import LanguageSelector from "./layout/LanguageSelector";
 
 export default function Header() {
@@ -29,7 +29,7 @@ export default function Header() {
   }));
 
   const [openDropdown, setOpenDropdown] = useState<
-    "services" | "news" | "languages" | null
+    "services" | "news" | "languages" | "tools" | null
   >(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -58,7 +58,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", controlNavbar);
   }, [lastScrollY, openDropdown, searchOpen, mobileOpen]);
 
-  const handleDropdownToggle = (dropdown: "services" | "news" | "languages") => {
+  const handleDropdownToggle = (dropdown: "services" | "news" | "languages" | "tools") => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
     setSearchOpen(false);
   };
@@ -141,7 +141,10 @@ export default function Header() {
           </button>
           <Link href={getLocalizedPath("/portfolio")} className="hover:text-[#3066be] transition" onClick={closeAll}>{t("cases")}</Link>
           <Link href={getLocalizedPath("/about")} className="hover:text-[#3066be] transition" onClick={closeAll}>{t("about")}</Link>
-          <Link href={getLocalizedPath("/tools")} className="hover:text-[#3066be] transition" onClick={closeAll}>{t("tools")}</Link>
+          <button onClick={() => handleDropdownToggle("tools")} className={`hover:text-[#3066be] transition flex items-center gap-2 ${openDropdown === "tools" ? "text-[#3066be]" : ""}`}>
+            {t("tools")}
+            <ChevronDownIcon className={`w-3 h-3 transition-transform ${openDropdown === "tools" ? "rotate-180" : ""}`} />
+          </button>
           <Link href={getLocalizedPath("/contact")} className="hover:text-[#3066be] transition" onClick={closeAll}>{t("contact")}</Link>
         </nav>
 
@@ -159,6 +162,7 @@ export default function Header() {
       {searchOpen && <SearchOverlay searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchResults={searchResults} getLocalizedPath={getLocalizedPath} closeAll={closeAll} />}
       {openDropdown === "services" && <MegaMenuServices serviceLinks={translatedServiceLinks} getLocalizedPath={getLocalizedPath} closeAll={closeAll} t={tMega} />}
       {openDropdown === "news" && <MegaMenuNews news={news} getLocalizedPath={getLocalizedPath} closeAll={closeAll} tEvent={tEvent} tMega={tMega} />}
+      {openDropdown === "tools" && <MegaMenuTools toolLinks={toolLinks} getLocalizedPath={getLocalizedPath} closeAll={closeAll} t={t} />}
       {mobileOpen && <MobileMenu locale={locale} searchQuery={searchQuery} setSearchQuery={setSearchQuery} openDropdown={openDropdown} handleDropdownToggle={handleDropdownToggle} serviceLinks={translatedServiceLinks} getLocalizedPath={getLocalizedPath} closeAll={closeAll} switchLanguage={switchLanguage} t={t} router={router} />}
 
       <style jsx global>{`

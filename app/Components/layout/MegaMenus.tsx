@@ -218,3 +218,80 @@ function ArrowRightIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+interface MegaMenuToolsProps {
+  toolLinks: ServiceLink[];
+  getLocalizedPath: (path: string) => string;
+  closeAll: () => void;
+  t: (key: string) => string;
+}
+
+export function MegaMenuTools({
+  toolLinks,
+  getLocalizedPath,
+  closeAll,
+  t,
+}: MegaMenuToolsProps) {
+  return (
+    <div className="hidden lg:block w-full bg-white/98 backdrop-blur-xl border-b border-gray-200 shadow-2xl py-8 animate-slideDown">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-3 gap-8">
+        <div className="col-span-2">
+          <h4 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4 px-4">
+            Tools
+          </h4>
+          <div className="grid grid-cols-2 gap-4">
+            {toolLinks.map((tool) => (
+              <Link
+                key={tool.slug}
+                href={getLocalizedPath(tool.slug)}
+                className="group p-4 rounded-xl hover:bg-gray-50 transition border border-transparent hover:border-gray-200 flex items-start gap-4"
+                onClick={closeAll}
+              >
+                <div className="mt-1 text-[#3066be] group-hover:scale-110 transition bg-blue-50 p-2 rounded-lg">
+                  {tool.icon}
+                </div>
+                <div>
+                  <h3 className="text-gray-900 font-semibold mb-1 group-hover:text-[#3066be] transition">
+                    {tool.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">
+                    {tool.description}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-6 px-4 pt-4 border-t border-gray-100">
+            <Link
+              href={getLocalizedPath("/tools")}
+              className="text-gray-500 text-sm font-semibold hover:text-[#3066be] transition flex items-center gap-1"
+              onClick={closeAll}
+            >
+              Alle Tools Bekijken{" "}
+              <ArrowRightIcon className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex items-start">
+          <div className="bg-linear-to-br from-[#3066be]/5 to-blue-50 border border-[#3066be]/20 rounded-2xl p-6 hover:border-[#3066be]/40 transition cursor-pointer w-full relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#3066be]/10 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-[#3066be]/20"></div>
+            <p className="font-semibold text-lg text-gray-900 mb-2 relative z-10">
+              Developers API
+            </p>
+            <p className="text-sm text-gray-600 mb-6 relative z-10">
+              Bouw je eigen AI agents met onze krachtige API en MCP server.
+            </p>
+            <Link
+              href={getLocalizedPath("/developers")}
+              onClick={closeAll}
+              className="block w-full py-3 bg-[#3066be] text-white text-center rounded-lg font-medium hover:bg-[#234a8c] transition relative z-10 shadow-lg shadow-blue-900/10"
+            >
+              Naar Developers Hub
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

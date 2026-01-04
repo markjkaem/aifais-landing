@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { news } from "../[locale]/news/data";
 import { sectorData, sectorDataEn } from "../[locale]/mkb/data";
+import { toolLinks } from "./layout/headerData";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -19,7 +20,7 @@ export default function Footer() {
       itemScope
       itemType="https://schema.org/Organization"
     >
-      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-12 text-sm">
+      <div className="max-w-7xl mx-auto px-6 py-12 md:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-10 md:gap-12 text-sm">
         {/* COL 1: Company Info & Address */}
         <div className="flex flex-col gap-4">
           <Link href={`/${locale}`} className="inline-block" itemProp="url">
@@ -136,6 +137,27 @@ export default function Footer() {
               className="text-[#3066be] hover:text-[#234a8c] transition font-medium mt-2 text-xs uppercase tracking-wider"
             >
               {tNav("viewAllServices")} →
+            </Link>
+          </nav>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <h3 className="font-bold text-gray-900 text-base">{tNav("tools")}</h3>
+          <nav className="flex flex-col gap-3">
+            {toolLinks.map((tool) => (
+              <Link
+                key={tool.slug}
+                href={`/${locale}${tool.slug}`}
+                className="hover:text-[#3066be] transition text-gray-600 truncate"
+              >
+                {tool.title}
+              </Link>
+            ))}
+            <Link
+              href={`/${locale}/tools`}
+              className="text-[#3066be] hover:text-[#234a8c] transition font-medium mt-2 text-xs uppercase tracking-wider"
+            >
+              Alle Tools →
             </Link>
           </nav>
         </div>
