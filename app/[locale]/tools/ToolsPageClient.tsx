@@ -138,6 +138,10 @@ const TOOLS: Tool[] = getAllTools().map(tool => ({
 
 
 
+import { SolanaLogo, IdealLogo } from "@/app/Components/CustomIcons";
+
+// ... (existing imports and code)
+
 function ToolCard({ tool, index }: { tool: Tool; index: number }) {
   const isSoon = tool.status === "soon";
   const Icon = tool.icon;
@@ -201,13 +205,17 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
                     </span>
                 ) : (
                     <div className="flex flex-col items-end">
-                       <span className="text-xs font-bold text-zinc-900 bg-white px-2 py-1 rounded-md border border-zinc-200 shadow-sm">
+                       <span className="flex items-center gap-1.5 text-xs font-bold text-zinc-900 bg-white px-2 py-1 rounded-md border border-zinc-200 shadow-sm">
+                           {tool.pricing.currency === "SOL" && <SolanaLogo className="w-5 h-4 object-contain" />}
                            {tool.pricing.price} {tool.pricing.currency}
                        </span>
                        {tool.pricing.currency === "SOL" && tool.pricing.price && (
-                           <span className="text-[10px] text-zinc-400 font-medium whitespace-nowrap">
-                               ≈ €{(tool.pricing.price * 150).toFixed(2)}
-                           </span>
+                           <div className="flex items-center gap-1 mt-0.5">
+                               <span className="text-[10px] text-zinc-400 font-medium whitespace-nowrap">
+                                   ≈ €{(tool.pricing.price * 150).toFixed(2)}
+                               </span>
+                               <IdealLogo className="w-9 h-4 object-contain" />
+                           </div>
                        )}
                     </div>
                 )}
@@ -331,13 +339,17 @@ function FeaturedToolCard({ tool, index }: { tool: Tool; index: number }) {
                     </span>
                 ) : (
                     <div className="flex flex-col items-end">
-                       <span className="text-xs font-bold text-zinc-900 bg-white px-2.5 py-1 rounded-lg border border-zinc-200 shadow-sm">
+                       <span className="flex items-center gap-1.5 text-xs font-bold text-zinc-900 bg-white px-2.5 py-1 rounded-lg border border-zinc-200 shadow-sm">
+                           {tool.pricing.currency === "SOL" && <SolanaLogo className="w-5 h-4 object-contain" />}
                            {tool.pricing.price} {tool.pricing.currency}
                        </span>
                        {tool.pricing.currency === "SOL" && tool.pricing.price && (
-                           <span className="text-[10px] text-zinc-500 font-medium">
-                               ≈ €{(tool.pricing.price * 150).toFixed(2)}
-                           </span>
+                           <div className="flex items-center gap-1 mt-0.5">
+                               <span className="text-[10px] text-zinc-500 font-medium">
+                                   ≈ €{(tool.pricing.price * 150).toFixed(2)}
+                               </span>
+                               <IdealLogo className="w-9 h-4 object-contain" />
+                           </div>
                        )}
                     </div>
                 )}

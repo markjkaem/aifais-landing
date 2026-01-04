@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getToolBySlug, getToolSlugs, ToolMetadata } from "@/config/tools";
-import { CheckCircle2, Sparkles, ArrowRight, Zap } from "lucide-react";
+import { Zap, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { SolanaLogo, IdealLogo } from "@/app/Components/CustomIcons";
 
 interface Props {
   params: Promise<{ locale: string; toolId: string }>;
@@ -255,12 +256,23 @@ export default async function ToolPage({ params }: Props) {
                     <span className="text-base font-semibold text-zinc-900">Gratis te gebruiken</span>
                   </>
                 ) : (
-                  <>
-                    <span className="text-sm text-zinc-500">Vanaf</span>
-                    <span className="text-lg font-bold text-zinc-900">
-                      {tool.pricing.price} {tool.pricing.currency}
-                    </span>
-                  </>
+                  <div className="flex flex-col items-end">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-zinc-500">Vanaf</span>
+                        <div className="flex items-center gap-1.5 px-2 py-0.5 bg-zinc-50 rounded-md border border-zinc-200">
+                             <SolanaLogo className="w-5 h-4 object-contain" />
+                             <span className="text-lg font-bold text-zinc-900">{tool.pricing.price} {tool.pricing.currency}</span>
+                        </div>
+                      </div>
+                      {tool.pricing.currency === "SOL" && tool.pricing.price && (
+                           <div className="flex items-center gap-1 mt-1 -mr-1">
+                               <span className="text-xs text-zinc-400 font-medium whitespace-nowrap">
+                                   ≈ €{(tool.pricing.price * 150).toFixed(2)}
+                               </span>
+                               <IdealLogo className="w-12 h-4 object-contain" />
+                           </div>
+                       )}
+                  </div>
                 )}
               </div>
             </div>

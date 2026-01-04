@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
+import { SolanaLogo, IdealLogo } from "@/app/Components/CustomIcons";
 
 const h1_font = Space_Grotesk({
   weight: "700",
@@ -258,6 +259,8 @@ export default async function DocsPage({
                 ))}
               </section>
 
+
+
               {/* Pricing Section - REPLACING */}
               <section id="pricing" className="scroll-mt-24">
                 <div className="flex items-center gap-4 mb-8">
@@ -275,9 +278,10 @@ export default async function DocsPage({
                       On-Chain (AI Agents)
                     </div>
                     <div className="text-center">
-                       <div className="flex items-baseline justify-center gap-1 mb-2">
+                       <div className="flex items-center justify-center gap-2 mb-2">
                            <span className="text-white/40 text-lg font-medium">vanaf</span>
-                           <span className={`${h1_font.className} text-5xl font-bold text-white`}>0.001 SOL</span>
+                           <span className={`${h1_font.className} text-5xl font-bold text-white`}>0.001</span>
+                           <SolanaLogo className="w-8 h-8" />
                         </div>
                        <div className="text-white/40 text-sm mb-6">per usage</div>
                     </div>
@@ -300,15 +304,16 @@ export default async function DocsPage({
                     </ul>
                   </div>
 
-                  {/* Classical Web (Unchanged conceptually) */}
+                  {/* Classical Web */}
                    <div className="p-8 bg-linear-to-b from-emerald-500/10 to-transparent border border-emerald-500/20 rounded-2xl">
                     <div className={`${mono.className} text-emerald-400 text-xs font-bold uppercase tracking-wider mb-4 text-center`}>
                       Classical (Web)
                     </div>
                     <div className="text-center">
-                      <div className="flex items-baseline justify-center gap-1 mb-2">
+                      <div className="flex items-center justify-center gap-2 mb-2">
                          <span className="text-white/40 text-lg font-medium">vanaf</span>
                          <span className={`${h1_font.className} text-5xl font-bold text-white`}>€0.05</span>
+                         <IdealLogo className="w-8 h-8 text-pink-600" />
                       </div>
                       <div className="text-white/40 text-sm mb-6">per gebruik</div>
                     </div>

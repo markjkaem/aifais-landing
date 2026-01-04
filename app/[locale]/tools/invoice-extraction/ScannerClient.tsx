@@ -113,14 +113,7 @@ export default function InvoiceScannerPage() {
             Upload je facturen en ontvang direct alle gegevens in een overzichtelijk Excel of CSV bestand. Van KvK-nummers tot BTW-bedragen.
           </p>
 
-          {/* Price badge */}
-          <div className="flex justify-center mb-12">
-            <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-white border border-zinc-200 rounded-full shadow-sm">
-              <span className="text-sm text-zinc-500">Vanaf</span>
-              <span className="text-lg font-bold text-zinc-900">0.001 SOL</span>
-              <span className="text-xs text-zinc-400">per batch</span>
-            </div>
-          </div>
+
 
           {/* Scroll indicator */}
           <div className="flex justify-center">

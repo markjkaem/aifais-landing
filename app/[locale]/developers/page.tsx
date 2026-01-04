@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { SolanaLogo } from "@/app/Components/CustomIcons";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { getTranslations } from "next-intl/server";
 
@@ -321,29 +322,28 @@ export default async function DevelopersLanding({
               Start gratis. Schaal wanneer je klaar bent.
             </p>
 
+
+
             <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-              {[
-                { tier: "Pay-per-Tool", price: "Vanaf 0.001 SOL", calls: "Betaal per gebruik (X402)", highlight: true },
-                { tier: "Enterprise", price: "Custom", calls: "Volume korting & API keys", highlight: false },
-              ].map((plan, i) => (
-                <div
-                  key={i}
-                  className={`relative p-8 rounded-2xl border transition-all ${
-                    plan.highlight
-                      ? 'bg-linear-to-b from-violet-500/10 to-transparent border-violet-500/30'
-                      : 'bg-white/2 border-white/5 hover:border-white/10'
-                  }`}
-                >
-                  {plan.highlight && (
-                    <div className={`${mono.className} absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-violet-500 text-white text-[10px] font-bold rounded-full uppercase`}>
-                      Agent Ready
-                    </div>
-                  )}
-                  <div className={`${mono.className} text-sm text-white/40 mb-2`}>{plan.tier}</div>
-                  <div className={`${h1_font.className} text-3xl font-bold text-white mb-2`}>{plan.price}</div>
-                  <div className="text-sm text-white/30">{plan.calls}</div>
-                </div>
-              ))}
+              {/* Pay-per-Tool Card */}
+              <div className="relative p-8 rounded-2xl border transition-all bg-linear-to-b from-violet-500/10 to-transparent border-violet-500/30">
+                  <div className={`${mono.className} absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-violet-500 text-white text-[10px] font-bold rounded-full uppercase`}>
+                    Agent Ready
+                  </div>
+                  <div className={`${mono.className} text-sm text-white/40 mb-2`}>Pay-per-Tool</div>
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                     <span className={`${h1_font.className} text-3xl font-bold text-white`}>Vanaf 0.001</span>
+                     <SolanaLogo className="w-6 h-6" />
+                  </div>
+                  <div className="text-sm text-white/30">Betaal per gebruik (X402)</div>
+              </div>
+
+              {/* Enterprise Card */}
+              <div className="relative p-8 rounded-2xl border transition-all bg-white/2 border-white/5 hover:border-white/10">
+                  <div className={`${mono.className} text-sm text-white/40 mb-2`}>Enterprise</div>
+                  <div className={`${h1_font.className} text-3xl font-bold text-white mb-2`}>Custom</div>
+                  <div className="text-sm text-white/30">Volume korting & API keys</div>
+              </div>
             </div>
 
             <Link
