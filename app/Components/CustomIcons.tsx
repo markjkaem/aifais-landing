@@ -54,6 +54,7 @@ export const IdealLogo = ({ className }: { className?: string }) => (
     xmlns="http://www.w3.org/2000/svg"
     className={className}
     aria-label="iDEAL"
+    preserveAspectRatio="xMidYMid meet"
   >
      {/* Background rounded rect for high contrast and brand recognition */}
      <rect width="100" height="44" rx="8" fill="#CC0066" />

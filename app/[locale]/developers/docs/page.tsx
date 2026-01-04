@@ -313,7 +313,7 @@ export default async function DocsPage({
                       <div className="flex items-center justify-center gap-2 mb-2">
                          <span className="text-white/40 text-lg font-medium">vanaf</span>
                          <span className={`${h1_font.className} text-5xl font-bold text-white`}>€0.05</span>
-                         <IdealLogo className="w-8 h-8 text-pink-600" />
+                         <IdealLogo className="w-16 h-7 text-pink-600" />
                       </div>
                       <div className="text-white/40 text-sm mb-6">per gebruik</div>
                     </div>

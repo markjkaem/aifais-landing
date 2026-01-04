@@ -43,6 +43,13 @@ export default async function DevelopersLanding({
       color: "cyan"
     },
     {
+      name: "generate_quote",
+      desc: "Genereer offertes in PDF formaat op basis van JSON input.",
+      status: "Live",
+      type: "MCP / API",
+      color: "cyan"
+    },
+    {
       name: "check_contract",
       desc: "AI-gedreven contractanalyse op basis van Nederlands recht (0.01 SOL).",
       status: "Live",
@@ -290,7 +297,7 @@ export default async function DevelopersLanding({
                     <div className="text-white/30 mb-4"># Scan an invoice with AIFAIS (X402)</div>
 
                     <div className="text-emerald-400 mb-1">
-                      <span className="text-cyan-400">$</span> curl -X POST https://api.aifais.com/v1/scan \
+                      <span className="text-cyan-400">$</span> curl -X POST https://api.aifais.com/api/v1/finance/scan \
                     </div>
                     <div className="text-white/60 pl-4 mb-1">-H "Content-Type: application/json" \</div>
                     <div className="text-white/60 pl-4 mb-4">-d '{"{"}"invoiceBase64": "...", "signature": "SOL_SIG"{"}"}' </div>
