@@ -113,24 +113,20 @@ export default function FactuurScannerPage() {
     <div className="min-h-screen bg-white font-sans relative flex flex-col items-center">
       <ToolSchema />
 
-      {/* Grid Background Effect */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#3066be10_1px,transparent_1px),linear-gradient(to_bottom,#3066be10_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none h-[800px]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_50%_200px,#3066be15,transparent)] pointer-events-none h-[800px]"></div>
-
       {/* HERO SECTION */}
-      <section className="relative z-10 w-full max-w-6xl px-6 pt-16 pb-12 flex flex-col items-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#3066be]/10 border border-[#3066be]/20 text-xs text-[#3066be] font-medium mb-6 animate-in fade-in slide-in-from-top-4 duration-700">
-          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-          Aifais Intelligence Engine v1.0
+      <section className="relative z-10 w-full max-w-6xl px-6 pt-20 pb-12 flex flex-col items-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-xs text-blue-600 font-bold uppercase tracking-wider mb-8 animate-in fade-in slide-in-from-top-4 duration-700">
+          <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
+          AIFAIS Intelligence Engine v1.0
         </div>
 
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 mb-6 text-center max-w-3xl">
+        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 text-center max-w-3xl">
           Factuur Scannen met <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-purple-600">
+          <span className="text-blue-600">
             Superhuman Accuracy
           </span>
         </h1>
-        <p className="text-gray-600 text-lg md:text-xl max-w-2xl text-center leading-relaxed mb-10">
+        <p className="text-slate-500 text-lg md:text-xl max-w-2xl text-center leading-relaxed mb-12">
           Zet PDF facturen en bonnetjes in seconden om naar Excel, CSV of JSON ready data. 
           Perfect voor ondernemers, accountants en developers.
         </p>

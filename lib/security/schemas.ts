@@ -45,3 +45,11 @@ export const scanSchema = z.object({
     stripeSessionId: z.string().optional(),
     format: z.enum(["json", "csv"]).optional().default("json"),
 });
+
+export const checkContractSchema = z.object({
+    contractBase64: z.string().min(1),
+    mimeType: z.enum(["application/pdf"]),
+    signature: z.string().optional(),
+    stripeSessionId: z.string().optional(),
+});
+

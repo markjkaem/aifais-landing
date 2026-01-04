@@ -195,7 +195,7 @@ export default function ScannerClient() {
         selectedFiles.map(file => convertFileToBase64(file))
       );
 
-      const response = await fetch("/api/v1/scan", {
+      const response = await fetch("/api/v1/finance/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -249,14 +249,11 @@ export default function ScannerClient() {
 
   return (
     <div className="w-full max-w-4xl relative">
-      {/* Glow Effect */}
-      <div className="absolute -inset-1 bg-linear-to-r from-[#3066be]/20 to-purple-500/20 rounded-[2rem] blur-2xl pointer-events-none" />
-
-      <div className="relative bg-white border border-gray-200 rounded-3xl p-8 shadow-xl overflow-hidden min-h-[400px]">
+      <div className="relative bg-white border border-gray-200 rounded-xl p-8 shadow-sm overflow-hidden min-h-[400px]">
         {/* PAYMENT MODAL */}
         {showPaymentModal && !showCryptoQR && (
           <div className="absolute inset-0 z-50 bg-white/90 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in">
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 w-full max-w-sm shadow-xl">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-gray-900 font-bold">Kies betaalmethode</h3>
                 <button onClick={() => setShowPaymentModal(false)}>
@@ -266,7 +263,7 @@ export default function ScannerClient() {
 
               <button
                 onClick={() => (window.location.href = STRIPE_LINK_SINGLE)}
-                className="w-full bg-[#3066be] hover:bg-[#234a8c] text-white font-bold py-4 rounded-xl flex items-center justify-between px-4 mb-3 transition shadow-lg shadow-[#3066be]/20"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl flex items-center justify-between px-4 mb-3 transition shadow-md shadow-blue-600/10"
               >
                 <div className="flex items-center gap-3">
                   <CreditCard className="w-5 h-5" /> iDEAL / Card
@@ -305,8 +302,8 @@ export default function ScannerClient() {
         {/* HEADER */}
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#3066be]/10 rounded-xl flex items-center justify-center border border-[#3066be]/20">
-              <Zap className="w-5 h-5 text-[#3066be]" />
+            <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center border border-blue-100">
+              <Zap className="w-5 h-5 text-blue-600" />
             </div>
             AI Invoice Scanner
             {selectedFiles.length > 0 && <span className="text-sm bg-gray-100 text-gray-600 px-2 py-1 rounded-full">{selectedFiles.length}/10</span>}

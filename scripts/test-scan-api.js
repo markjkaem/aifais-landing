@@ -23,6 +23,7 @@ const BASE64_DATA = getBase64();
 
 async function testApi() {
     console.log(`🚀 Testing /api/v1/scan with ${TEST_FILE_NAME} & DEV_BYPASS...`);
+    console.log(`🚀 Testing /api/v1/finance/scan with ${TEST_FILE_NAME} & DEV_BYPASS...`);
 
     const payload = {
         // Bulk mode test
@@ -36,8 +37,13 @@ async function testApi() {
         format: "csv"
     };
 
+    console.log('📤 Sending request to:', `${LOCAL_API_URL}/api/v1/finance/scan`);
+    console.log('📦 Payload size:', Math.round(BASE64_DATA.length / 1024), 'KB');
+    console.log('📊 Format:', payload.format);
+    console.log('');
+
     try {
-        const response = await fetch(LOCAL_API_URL, {
+        const response = await fetch(`${LOCAL_API_URL}/api/v1/finance/scan`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

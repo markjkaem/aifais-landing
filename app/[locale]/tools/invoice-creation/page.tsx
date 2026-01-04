@@ -52,20 +52,19 @@ export default function FactuurMakerPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Background Effects (Light Mode) */}
-      <div className="fixed inset-0 bg-[linear-gradient(to_right,#3066be10_1px,transparent_1px),linear-gradient(to_bottom,#3066be10_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none -z-10"></div>
-      <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-[#3066be]/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+      {/* Background (Clean) */}
+      <div className="absolute inset-0 bg-slate-50 -z-10"></div>
 
-      {/* System Notification */}
-      <div className="w-full bg-black text-white text-xs py-2 px-4 flex justify-between items-center font-mono z-50">
+      {/* System Notification - Cleaner */}
+      <div className="w-full bg-slate-900 text-slate-300 text-xs py-2 px-4 flex justify-between items-center font-medium z-50 border-b border-slate-800">
         <div className="flex gap-4">
           <span className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            SYSTEM: ONLINE
+             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+             SYSTEM: ONLINE
           </span>
-          <span className="opacity-50">X402 PROTOCOL: ACTIVE</span>
+          <span className="opacity-70">X402 PROTOCOL: ACTIVE</span>
         </div>
-        <div className="opacity-50 hidden sm:block">AIFAIS GENERATOR V1.2</div>
+        <div className="opacity-70 hidden sm:block">AIFAIS GENERATOR V1.2</div>
       </div>
 
       <div className="w-full max-w-7xl px-4 py-10 flex flex-col items-center">

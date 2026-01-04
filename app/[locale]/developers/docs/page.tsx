@@ -333,7 +333,10 @@ export default async function DocsPage({
                       On-Chain (AI Agents)
                     </div>
                     <div className="text-center">
-                      <div className={`${h1_font.className} text-5xl font-bold text-white mb-2`}>0.001 SOL</div>
+                      <div className="flex items-baseline justify-center gap-1 mb-2">
+                         <span className="text-white/40 text-lg font-medium">vanaf</span>
+                         <span className={`${h1_font.className} text-5xl font-bold text-white`}>0.001 SOL</span>
+                      </div>
                       <div className="text-white/40 text-sm mb-6">per API call</div>
                     </div>
                     <ul className="space-y-3 text-sm text-white/60 mb-8">
@@ -341,19 +344,19 @@ export default async function DocsPage({
                         <svg className="w-4 h-4 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        Geen account of API key nodig
+                        <strong>Basic Tools:</strong> 0.001 SOL (Scan, Extraction)
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <strong>Advanced Tools:</strong> 0.01 SOL (Legal, Strategy)
                       </li>
                       <li className="flex items-center gap-2">
                         <svg className="w-4 h-4 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                         Pay-per-call via X402 protocol
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Direct gestructureerde data
                       </li>
                     </ul>
                   </div>
@@ -363,8 +366,11 @@ export default async function DocsPage({
                       Classical (Web & SaaS)
                     </div>
                     <div className="text-center">
-                      <div className={`${h1_font.className} text-5xl font-bold text-white mb-2`}>€0.05</div>
-                      <div className="text-white/40 text-sm mb-6">gemiddeld per call</div>
+                      <div className="flex items-baseline justify-center gap-1 mb-2">
+                         <span className="text-white/40 text-lg font-medium">vanaf</span>
+                         <span className={`${h1_font.className} text-5xl font-bold text-white`}>€0.50</span>
+                      </div>
+                      <div className="text-white/40 text-sm mb-6">per gebruik</div>
                     </div>
                     <ul className="space-y-3 text-sm text-white/60 mb-8">
                       <li className="flex items-center gap-2">
@@ -377,7 +383,7 @@ export default async function DocsPage({
                         <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        Maandelijkse facturatie mogelijk
+                        Geen maandabonnement, pay-as-you-go
                       </li>
                       <li className="flex items-center gap-2">
                         <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -389,8 +395,8 @@ export default async function DocsPage({
                   </div>
                 </div>
 
-                <p className={`${mono.className} text-xs text-white/30 mt-4`}>
-                  * Voor bulkafspraken of commerciële integraties buiten de blockchain om, neem contact op via sales@aifais.mobi.
+                <p className={`${mono.className} text-xs text-white/30 mt-4 col-span-2 text-center`}>
+                  * Prijzen kunnen variëren per tool. Check het /api/mcp endpoint voor real-time pricing per functie.
                 </p>
               </section>
 
