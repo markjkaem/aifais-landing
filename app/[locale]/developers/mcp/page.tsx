@@ -33,18 +33,32 @@ export default async function MCPPage({
       color: "emerald"
     },
     {
-      name: "verify_business",
-      desc: "Controleert bedrijfsgegevens direct in het Nederlandse Handelsregister.",
-      price: "0.001 SOL",
-      status: "Coming Soon",
-      color: "amber"
+      name: "create_invoice",
+      desc: "Genereer professionele PDF facturen via een simpele JSON payload.",
+      price: "Free",
+      status: "Live",
+      color: "cyan"
     },
     {
-      name: "analyze_contract",
-      desc: "Analyseert contracten op risico's en ongunstige clausules.",
-      price: "0.002 SOL",
-      status: "Coming Soon",
+      name: "generate_quote",
+      desc: "Genereer offertes in PDF formaat op basis van JSON input.",
+      price: "Free",
+      status: "Live",
+      color: "cyan"
+    },
+    {
+      name: "check_contract",
+      desc: "Analyseert juridische contracten op risico's en ongunstige clausules.",
+      price: "0.01 SOL",
+      status: "Live",
       color: "violet"
+    },
+    {
+      name: "generate_terms",
+      desc: "Genereer juridisch dichte algemene voorwaarden op maat.",
+      price: "0.005 SOL",
+      status: "Live",
+      color: "amber"
     }
   ];
 
