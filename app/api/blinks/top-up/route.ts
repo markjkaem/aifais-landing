@@ -9,6 +9,7 @@ import {
   Keypair, // Nodig voor referentie
 } from "@solana/web3.js";
 import { ACTIONS_CORS_HEADERS, ActionGetResponse } from "@solana/actions";
+import { withApiGuard } from "@/lib/security/api-guard";
 
 // CONFIGURATIE: Zorg dat dit overeenkomt met je Agent prijs!
 const PRICE_PER_SCAN = 0.001;
@@ -25,7 +26,7 @@ export async function OPTIONS() {
 }
 
 // GET: Toon de Blink knop op Twitter
-export async function GET(req: NextRequest) {
+export const GET = withApiGuard(async (req: NextRequest) => {
   const payload: ActionGetResponse = {
     icon: "https://aifais.com/logo_official.png", // Zorg dat dit plaatje bestaat!
     label: `Scan Factuur (${PRICE_PER_SCAN} SOL)`,
@@ -43,10 +44,12 @@ export async function GET(req: NextRequest) {
   };
 
   return NextResponse.json(payload, { headers: CORS_HEADERS });
-}
+}, {
+  rateLimit: { windowMs: 60000, maxRequests: 100 } // Ruime limit voor discovery
+});
 
 // POST: Bouw de transactie
-export async function POST(req: NextRequest) {
+export const POST = withApiGuard(async (req: NextRequest) => {
   try {
     const body = await req.json();
     const { account } = body;
@@ -107,4 +110,6 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: "Transaction failed" }, { status: 500, headers: CORS_HEADERS });
   }
-}
+}, {
+  rateLimit: { windowMs: 60000, maxRequests: 50 } // Ruime limit voor transactions
+});

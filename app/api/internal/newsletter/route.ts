@@ -1,14 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addLeadToNotion } from "@/lib/crm/notion";
+import { withApiGuard } from "@/lib/security/api-guard";
+import { newsletterSchema } from "@/lib/security/schemas";
 
-export async function POST(req: NextRequest) {
+export const POST = withApiGuard(async (req, { email }: { email: string }) => {
     try {
-        const { email } = await req.json();
-
-        if (!email || !email.includes("@")) {
-            return NextResponse.json({ error: "Invalid email" }, { status: 400 });
-        }
-
         // Store in Notion CRM
         await addLeadToNotion({
             email,
@@ -22,4 +18,8 @@ export async function POST(req: NextRequest) {
     } catch (error) {
         return NextResponse.json({ error: "Server error" }, { status: 500 });
     }
-}
+}, {
+    schema: newsletterSchema,
+    rateLimit: { windowMs: 3600000, maxRequests: 5 }, // 5 per uur per IP
+    requireOrigin: true
+});

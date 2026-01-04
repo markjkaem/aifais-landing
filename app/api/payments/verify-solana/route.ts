@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { getScansForAmount } from "@/utils/solana-pricing";
+import { withApiGuard } from "@/lib/security/api-guard";
 
-export async function GET(req: NextRequest) {
+export const GET = withApiGuard(async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const signature = searchParams.get("signature");
   const reference = searchParams.get("reference");
@@ -10,9 +11,9 @@ export async function GET(req: NextRequest) {
   // Validatie
   if (!signature || !reference) {
     return NextResponse.json(
-      { 
-        valid: false, 
-        error: "Signature en reference zijn verplicht" 
+      {
+        valid: false,
+        error: "Signature en reference zijn verplicht"
       },
       { status: 400 }
     );
@@ -24,7 +25,7 @@ export async function GET(req: NextRequest) {
       process.env.NEXT_PUBLIC_SOLANA_RPC || clusterApiUrl("mainnet-beta"),
       "confirmed"
     );
-    
+
     // Haal de transactie op
     const tx = await connection.getTransaction(signature, {
       maxSupportedTransactionVersion: 0,
@@ -105,7 +106,7 @@ export async function GET(req: NextRequest) {
 
   } catch (error: any) {
     console.error("Solana verification error:", error);
-    
+
     return NextResponse.json(
       {
         valid: false,
@@ -114,4 +115,6 @@ export async function GET(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+}, {
+  rateLimit: { windowMs: 60000, maxRequests: 20 } // 20 per minuut per IP
+});

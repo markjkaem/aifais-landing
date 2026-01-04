@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addLeadToNotion } from "@/lib/crm/notion";
 import nodemailer from "nodemailer";
+import { withApiGuard } from "@/lib/security/api-guard";
+import { quickscanSchema } from "@/lib/security/schemas";
 
-export async function POST(req: NextRequest) {
+export const POST = withApiGuard(async (req, data: any) => {
     try {
-        const data = await req.json();
         const { email, results, formData } = data;
 
         if (!email || !email.includes("@")) {
@@ -93,4 +94,8 @@ export async function POST(req: NextRequest) {
         console.error("❌ QuickScan capture/email error:", error);
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
-}
+}, {
+    schema: quickscanSchema,
+    rateLimit: { windowMs: 3600000, maxRequests: 5 }, // 5 per uur per IP
+    requireOrigin: true
+});

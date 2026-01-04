@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
+import { withApiGuard } from "@/lib/security/api-guard";
 
-export async function GET(request: Request) {
+export const GET = withApiGuard(async (request: Request) => {
     const baseUrl = new URL(request.url).origin;
 
     const mcpDefinition = {
@@ -25,5 +26,11 @@ export async function GET(request: Request) {
         ],
     };
 
-    return NextResponse.json(mcpDefinition);
-}
+    return NextResponse.json(mcpDefinition, {
+        headers: {
+            "Cache-Control": "public, max-age=3600",
+        }
+    });
+}, {
+    rateLimit: { windowMs: 60000, maxRequests: 50 }
+});

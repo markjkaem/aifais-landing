@@ -1,44 +1,11 @@
 import nodemailer from "nodemailer";
 import { addLeadToNotion } from "@/lib/crm/notion";
+import { withApiGuard } from "@/lib/security/api-guard";
+import { contactSchema } from "@/lib/security/schemas";
 
-// Simple in-memory rate limit storage (resets on server restart)
-const rateLimitStore: {
-  [key: string]: { count: number; lastRequest: number };
-} = {};
-const MAX_REQUESTS = 2;
-const WINDOW_MS = 24 * 60 * 60 * 1000; // 24 hours
-
-export async function POST(request: Request) {
+export const POST = withApiGuard(async (request, data: any) => {
   try {
-    const data = await request.json();
     const { name, email, phone, message } = data;
-
-    if (!email) {
-      return new Response(JSON.stringify({ error: "Email required" }), {
-        status: 400,
-      });
-    }
-
-    const now = Date.now();
-    const user = email.toLowerCase(); // Rate limit per email
-
-    // Initialize if first request
-    if (
-      !rateLimitStore[user] ||
-      now - rateLimitStore[user].lastRequest > WINDOW_MS
-    ) {
-      rateLimitStore[user] = { count: 0, lastRequest: now };
-    }
-
-    if (rateLimitStore[user].count >= MAX_REQUESTS) {
-      return new Response(
-        JSON.stringify({ error: "Max requests per day reached" }),
-        { status: 429 }
-      );
-    }
-
-    rateLimitStore[user].count += 1;
-    rateLimitStore[user].lastRequest = now;
 
     // SMTP setup
     const SMTP_HOST = process.env.SMTP_HOST;
@@ -85,4 +52,8 @@ export async function POST(request: Request) {
       status: 500,
     });
   }
-}
+}, {
+  schema: contactSchema,
+  rateLimit: { windowMs: 86400000, maxRequests: 2 }, // 2 per 24 uur per IP
+  requireOrigin: true
+});

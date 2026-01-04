@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addLeadToNotion } from "@/lib/crm/notion";
 import nodemailer from "nodemailer";
+import { withApiGuard } from "@/lib/security/api-guard";
+import { benchmarkSchema } from "@/lib/security/schemas";
 
-export async function POST(req: NextRequest) {
+export const POST = withApiGuard(async (req, data: any) => {
     try {
-        const data = await req.json();
         const { email, sector, score, benchmark } = data;
-
-        if (!email || !email.includes("@")) {
-            return NextResponse.json({ error: "Email required" }, { status: 400 });
-        }
 
         // 1. Capture benchmark lead in Notion CRM
         await addLeadToNotion({
@@ -24,7 +21,7 @@ export async function POST(req: NextRequest) {
                 benchmark
             }
         });
-
+        // ... (rest of the code remains same until end)
         // 2. SMTP setup
         const SMTP_HOST = process.env.SMTP_HOST;
         const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
@@ -98,4 +95,8 @@ export async function POST(req: NextRequest) {
         console.error("❌ Benchmark capture/email error:", error);
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
-}
+}, {
+    schema: benchmarkSchema,
+    rateLimit: { windowMs: 3600000, maxRequests: 5 }, // 5 per uur per IP
+    requireOrigin: true
+});

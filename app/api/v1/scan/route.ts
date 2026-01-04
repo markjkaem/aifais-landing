@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { gatekeepPayment } from "@/lib/payment-gatekeeper";
 import { scanInvoiceWithClaude } from "@/utils/ai-scanner";
+import { withApiGuard } from "@/lib/security/api-guard";
+import { scanSchema } from "@/lib/security/schemas";
 
-export async function POST(req: NextRequest) {
+export const POST = withApiGuard(async (req, body: any) => {
   console.log("--- API START: /api/v1/scan ---");
 
   try {
-    const body = await req.json();
-
     // =========================================================================
     // 1. PAYMENT GUARD (Checkt Solana, Stripe & Redis Replays)
     // =========================================================================
@@ -29,11 +29,6 @@ export async function POST(req: NextRequest) {
     console.log(`Payment authorized via ${payment.method}. Starting AI scan...`);
 
     const { invoiceBase64, mimeType } = body;
-
-    // Validatie input
-    if (!invoiceBase64 || !mimeType) {
-      return NextResponse.json({ error: "Missing invoice data" }, { status: 400 });
-    }
 
     // Voer de AI scan uit
     const result = await scanInvoiceWithClaude(invoiceBase64, mimeType);
@@ -62,4 +57,7 @@ export async function POST(req: NextRequest) {
     console.error("--- API CRITICAL ERROR ---", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
-}
+}, {
+  schema: scanSchema,
+  rateLimit: { windowMs: 60000, maxRequests: 10 } // 10 per minuut per IP
+});
