@@ -13,7 +13,7 @@ export const GET = async () => {
     rules: [
       {
         pathPattern: "/tools/invoice-extraction",
-        apiPath: "/api/actions/top-up",
+        apiPath: "/api/blinks/top-up",
       },
     ],
   };

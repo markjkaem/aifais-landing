@@ -13,19 +13,19 @@ import { sanitizeObject } from "@/lib/sanitize";
 const formatCurrency = (amount: number) => `EUR ${amount.toFixed(2)}`;
 
 export async function POST(req: NextRequest) {
-  console.log("--- API START: /api/agent/create-invoice ---");
+  console.log("--- API START: /api/v1/create-invoice ---");
 
   try {
     const rawBody = await req.json();
     const body = sanitizeObject(rawBody);
     const {
-        signature,
-        stripeSessionId,
-        ownName,
-        clientName,
-        invoiceNumber,
-        items,
-        notes
+      signature,
+      stripeSessionId,
+      ownName,
+      clientName,
+      invoiceNumber,
+      items,
+      notes
     } = body;
 
     let paymentMethod = "";
@@ -35,13 +35,13 @@ export async function POST(req: NextRequest) {
     // =========================================================================
     // 1. PAYMENT CHECK (Eén regel code!)
     const payment = await gatekeepPayment(body);
-    
+
     // Als betaling mislukt is, stuur direct de error terug die uit de gatekeeper komt
     if (!payment.success) {
       // @ts-ignore (details kan undefined zijn, maar dat mag in json)
       return NextResponse.json(
-          { error: payment.error, ...payment.details }, 
-          { status: payment.status }
+        { error: payment.error, ...payment.details },
+        { status: payment.status }
       );
     }
 
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
 
     // Validatie van input voor PDF
     if (!items || !Array.isArray(items)) {
-        return NextResponse.json({ error: "Missing required invoice items." }, { status: 400 });
+      return NextResponse.json({ error: "Missing required invoice items." }, { status: 400 });
     }
 
     const doc = new jsPDF();
@@ -71,12 +71,12 @@ export async function POST(req: NextRequest) {
     // --- Adressen ---
     doc.setFontSize(11);
     doc.setTextColor(0);
-    
+
     // Links: Eigen bedrijf
     doc.setFont("helvetica", "bold");
     doc.text(ownName || "Mijn Bedrijf", 14, 50);
     doc.setFont("helvetica", "normal");
-    
+
     // Rechts: Klant
     doc.setFont("helvetica", "bold");
     doc.text("Factureren aan:", 140, 50);
@@ -85,14 +85,14 @@ export async function POST(req: NextRequest) {
 
     // --- Berekeningen ---
     let subtotal = 0;
-    
+
     // Data voor autotable voorbereiden
     const tableRows = items.map((item: any) => {
       const qty = Number(item.quantity) || 0;
       const price = Number(item.unitPrice || item.price) || 0; // Support beide veldnamen
       const total = qty * price;
       subtotal += total;
-      
+
       return [
         item.description || "Dienst/Product",
         qty.toString(),
@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
       ];
     });
 
-    const vatAmount = subtotal * 0.21; 
+    const vatAmount = subtotal * 0.21;
     const totalAmount = subtotal + vatAmount;
 
     // --- Tabel ---
@@ -131,15 +131,15 @@ export async function POST(req: NextRequest) {
 
     // --- Notes / Footer ---
     if (notes) {
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(9);
-        doc.setTextColor(100);
-        doc.text(notes, 14, 280);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(100);
+      doc.text(notes, 14, 280);
     } else {
-        // Standaard footer als er geen notes zijn
-        doc.setFontSize(8);
-        doc.setTextColor(150);
-        doc.text(`Gegenereerd via AI Agent - Betaald met ${paymentMethod}`, 14, 290);
+      // Standaard footer als er geen notes zijn
+      doc.setFontSize(8);
+      doc.setTextColor(150);
+      doc.text(`Gegenereerd via AI Agent - Betaald met ${paymentMethod}`, 14, 290);
     }
 
     // --- Output Converteren naar Base64 ---
@@ -150,23 +150,23 @@ export async function POST(req: NextRequest) {
     // 3. RESPONSE
     // =========================================================================
     console.log(`--- API END: Success (200) via ${paymentMethod} ---`);
-    
+
     return NextResponse.json({
       success: true,
       message: "Factuur succesvol gegenereerd.",
       fileName: `factuur_${invoiceNumber || 'concept'}.pdf`,
       mimeType: "application/pdf",
-      base64: base64Pdf, 
+      base64: base64Pdf,
       meta: { method: paymentMethod, total: totalAmount }
     });
 
   } catch (error: any) {
     // Specifieke error handling voor Replay Attacks
     if (error.message && error.message.includes("Transaction signature already used")) {
-          console.warn(`Double Spend detected (409): ${error.message}`);
-          return NextResponse.json({ error: error.message }, { status: 409 });
+      console.warn(`Double Spend detected (409): ${error.message}`);
+      return NextResponse.json({ error: error.message }, { status: 409 });
     }
-    
+
     console.error("--- API END: CRITICAL ERROR (500) ---", error);
     return NextResponse.json({ error: "Internal Server Error during invoice generation", details: error.message }, { status: 500 });
   }

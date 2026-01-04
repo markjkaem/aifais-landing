@@ -11,7 +11,7 @@ import {
 import { ACTIONS_CORS_HEADERS, ActionGetResponse } from "@solana/actions";
 
 // CONFIGURATIE: Zorg dat dit overeenkomt met je Agent prijs!
-const PRICE_PER_SCAN = 0.001; 
+const PRICE_PER_SCAN = 0.001;
 const MY_WALLET = new PublicKey(process.env.NEXT_PUBLIC_SOLANA_WALLET!);
 
 const CORS_HEADERS = {
@@ -35,13 +35,13 @@ export async function GET(req: NextRequest) {
       actions: [
         {
           label: `Koop 1 Scan (${PRICE_PER_SCAN} SOL)`,
-          href: `${req.nextUrl.origin}/api/actions/top-up`, // Verwijst naar de POST hieronder
+          href: `${req.nextUrl.origin}/api/blinks/top-up`, // Verwijst naar de POST hieronder
           type: "transaction"
         }
       ],
     },
   };
-  
+
   return NextResponse.json(payload, { headers: CORS_HEADERS });
 }
 
@@ -74,13 +74,13 @@ export async function POST(req: NextRequest) {
 
     // 2. De Referentie (zodat we weten wie betaald heeft)
     transaction.add(
-        SystemProgram.transfer({
-            fromPubkey: sender,
-            toPubkey: reference,
-            lamports: 0, // Kost niks, is alleen marker
-        })
+      SystemProgram.transfer({
+        fromPubkey: sender,
+        toPubkey: reference,
+        lamports: 0, // Kost niks, is alleen marker
+      })
     );
-    
+
     transaction.feePayer = sender;
     transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
 
@@ -90,15 +90,15 @@ export async function POST(req: NextRequest) {
       // 👇 HIER IS DE TRUC: Stuur de mens door naar je website
       links: {
         next: {
-            type: "inline", // Of 'post' afhankelijk van client support, inline toont resultaat
-            action: {
-                description: "Betaling ontvangen. Klik om te uploaden.",
-                icon: "https://aifais.com/upload-icon.png",
-                label: "Upload Factuur",
-                title: "Ga naar Upload",
-                type: "external-link", // Stuur ze naar je frontend website
-                href: `https://aifais.com/upload?tx=${reference.toBase58()}` 
-            }
+          type: "inline", // Of 'post' afhankelijk van client support, inline toont resultaat
+          action: {
+            description: "Betaling ontvangen. Klik om te uploaden.",
+            icon: "https://aifais.com/upload-icon.png",
+            label: "Upload Factuur",
+            title: "Ga naar Upload",
+            type: "external-link", // Stuur ze naar je frontend website
+            href: `https://aifais.com/upload?tx=${reference.toBase58()}`
+          }
         }
       }
     };

@@ -3,7 +3,7 @@ import { gatekeepPayment } from "@/lib/payment-gatekeeper";
 import { scanInvoiceWithClaude } from "@/utils/ai-scanner";
 
 export async function POST(req: NextRequest) {
-  console.log("--- API START: /api/agent/scan ---");
+  console.log("--- API START: /api/v1/scan ---");
 
   try {
     const body = await req.json();
@@ -14,13 +14,13 @@ export async function POST(req: NextRequest) {
     const payment = await gatekeepPayment(body);
 
     if (!payment.success) {
-       // Als de betaling niet geldig is (of ontbreekt), stuur direct de error terug.
-       // Dit kan een 402 (Payment Required) of 409 (Double Spend) zijn.
-       // @ts-ignore
-       return NextResponse.json(
-         { error: payment.error, ...payment.details }, 
-         { status: payment.status }
-       );
+      // Als de betaling niet geldig is (of ontbreekt), stuur direct de error terug.
+      // Dit kan een 402 (Payment Required) of 409 (Double Spend) zijn.
+      // @ts-ignore
+      return NextResponse.json(
+        { error: payment.error, ...payment.details },
+        { status: payment.status }
+      );
     }
 
     // =========================================================================
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
 
     // Validatie input
     if (!invoiceBase64 || !mimeType) {
-        return NextResponse.json({ error: "Missing invoice data" }, { status: 400 });
+      return NextResponse.json({ error: "Missing invoice data" }, { status: 400 });
     }
 
     // Voer de AI scan uit
@@ -40,22 +40,22 @@ export async function POST(req: NextRequest) {
 
     // Vang specifieke AI fouten af (bijv. als het plaatje onleesbaar is)
     if (result && result.error === "UNREADABLE_DOCUMENT") {
-       console.warn(`SCAN FAILED (400): ${result.message}`);
-       return NextResponse.json({ error: result.message }, { status: 400 }); 
+      console.warn(`SCAN FAILED (400): ${result.message}`);
+      return NextResponse.json({ error: result.message }, { status: 400 });
     }
 
     // =========================================================================
     // 3. SUCCESS RESPONSE
     // =========================================================================
     console.log(`--- API END: Success (200) ---`);
-    
-    return NextResponse.json({ 
-        success: true, 
-        data: result, 
-        meta: { 
-            method: payment.method, // "solana_x402" of "stripe_fiat"
-            timestamp: new Date().toISOString()
-        } 
+
+    return NextResponse.json({
+      success: true,
+      data: result,
+      meta: {
+        method: payment.method, // "solana_x402" of "stripe_fiat"
+        timestamp: new Date().toISOString()
+      }
     });
 
   } catch (error: any) {

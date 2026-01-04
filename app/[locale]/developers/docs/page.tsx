@@ -16,19 +16,22 @@ export default function DocsPage() {
   const endpoints = [
     {
       method: "POST",
-      path: "/v1/scan",
+      path: "/api/v1/scan",
       desc: "Scant een document (PDF/JPG/PNG) en extraheert gestructureerde data via AI.",
       params: [
         { name: "invoiceBase64", type: "string", required: true, desc: "Base64 string van het document." },
-        { name: "mimeType", type: "string", required: true, desc: " image/jpeg, image/png of application/pdf." },
+        { name: "mimeType", type: "string", required: true, desc: "image/jpeg, image/png of application/pdf." },
         { name: "signature", type: "string", required: false, desc: "Solana transaction signature voor X402 payment." },
       ]
     },
     {
-      method: "GET",
-      path: "/v1/usage",
-      desc: "Haal je huidige verbruik en API limieten op.",
-      params: []
+      method: "POST",
+      path: "/api/v1/create-invoice",
+      desc: "Genereert een professionele PDF factuur op basis van JSON data.",
+      params: [
+        { name: "clientName", type: "string", required: true, desc: "Naam van de klant." },
+        { name: "items", type: "array", required: true, desc: "Lijst met factuurregels (description, quantity, price)." },
+      ]
     }
   ];
 
@@ -163,6 +166,27 @@ export default function DocsPage() {
                 </tbody>
               </table>
               <p className="text-xs text-slate-400 mt-6">* Alle prijzen zijn exclusief BTW. Billing geschiedt per kalendermaand op basis van werkelijk verbruik.</p>
+            </section>
+
+            {/* Error Codes Section */}
+            <section id="errors">
+              <h2 className="text-3xl font-bold mb-8 text-slate-900">Error Codes</h2>
+              <div className="space-y-4">
+                {[
+                  { code: 400, title: "Bad Request", desc: "Verplichte velden missen of data is onjuist geformatteerd." },
+                  { code: 402, title: "Payment Required", desc: "X402 protocol: Betaling via Solana is vereist voor deze call." },
+                  { code: 409, title: "Conflict / Double Spend", desc: "Deze transactie signature is al eerder gebruikt." },
+                  { code: 500, title: "Internal Server Error", desc: "Er is iets misgegaan aan onze kant. Probeer het later opnieuw." }
+                ].map(err => (
+                  <div key={err.code} className="flex gap-6 p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                    <div className="text-lg font-bold text-slate-900 font-mono w-12">{err.code}</div>
+                    <div>
+                      <h4 className="font-bold text-slate-900 mb-1">{err.title}</h4>
+                      <p className="text-slate-600 text-sm">{err.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </section>
           </div>
         </div>

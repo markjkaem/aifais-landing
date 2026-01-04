@@ -53,9 +53,9 @@ export default function MCPPage() {
             <h2 className="text-2xl font-bold mb-8 text-slate-900">Beschikbare MCP Tools</h2>
             <div className="grid gap-6">
               {[
-                { name: "scan_invoice", desc: "Extracteert gestructureerde data uit facturen/bonnen via LLM-vison." },
-                { name: "verify_kvk", desc: "Controleert bedrijfsgegevens direct in het Nederlandse Handelsregister." },
-                { name: "calculate_vat", desc: "Voert complexe BTW berekeningen uit voor NL-specifieke regels." }
+                { name: "scan_invoice", desc: "Extracteert gestructureerde data uit facturen/bonnen via LLM-vison. (Live)" },
+                { name: "verify_business", desc: "Controleert bedrijfsgegevens direct in het Nederlandse Handelsregister. (Binnenkort)" },
+                { name: "analyze_contract", desc: "Analyseert contracten op risico's en ongunstige clausules. (Binnenkort)" }
               ].map(tool => (
                 <div key={tool.name} className="flex gap-6 p-6 bg-white rounded-2xl border border-slate-200 shadow-sm">
                   <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xs shrink-0">

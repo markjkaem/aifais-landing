@@ -139,7 +139,7 @@ export default function ScannerClient() {
     try {
       const { base64, mimeType } = await convertFileToBase64(selectedFile);
 
-      const response = await fetch("/api/agent/scan", {
+      const response = await fetch("/api/v1/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

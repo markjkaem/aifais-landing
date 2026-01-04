@@ -24,19 +24,19 @@ export default async function DevelopersLanding({
   const tools = [
     {
       name: "scan_invoice",
-      desc: "Deep-learning factuur extractie met 100% accuraatheid.",
+      desc: "Deep-learning factuur extractie met 100% accuraatheid via het x402 protocol.",
       status: "Live",
       type: "MCP / API"
     },
     {
-      name: "categorize_transaction",
-      desc: "Automatische categorisering van banktransacties.",
-      status: "Beta",
-      type: "API"
+      name: "verify_business",
+      desc: "Directe verificatie van KvK gegevens en BTW nummers.",
+      status: "Coming Soon",
+      type: "MCP"
     },
     {
-      name: "generate_audit_trail",
-      desc: "Creëer onweerlegbare audit logs voor AI acties.",
+      name: "analyze_contract",
+      desc: "AI-gedreven contractanalyse op basis van Nederlands recht.",
       status: "Coming Soon",
       type: "MCP"
     }
@@ -149,12 +149,11 @@ export default async function DevelopersLanding({
                 </div>
                 <pre className="p-6 text-sm font-mono leading-relaxed overflow-x-auto">
                   <code className="text-blue-300">
-{`curl -X POST https://api.aifais.com/v1/scan \\
-  -H "Authorization: Bearer \${API_KEY}" \\
+{`curl -X POST https://aifais.com/api/v1/scan \\
   -H "Content-Type: application/json" \\
   -d '{
-    "file_url": "https://example.com/invoice.pdf",
-    "extract": ["amount", "vat_id", "date"]
+    "invoiceBase64": "...",
+    "mimeType": "application/pdf"
   }'`}
                   </code>
                 </pre>
