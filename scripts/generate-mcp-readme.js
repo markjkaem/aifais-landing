@@ -14,22 +14,24 @@ const MCP_DIR = path.join(ROOT, 'aifais-mcp-server');
 
 // Configuration - update these when pricing or tools change
 const CONFIG = {
-    version: '1.2.0',
-    price: '0.001 SOL',
-    tools: [
-        {
-            name: 'scan_invoice',
-            description: 'Scant een factuur/bonnetje en extraheert gestructureerde data via AI.',
-            params: ['invoiceBase64 (required)', 'mimeType (required)', 'signature (optional)'],
-        }
-    ],
-    wallet: 'Bqpo3emFG46VGLX4korYoeta3a317pWbR2DMbWnFpZ8c',
+  version: '1.2.0',
+  price: '0.001 SOL',
+  tools: [
+    {
+      name: 'scan_invoice',
+      description: 'Scant een factuur/bonnetje en extraheert gestructureerde data via AI.',
+      params: ['invoiceBase64 (required)', 'mimeType (required)', 'signature (optional)'],
+    }
+  ],
+  wallet: 'Bqpo3emFG46VGLX4korYoeta3a317pWbR2DMbWnFpZ8c',
 };
 
 function generateReadme() {
-    const content = `# AIFAIS MCP Server ⚡
+  const content = `# AIFAIS MCP Server ⚡
 
 De officiële Model Context Protocol (MCP) server voor AIFAIS. Geef je AI agents (zoals Claude of Cursor) direct toegang tot specialistische tools voor de Nederlandse markt.
+
+> **Noot:** Deze MCP server is specifiek voor Claude Desktop en Cursor. Andere AI agents kunnen de API [direct aanroepen](https://aifais.mobi/developers/docs#direct-api) via HTTP zonder server.
 
 ## 🚀 Quick Start
 
@@ -111,9 +113,9 @@ MIT © AIFAIS
 *Auto-generated from website docs. Version ${CONFIG.version}*
 `;
 
-    const outputPath = path.join(MCP_DIR, 'README.md');
-    fs.writeFileSync(outputPath, content, 'utf-8');
-    console.log(`✅ Generated ${outputPath}`);
+  const outputPath = path.join(MCP_DIR, 'README.md');
+  fs.writeFileSync(outputPath, content, 'utf-8');
+  console.log(`✅ Generated ${outputPath}`);
 }
 
 generateReadme();

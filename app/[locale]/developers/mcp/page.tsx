@@ -92,7 +92,11 @@ export default async function MCPPage({
 
           <p className="text-xl text-white/40 mb-12 leading-relaxed max-w-2xl">
             AIFAIS ondersteunt het Model Context Protocol (MCP), de nieuwe standaard voor tool use door AI-modellen.
-            Met onze server geef je je agent direct toegang tot specialistische tools voor de Nederlandse markt.
+            Gebruik deze server voor directe integratie in <strong>Claude Desktop</strong> en <strong>Cursor IDE</strong>. 
+            <br /><br />
+            <span className="text-white/20 text-sm">
+              * Andere AI agents kunnen onze <Link href={`/${locale}/developers/docs#direct-api`} className="text-emerald-400 hover:underline">Directe API</Link> gebruiken zonder server.
+            </span>
           </p>
 
           {/* Quick install */}
@@ -375,7 +379,7 @@ export default async function MCPPage({
 
       {/* Support CTA */}
       <section className="py-24 border-t border-white/5 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 via-cyan-500/5 to-emerald-500/5" />
+        <div className="absolute inset-0 bg-linear-to-r from-violet-500/5 via-cyan-500/5 to-emerald-500/5" />
 
         <div className="container mx-auto px-6 max-w-3xl relative z-10 text-center">
           <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-violet-500/20 to-cyan-500/20 border border-white/10 flex items-center justify-center mx-auto mb-8">

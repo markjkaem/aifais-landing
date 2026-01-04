@@ -46,7 +46,9 @@ export default async function DocsPage({
     { section: "Aan de slag", items: [
       { id: "auth", label: "Authenticatie" },
       { id: "quickstart", label: "Quickstart" },
+      { id: "direct-api", label: "Direct API Access" },
       { id: "x402", label: "X402 Payments" },
+      { id: "discovery", label: "Tool Discovery" },
     ]},
     { section: "Endpoints", items: endpoints.map(e => ({ id: e.path, label: e.path })) },
     { section: "Overig", items: [
@@ -163,6 +165,41 @@ export default async function DocsPage({
                 </div>
               </section>
 
+              {/* Direct API Access Section */}
+              <section id="direct-api" className="scroll-mt-24">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h2 className={`${h1_font.className} text-2xl font-bold text-white`}>Direct API Access</h2>
+                </div>
+                <div className="space-y-6">
+                  <p className="text-white/50 leading-relaxed">
+                    Voor de meeste AI agents (zoals LangChain, AutoGPT of custom Python scripts) is een MCP server niet nodig. 
+                    Je kunt de API direct aanroepen via HTTP. Dit is de meest universele manier om AIFAIS te integreren.
+                  </p>
+
+                  <div className="bg-[#050505] rounded-xl border border-white/5 overflow-hidden">
+                    <div className="px-4 py-2 bg-white/5 border-b border-white/5 flex items-center justify-between">
+                      <span className={`${mono.className} text-[10px] text-white/30 uppercase tracking-widest`}>Shell / cURL</span>
+                    </div>
+                    <pre className={`${mono.className} p-4 text-sm text-white/70 overflow-x-auto`}>
+                      <code>
+{`curl -X POST https://aifais.com/api/v1/scan \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "invoiceBase64": "BASE64_STRING_HERE",
+    "mimeType": "application/pdf",
+    "signature": "OPTIONAL_SOLANA_SIG"
+  }'`}
+                      </code>
+                    </pre>
+                  </div>
+                </div>
+              </section>
+
               {/* X402 Section */}
               <section id="x402" className="scroll-mt-24">
                 <div className="flex items-center gap-4 mb-6">
@@ -189,6 +226,33 @@ export default async function DocsPage({
                       </p>
                     </div>
                   </div>
+                </div>
+              </section>
+
+              {/* Discovery Section */}
+              <section id="discovery" className="scroll-mt-24">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <h2 className={`${h1_font.className} text-2xl font-bold text-white`}>Tool Discovery</h2>
+                </div>
+                <div className="space-y-6">
+                  <p className="text-white/50 leading-relaxed">
+                    Je agent kan automatisch ontdekken welke tools beschikbaar zijn en wat de actuele prijzen zijn via ons MCP discovery endpoint. 
+                    Dit endpoint geeft een JSON-schema terug van alle beschikbare functies.
+                  </p>
+
+                  <div className="flex items-center gap-4 p-4 bg-white/2 border border-white/5 rounded-xl">
+                    <span className={`${mono.className} px-2 py-1 bg-emerald-500/10 text-emerald-400 text-xs rounded border border-emerald-500/20`}>GET</span>
+                    <span className={`${mono.className} text-white/80 font-bold`}>https://aifais.com/api/mcp</span>
+                  </div>
+
+                  <p className="text-sm text-white/30">
+                    Dit endpoint wordt ook gebruikt door de MCP server om tool-definities op te halen.
+                  </p>
                 </div>
               </section>
 
