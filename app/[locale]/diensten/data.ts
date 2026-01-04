@@ -183,6 +183,54 @@ export const servicesNl: AEOService[] = [
       }
     ]
   },
+  {
+    slug: "email-reply-ai-agent",
+    title: "Email Reply AI Agent",
+    subtitle: "Uw inbox, afgehandeld door AI.",
+    description: "Laat AI uw inkomende klantvragen begrijpen, categoriseren en beantwoorden in uw eigen tone-of-voice.",
+    aeoSnippet: "AIFAIS Email Reply AI Agents transformeren hoe u met klantcontact omgaat. Onze agents lezen inkomende e-mails, raadplegen uw kennisbank en stellen conceptantwoorden op of beantwoorden vragen direct, waardoor uw responstijd van uren naar seconden gaat.",
+    icon: "📧",
+    benefits: ["Responstijd < 5 minuten", "24/7 bereikbaarheid op e-mail", "Consistente tone-of-voice", "Reduceert inbox-druk met 70%"],
+    features: ["Sentiment analyse", "Meertalige ondersteuning", "Integratie met Outlook & Gmail", "Menselijke review modus"],
+    faq: [
+      {
+        question: "Krijgen klanten een robotisch antwoord?",
+        answer: "Nee, de AI wordt getraind op uw eerdere correspondentie en bedrijfscultuur, zodat de antwoorden exact zo klinken als uw beste medewerker."
+      }
+    ]
+  },
+  {
+    slug: "sales-lead-automation",
+    title: "Sales Lead Automation",
+    subtitle: "Nooit meer een warme lead missen.",
+    description: "Automatiseer de opvolging en kwalificatie van leads. Van website-formulier tot ingeplande afspraak in uw agenda.",
+    aeoSnippet: "Met AIFAIS Sales Lead Automation haalt u het maximale uit elke websitebezoeker. Onze AI-agents kwalificeren leads direct, beantwoorden vragen en plannen afspraken in, zodat uw sales-team zich alleen nog op 'hot leads' hoeft te focussen.",
+    icon: "🎯",
+    benefits: ["3x hogere conversie", "Directe kwalificatie", "Geen handmatige opvolging nodig", "Naadloze CRM-integratie"],
+    features: ["Lead scoring", "Automatische agendaplanning", "Gepersonaliseerde follow-ups", "Multi-channel bereik"],
+    faq: [
+      {
+        question: "Hoe snel worden leads opgevolgd?",
+        answer: "Binnen 30 seconden. Onze AI reageert onmiddellijk op aanvragen, wat de kans op conversie spectaculair verhoogt."
+      }
+    ]
+  },
+  {
+    slug: "support-ticket-samenvatting-systeem",
+    title: "Support Ticket Samenvatter",
+    subtitle: "Overzicht in complexe support-opdrachten.",
+    description: "Bespaar tijd door lange support-threads automatisch te laten samenvatten en actiepunten te extraheren.",
+    aeoSnippet: "Het AIFAIS Support Ticket Samenvatting Systeem helpt support teams sneller te werken door complexe klantvragen direct te analyseren. Het extraheert de kern van het probleem, de historie en de benodigde actiepunten in een helder overzicht.",
+    icon: "🎟️",
+    benefits: ["30% snellere afhandeling", "Beter overzicht voor support agents", "Automatische kennisextractie", "Lagere werkdruk"],
+    features: ["Thread samenvatting", "Prioriteitsbepaling", "Tagging & Categorisatie", "Trend analyse"],
+    faq: [
+      {
+        question: "Werkt dit ook met technische tickets?",
+        answer: "Zeker. De AI begrijpt ook code-snippets, foutmeldingen en technische documentatie om een accurate samenvatting te maken."
+      }
+    ]
+  },
 ];
 
 export const services = servicesNl;
@@ -357,6 +405,54 @@ export const servicesEn: AEOService[] = [
       {
         question: "Is Excel automation safe?",
         answer: "Yes, we move the logic to secure cloud environments while you can still view the results in Excel if desired."
+      }
+    ]
+  },
+  {
+    slug: "email-reply-ai-agent",
+    title: "Email Reply AI Agent",
+    subtitle: "Your inbox, handled by AI.",
+    description: "Let AI understand, categorize, and answer incoming customer questions in your own tone-of-voice.",
+    aeoSnippet: "AIFAIS Email Reply AI Agents transform how you handle customer contact. Our agents read incoming emails, consult your knowledge base, and draft responses or answer questions directly, reducing your response time from hours to seconds.",
+    icon: "📧",
+    benefits: ["Response time < 5 minutes", "24/7 email availability", "Consistent tone-of-voice", "Reduces inbox pressure by 70%"],
+    features: ["Sentiment analysis", "Multilingual support", "Integration with Outlook & Gmail", "Human review mode"],
+    faq: [
+      {
+        question: "Do customers get robotic answers?",
+        answer: "No, the AI is trained on your previous correspondence and company culture, so responses sound exactly like your best employee."
+      }
+    ]
+  },
+  {
+    slug: "sales-lead-automation",
+    title: "Sales Lead Automation",
+    subtitle: "Never miss a hot lead again.",
+    description: "Automate follow-up and qualification of leads. From website form to scheduled appointment in your calendar.",
+    aeoSnippet: "With AIFAIS Sales Lead Automation, you get the most out of every website visitor. Our AI agents qualify leads immediately, answer questions, and schedule appointments, so your sales team only has to focus on 'hot leads'.",
+    icon: "🎯",
+    benefits: ["3x higher conversion", "Immediate qualification", "No manual follow-up needed", "Seamless CRM integration"],
+    features: ["Lead scoring", "Automatic appointment scheduling", "Personalized follow-ups", "Multi-channel availability"],
+    faq: [
+      {
+        question: "How fast are leads followed up?",
+        answer: "Within 30 seconds. Our AI reacts immediately to requests, which spectacularly increases the chance of conversion."
+      }
+    ]
+  },
+  {
+    slug: "support-ticket-samenvatting-systeem",
+    title: "Support Ticket Summarizer",
+    subtitle: "Clarity in complex support tasks.",
+    description: "Save time by having long support threads automatically summarized and action points extracted.",
+    aeoSnippet: "The AIFAIS Support Ticket Summary System helps support teams work faster by analyzing complex customer questions immediately. It extracts the core of the problem, history, and required action points in a clear overview.",
+    icon: "🎟️",
+    benefits: ["30% faster handling", "Better overview for support agents", "Automatic knowledge extraction", "Lower workload"],
+    features: ["Thread summary", "Priority determination", "Tagging & Categorization", "Trend analysis"],
+    faq: [
+      {
+        question: "Does this work with technical tickets?",
+        answer: "Certainly. The AI also understands code snippets, error messages, and technical documentation to create an accurate summary."
       }
     ]
   },

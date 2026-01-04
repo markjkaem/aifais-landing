@@ -37,8 +37,11 @@
     "activeIn": "Active in:",
     "legal": {
       "terms": "Terms & Conditions",
-      "privacy": "Privacy & Cookie Policy"
+      "privacy": "Privacy & Cookie Policy",
+      "cookies": "Cookie Policy"
     },
+    "allSectors": "View all sectors",
+    "allLocations": "View all locations",
     "followLinkedIn": "Follow us on LinkedIn",
     "services": {
       "email": "AI Email Answering System",

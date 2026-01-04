@@ -38,8 +38,11 @@
     "activeIn": "Actief in:",
     "legal": {
       "terms": "Algemene Voorwaarden",
-      "privacy": "Privacy & Cookie Beleid"
+      "privacy": "Privacy & Cookie Beleid",
+      "cookies": "Cookiebeleid"
     },
+    "allSectors": "Alle sectoren bekijken",
+    "allLocations": "Alle locaties bekijken",
     "followLinkedIn": "Volg ons op LinkedIn",
     "services": {
       "email": "AI Email Beantwoording Systeem",

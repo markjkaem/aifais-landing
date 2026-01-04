@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 
 export default function ExitIntentPopup() {
@@ -9,8 +10,10 @@ export default function ExitIntentPopup() {
   const [showPopup, setShowPopup] = useState(false);
   const [hasShown, setHasShown] = useState(false);
 
+  const locale = useLocale();
+
   // Check if current page should show popup
-  const excludedPaths = ["/", "/quickscan", "/contact", "/bedankt"];
+  const excludedPaths = ["/", "/quickscan", "/contact", "/thank-you"];
   const shouldShowPopup = !excludedPaths.some((path) =>
     pathname.includes(path)
   );
@@ -142,7 +145,7 @@ export default function ExitIntentPopup() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
               <Link
-                href="/contact"
+                href={`/${locale}/contact`}
                 onClick={closePopup}
                 className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-bold text-lg rounded-xl hover:scale-105 transition-all duration-300 shadow-2xl shadow-gray-500/30"
               >

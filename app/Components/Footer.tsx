@@ -120,10 +120,22 @@ export default function Footer() {
               {t("services.support")}
             </Link>
             <Link
+              href={`/${locale}/diensten/human-parity-voice`}
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
+              {locale === 'en' ? 'Human-Parity Voice AI' : 'Human-Parity Voice AI'}
+            </Link>
+            <Link
+              href={`/${locale}/diensten/workflow-automatisering`}
+              className="hover:text-[#3066be] transition text-gray-600"
+            >
+              {locale === 'en' ? 'Workflow Automation' : 'Workflow Automatisering'}
+            </Link>
+            <Link
               href={`/${locale}/diensten`}
               className="text-[#3066be] hover:text-[#234a8c] transition font-medium mt-2 text-xs uppercase tracking-wider"
             >
-              {tNav("services")} →
+              {tNav("viewAllServices")} →
             </Link>
           </nav>
         </div>
@@ -143,21 +155,6 @@ export default function Footer() {
             >
               {tNav("news")}
             </Link>
-            {news.slice(0, 3).map((item, index) => (
-              <Link
-                key={item.slug}
-                href={`/${locale}/news/${item.slug}`}
-                className="group hover:text-[#3066be] transition text-gray-600 truncate text-xs flex items-center gap-2"
-                title={item.title}
-              >
-                • {item.title}
-                {index === 0 && item.slug === "ai-trends-2026-kansen-mkb" && (
-                  <span className="bg-blue-600 text-white px-1 py-0.5 rounded-[3px] text-[8px] font-bold uppercase tracking-tighter shrink-0">
-                    Trend 2026
-                  </span>
-                )}
-              </Link>
-            ))}
             <Link
               href={`/${locale}/about`}
               className="hover:text-[#3066be] transition text-gray-600"
@@ -189,7 +186,7 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <h3 className="font-bold text-gray-900 text-base">{locale === 'en' ? 'Sectors' : 'MKB Sectoren'}</h3>
           <nav className="flex flex-col gap-3">
-            {Object.values(locale === 'en' ? sectorDataEn : sectorData).map((sector) => (
+            {Object.values(locale === 'en' ? sectorDataEn : sectorData).slice(0, 5).map((sector) => (
               <Link
                 key={sector.slug}
                 href={`/${locale}/mkb/${sector.slug}`}
@@ -199,6 +196,12 @@ export default function Footer() {
                 {sector.name}
               </Link>
             ))}
+            <Link
+              href={`/${locale}/mkb`}
+              className="text-[#3066be] hover:text-[#234a8c] transition font-medium mt-2 text-xs uppercase tracking-wider"
+            >
+              {t("allSectors")} →
+            </Link>
           </nav>
         </div>
 
@@ -230,6 +233,12 @@ export default function Footer() {
             >
               {tLoc("utrecht")}
             </Link>
+            <Link
+              href={`/${locale}/locatie`}
+              className="text-[#3066be] hover:text-[#234a8c] transition font-medium mt-2 text-xs uppercase tracking-wider"
+            >
+              {t("allLocations")} →
+            </Link>
           </nav>
         </div>
 
@@ -238,6 +247,7 @@ export default function Footer() {
             {t("businessTitle")}
           </h3>
           <div className="flex flex-col gap-2 text-gray-500">
+            <p>KVK: 92453629</p>
           </div>
 
           <div className="mt-4 pt-4 border-t border-gray-200 flex flex-col gap-2">
@@ -252,6 +262,12 @@ export default function Footer() {
               className="hover:text-[#3066be] transition text-xs text-gray-600"
             >
               {t("legal.privacy")}
+            </Link>
+            <Link
+              href={`/${locale}/cookies`}
+              className="hover:text-[#3066be] transition text-xs text-gray-600"
+            >
+              {t("legal.cookies")}
             </Link>
           </div>
 
