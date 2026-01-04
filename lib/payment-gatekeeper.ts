@@ -10,7 +10,7 @@ const connection = new Connection(
   "confirmed"
 );
 
-export type PaymentResult = 
+export type PaymentResult =
   | { success: true; method: string; status?: number }
   | { success: false; error: string; status: number; details?: any };
 
@@ -22,14 +22,20 @@ export async function gatekeepPayment(reqBody: any): Promise<PaymentResult> {
 
   // --- OPTIE A: SOLANA (X402) ---
   if (signature) {
+    // DEVELOPMENT BACKDOOR
+    if (process.env.NODE_ENV === 'development' && signature === 'DEV_BYPASS') {
+      console.warn("⚠️ DEV_BYPASS used for payment verification");
+      return { success: true, method: "dev_bypass" };
+    }
+
     const payCheck = await checkPayment(signature, connection);
 
     if (payCheck.status === "error") {
-      return { 
-        success: false, 
-        error: payCheck.message, 
-        status: payCheck.code, 
-        details: payCheck.details 
+      return {
+        success: false,
+        error: payCheck.message,
+        status: payCheck.code,
+        details: payCheck.details
       };
     }
 

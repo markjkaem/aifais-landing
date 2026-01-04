@@ -3,6 +3,7 @@ import { gatekeepPayment } from "@/lib/payment-gatekeeper";
 import { scanInvoiceWithClaude } from "@/utils/ai-scanner";
 import { withApiGuard } from "@/lib/security/api-guard";
 import { scanSchema } from "@/lib/security/schemas";
+import { convertToCSV } from "@/utils/csv-formatter";
 
 export const POST = withApiGuard(async (req, body: any) => {
   console.log("--- API START: /api/v1/scan ---");
@@ -24,31 +25,57 @@ export const POST = withApiGuard(async (req, body: any) => {
     }
 
     // =========================================================================
-    // 2. BUSINESS LOGIC: SCAN FACTUUR
+    // 2. BUSINESS LOGIC: SCAN FACTUUR (Single of Bulk)
     // =========================================================================
     console.log(`Payment authorized via ${payment.method}. Starting AI scan...`);
 
-    const { invoiceBase64, mimeType } = body;
+    const { invoiceBase64, mimeType, invoices, format } = body;
 
-    // Voer de AI scan uit
-    const result = await scanInvoiceWithClaude(invoiceBase64, mimeType);
+    let scanJobs: { base64: string; mimeType: string; originalIndex: number }[] = [];
 
-    // Vang specifieke AI fouten af (bijv. als het plaatje onleesbaar is)
-    if (result && result.error === "UNREADABLE_DOCUMENT") {
-      console.warn(`SCAN FAILED (400): ${result.message}`);
-      return NextResponse.json({ error: result.message }, { status: 400 });
+    if (Array.isArray(invoices) && invoices.length > 0) {
+      scanJobs = invoices.map((inv: any, idx: number) => ({ base64: inv.base64, mimeType: inv.mimeType, originalIndex: idx }));
+    } else if (invoiceBase64 && mimeType) {
+      scanJobs = [{ base64: invoiceBase64, mimeType, originalIndex: 0 }];
+    } else {
+      return NextResponse.json({ error: "Geen factuur data gevonden in request." }, { status: 400 });
     }
+
+    // Voer alle scans parallel uit (Claude kan dit aan, en het is sneller voor de user)
+    const results = await Promise.all(
+      scanJobs.map(async (job) => {
+        try {
+          const result = await scanInvoiceWithClaude(job.base64, job.mimeType);
+          return { success: true, result };
+        } catch (err: any) {
+          return { success: false, error: err.message };
+        }
+      })
+    );
 
     // =========================================================================
     // 3. SUCCESS RESPONSE
     // =========================================================================
-    console.log(`--- API END: Success (200) ---`);
+    console.log(`--- API END: Success (Processed ${results.length} scans) ---`);
 
+    // CSV Export Logic
+    if (format === 'csv') {
+      const csvData = convertToCSV(results);
+      return new NextResponse(csvData, {
+        headers: {
+          "Content-Type": "text/csv; charset=utf-8",
+          "Content-Disposition": `attachment; filename="invoices-${Date.now()}.csv"`
+        }
+      });
+    }
+
+    // Default JSON Response
     return NextResponse.json({
       success: true,
-      data: result,
+      data: Array.isArray(invoices) ? results : results[0].result, // Return array for bulk, single object for legacy
       meta: {
-        method: payment.method, // "solana_x402" of "stripe_fiat"
+        method: payment.method,
+        count: results.length,
         timestamp: new Date().toISOString()
       }
     });

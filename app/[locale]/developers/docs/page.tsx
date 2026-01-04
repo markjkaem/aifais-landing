@@ -33,6 +33,7 @@ export default async function DocsPage({
         { name: "invoiceBase64", type: "string", required: true, desc: "Base64 string van het document." },
         { name: "mimeType", type: "string", required: true, desc: "image/jpeg, image/png of application/pdf." },
         { name: "signature", type: "string", required: false, desc: "Solana transaction signature voor X402 payment." },
+        { name: "format", type: "string", required: false, desc: "Optioneel: 'json' (default) of 'csv' voor CSV output." },
       ]
     }
   ];
@@ -192,6 +193,7 @@ export default async function DocsPage({
   -d '{
     "invoiceBase64": "BASE64_STRING_HERE",
     "mimeType": "application/pdf",
+    "format": "csv", // Optioneel
     "signature": "OPTIONAL_SOLANA_SIG"
   }'`}
                       </code>

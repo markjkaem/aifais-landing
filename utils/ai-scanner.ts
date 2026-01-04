@@ -8,7 +8,7 @@ const anthropic = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY || "" });
  * Nu met robuuste error handling voor lege/witte afbeeldingen.
  */
 export async function scanInvoiceWithClaude(invoiceBase64: string, mimeType: string) {
-  
+
   // 1. Bepaal het type content blok op basis van de mimeType
   let contentBlock;
 
@@ -21,7 +21,7 @@ export async function scanInvoiceWithClaude(invoiceBase64: string, mimeType: str
   } else {
     const validImageTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     if (!validImageTypes.includes(mimeType)) {
-        throw new Error(`Niet-ondersteund bestandstype: ${mimeType}. Gebruik PDF, JPG of PNG.`);
+      throw new Error(`Niet-ondersteund bestandstype: ${mimeType}. Gebruik PDF, JPG of PNG.`);
     }
     contentBlock = {
       type: "image" as const,
@@ -30,11 +30,23 @@ export async function scanInvoiceWithClaude(invoiceBase64: string, mimeType: str
   }
 
   // 2. Stuur naar Claude
-  // Tip: Gebruik "claude-3-5-sonnet-20240620" (huidige model) ipv "claude-4-sonnet" (bestaat soms niet of is duurder/trager)
-  // Ik laat jouw model staan, maar als je errors krijgt over model names, gebruik de 3.5 sonnet.
+  const prompt = `Extract all relevant information from this invoice into a highly detailed JSON structure. 
+  Include the following fields if present:
+  - supplier: { name, kvk_number, vat_id, address, phone, email, website, iban, bic }
+  - invoice: { number, date, due_date, reference }
+  - totals: { subtotal, vat_percentage, vat_amount, total_amount, currency }
+  - line_items: [{ description, quantity, unit_price, vat_percentage, amount }]
+  - metadata: { payment_terms, payment_status, customer_id, category_suggestion }
+
+  Rules:
+  1. If the image is blank, unreadable, or not an invoice, respond with exactly: {"error": "UNREADABLE_DOCUMENT"}.
+  2. Use YYYY-MM-DD for dates.
+  3. Ensure all numbers are floats.
+  4. Do not include markdown formatting or explanations, only raw JSON.`;
+
   const msg = await anthropic.messages.create({
-    model: "claude-4-sonnet-20250514", // AANBEVOLEN voor documenten!
-    max_tokens: 2048,
+    model: "claude-4-sonnet-20250514", // AANBEVOLEN voo"
+    max_tokens: 4096,
     messages: [
       {
         role: "user",
@@ -42,7 +54,7 @@ export async function scanInvoiceWithClaude(invoiceBase64: string, mimeType: str
           contentBlock,
           {
             type: "text",
-            text: "Extract invoice data to pure JSON. Fields: supplier_name, invoice_date (YYYY-MM-DD), invoice_number, total_amount, vat_amount, currency. If the image is blank, unreadable, or not an invoice, respond with exactly: {\"error\": \"UNREADABLE_DOCUMENT\"}. Do not include markdown formatting or explanations."
+            text: prompt
           }
         ],
       }
@@ -52,32 +64,22 @@ export async function scanInvoiceWithClaude(invoiceBase64: string, mimeType: str
   // 3. Verwerk het antwoord
   let text = msg.content[0].type === 'text' ? msg.content[0].text : "";
 
-  // Zoek naar de JSON (soms kletst Claude eromheen)
   const jsonMatch = text.match(/\{[\s\S]*\}/);
-  
-  // ... (in scanInvoiceWithClaude, na de const jsonMatch = text.match(/\{[\s\S]*\}/);)
 
-// Dit stukje is nu kritiek:
-if (!jsonMatch) {
-    throw new Error("AI kon geen JSON-structuur vinden in de response. Controleer of de prompt duidelijk is en de afbeelding leesbaar.");
-}
+  if (!jsonMatch) {
+    throw new Error("AI kon geen JSON-structuur vinden in de response.");
+  }
 
-try {
-    const rawJsonText = jsonMatch[0];
-    const data = JSON.parse(rawJsonText); 
-    
-    // Check of Claude onze error instructie heeft gevolgd
+  try {
+    const data = JSON.parse(jsonMatch[0]);
+
     if (data.error === "UNREADABLE_DOCUMENT") {
-        // 🚨 NIET THROWEN, MAAR DIRECT HET RESULTAAT GEVEN!
-        return { error: "UNREADABLE_DOCUMENT", message: "Het document is onleesbaar of geen factuur." };
+      return { error: "UNREADABLE_DOCUMENT", message: "Het document is onleesbaar of geen factuur." };
     }
-    
+
     return data;
 
-} catch (e: any) {
-    // Dit vangt alleen ECHTE JSON parse errors af
+  } catch (e: any) {
     throw new Error("Ongeldig JSON formaat ontvangen van AI.");
-}
-
-// ... (rest van de functie)
+  }
 }

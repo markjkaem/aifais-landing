@@ -31,8 +31,17 @@ export const quickscanSchema = z.object({
 });
 
 export const scanSchema = z.object({
-    invoiceBase64: z.string().min(1, "Invoice data is verplicht"),
-    mimeType: z.enum(["image/jpeg", "image/png", "application/pdf"]),
+    // Single file mode (legacy)
+    invoiceBase64: z.string().optional(),
+    mimeType: z.enum(["image/jpeg", "image/png", "application/pdf"]).optional(),
+
+    // Bulk mode
+    invoices: z.array(z.object({
+        base64: z.string().min(1),
+        mimeType: z.enum(["image/jpeg", "image/png", "application/pdf"])
+    })).max(10).optional(),
+
     signature: z.string().optional(),
     stripeSessionId: z.string().optional(),
+    format: z.enum(["json", "csv"]).optional().default("json"),
 });
