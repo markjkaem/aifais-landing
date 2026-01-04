@@ -68,6 +68,13 @@ ${tool.params.map(p => `- \`${p}\``).join('\n')}
 
 ---
 
+## 🔍 Discovery API
+
+Je kunt de actuele tool-definities en prijzen altijd ophalen via ons discovery endpoint:
+\`https://aifais.com/api/mcp\`
+
+---
+
 ## 💳 Pricing
 
 Elke API call kost **${CONFIG.price}** via het X402 protocol.
