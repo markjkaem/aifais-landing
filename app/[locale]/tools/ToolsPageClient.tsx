@@ -212,7 +212,7 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
                        {tool.pricing.currency === "SOL" && tool.pricing.price && (
                            <div className="flex items-center gap-1 mt-0.5">
                                <span className="text-[10px] text-zinc-400 font-medium whitespace-nowrap">
-                                   ≈ €{(tool.pricing.price * 150).toFixed(2)}
+                                   ≈ €{(tool.pricing.price * 500).toFixed(2)}
                                </span>
                                <IdealLogo className="w-9 h-4 object-contain" />
                            </div>
@@ -346,7 +346,7 @@ function FeaturedToolCard({ tool, index }: { tool: Tool; index: number }) {
                        {tool.pricing.currency === "SOL" && tool.pricing.price && (
                            <div className="flex items-center gap-1 mt-0.5">
                                <span className="text-[10px] text-zinc-500 font-medium">
-                                   ≈ €{(tool.pricing.price * 150).toFixed(2)}
+                                   ≈ €{(tool.pricing.price * 500).toFixed(2)}
                                </span>
                                <IdealLogo className="w-9 h-4 object-contain" />
                            </div>

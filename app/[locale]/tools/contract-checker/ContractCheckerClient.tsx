@@ -4,11 +4,11 @@ import { useState } from "react";
 import { FileText, Loader2, AlertTriangle, CheckCircle2, Download, X } from "lucide-react";
 import CryptoModal from "@/app/Components/CryptoModal";
 
-const STRIPE_LINK = process.env.NEXT_PUBLIC_STRIPE_LINK_SINGLE || "https://buy.stripe.com/test_...";
+const STRIPE_LINK = process.env.NEXT_PUBLIC_STRIPE_LINK_CONTRACT || "#";
 
 const CONFIG = {
-  priceSol: 0.01,
-  priceEur: 5.0,
+  priceSol: 0.001,
+  priceEur: 0.50,
   name: "Contract Checker",
 };
 
@@ -179,7 +179,7 @@ export default function ContractCheckerClient() {
             </div>
 
             <div className="mt-6 flex items-center justify-center gap-6 text-xs text-slate-500">
-              <span>0.01 SOL / €5 per analyse</span>
+              <span>0.01 SOL / €0.50 per analyse</span>
               <span>•</span>
               <span>Claude 3.5 Sonnet</span>
             </div>

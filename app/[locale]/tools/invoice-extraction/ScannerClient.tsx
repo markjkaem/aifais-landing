@@ -34,11 +34,11 @@ import { convertToCSV } from "@/utils/csv-formatter";
 // --- CONFIG ---
 const STRIPE_LINK_SINGLE =
   process.env.NEXT_PUBLIC_STRIPE_LINK_SINGLE ||
-  "https://buy.stripe.com/test_...";
+  "https://buy.stripe.com/test_4gM5kF3JOb2faig72R8EM00";
 
 const SCAN_CONFIG = {
   priceSol: 0.001,
-  priceEur: 0.5,
+  priceEur: 0.50,
   name: "AI Factuur Scan",
 };
 
@@ -76,54 +76,7 @@ const USE_CASES = [
 export default function InvoiceScannerPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-white" />
-        
-        {/* Subtle grid pattern */}
-        <div 
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgb(0 0 0) 1px, transparent 0)`,
-            backgroundSize: '32px 32px',
-          }}
-        />
-
-        {/* Decorative blurs */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px]" />
-        <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
-
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-          {/* Badge */}
-          <div className="flex justify-center mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-200/50 rounded-full">
-              <Sparkles className="w-4 h-4 text-emerald-600" />
-              <span className="text-sm font-medium text-emerald-700">AI-Powered Tool</span>
-            </div>
-          </div>
-
-          {/* Title */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-center text-zinc-900 tracking-tight mb-6">
-            Factuur Scanner
-          </h1>
-
-          {/* Description */}
-          <p className="text-lg sm:text-xl text-zinc-500 text-center max-w-2xl mx-auto mb-8 leading-relaxed">
-            Upload je facturen en ontvang direct alle gegevens in een overzichtelijk Excel of CSV bestand. Van KvK-nummers tot BTW-bedragen.
-          </p>
-
-
-
-          {/* Scroll indicator */}
-          <div className="flex justify-center">
-            <div className="flex flex-col items-center gap-2 text-zinc-400">
-              <span className="text-xs font-medium uppercase tracking-wider">Start hieronder</span>
-              <ArrowDown className="w-4 h-4 animate-bounce" />
-            </div>
-          </div>
-        </div>
-      </section>
+     
 
       {/* SCANNER SECTION */}
       <section className="relative py-12 sm:py-16">
@@ -456,7 +409,7 @@ function ScannerClient() {
 
                 <button
                   onClick={() => setShowCryptoQR(true)}
-                  className="group w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-4 px-5 rounded-xl flex items-center justify-between transition-all shadow-lg"
+                  className="group w-full bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-4 px-5 rounded-xl flex items-center justify-between transition-all shadow-lg"
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-white/20 rounded-lg">
@@ -490,7 +443,7 @@ function ScannerClient() {
             <div className="flex items-center gap-4">
               <div className="relative">
                 <div className="absolute inset-0 bg-emerald-500 rounded-2xl blur-xl opacity-25" />
-                <div className="relative w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/25">
+                <div className="relative w-14 h-14 bg-linear-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/25">
                   <Zap className="w-7 h-7 text-white" />
                 </div>
               </div>
@@ -628,7 +581,7 @@ function ScannerClient() {
                 <button
                   onClick={() => setShowPaymentModal(true)}
                   disabled={isScanning}
-                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 rounded-xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/20"
+                  className="w-full bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 rounded-xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/20"
                 >
                   <span>Scan {selectedFiles.length} {selectedFiles.length === 1 ? 'factuur' : 'facturen'}</span>
                   <ArrowRight className="w-5 h-5" />
@@ -637,7 +590,7 @@ function ScannerClient() {
                 <button
                   onClick={() => performScan(paymentProof!)}
                   disabled={isScanning}
-                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 rounded-xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/20 disabled:opacity-70"
+                  className="w-full bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 rounded-xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/20 disabled:opacity-70"
                 >
                   {isScanning ? (
                     <><Loader2 className="w-5 h-5 animate-spin" /><span>Scannen...</span></>

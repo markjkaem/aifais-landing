@@ -1,22 +1,265 @@
 import { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
-import { SolanaLogo, IdealLogo } from "@/app/Components/CustomIcons";
 
-const h1_font = Space_Grotesk({
-  weight: "700",
+const heading = Space_Grotesk({
+  weight: ["600", "700"],
   subsets: ["latin"],
 });
 
 const mono = JetBrains_Mono({
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   title: "API Documentation | AIFAIS Developers",
-  description: "Volledige technische documentatie voor de AIFAIS API en MCP tools. Authenticatie, endpoints en response formats.",
+  description:
+    "Complete API reference for AIFAIS. Authentication, endpoints, parameters, and response formats.",
 };
+
+// ============================================================================
+// CONFIGURATION - Scalable for 100+ APIs
+// ============================================================================
+
+type EndpointParam = {
+  name: string;
+  type: string;
+  required: boolean;
+  description: string;
+};
+
+type Endpoint = {
+  id: string;
+  method: "GET" | "POST" | "PUT" | "DELETE";
+  path: string;
+  title: string;
+  description: string;
+  category: string;
+  price: string;
+  isFree?: boolean;
+  params: EndpointParam[];
+  responseExample?: string;
+};
+
+type Category = {
+  id: string;
+  name: string;
+  icon: string;
+};
+
+const categories: Category[] = [
+  { id: "finance", name: "Finance", icon: "💰" },
+  { id: "legal", name: "Legal", icon: "⚖️" },
+];
+
+const endpoints: Endpoint[] = [
+  {
+    id: "scan-invoice",
+    method: "POST",
+    path: "/api/v1/finance/scan",
+    title: "Scan Invoice",
+    description: "Extract structured data from invoices and receipts using AI vision. Supports PDF, JPG, and PNG.",
+    category: "finance",
+    price: "0.001 SOL",
+    params: [
+      { name: "invoiceBase64", type: "string", required: true, description: "Base64 encoded document" },
+      { name: "mimeType", type: "string", required: true, description: "image/jpeg, image/png, or application/pdf" },
+      { name: "signature", type: "string", required: false, description: "X402 payment signature (required for paid requests)" },
+    ],
+    responseExample: `{
+  "success": true,
+  "data": {
+    "vendor": "Bol.com B.V.",
+    "invoiceNumber": "INV-2024-001",
+    "date": "2024-01-15",
+    "total": 149.99,
+    "vat": 26.03,
+    "currency": "EUR",
+    "lineItems": [...]
+  }
+}`,
+  },
+  {
+    id: "create-invoice",
+    method: "POST",
+    path: "/api/v1/finance/create-invoice",
+    title: "Create Invoice",
+    description: "Generate a professional PDF invoice from structured data.",
+    category: "finance",
+    price: "Free",
+    isFree: true,
+    params: [
+      { name: "ownName", type: "string", required: true, description: "Your company name" },
+      { name: "ownAddress", type: "string", required: false, description: "Your company address" },
+      { name: "clientName", type: "string", required: true, description: "Client company name" },
+      { name: "items", type: "array", required: true, description: "Array of invoice line items" },
+      { name: "invoiceNumber", type: "string", required: false, description: "Custom invoice number" },
+    ],
+    responseExample: `{
+  "success": true,
+  "data": {
+    "pdfBase64": "JVBERi0xLjQK...",
+    "invoiceNumber": "2024-001"
+  }
+}`,
+  },
+  {
+    id: "generate-quote",
+    method: "POST",
+    path: "/api/v1/finance/generate-quote",
+    title: "Generate Quote",
+    description: "Generate a professional PDF quote/proposal from structured data.",
+    category: "finance",
+    price: "Free",
+    isFree: true,
+    params: [
+      { name: "companyName", type: "string", required: true, description: "Your company name" },
+      { name: "clientName", type: "string", required: true, description: "Client name" },
+      { name: "projectTitle", type: "string", required: true, description: "Project or quote title" },
+      { name: "items", type: "array", required: true, description: "Array of quote line items" },
+      { name: "validUntil", type: "number", required: false, description: "Validity in days (default: 30)" },
+    ],
+  },
+  {
+    id: "check-contract",
+    method: "POST",
+    path: "/api/v1/legal/check-contract",
+    title: "Check Contract",
+    description: "AI-powered contract analysis. Identifies risks, unfavorable clauses, and compliance issues based on Dutch law.",
+    category: "legal",
+    price: "0.001 SOL",
+    params: [
+      { name: "contractBase64", type: "string", required: true, description: "Base64 encoded PDF contract" },
+      { name: "signature", type: "string", required: true, description: "X402 payment signature" },
+      { name: "focusAreas", type: "array", required: false, description: "Specific areas to analyze" },
+    ],
+  },
+  {
+    id: "generate-terms",
+    method: "POST",
+    path: "/api/v1/legal/generate-terms",
+    title: "Generate Terms",
+    description: "Generate custom terms & conditions tailored to your business type and Dutch regulations.",
+    category: "legal",
+    price: "0.001 SOL",
+    params: [
+      { name: "companyName", type: "string", required: true, description: "Your company name" },
+      { name: "companyType", type: "string", required: true, description: "Business type (BV, VOF, ZZP, etc.)" },
+      { name: "industry", type: "string", required: false, description: "Your industry for specific clauses" },
+      { name: "signature", type: "string", required: true, description: "X402 payment signature" },
+    ],
+  },
+];
+
+const errorCodes = [
+  { code: 400, name: "Bad Request", description: "Invalid parameters or missing required fields" },
+  { code: 401, name: "Unauthorized", description: "Missing or invalid authentication" },
+  { code: 402, name: "Payment Required", description: "X402 payment signature required or invalid" },
+  { code: 429, name: "Rate Limited", description: "Too many requests, please slow down" },
+  { code: 500, name: "Server Error", description: "Internal server error, please retry" },
+];
+
+// ============================================================================
+// COMPONENTS
+// ============================================================================
+
+function MethodBadge({ method }: { method: string }) {
+  const styles: Record<string, string> = {
+    GET: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    POST: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    PUT: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    DELETE: "bg-red-500/10 text-red-400 border-red-500/20",
+  };
+
+  return (
+    <span className={`${mono.className} px-2.5 py-1 rounded text-xs font-semibold border ${styles[method]}`}>
+      {method}
+    </span>
+  );
+}
+
+function ParamRow({ param }: { param: EndpointParam }) {
+  return (
+    <div className="grid grid-cols-12 gap-4 py-3 border-b border-zinc-800/50 last:border-0">
+      <div className="col-span-3 flex items-center gap-2">
+        <code className={`${mono.className} text-sm text-cyan-400`}>{param.name}</code>
+        {param.required && (
+          <span className="px-1.5 py-0.5 bg-red-500/10 text-red-400 text-[10px] font-semibold rounded border border-red-500/20">
+            required
+          </span>
+        )}
+      </div>
+      <div className="col-span-2">
+        <code className={`${mono.className} text-xs text-zinc-500`}>{param.type}</code>
+      </div>
+      <div className="col-span-7">
+        <p className="text-sm text-zinc-400">{param.description}</p>
+      </div>
+    </div>
+  );
+}
+
+function EndpointCard({ endpoint }: { endpoint: Endpoint }) {
+  return (
+    <div id={endpoint.id} className="scroll-mt-24 mb-12">
+      <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-colors">
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800 bg-zinc-900/50">
+          <div className="flex items-center gap-4">
+            <MethodBadge method={endpoint.method} />
+            <code className={`${mono.className} text-white font-semibold`}>{endpoint.path}</code>
+          </div>
+          <div className="flex items-center gap-3">
+            {endpoint.isFree ? (
+              <span className={`${mono.className} px-2 py-1 bg-cyan-500/10 text-cyan-400 text-xs font-semibold rounded border border-cyan-500/20`}>
+                FREE
+              </span>
+            ) : (
+              <span className={`${mono.className} text-xs text-zinc-500`}>{endpoint.price}</span>
+            )}
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-6">
+          <h3 className={`${heading.className} text-xl font-semibold text-white mb-2`}>{endpoint.title}</h3>
+          <p className="text-zinc-400 mb-6">{endpoint.description}</p>
+
+          {/* Parameters */}
+          {endpoint.params.length > 0 && (
+            <div className="mb-6">
+              <h4 className={`${mono.className} text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-4`}>
+                Parameters
+              </h4>
+              <div className="bg-zinc-950/50 rounded-lg border border-zinc-800/50 p-4">
+                {endpoint.params.map((param) => (
+                  <ParamRow key={param.name} param={param} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Response Example */}
+          {endpoint.responseExample && (
+            <div>
+              <h4 className={`${mono.className} text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-4`}>
+                Response Example
+              </h4>
+              <pre className={`${mono.className} bg-zinc-950 rounded-lg border border-zinc-800/50 p-4 text-sm overflow-x-auto`}>
+                <code className="text-zinc-300">{endpoint.responseExample}</code>
+              </pre>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
 
 export default async function DocsPage({
   params,
@@ -25,116 +268,72 @@ export default async function DocsPage({
 }) {
   const { locale } = await params;
 
-  const endpoints = [
+  // Build navigation from categories and endpoints
+  const navSections = [
     {
-      method: "POST",
-      path: "/api/v1/finance/scan",
-      desc: "Scant een document (PDF/JPG/PNG) en extraheert gestructureerde data via AI (0.001 SOL).",
-      params: [
-        { name: "invoiceBase64", type: "string", required: true, desc: "Base64 string van het document." },
-        { name: "mimeType", type: "string", required: true, desc: "image/jpeg, image/png of application/pdf." },
-        { name: "signature", type: "string", required: false, desc: "X402 signature." },
-      ]
+      title: "Getting Started",
+      items: [
+        { id: "overview", label: "Overview" },
+        { id: "authentication", label: "Authentication" },
+        { id: "x402-payments", label: "X402 Payments" },
+      ],
     },
+    ...categories.map((cat) => ({
+      title: cat.name,
+      items: endpoints
+        .filter((e) => e.category === cat.id)
+        .map((e) => ({ id: e.id, label: e.title })),
+    })),
     {
-      method: "POST",
-      path: "/api/v1/finance/create-invoice",
-      desc: "Genereer een PDF factuur op basis van input data. (Gratis)",
-      params: [
-        { name: "ownName", type: "string", required: true, desc: "Naam eigen bedrijf." },
-        { name: "clientName", type: "string", required: true, desc: "Naam klant." },
-        { name: "items", type: "array", required: true, desc: "Lijst met factuurregels." },
-      ]
+      title: "Reference",
+      items: [
+        { id: "pricing", label: "Pricing" },
+        { id: "errors", label: "Error Codes" },
+      ],
     },
-    {
-      method: "POST",
-      path: "/api/v1/finance/generate-quote",
-      desc: "Genereer een PDF offerte op basis van input data. (Gratis)",
-      params: [
-        { name: "companyName", type: "string", required: true, desc: "Bedrijfsnaam afzender." },
-        { name: "clientName", type: "string", required: true, desc: "Naam klant." },
-        { name: "projectTitle", type: "string", required: true, desc: "Titel van het project." },
-        { name: "items", type: "array", required: true, desc: "Lijst met offerteregels." },
-        { name: "validUntil", type: "number", required: false, desc: "Geldigheidsduur in dagen (default: 30)." },
-      ]
-    },
-    {
-      method: "POST",
-      path: "/api/v1/legal/check-contract",
-      desc: "Analyseer een juridisch contract op risico's (0.01 SOL).",
-      params: [
-        { name: "contractBase64", type: "string", required: true, desc: "Base64 PDF contract." },
-        { name: "signature", type: "string", required: true, desc: "X402 signature (0.01 SOL)." },
-      ]
-    },
-    {
-      method: "POST",
-      path: "/api/v1/legal/generate-terms",
-      desc: "Genereer algemene voorwaarden op maat (0.005 SOL).",
-      params: [
-        { name: "companyName", type: "string", required: true, desc: "Bedrijfsnaam." },
-        { name: "companyType", type: "string", required: true, desc: "Type bedrijf (bv. BV)." },
-        { name: "signature", type: "string", required: true, desc: "X402 signature (0.005 SOL)." },
-      ]
-    }
-  ];
-
-  const navItems = [
-    { section: "Aan de slag", items: [
-      { id: "auth", label: "Authenticatie" },
-      { id: "quickstart", label: "Quickstart" },
-      { id: "direct-api", label: "Direct API Access" },
-      { id: "x402", label: "X402 Payments" },
-      { id: "discovery", label: "Tool Discovery" },
-    ]},
-    { section: "Endpoints", items: endpoints.map(e => ({ id: e.path, label: e.path })) },
-    { section: "Overig", items: [
-      { id: "pricing", label: "Pricing" },
-      { id: "errors", label: "Error Codes" },
-    ]},
   ];
 
   return (
-    <main className="bg-[#0c0c0c] min-h-screen text-white">
-      {/* Header bar and other unchanged sections... */}
-      <div className="border-b border-white/5 bg-[#0c0c0c]/80 backdrop-blur-xl sticky top-0 z-50">
+    <main className="bg-zinc-950 min-h-screen text-white">
+      {/* Header */}
+      <div className="border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link href={`/${locale}/developers`} className={`${mono.className} text-white/40 hover:text-emerald-400 transition-colors text-sm flex items-center gap-2`}>
+          <div className="flex items-center gap-4">
+            <Link
+              href={`/${locale}/developers`}
+              className={`${mono.className} text-zinc-500 hover:text-emerald-400 transition-colors text-sm flex items-center gap-2`}
+            >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              Developers Hub
+              Developers
             </Link>
-            <div className="hidden md:flex items-center gap-1 text-white/20">
-              <span>/</span>
-              <span className="text-white/60">docs</span>
-            </div>
+            <span className="text-zinc-700">/</span>
+            <span className="text-zinc-400">docs</span>
           </div>
-          <div className={`${mono.className} hidden md:flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-xs`}>
+          <div className={`${mono.className} hidden sm:flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-xs`}>
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             v1.2.0
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12 max-w-7xl">
-        <div className="grid lg:grid-cols-[280px_1fr] gap-12">
-          {/* Sidebar Navigation */}
+      <div className="container mx-auto px-6 py-12">
+        <div className="grid lg:grid-cols-[240px_1fr] gap-12 max-w-7xl mx-auto">
+          {/* Sidebar */}
           <aside className="hidden lg:block">
             <nav className="sticky top-24 space-y-8">
-              {navItems.map((group, gi) => (
-                <div key={gi}>
-                  <h3 className={`${mono.className} text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-4`}>
-                    {group.section}
+              {navSections.map((section) => (
+                <div key={section.title}>
+                  <h3 className={`${mono.className} text-[10px] font-semibold text-zinc-600 uppercase tracking-widest mb-3`}>
+                    {section.title}
                   </h3>
                   <ul className="space-y-1">
-                    {group.items.map((item, ii) => (
-                      <li key={ii}>
+                    {section.items.map((item) => (
+                      <li key={item.id}>
                         <a
                           href={`#${item.id}`}
-                          className={`${mono.className} block px-3 py-2 text-sm text-white/50 hover:text-emerald-400 hover:bg-white/5 rounded-lg transition-all truncate`}
-                          title={item.label}
+                          className={`${mono.className} block px-3 py-2 text-sm text-zinc-500 hover:text-white hover:bg-zinc-900 rounded-lg transition-colors`}
                         >
                           {item.label}
                         </a>
@@ -146,192 +345,166 @@ export default async function DocsPage({
             </nav>
           </aside>
 
-          {/* Content Area */}
+          {/* Content */}
           <div className="min-w-0">
-             {/* ... content header ... */}
-             <div className="mb-16">
-              <div className={`${mono.className} text-emerald-400 text-sm mb-4`}>// Documentation</div>
-              <h1 className={`${h1_font.className} text-5xl md:text-6xl font-extrabold mb-6 text-white tracking-tight`}>
-                API Reference
-              </h1>
-              <p className="text-xl text-white/40 leading-relaxed max-w-2xl">
-                Complete technische documentatie voor de AIFAIS API. Authenticatie, endpoints, response formats en error handling.
+            {/* Page Header */}
+            <div className="mb-16">
+              <p className={`${mono.className} text-emerald-400 text-sm mb-3`}>// Documentation</p>
+              <h1 className={`${heading.className} text-4xl sm:text-5xl font-bold text-white mb-4`}>API Reference</h1>
+              <p className="text-lg text-zinc-400 max-w-2xl">
+                Complete technical documentation for the AIFAIS API. Authentication, endpoints, and response formats.
               </p>
             </div>
 
-            <div className="space-y-24">
-              {/* ... Auth Section ... */}
-              <section id="auth" className="scroll-mt-24">
-                 {/* ... (Kept as is, inferred context) ... */}
-                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-                    </svg>
+            {/* Overview */}
+            <section id="overview" className="scroll-mt-24 mb-16">
+              <h2 className={`${heading.className} text-2xl font-bold text-white mb-4`}>Overview</h2>
+              <p className="text-zinc-400 mb-6">
+                The AIFAIS API provides AI-powered tools for Dutch businesses. All endpoints accept JSON and return JSON responses.
+              </p>
+              <div className="bg-zinc-900/50 rounded-xl border border-zinc-800 p-6">
+                <h4 className={`${mono.className} text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3`}>
+                  Base URL
+                </h4>
+                <code className={`${mono.className} text-emerald-400`}>https://aifais.com/api</code>
+              </div>
+            </section>
+
+            {/* Authentication */}
+            <section id="authentication" className="scroll-mt-24 mb-16">
+              <h2 className={`${heading.className} text-2xl font-bold text-white mb-4`}>Authentication</h2>
+              <p className="text-zinc-400 mb-6">
+                AIFAIS uses different authentication methods depending on your use case:
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="bg-zinc-900/50 rounded-xl border border-zinc-800 p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-xl">🤖</span>
+                    <h4 className={`${heading.className} font-semibold text-white`}>AI Agents</h4>
                   </div>
-                  <h2 className={`${h1_font.className} text-2xl font-bold text-white`}>Authenticatie</h2>
-                </div>
-                <div className="space-y-6">
-                  <p className="text-white/50 leading-relaxed">
-                    AIFAIS hanteert een strikte scheiding tussen AI agents en menselijke gebruikers om workflows zo eenvoudig mogelijk te houden.
+                  <p className="text-sm text-zinc-400">
+                    Use X402 payment signatures. No API key required - pay per request via Solana.
                   </p>
-                  <p className="text-sm text-white/30 italic">
-                    * Enterprise klanten kunnen contact opnemen voor API keys met maandelijkse facturatie.
+                </div>
+                <div className="bg-zinc-900/50 rounded-xl border border-zinc-800 p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-xl">🔑</span>
+                    <h4 className={`${heading.className} font-semibold text-white`}>Enterprise</h4>
+                  </div>
+                  <p className="text-sm text-zinc-400">
+                    Contact us for API keys with monthly billing and volume discounts.
                   </p>
                 </div>
-              </section>
-              
-              {/* ... Direct API ... */}
-              <section id="direct-api" className="scroll-mt-24">
-                   <div className="flex items-center gap-4 mb-6">
-                      <h2 className={`${h1_font.className} text-2xl font-bold text-white`}>Direct API Access</h2>
-                   </div>
-                   <p className="text-white/50 leading-relaxed">
-                    Gebruik de API direct via HTTP POST requests voor maximale flexibiliteit.
-                   </p>
-              </section>
+              </div>
+            </section>
 
-              {/* ... X402 ... */}
-              <section id="x402" className="scroll-mt-24">
-                  <h2 className={`${h1_font.className} text-2xl font-bold text-white mb-6`}>X402 Payments</h2>
-                  <p className="text-white/50 mb-8 leading-relaxed">
-                      Wij ondersteunen de 402 Payment Required standaard voor AI agents.
-                  </p>
-              </section>
-              
-              {/* ... Discovery ... */}
-              <section id="discovery" className="scroll-mt-24">
-                  <h2 className={`${h1_font.className} text-2xl font-bold text-white mb-6`}>Tool Discovery</h2>
-                  <p className="text-white/50 mb-8 leading-relaxed">Endpoint: https://aifais.com/api/mcp</p>
-              </section>
-
-              {/* Endpoints Section - REPLACING */}
-              <section id="endpoints" className="scroll-mt-24 space-y-16">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <h2 className={`${h1_font.className} text-3xl font-bold text-white`}>Endpoints</h2>
+            {/* X402 Payments */}
+            <section id="x402-payments" className="scroll-mt-24 mb-16">
+              <h2 className={`${heading.className} text-2xl font-bold text-white mb-4`}>X402 Payments</h2>
+              <p className="text-zinc-400 mb-6">
+                We support the HTTP 402 Payment Required standard for AI agents. Include a Solana payment signature in your request.
+              </p>
+              <div className="bg-zinc-900/50 rounded-xl border border-zinc-800 overflow-hidden">
+                <div className="px-4 py-3 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between">
+                  <span className={`${mono.className} text-xs text-zinc-500`}>Request Header</span>
                 </div>
+                <pre className={`${mono.className} p-4 text-sm overflow-x-auto`}>
+                  <code>
+                    <span className="text-zinc-500">X-Payment:</span> <span className="text-emerald-400">&lt;solana_signature&gt;</span>
+                  </code>
+                </pre>
+              </div>
+            </section>
 
-                {endpoints.map((e, i) => (
-                  <div key={i} id={e.path} className="scroll-mt-24">
-                    <div className="bg-white/2 border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-colors">
-                      {/* Endpoint header */}
-                      <div className="px-6 py-4 border-b border-white/5 flex items-center gap-4">
-                        <span className={`${mono.className} px-2.5 py-1 rounded-md text-xs font-bold ${
-                          e.method === 'POST' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
-                          'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                        }`}>
-                          {e.method}
-                        </span>
-                        <span className={`${mono.className} text-lg font-bold text-white`}>{e.path}</span>
-                      </div>
+            {/* Endpoints by Category */}
+            {categories.map((category) => {
+              const categoryEndpoints = endpoints.filter((e) => e.category === category.id);
+              if (categoryEndpoints.length === 0) return null;
 
-                      <div className="p-6">
-                        <p className="text-white/50 mb-8 leading-relaxed">{e.desc}</p>
-                        {e.params.length > 0 && (
-                          <div>
-                            <h4 className={`${mono.className} text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-4`}>
-                              Parameters
-                            </h4>
-                            <div className="space-y-3">
-                              {e.params.map((p, pi) => (
-                                <div key={pi} className="flex items-start gap-4 p-4 bg-white/2 rounded-xl">
-                                  <div className="flex items-center gap-2">
-                                    <span className={`${mono.className} text-cyan-400 font-bold`}>{p.name}</span>
-                                    {p.required && (
-                                      <span className="px-1.5 py-0.5 bg-red-500/10 text-red-400 text-[10px] font-bold rounded">required</span>
-                                    )}
-                                  </div>
-                                  <span className={`${mono.className} text-white/30 text-sm`}>{p.type}</span>
-                                  <span className="text-white/50 text-sm flex-1">{p.desc}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+              return (
+                <section key={category.id} className="mb-16">
+                  <div className="flex items-center gap-3 mb-8">
+                    <span className="text-2xl">{category.icon}</span>
+                    <h2 className={`${heading.className} text-2xl font-bold text-white`}>{category.name} Endpoints</h2>
                   </div>
-                ))}
-              </section>
+                  {categoryEndpoints.map((endpoint) => (
+                    <EndpointCard key={endpoint.id} endpoint={endpoint} />
+                  ))}
+                </section>
+              );
+            })}
 
+            {/* Pricing */}
+            <section id="pricing" className="scroll-mt-24 mb-16">
+              <h2 className={`${heading.className} text-2xl font-bold text-white mb-6`}>Pricing</h2>
+              <div className="bg-zinc-900/50 rounded-xl border border-zinc-800 overflow-hidden">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-zinc-800">
+                      <th className={`${mono.className} px-6 py-4 text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider`}>
+                        Endpoint
+                      </th>
+                      <th className={`${mono.className} px-6 py-4 text-right text-xs font-semibold text-zinc-500 uppercase tracking-wider`}>
+                        Price
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {endpoints.map((endpoint) => (
+                      <tr key={endpoint.id} className="border-b border-zinc-800/50 last:border-0">
+                        <td className="px-6 py-4">
+                          <code className={`${mono.className} text-sm text-zinc-300`}>{endpoint.path}</code>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <span className={`${mono.className} text-sm ${endpoint.isFree ? "text-cyan-400" : "text-zinc-400"}`}>
+                            {endpoint.price}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
-
-              {/* Pricing Section - REPLACING */}
-              <section id="pricing" className="scroll-mt-24">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <h2 className={`${h1_font.className} text-3xl font-bold text-white`}>Pricing Model</h2>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6 mb-12">
-                  <div className="p-8 bg-linear-to-b from-violet-500/10 to-transparent border border-violet-500/20 rounded-2xl">
-                    <div className={`${mono.className} text-violet-400 text-xs font-bold uppercase tracking-wider mb-4 text-center`}>
-                      On-Chain (AI Agents)
-                    </div>
-                    <div className="text-center">
-                       <div className="flex items-center justify-center gap-2 mb-2">
-                           <span className="text-white/40 text-lg font-medium">vanaf</span>
-                           <span className={`${h1_font.className} text-5xl font-bold text-white`}>0.001</span>
-                           <SolanaLogo className="w-8 h-8" />
-                        </div>
-                       <div className="text-white/40 text-sm mb-6">per usage</div>
-                    </div>
-                    <ul className="space-y-3 text-sm text-white/60 mb-8">
-                      <li className="flex items-center gap-2">
-                         <span className="text-cyan-400">●</span> <strong>Create Invoice:</strong> Gratis
-                      </li>
-                      <li className="flex items-center gap-2">
-                         <span className="text-cyan-400">●</span> <strong>Generate Quote:</strong> Gratis
-                      </li>
-                      <li className="flex items-center gap-2">
-                         <span className="text-emerald-400">●</span> <strong>Scan Invoice:</strong> 0.001 SOL
-                      </li>
-                      <li className="flex items-center gap-2">
-                         <span className="text-amber-400">●</span> <strong>Generate Terms:</strong> 0.005 SOL
-                      </li>
-                      <li className="flex items-center gap-2">
-                         <span className="text-violet-400">●</span> <strong>Check Contract:</strong> 0.01 SOL
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Classical Web */}
-                   <div className="p-8 bg-linear-to-b from-emerald-500/10 to-transparent border border-emerald-500/20 rounded-2xl">
-                    <div className={`${mono.className} text-emerald-400 text-xs font-bold uppercase tracking-wider mb-4 text-center`}>
-                      Classical (Web)
-                    </div>
-                    <div className="text-center">
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                         <span className="text-white/40 text-lg font-medium">vanaf</span>
-                         <span className={`${h1_font.className} text-5xl font-bold text-white`}>€0.05</span>
-                         <IdealLogo className="w-16 h-7 text-pink-600" />
-                      </div>
-                      <div className="text-white/40 text-sm mb-6">per gebruik</div>
-                    </div>
-                     <ul className="space-y-3 text-sm text-white/60 mb-8">
-                        <li>Dezelfde tools via web interface</li>
-                        <li>Betaling via Stripe (iDEAL/Card)</li>
-                        <li>Geen crypto wallet nodig</li>
-                     </ul>
-                  </div>
-                </div>
-              </section>
-
-               {/* Error Codes Section (Kept as is) */}
-               <section id="errors" className="scroll-mt-24">
-                  <h2 className={`${h1_font.className} text-3xl font-bold text-white mb-6`}>Error Codes</h2>
-                  {/* ... Same content ... */}
-               </section>
-            </div>
+            {/* Error Codes */}
+            <section id="errors" className="scroll-mt-24">
+              <h2 className={`${heading.className} text-2xl font-bold text-white mb-6`}>Error Codes</h2>
+              <div className="bg-zinc-900/50 rounded-xl border border-zinc-800 overflow-hidden">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-zinc-800">
+                      <th className={`${mono.className} px-6 py-4 text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider w-24`}>
+                        Code
+                      </th>
+                      <th className={`${mono.className} px-6 py-4 text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider w-40`}>
+                        Name
+                      </th>
+                      <th className={`${mono.className} px-6 py-4 text-left text-xs font-semibold text-zinc-500 uppercase tracking-wider`}>
+                        Description
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {errorCodes.map((error) => (
+                      <tr key={error.code} className="border-b border-zinc-800/50 last:border-0">
+                        <td className="px-6 py-4">
+                          <code className={`${mono.className} text-sm ${error.code >= 500 ? "text-red-400" : error.code >= 400 ? "text-amber-400" : "text-zinc-400"}`}>
+                            {error.code}
+                          </code>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-sm text-zinc-300">{error.name}</span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-sm text-zinc-500">{error.description}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
           </div>
         </div>
       </div>

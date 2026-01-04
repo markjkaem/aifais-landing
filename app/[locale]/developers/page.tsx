@@ -1,142 +1,344 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { SolanaLogo } from "@/app/Components/CustomIcons";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
-import { getTranslations } from "next-intl/server";
 
-const h1_font = Space_Grotesk({
-  weight: "700",
+const heading = Space_Grotesk({
+  weight: ["600", "700"],
   subsets: ["latin"],
 });
 
 const mono = JetBrains_Mono({
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "AI Developers Hub | Build with AIFAIS Infrastructure",
-  description: "Agent-Ready Infrastructure voor de Nederlandse markt. Integreer AIFAIS tools direct in je workflows via MCP of onze REST API.",
+  title: "Developers | AIFAIS API & MCP Infrastructure",
+  description:
+    "Agent-ready infrastructure voor de Nederlandse markt. Integreer AIFAIS tools via MCP of REST API met pay-per-use pricing.",
 };
 
-export default async function DevelopersLanding({
+// ============================================================================
+// CONFIGURATION - Easy to scale to 100+ APIs
+// ============================================================================
+
+type APICategory = {
+  id: string;
+  name: string;
+  description: string;
+  color: "emerald" | "violet" | "amber" | "cyan" | "rose" | "blue";
+  icon: string;
+};
+
+type APIEndpoint = {
+  name: string;
+  description: string;
+  category: string;
+  price: string;
+  status: "live" | "beta" | "coming";
+  isNew?: boolean;
+  isFree?: boolean;
+};
+
+const categories: APICategory[] = [
+  {
+    id: "finance",
+    name: "Finance",
+    description: "Facturen, offertes & financiële documenten",
+    color: "emerald",
+    icon: "💰",
+  },
+  {
+    id: "legal",
+    name: "Legal",
+    description: "Contracten, voorwaarden & compliance",
+    color: "violet",
+    icon: "⚖️",
+  },
+  {
+    id: "hr",
+    name: "HR",
+    description: "Personeelszaken & recruitment",
+    color: "amber",
+    icon: "👥",
+  },
+  {
+    id: "marketing",
+    name: "Marketing",
+    description: "Content, SEO & campagnes",
+    color: "rose",
+    icon: "📢",
+  },
+];
+
+const apis: APIEndpoint[] = [
+  // Finance
+  {
+    name: "scan_invoice",
+    description: "Extract structured data from invoices via AI vision",
+    category: "finance",
+    price: "0.001 SOL",
+    status: "live",
+  },
+  {
+    name: "create_invoice",
+    description: "Generate professional PDF invoices",
+    category: "finance",
+    price: "Free",
+    status: "live",
+    isFree: true,
+  },
+  {
+    name: "generate_quote",
+    description: "Generate PDF quotes from JSON input",
+    category: "finance",
+    price: "Free",
+    status: "live",
+    isFree: true,
+  },
+  // Legal
+  {
+    name: "check_contract",
+    description: "AI-powered contract risk analysis",
+    category: "legal",
+    price: "0.001 SOL",
+    status: "live",
+  },
+  {
+    name: "generate_terms",
+    description: "Generate custom terms & conditions",
+    category: "legal",
+    price: "0.001 SOL",
+    status: "live",
+  },
+  // Coming soon examples
+  {
+    name: "extract_clauses",
+    description: "Extract specific clauses from contracts",
+    category: "legal",
+    price: "0.001 SOL",
+    status: "coming",
+  },
+  {
+    name: "generate_job_post",
+    description: "AI-generated job postings",
+    category: "hr",
+    price: "0.001 SOL",
+    status: "coming",
+  },
+];
+
+const features = [
+  {
+    icon: "⚡",
+    title: "< 200ms Response",
+    description: "Optimized for real-time agent workflows",
+  },
+  {
+    icon: "🔐",
+    title: "Enterprise Security",
+    description: "SOC2 ready, Dutch data sovereignty",
+  },
+  {
+    icon: "🇳🇱",
+    title: "NL Context",
+    description: "Built for Dutch regulations & language",
+  },
+  {
+    icon: "💳",
+    title: "X402 Native",
+    description: "Pay-per-call via Solana or traditional billing",
+  },
+];
+
+// ============================================================================
+// HELPER COMPONENTS
+// ============================================================================
+
+const colorClasses = {
+  emerald: {
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/20",
+    text: "text-emerald-400",
+    glow: "bg-emerald-500/5",
+  },
+  violet: {
+    bg: "bg-violet-500/10",
+    border: "border-violet-500/20",
+    text: "text-violet-400",
+    glow: "bg-violet-500/5",
+  },
+  amber: {
+    bg: "bg-amber-500/10",
+    border: "border-amber-500/20",
+    text: "text-amber-400",
+    glow: "bg-amber-500/5",
+  },
+  cyan: {
+    bg: "bg-cyan-500/10",
+    border: "border-cyan-500/20",
+    text: "text-cyan-400",
+    glow: "bg-cyan-500/5",
+  },
+  rose: {
+    bg: "bg-rose-500/10",
+    border: "border-rose-500/20",
+    text: "text-rose-400",
+    glow: "bg-rose-500/5",
+  },
+  blue: {
+    bg: "bg-blue-500/10",
+    border: "border-blue-500/20",
+    text: "text-blue-400",
+    glow: "bg-blue-500/5",
+  },
+};
+
+function StatusBadge({ status }: { status: "live" | "beta" | "coming" }) {
+  const styles = {
+    live: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    beta: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    coming: "bg-zinc-500/10 text-zinc-400 border-zinc-500/20",
+  };
+  const labels = { live: "Live", beta: "Beta", coming: "Coming" };
+
+  return (
+    <span
+      className={`${mono.className} px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider border ${styles[status]}`}
+    >
+      {labels[status]}
+    </span>
+  );
+}
+
+function APICard({ api, category }: { api: APIEndpoint; category: APICategory }) {
+  const colors = colorClasses[category.color];
+
+  return (
+    <div className="group relative bg-zinc-900/50 border border-zinc-800 rounded-xl p-5 hover:border-zinc-700 hover:bg-zinc-900 transition-all duration-200">
+      {/* Top row */}
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <div className="flex items-center gap-2">
+          <StatusBadge status={api.status} />
+          {api.isFree && (
+            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+              FREE
+            </span>
+          )}
+        </div>
+        <span className={`${mono.className} text-xs ${api.isFree ? "text-cyan-400" : "text-zinc-500"}`}>
+          {api.price}
+        </span>
+      </div>
+
+      {/* Function name */}
+      <h3
+        className={`${mono.className} text-base font-semibold text-white mb-2 group-hover:${colors.text} transition-colors`}
+      >
+        {api.name}()
+      </h3>
+
+      {/* Description */}
+      <p className="text-sm text-zinc-500 leading-relaxed">{api.description}</p>
+
+      {/* Hover glow */}
+      <div
+        className={`absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none ${colors.glow}`}
+      />
+    </div>
+  );
+}
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+export default async function DevelopersPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "common" });
 
-  const tools = [
-    {
-      name: "scan_invoice",
-      desc: "Deep-learning factuur extractie met 100% accuraatheid via het x402 protocol.",
-      status: "Live",
-      type: "MCP / API",
-      color: "emerald"
-    },
-    {
-      name: "create_invoice",
-      desc: "Genereer professionele PDF facturen via een simpele JSON payload.",
-      status: "Live",
-      type: "MCP / API",
-      color: "cyan"
-    },
-    {
-      name: "generate_quote",
-      desc: "Genereer offertes in PDF formaat op basis van JSON input.",
-      status: "Live",
-      type: "MCP / API",
-      color: "cyan"
-    },
-    {
-      name: "check_contract",
-      desc: "AI-gedreven contractanalyse op basis van Nederlands recht (0.01 SOL).",
-      status: "Live",
-      type: "MCP / API",
-      color: "violet"
-    },
-    {
-      name: "generate_terms",
-      desc: "Genereer juridisch dichte algemene voorwaarden op maat (0.005 SOL).",
-      status: "Live",
-      type: "MCP / API",
-      color: "amber"
-    }
-  ];
-
-  const features = [
-    { icon: "⚡", title: "< 200ms Response", desc: "Geoptimaliseerd voor real-time agent workflows" },
-    { icon: "🔐", title: "SOC2 Ready", desc: "Enterprise-grade security & data soevereiniteit" },
-    { icon: "🇳🇱", title: "NL Context", desc: "Gebouwd voor Nederlandse wet- en regelgeving" },
-    { icon: "💳", title: "X402 Native", desc: "Pay-per-call via Solana of traditionele billing" },
-  ];
+  const liveApis = apis.filter((a) => a.status === "live");
+  const comingApis = apis.filter((a) => a.status !== "live");
 
   return (
-    <main className="bg-[#0c0c0c] text-white min-h-screen antialiased selection:bg-emerald-500/30">
-      {/* Noise texture overlay */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.015] z-50" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+    <main className="bg-zinc-950 text-white min-h-screen">
+      {/* ================================================================== */}
+      {/* HERO SECTION */}
+      {/* ================================================================== */}
+      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:64px_64px]" />
+          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-emerald-500/10 rounded-full blur-[128px]" />
+          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-violet-500/10 rounded-full blur-[128px]" />
+        </div>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[72px_72px]" />
-
-        {/* Gradient orbs */}
-        <div className="absolute top-1/4 -left-32 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[128px]" />
-        <div className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[128px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-500/5 rounded-full blur-[128px]" />
-
-        <div className="container mx-auto px-6 relative z-10 py-32">
-          <div className="max-w-5xl mx-auto">
-            {/* Terminal-style badge */}
-            <div className={`${mono.className} inline-flex items-center gap-3 px-4 py-2 rounded-full bg-emerald-500/5 border border-emerald-500/20 text-emerald-400 text-xs mb-10`}>
+        <div className="container mx-auto px-6 relative z-10 py-24">
+          <div className="max-w-4xl">
+            {/* Status badge */}
+            <div
+              className={`${mono.className} inline-flex items-center gap-3 px-4 py-2 rounded-full bg-emerald-500/5 border border-emerald-500/20 text-emerald-400 text-xs mb-8`}
+            >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
-              <span className="opacity-50">$</span> npx github:aifais/aifais-mcp-server --status
-              <span className="text-emerald-300">OPERATIONAL</span>
+              <span className="text-zinc-500">All systems operational</span>
+              <span className="text-emerald-400">{liveApis.length} APIs live</span>
             </div>
 
-            {/* Main headline */}
-            <h1 className={`${h1_font.className} text-6xl md:text-7xl lg:text-8xl font-extrabold mb-8 tracking-tight leading-[0.95]`}>
-              <span className="text-white/90">Agent-Ready</span>
+            {/* Headline */}
+            <h1
+              className={`${heading.className} text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight leading-[1.1]`}
+            >
+              <span className="text-white">Agent-Ready</span>
               <br />
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 via-cyan-400 to-violet-400">
-                Infrastructure
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400">
+                API Infrastructure
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-white/40 max-w-2xl mb-12 leading-relaxed">
-              De eerste Nederlandse infrastructuur gebouwd voor AI Agents.
-              Integreer tools direct via MCP of REST API.
+            {/* Subtitle */}
+            <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mb-10 leading-relaxed">
+              Nederlandse AI infrastructure gebouwd voor agents. Integreer via MCP of REST API met pay-per-use
+              pricing via Solana.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-20">
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Link
                 href={`/${locale}/developers/docs`}
-                className="group px-8 py-4 bg-linear-to-r from-emerald-500 to-cyan-500 text-black font-bold rounded-xl transition-all shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:scale-[1.02] flex items-center justify-center gap-3"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-zinc-900 font-semibold rounded-xl hover:bg-zinc-100 transition-colors"
               >
-                <span>Start Building</span>
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                View Documentation
+                <svg
+                  className="w-4 h-4 group-hover:translate-x-0.5 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
               <Link
                 href={`/${locale}/developers/mcp`}
-                className={`${mono.className} px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-medium rounded-xl transition-all border border-white/10 hover:border-white/20 flex items-center justify-center gap-3`}
+                className={`${mono.className} inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-zinc-900 border border-zinc-800 text-white font-medium rounded-xl hover:bg-zinc-800 hover:border-zinc-700 transition-colors`}
               >
                 <span className="text-emerald-400">$</span>
-                <span>Explore MCP Server</span>
+                Setup MCP Server
               </Link>
             </div>
 
             {/* Protocol badges */}
-            <div className={`${mono.className} flex flex-wrap gap-6 text-xs text-white/30`}>
-              {["MCP Protocol", "X402 Payments", "REST API", "Webhooks", "TypeScript SDK"].map((item, i) => (
-                <div key={i} className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-lg border border-white/5">
+            <div className="flex flex-wrap gap-3">
+              {["MCP Protocol", "X402 Payments", "REST API", "TypeScript SDK"].map((item) => (
+                <div
+                  key={item}
+                  className={`${mono.className} flex items-center gap-2 px-3 py-1.5 bg-zinc-900/50 rounded-lg border border-zinc-800 text-xs text-zinc-500`}
+                >
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/50" />
                   {item}
                 </div>
@@ -144,172 +346,188 @@ export default async function DevelopersLanding({
             </div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/20">
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <div className="w-px h-12 bg-linear-to-b from-white/20 to-transparent" />
-        </div>
       </section>
 
-      {/* Features Strip */}
-      <section className="py-20 border-y border-white/5 bg-white/1">
+      {/* ================================================================== */}
+      {/* FEATURES STRIP */}
+      {/* ================================================================== */}
+      <section className="py-16 border-y border-zinc-900 bg-zinc-950/50">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, i) => (
-              <div key={i} className="text-center md:text-left">
-                <div className="text-3xl mb-4">{feature.icon}</div>
-                <h3 className={`${mono.className} text-lg font-bold text-white mb-2`}>{feature.title}</h3>
-                <p className="text-white/40 text-sm">{feature.desc}</p>
+              <div key={i} className="text-center sm:text-left">
+                <div className="text-2xl mb-3">{feature.icon}</div>
+                <h3 className={`${mono.className} text-sm font-semibold text-white mb-1`}>{feature.title}</h3>
+                <p className="text-sm text-zinc-500">{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Tools Section */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px]" />
-
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            {/* Section header */}
-            <div className="flex items-end justify-between mb-16">
+      {/* ================================================================== */}
+      {/* AVAILABLE APIs */}
+      {/* ================================================================== */}
+      <section className="py-24">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
               <div>
-                <div className={`${mono.className} text-emerald-400 text-sm mb-4`}>// Available Tools</div>
-                <h2 className={`${h1_font.className} text-4xl md:text-5xl font-bold text-white`}>
-                  Plug & Play AI Tools
+                <p className={`${mono.className} text-emerald-400 text-sm mb-2`}>// Available APIs</p>
+                <h2 className={`${heading.className} text-3xl sm:text-4xl font-bold text-white`}>
+                  Plug & Play Tools
                 </h2>
               </div>
-              <Link href={`/${locale}/developers/docs`} className={`${mono.className} hidden md:flex items-center gap-2 text-white/40 hover:text-emerald-400 transition-colors text-sm`}>
-                View all docs
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <Link
+                href={`/${locale}/developers/docs`}
+                className={`${mono.className} flex items-center gap-2 text-sm text-zinc-500 hover:text-emerald-400 transition-colors`}
+              >
+                Full API Reference
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             </div>
 
-            {/* Tools grid */}
-            <div className="grid md:grid-cols-2 gap-6">
-              {tools.map((tool, i) => (
-                <div
-                  key={i}
-                  className="group relative bg-white/2 border border-white/5 rounded-2xl p-8 hover:bg-white/4 hover:border-white/10 transition-all duration-300"
-                >
-                  {/* Status badge */}
-                  <div className="flex justify-between items-start mb-8">
-                    <div className={`${mono.className} px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${
-                      tool.status === 'Live'
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                        : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                    }`}>
-                      {tool.status}
+            {/* Categories */}
+            {categories
+              .filter((cat) => apis.some((a) => a.category === cat.id && a.status === "live"))
+              .map((category) => {
+                const categoryApis = liveApis.filter((a) => a.category === category.id);
+                if (categoryApis.length === 0) return null;
+
+                return (
+                  <div key={category.id} className="mb-12 last:mb-0">
+                    {/* Category header */}
+                    <div className="flex items-center gap-3 mb-6">
+                      <span className="text-xl">{category.icon}</span>
+                      <div>
+                        <h3 className={`${heading.className} text-lg font-semibold text-white`}>{category.name}</h3>
+                        <p className="text-sm text-zinc-500">{category.description}</p>
+                      </div>
                     </div>
-                    <div className={`${mono.className} text-[10px] text-white/30`}>{tool.type}</div>
+
+                    {/* API grid */}
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {categoryApis.map((api) => (
+                        <APICard key={api.name} api={api} category={category} />
+                      ))}
+                    </div>
                   </div>
+                );
+              })}
 
-                  {/* Tool name */}
-                  <h3 className={`${mono.className} text-xl font-bold mb-4 text-white group-hover:text-emerald-400 transition-colors`}>
-                    {tool.name}()
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-white/40 text-sm leading-relaxed mb-8">
-                    {tool.desc}
-                  </p>
-
-                  {/* Arrow link */}
-                  <div className="flex items-center gap-2 text-emerald-400/50 group-hover:text-emerald-400 transition-colors">
-                    <span className={`${mono.className} text-xs`}>Read docs</span>
-                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
+            {/* Coming Soon */}
+            {comingApis.length > 0 && (
+              <div className="mt-16 pt-16 border-t border-zinc-900">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-xl">🚀</span>
+                  <div>
+                    <h3 className={`${heading.className} text-lg font-semibold text-white`}>Coming Soon</h3>
+                    <p className="text-sm text-zinc-500">{comingApis.length} APIs in development</p>
                   </div>
-
-                  {/* Hover glow */}
-                  <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none ${
-                    tool.color === 'emerald' ? 'bg-emerald-500/5' : tool.color === 'amber' ? 'bg-amber-500/5' : 'bg-violet-500/5'
-                  }`} />
                 </div>
-              ))}
-            </div>
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {comingApis.map((api) => {
+                    const category = categories.find((c) => c.id === api.category)!;
+                    return <APICard key={api.name} api={api} category={category} />;
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Code Preview Section */}
-      <section className="py-32 relative">
+      {/* ================================================================== */}
+      {/* CODE EXAMPLE */}
+      {/* ================================================================== */}
+      <section className="py-24 border-t border-zinc-900">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              {/* Left content */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left */}
               <div>
-                <div className={`${mono.className} text-cyan-400 text-sm mb-4`}>// Why AIFAIS</div>
-                <h2 className={`${h1_font.className} text-4xl md:text-5xl font-bold mb-8 text-white leading-tight`}>
-                  Gebouwd voor
-                  <br />
-                  <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-violet-400">Agentic Flows</span>
+                <p className={`${mono.className} text-cyan-400 text-sm mb-2`}>// Integration</p>
+                <h2 className={`${heading.className} text-3xl sm:text-4xl font-bold text-white mb-6`}>
+                  Simple JSON Schema
                 </h2>
-
-                <p className="text-lg text-white/40 leading-relaxed mb-10">
-                  Vergeet complexe enterprise integraties. Met AIFAIS roep je tools aan met simpele JSON schema's.
-                  Of je nu Claude, GPT of een open-source agent gebruikt.
+                <p className="text-lg text-zinc-400 leading-relaxed mb-8">
+                  Vergeet complexe enterprise integraties. Roep tools aan met simpele JSON. Werkt met Claude, GPT,
+                  of je eigen agent.
                 </p>
 
-                {/* Checklist */}
                 <div className="space-y-4">
                   {[
-                    "MCP Server voor directe Cursor/Claude integratie",
-                    "Pay-per-use via Solana (X402) of traditionele billing",
-                    "Nederlandse lokale context & data soevereiniteit",
-                    "TypeScript & Python SDK beschikbaar"
+                    "MCP Server voor Cursor & Claude Desktop",
+                    "Pay-per-use via Solana (X402 protocol)",
+                    "Nederlandse context & data sovereignty",
+                    "TypeScript SDK beschikbaar",
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-4">
-                      <div className="w-6 h-6 rounded-md bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
-                        <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                        <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <span className="text-white/60">{item}</span>
+                      <span className="text-zinc-400">{item}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Right - Terminal */}
+              {/* Right - Code block */}
               <div className="relative">
-                <div className="absolute -inset-4 bg-linear-to-r from-emerald-500/10 via-cyan-500/10 to-violet-500/10 blur-2xl rounded-3xl opacity-50" />
-
-                <div className="relative bg-[#0a0a0a] rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
-                  {/* Terminal header */}
-                  <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
-                    <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500/70" />
-                      <div className="w-3 h-3 rounded-full bg-amber-500/70" />
-                      <div className="w-3 h-3 rounded-full bg-emerald-500/70" />
+                <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/5 via-cyan-500/5 to-violet-500/5 blur-2xl rounded-2xl" />
+                <div className="relative bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden">
+                  {/* Header */}
+                  <div className="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-zinc-800">
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-zinc-700" />
+                      <div className="w-3 h-3 rounded-full bg-zinc-700" />
+                      <div className="w-3 h-3 rounded-full bg-zinc-700" />
                     </div>
-                    <div className={`${mono.className} text-xs text-white/30`}>terminal</div>
-                    <div className="w-16" />
+                    <span className={`${mono.className} text-xs text-zinc-600`}>terminal</span>
                   </div>
 
-                  {/* Terminal content */}
-                  <div className={`${mono.className} p-6 text-sm leading-relaxed`}>
-                    <div className="text-white/30 mb-4"># Scan an invoice with AIFAIS (X402)</div>
-
-                    <div className="text-emerald-400 mb-1">
-                      <span className="text-cyan-400">$</span> curl -X POST https://api.aifais.com/api/v1/finance/scan \
-                    </div>
-                    <div className="text-white/60 pl-4 mb-1">-H "Content-Type: application/json" \</div>
-                    <div className="text-white/60 pl-4 mb-4">-d '{"{"}"invoiceBase64": "...", "signature": "SOL_SIG"{"}"}' </div>
-
-                    <div className="text-white/30 mb-2"># Response (42ms)</div>
-                    <div className="text-amber-300">{"{"}</div>
-                    <div className="text-white/60 pl-4">"vendor": <span className="text-emerald-300">"Bol.com B.V."</span>,</div>
-                    <div className="text-white/60 pl-4">"total": <span className="text-cyan-300">149.99</span>,</div>
-                    <div className="text-white/60 pl-4">"vat": <span className="text-cyan-300">26.03</span>,</div>
-                    <div className="text-white/60 pl-4">"currency": <span className="text-emerald-300">"EUR"</span></div>
-                    <div className="text-amber-300">{"}"}</div>
-                  </div>
+                  {/* Code */}
+                  <pre className={`${mono.className} p-5 text-sm leading-relaxed overflow-x-auto`}>
+                    <code>
+                      <span className="text-zinc-600"># Scan invoice with X402 payment</span>
+                      {"\n"}
+                      <span className="text-emerald-400">$</span>{" "}
+                      <span className="text-white">curl -X POST aifais.com/api/v1/finance/scan</span>
+                      {"\n"}
+                      <span className="text-zinc-600">{`  -H "X-Payment: <solana_sig>"`}</span>
+                      {"\n"}
+                      <span className="text-zinc-600">{`  -d '{"invoice": "base64..."}'`}</span>
+                      {"\n\n"}
+                      <span className="text-zinc-600"># Response (38ms)</span>
+                      {"\n"}
+                      <span className="text-amber-400">{"{"}</span>
+                      {"\n"}
+                      <span className="text-zinc-500">{"  "}</span>
+                      <span className="text-cyan-400">"vendor"</span>
+                      <span className="text-zinc-500">: </span>
+                      <span className="text-emerald-400">"Bol.com B.V."</span>
+                      <span className="text-zinc-500">,</span>
+                      {"\n"}
+                      <span className="text-zinc-500">{"  "}</span>
+                      <span className="text-cyan-400">"total"</span>
+                      <span className="text-zinc-500">: </span>
+                      <span className="text-violet-400">149.99</span>
+                      <span className="text-zinc-500">,</span>
+                      {"\n"}
+                      <span className="text-zinc-500">{"  "}</span>
+                      <span className="text-cyan-400">"currency"</span>
+                      <span className="text-zinc-500">: </span>
+                      <span className="text-emerald-400">"EUR"</span>
+                      {"\n"}
+                      <span className="text-amber-400">{"}"}</span>
+                    </code>
+                  </pre>
                 </div>
               </div>
             </div>
@@ -317,84 +535,80 @@ export default async function DevelopersLanding({
         </div>
       </section>
 
-      {/* Pricing Preview */}
-      <section className="py-32 border-t border-white/5">
+      {/* ================================================================== */}
+      {/* PRICING */}
+      {/* ================================================================== */}
+      <section className="py-24 border-t border-zinc-900">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className={`${mono.className} text-violet-400 text-sm mb-4`}>// Pricing</div>
-            <h2 className={`${h1_font.className} text-4xl md:text-5xl font-bold mb-6 text-white`}>
-              Usage-Based Pricing
-            </h2>
-            <p className="text-xl text-white/40 mb-16">
-              Start gratis. Schaal wanneer je klaar bent.
-            </p>
+          <div className="max-w-3xl mx-auto text-center">
+            <p className={`${mono.className} text-violet-400 text-sm mb-2`}>// Pricing</p>
+            <h2 className={`${heading.className} text-3xl sm:text-4xl font-bold text-white mb-4`}>Usage-Based Pricing</h2>
+            <p className="text-zinc-400 mb-12">Start gratis. Betaal alleen wat je gebruikt.</p>
 
-
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-              {/* Pay-per-Tool Card */}
-              <div className="relative p-8 rounded-2xl border transition-all bg-linear-to-b from-violet-500/10 to-transparent border-violet-500/30">
-                  <div className={`${mono.className} absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-violet-500 text-white text-[10px] font-bold rounded-full uppercase`}>
-                    Agent Ready
-                  </div>
-                  <div className={`${mono.className} text-sm text-white/40 mb-2`}>Pay-per-Tool</div>
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                     <span className={`${h1_font.className} text-3xl font-bold text-white`}>Vanaf 0.001</span>
-                     <SolanaLogo className="w-6 h-6" />
-                  </div>
-                  <div className="text-sm text-white/30">Betaal per gebruik (X402)</div>
+            <div className="grid sm:grid-cols-2 gap-6 max-w-xl mx-auto">
+              {/* Pay per use */}
+              <div className="relative p-6 rounded-xl bg-gradient-to-b from-emerald-500/10 to-transparent border border-emerald-500/20">
+                <div
+                  className={`${mono.className} absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-500 text-zinc-900 text-[10px] font-bold rounded-full uppercase`}
+                >
+                  Recommended
+                </div>
+                <p className={`${mono.className} text-sm text-zinc-400 mb-2`}>Pay-per-use</p>
+                <p className={`${heading.className} text-2xl font-bold text-white mb-1`}>From 0.001 SOL</p>
+                <p className="text-xs text-zinc-500">Per API call (X402)</p>
               </div>
 
-              {/* Enterprise Card */}
-              <div className="relative p-8 rounded-2xl border transition-all bg-white/2 border-white/5 hover:border-white/10">
-                  <div className={`${mono.className} text-sm text-white/40 mb-2`}>Enterprise</div>
-                  <div className={`${h1_font.className} text-3xl font-bold text-white mb-2`}>Custom</div>
-                  <div className="text-sm text-white/30">Volume korting & API keys</div>
+              {/* Enterprise */}
+              <div className="p-6 rounded-xl bg-zinc-900/50 border border-zinc-800">
+                <p className={`${mono.className} text-sm text-zinc-400 mb-2`}>Enterprise</p>
+                <p className={`${heading.className} text-2xl font-bold text-white mb-1`}>Custom</p>
+                <p className="text-xs text-zinc-500">Volume discounts & API keys</p>
               </div>
             </div>
 
             <Link
               href={`/${locale}/developers/docs#pricing`}
-              className={`${mono.className} inline-flex items-center gap-2 mt-12 text-emerald-400 hover:text-emerald-300 transition-colors`}
+              className={`${mono.className} inline-flex items-center gap-2 mt-8 text-sm text-zinc-500 hover:text-emerald-400 transition-colors`}
             >
               View full pricing
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-linear-to-r from-emerald-500/10 via-cyan-500/5 to-violet-500/10" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-size-[48px_48px]" />
+      {/* ================================================================== */}
+      {/* CTA */}
+      {/* ================================================================== */}
+      <section className="py-24 border-t border-zinc-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-transparent to-violet-500/5" />
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className={`${mono.className} inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm mb-8`}>
-              <span className="text-emerald-400">$</span> npx github:aifais/aifais-mcp-server
+          <div className="max-w-2xl mx-auto text-center">
+            <div
+              className={`${mono.className} inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900 border border-zinc-800 text-sm text-zinc-400 mb-6`}
+            >
+              <span className="text-emerald-400">$</span>
+              npx github:aifais/aifais-mcp-server
             </div>
 
-            <h2 className={`${h1_font.className} text-4xl md:text-6xl font-bold mb-8 text-white`}>
-              Ready to Build?
-            </h2>
-
-            <p className="text-xl text-white/40 mb-12 leading-relaxed">
-              Geen sign-up nodig voor agents. Integreer de MCP server direct in Cursor of Claude en begin vandaag nog.
+            <h2 className={`${heading.className} text-3xl sm:text-4xl font-bold text-white mb-4`}>Ready to Build?</h2>
+            <p className="text-zinc-400 mb-8">
+              Geen sign-up nodig. Start direct met de MCP server of lees de documentatie.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href={`/${locale}/developers/docs`}
-                className="px-10 py-5 bg-white text-black font-bold rounded-xl hover:bg-white/90 transition-all shadow-2xl shadow-white/10"
+                className="px-8 py-4 bg-white text-zinc-900 font-semibold rounded-xl hover:bg-zinc-100 transition-colors"
               >
                 Get Started
               </Link>
               <Link
                 href={`/${locale}/contact`}
-                className={`${mono.className} px-10 py-5 bg-white/5 border border-white/10 text-white font-medium rounded-xl hover:bg-white/10 transition-all`}
+                className={`${mono.className} px-8 py-4 bg-zinc-900 border border-zinc-800 text-white rounded-xl hover:bg-zinc-800 transition-colors`}
               >
                 Contact Sales
               </Link>

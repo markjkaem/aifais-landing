@@ -171,7 +171,7 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         featured: true,
         new: true,
         metaTitle: "Contract Checker AI | Voorkom Juridische Risico's | AIFAIS",
-        metaDescription: "Laat AI je contract controleren op risico's en valkuilen. Krijg direct een professioneel rapport. Vanaf 0.01 SOL.",
+        metaDescription: "Laat AI je contract controleren op risico's en valkuilen. Krijg direct een professioneel rapport. Slechts €0.50.",
         keywords: ["contract checker", "contract analyse", "juridische AI", "contract risico's", "contract review"],
         features: [
             "AI-powered analyse met Claude 3.5",
@@ -186,7 +186,7 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         ],
         pricing: {
             type: "paid",
-            price: 0.01,
+            price: 0.001,
             currency: "SOL",
         },
         componentPath: "contract-checker/ContractCheckerClient",
@@ -201,8 +201,8 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         icon: ShieldCheck,
         status: "live",
         category: "legal",
-        metaTitle: "Algemene Voorwaarden Generator (0.005 SOL) | Juridisch Dicht | AIFAIS",
-        metaDescription: "Genereer professionele algemene voorwaarden voor je bedrijf in 3 stappen. AI genereert voorwaarden op maat. Kosten: 0.005 SOL.",
+        metaTitle: "Algemene Voorwaarden Generator (€0.50) | Juridisch Dicht | AIFAIS",
+        metaDescription: "Genereer professionele algemene voorwaarden voor je bedrijf in 3 stappen. AI genereert voorwaarden op maat. Kosten: €0.50.",
         keywords: ["algemene voorwaarden", "voorwaarden generator", "juridische voorwaarden", "AVG voorwaarden", "bedrijfsvoorwaarden"],
         features: [
             "Wizard-style formulier (3 stappen)",
@@ -217,7 +217,7 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         ],
         pricing: {
             type: "paid",
-            price: 0.005,
+            price: 0.001,
             currency: "SOL",
         },
         componentPath: "terms-generator/TermsGeneratorClient",

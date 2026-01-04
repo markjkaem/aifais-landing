@@ -220,7 +220,7 @@ export default async function ToolPage({ params }: Props) {
                 </div>
               )}
               {tool.new && (
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-orange-500 to-rose-500 text-xs text-white font-semibold uppercase tracking-wider shadow-sm">
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-linear-to-r from-orange-500 to-rose-500 text-xs text-white font-semibold uppercase tracking-wider shadow-sm">
                   <Sparkles className="w-3 h-3" />
                   Nieuw
                 </div>
@@ -231,7 +231,7 @@ export default async function ToolPage({ params }: Props) {
             <div className="flex justify-center mb-8">
               <div className="relative">
                 <div className="absolute inset-0 bg-emerald-500 rounded-2xl blur-xl opacity-20" />
-                <div className="relative w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-500/25">
+                <div className="relative w-20 h-20 bg-linear-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-500/25">
                   <Icon className="w-10 h-10 text-white" strokeWidth={1.5} />
                 </div>
               </div>
@@ -253,7 +253,9 @@ export default async function ToolPage({ params }: Props) {
                 {tool.pricing.type === "free" ? (
                   <>
                     <Zap className="w-4 h-4 text-emerald-500" />
-                    <span className="text-base font-semibold text-zinc-900">Gratis te gebruiken</span>
+                    <span className="relative z-10 bg-linear-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent animate-gradient animate-pulse-slow">
+                    Gratis te gebruiken
+                  </span>
                   </>
                 ) : (
                   <div className="flex flex-col items-end">
@@ -267,7 +269,7 @@ export default async function ToolPage({ params }: Props) {
                       {tool.pricing.currency === "SOL" && tool.pricing.price && (
                            <div className="flex items-center gap-1 mt-1 -mr-1">
                                <span className="text-xs text-zinc-400 font-medium whitespace-nowrap">
-                                   ≈ €{(tool.pricing.price * 150).toFixed(2)}
+                                   ≈ €{(tool.pricing.price * 500).toFixed(2)}
                                </span>
                                <IdealLogo className="w-12 h-4 object-contain" />
                            </div>
