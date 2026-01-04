@@ -4,6 +4,8 @@ import { z } from "zod";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import OpenAI from "openai";
 
+import { gatekeepPayment } from "@/lib/payment-gatekeeper";
+
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
@@ -18,16 +20,35 @@ const termsSchema = z.object({
     returnDays: z.number().optional(),
     paymentTerms: z.number(),
     jurisdiction: z.string(),
+    signature: z.string().optional(), // Added for DEV_BYPASS
 });
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY!,
-});
+
 
 export const POST = withApiGuard(async (req, body: any) => {
     console.log("--- API START: /api/v1/legal/generate-terms ---");
 
     try {
+        // Enforce Payment (0.005 SOL)
+        await gatekeepPayment(body, 0.005);
+
+        // DEV_BYPASS: Mock generation
+        if (body.signature === 'DEV_BYPASS') {
+            console.log("⚠️ DEV_BYPASS detected: Returning mock terms");
+            const mockArticles = [
+                "Artikel 1: Definities\nIn deze voorwaarden wordt verstaan onder...",
+                "Artikel 2: Toepasselijkheid\nDeze voorwaarden zijn van toepassing op alle aanbiedingen...",
+                "Artikel 3: Levering\nLevering geschiedt af fabriek..."
+            ];
+            const pdfBytes = await generateTermsPDF(body, mockArticles);
+            return NextResponse.json({
+                success: true,
+                data: {
+                    pdfBase64: Buffer.from(pdfBytes).toString("base64"),
+                },
+            });
+        }
+
         // Generate terms content with GPT
         const termsContent = await generateTermsContent(body);
 
@@ -78,6 +99,11 @@ ${data.acceptsReturns ? '9. Intellectueel eigendom\n10. Toepasselijk recht' : '8
 Geef elk artikel als een aparte sectie. Gebruik duidelijke, juridische maar begrijpelijke taal. Zorg dat het compleet en professioneel is.
 
 Formaat: Geef alleen de artikelen terug, elk artikel op een nieuwe regel gescheiden door "---". Begin elk artikel met "Artikel X: [Titel]" gevolgd door de inhoud.`;
+
+    // Initialize OpenAI only when needed (lazy load)
+    const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY || "dummy-key", // Fallback to avoid error if key missing but not used
+    });
 
     const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",

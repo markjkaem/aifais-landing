@@ -17,7 +17,7 @@ export const POST = withApiGuard(async (req, body: any) => {
 
     try {
         // Payment verification
-        const payment = await gatekeepPayment(body);
+        const payment = await gatekeepPayment(body, 0.01);
 
         if (!payment.success) {
             return NextResponse.json(
@@ -28,6 +28,28 @@ export const POST = withApiGuard(async (req, body: any) => {
         }
 
         console.log(`Payment authorized via ${payment.method}. Starting contract analysis...`);
+
+        // DEV_BYPASS: Return mock analysis without calling Claude
+        if (payment.method === 'dev_bypass') {
+            console.log("⚠️ DEV_BYPASS detected: Returning mock contract analysis");
+            const mockAnalysis = {
+                summary: "Dit is een gesimuleerde analyse voor testdoeleinden.",
+                risks: ["Dit is een testrisico", "Automatische verlenging zonder notificatie"],
+                unclear_clauses: ["Artikel 3.2 is vaag gedefinieerd"],
+                suggestions: ["Voeg een opzegtermijn toe", "Specificeer de aansprakelijkheid"],
+                overall_score: 8
+            };
+            const pdfBuffer = await generatePDFReport(mockAnalysis);
+            return NextResponse.json({
+                success: true,
+                data: {
+                    summary: mockAnalysis.summary,
+                    risks: mockAnalysis.risks,
+                    score: mockAnalysis.overall_score,
+                    pdfBase64: pdfBuffer.toString("base64"),
+                },
+            });
+        }
 
         const { contractBase64, mimeType } = body;
 

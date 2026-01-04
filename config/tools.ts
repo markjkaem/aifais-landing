@@ -201,8 +201,8 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         icon: ShieldCheck,
         status: "live",
         category: "legal",
-        metaTitle: "Gratis Algemene Voorwaarden Generator | Juridisch Dicht | AIFAIS",
-        metaDescription: "Genereer professionele algemene voorwaarden voor je bedrijf in 3 stappen. Gratis, geen account nodig. Direct downloaden als PDF.",
+        metaTitle: "Algemene Voorwaarden Generator (0.005 SOL) | Juridisch Dicht | AIFAIS",
+        metaDescription: "Genereer professionele algemene voorwaarden voor je bedrijf in 3 stappen. AI genereert voorwaarden op maat. Kosten: 0.005 SOL.",
         keywords: ["algemene voorwaarden", "voorwaarden generator", "juridische voorwaarden", "AVG voorwaarden", "bedrijfsvoorwaarden"],
         features: [
             "Wizard-style formulier (3 stappen)",
@@ -216,7 +216,9 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
             "Juridische bescherming",
         ],
         pricing: {
-            type: "free",
+            type: "paid",
+            price: 0.005,
+            currency: "SOL",
         },
         componentPath: "terms-generator/TermsGeneratorClient",
     },

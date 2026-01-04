@@ -11,6 +11,7 @@ const quoteSchema = z.object({
     companyAddress: z.string().optional(),
     companyKvk: z.string().optional(),
     companyVat: z.string().optional(),
+    companyLogo: z.string().optional(), // Base64 string
     clientName: z.string().min(1),
     clientAddress: z.string().optional(),
     projectTitle: z.string().min(1),
@@ -61,10 +62,49 @@ async function generateQuotePDF(data: any): Promise<Uint8Array> {
 
     let y = height - 80;
 
-    // Header - OFFERTE
+    // Logo
+    if (data.companyLogo) {
+        try {
+            const logoImage = await pdfDoc.embedJpg(data.companyLogo);
+            const logoDims = logoImage.scale(0.3); // Adjust scale as needed
+            // Limit max width/height to avoid huge logos
+            let logoWidth = logoDims.width;
+            let logoHeight = logoDims.height;
+            const maxLogoWidth = 100;
+            if (logoWidth > maxLogoWidth) {
+                const scaleFactor = maxLogoWidth / logoWidth;
+                logoWidth *= scaleFactor;
+                logoHeight *= scaleFactor;
+            }
+
+            page.drawImage(logoImage, {
+                x: 50,
+                y: y,
+                width: logoWidth,
+                height: logoHeight,
+            });
+            // Adjust Y so text doesn't overlap logo
+            // y -= (logoHeight + 20); // Actually, let's keep logo on top left or right??
+            // The current layout has "OFFERTE" on top right. Logo should probably be top left.
+            // Let's position logo at x:50, y: height - 80 - logoHeight? No PDF coordinates are bottom-left based.
+            // y starts at height - 80.
+            // Draw logo at y: height - 60 - logoHeight (top left corner)
+            page.drawImage(logoImage, {
+                x: 50,
+                y: height - 50 - logoHeight,
+                width: logoWidth,
+                height: logoHeight,
+            });
+        } catch (e) {
+            console.error("Failed to embed logo", e);
+        }
+    }
+
+    // Header - OFFERTE (Right aligned)
+    y = height - 80;
     page.drawText("OFFERTE", {
         x: width - 200,
-        y,
+        y: y,
         size: 28,
         font: fontBold,
         color: rgb(0.12, 0.25, 0.69), // #1e40af

@@ -111,6 +111,11 @@ interface Tool {
   sector: SectorId;
   featured?: boolean;
   new?: boolean;
+  pricing: {
+    type: "free" | "paid" | "freemium";
+    price?: number;
+    currency?: string;
+  };
 }
 
 // Get tools from registry and convert to UI format
@@ -124,34 +129,14 @@ const TOOLS: Tool[] = getAllTools().map(tool => ({
   sector: tool.category as SectorId,
   featured: tool.featured,
   new: tool.new,
+  pricing: tool.pricing,
 }));
 
 // ============================================
 // COMPONENTS
 // ============================================
 
-function StatusBadge({ status }: { status: ToolStatus }) {
-  if (status === "live") {
-    return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-600 bg-emerald-50 rounded-full ring-1 ring-emerald-200/50">
-        <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-        Beschikbaar
-      </span>
-    );
-  }
-  if (status === "beta") {
-    return (
-      <span className="px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-amber-600 bg-amber-50 rounded-full ring-1 ring-amber-200/50">
-        Beta
-      </span>
-    );
-  }
-  return (
-    <span className="px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-400 bg-zinc-100 rounded-full ring-1 ring-zinc-200/50">
-      Binnenkort
-    </span>
-  );
-}
+
 
 function ToolCard({ tool, index }: { tool: Tool; index: number }) {
   const isSoon = tool.status === "soon";
@@ -196,7 +181,6 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
               background: isSoon ? undefined : `linear-gradient(135deg, ${sector?.accentColor}ee, ${sector?.accentColor}99)`,
             }}
           >
-            <Icon className="w-5 h-5" strokeWidth={1.5} />
             {!isSoon && (
               <div 
                 className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -207,7 +191,28 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
             )}
             <Icon className="w-5 h-5 relative z-10" strokeWidth={1.5} />
           </div>
-          <StatusBadge status={tool.status} />
+
+          {/* Pricing Badge */}
+          {!isSoon && (
+             <div className="flex flex-col items-end gap-1">
+                {tool.pricing.type === "free" ? (
+                    <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100 uppercase tracking-wider">
+                        Gratis
+                    </span>
+                ) : (
+                    <div className="flex flex-col items-end">
+                       <span className="text-xs font-bold text-zinc-900 bg-white px-2 py-1 rounded-md border border-zinc-200 shadow-sm">
+                           {tool.pricing.price} {tool.pricing.currency}
+                       </span>
+                       {tool.pricing.currency === "SOL" && tool.pricing.price && (
+                           <span className="text-[10px] text-zinc-400 font-medium whitespace-nowrap">
+                               ≈ €{(tool.pricing.price * 150).toFixed(2)}
+                           </span>
+                       )}
+                    </div>
+                )}
+             </div>
+          )}
         </div>
 
         {/* Content */}
@@ -226,6 +231,7 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
             </span>
             <div className="flex items-center gap-1 text-sm font-medium text-zinc-900 group-hover:gap-2 transition-all">
               Open
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </div>
@@ -282,7 +288,7 @@ function FeaturedToolCard({ tool, index }: { tool: Tool; index: number }) {
             }}
           />
           
-          {/* Top row: Icon + Badges */}
+          {/* Top row: Icon + Pricing/Badges */}
           <div className="flex items-start justify-between mb-5">
             <div className="relative">
               {/* Icon glow */}
@@ -298,22 +304,43 @@ function FeaturedToolCard({ tool, index }: { tool: Tool; index: number }) {
               </div>
             </div>
             
-            {/* Badges */}
-            <div className="flex items-center gap-2">
-              {tool.new && (
-                <span className="px-2.5 py-1 text-[10px] font-bold text-white bg-gradient-to-r from-orange-500 to-rose-500 rounded-full shadow-sm">
-                  NIEUW
-                </span>
-              )}
-              <span 
-                className="px-3 py-1 text-[11px] font-semibold rounded-full"
-                style={{ 
-                  background: `${sector?.accentColor}12`,
-                  color: sector?.accentColor,
-                }}
-              >
-                {sector?.name}
-              </span>
+            {/* Badges & Pricing */}
+            <div className="flex flex-col items-end gap-2">
+                {/* Status/Sector Badges */}
+                <div className="flex items-center gap-2">
+                  {tool.new && (
+                    <span className="px-2.5 py-1 text-[10px] font-bold text-white bg-gradient-to-r from-orange-500 to-rose-500 rounded-full shadow-sm">
+                      NIEUW
+                    </span>
+                  )}
+                  <span 
+                    className="px-3 py-1 text-[11px] font-semibold rounded-full"
+                    style={{ 
+                      background: `${sector?.accentColor}12`,
+                      color: sector?.accentColor,
+                    }}
+                  >
+                    {sector?.name}
+                  </span>
+                </div>
+
+                {/* Pricing Badge */}
+                {tool.pricing.type === "free" ? (
+                    <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100 uppercase tracking-wider">
+                        Gratis
+                    </span>
+                ) : (
+                    <div className="flex flex-col items-end">
+                       <span className="text-xs font-bold text-zinc-900 bg-white px-2.5 py-1 rounded-lg border border-zinc-200 shadow-sm">
+                           {tool.pricing.price} {tool.pricing.currency}
+                       </span>
+                       {tool.pricing.currency === "SOL" && tool.pricing.price && (
+                           <span className="text-[10px] text-zinc-500 font-medium">
+                               ≈ €{(tool.pricing.price * 150).toFixed(2)}
+                           </span>
+                       )}
+                    </div>
+                )}
             </div>
           </div>
 
@@ -323,9 +350,9 @@ function FeaturedToolCard({ tool, index }: { tool: Tool; index: number }) {
               {tool.title}
             </h3>
             <p className="text-zinc-500 leading-relaxed mb-5 line-clamp-2">{tool.description}</p>
+          </div>
             
-            {/* CTA */}
-            <div className="flex items-center justify-between pt-4 border-t border-zinc-100">
+          <div className="flex items-center justify-between pt-4 border-t border-zinc-100">
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-xs font-medium text-emerald-600">Beschikbaar</span>
@@ -337,7 +364,6 @@ function FeaturedToolCard({ tool, index }: { tool: Tool; index: number }) {
                 <span>Probeer nu</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </div>
-            </div>
           </div>
         </div>
       </div>

@@ -16,8 +16,10 @@ export type PaymentResult =
 
 /**
  * Deze functie controleert of een request geldig betaald is via Solana (X-402) of Stripe.
+ * @param reqBody De request body (moet signature of stripeSessionId bevatten)
+ * @param requiredAmount Het vereiste bedrag in SOL (optioneel, default 0.001)
  */
-export async function gatekeepPayment(reqBody: any): Promise<PaymentResult> {
+export async function gatekeepPayment(reqBody: any, requiredAmount?: number): Promise<PaymentResult> {
   const { signature, stripeSessionId } = reqBody;
 
   // --- OPTIE A: SOLANA (X402) ---
@@ -28,7 +30,7 @@ export async function gatekeepPayment(reqBody: any): Promise<PaymentResult> {
       return { success: true, method: "dev_bypass" };
     }
 
-    const payCheck = await checkPayment(signature, connection);
+    const payCheck = await checkPayment(signature, connection, requiredAmount);
 
     if (payCheck.status === "error") {
       return {
@@ -82,7 +84,7 @@ export async function gatekeepPayment(reqBody: any): Promise<PaymentResult> {
       status: 402,
       details: {
         address: walletAddress,
-        amount: 0.001
+        amount: requiredAmount || 0.001
       }
     };
   }

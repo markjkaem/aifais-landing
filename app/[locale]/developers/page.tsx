@@ -35,18 +35,25 @@ export default async function DevelopersLanding({
       color: "emerald"
     },
     {
-      name: "verify_business",
-      desc: "Directe verificatie van KvK gegevens en BTW nummers.",
-      status: "Coming Soon",
-      type: "MCP",
-      color: "amber"
+      name: "create_invoice",
+      desc: "Genereer professionele PDF facturen via een simpele JSON payload.",
+      status: "Live",
+      type: "MCP / API",
+      color: "cyan"
     },
     {
-      name: "analyze_contract",
-      desc: "AI-gedreven contractanalyse op basis van Nederlands recht.",
-      status: "Coming Soon",
-      type: "MCP",
+      name: "check_contract",
+      desc: "AI-gedreven contractanalyse op basis van Nederlands recht (0.01 SOL).",
+      status: "Live",
+      type: "MCP / API",
       color: "violet"
+    },
+    {
+      name: "generate_terms",
+      desc: "Genereer juridisch dichte algemene voorwaarden op maat (0.005 SOL).",
+      status: "Live",
+      type: "MCP / API",
+      color: "amber"
     }
   ];
 
@@ -175,7 +182,7 @@ export default async function DevelopersLanding({
             </div>
 
             {/* Tools grid */}
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 gap-6">
               {tools.map((tool, i) => (
                 <div
                   key={i}
@@ -316,7 +323,7 @@ export default async function DevelopersLanding({
 
             <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               {[
-                { tier: "AI Agents", price: "0.001 SOL", calls: "per scan (X402)", highlight: true },
+                { tier: "Pay-per-Tool", price: "Vanaf 0.001 SOL", calls: "Betaal per gebruik (X402)", highlight: true },
                 { tier: "Enterprise", price: "Custom", calls: "Volume korting & API keys", highlight: false },
               ].map((plan, i) => (
                 <div

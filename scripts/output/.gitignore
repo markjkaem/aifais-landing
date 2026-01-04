@@ -1,0 +1,7 @@
+# Test output files
+*.pdf
+*.json
+*.csv
+
+# Keep folder
+!.gitkeep

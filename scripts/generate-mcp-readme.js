@@ -13,14 +13,40 @@ const ROOT = path.resolve(__dirname, '..');
 const MCP_DIR = path.join(ROOT, 'aifais-mcp-server');
 
 // Configuration - update these when pricing or tools change
+// Configuration - update these when pricing or tools change
 const CONFIG = {
   version: '1.2.0',
-  price: '0.001 SOL',
+  pricingModel: 'Pay-per-tool (vanaf 0.001 SOL)',
   tools: [
     {
       name: 'scan_invoice',
       description: 'Scant een factuur/bonnetje en extraheert gestructureerde data via AI.',
-      params: ['invoiceBase64 (required)', 'mimeType (required)', 'signature (optional)'],
+      params: ['invoiceBase64 (required)', 'mimeType (required)', 'signature (optional, 0.001 SOL)'],
+      price: '0.001 SOL'
+    },
+    {
+      name: 'create_invoice',
+      description: 'Genereer een PDF factuur op basis van JSON data.',
+      params: ['ownName', 'clientName', 'items (array)'],
+      price: 'Gratis'
+    },
+    {
+      name: 'generate_quote',
+      description: 'Genereer een PDF offerte op basis van JSON data.',
+      params: ['companyName', 'clientName', 'projectTitle', 'items (array)', 'validUntil (optional)'],
+      price: 'Gratis'
+    },
+    {
+      name: 'check_contract',
+      description: 'Analyseer een juridisch contract op risico\'s.',
+      params: ['contractBase64 (required)', 'signature (required, 0.01 SOL)'],
+      price: '0.01 SOL'
+    },
+    {
+      name: 'generate_terms',
+      description: 'Genereer algemene voorwaarden op maat.',
+      params: ['companyName', 'companyType', 'signature (required, 0.005 SOL)'],
+      price: '0.005 SOL'
     }
   ],
   wallet: 'Bqpo3emFG46VGLX4korYoeta3a317pWbR2DMbWnFpZ8c',
@@ -59,7 +85,7 @@ Voeg dit toe aan je \`claude_desktop_config.json\`:
 
 ## 💎 Beschikbare Tools
 
-${CONFIG.tools.map(tool => `### \`${tool.name}\`
+${CONFIG.tools.map(tool => `### \`${tool.name}\` (${tool.price})
 ${tool.description}
 
 **Parameters:**
@@ -77,7 +103,8 @@ Je kunt de actuele tool-definities en prijzen altijd ophalen via ons discovery e
 
 ## 💳 Pricing
 
-Elke API call kost **${CONFIG.price}** via het X402 protocol.
+Prijzen zijn **Pay-per-Tool** via het X402 protocol.
+Sommige tools zijn gratis (factuur/offerte genereren), anderen kosten een klein bedrag in SOL.
 
 **Hoe het werkt:**
 1. De agent doet een verzoek zonder \`signature\`.
