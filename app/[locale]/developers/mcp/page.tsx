@@ -28,18 +28,21 @@ export default async function MCPPage({
     {
       name: "scan_invoice",
       desc: "Extracteert gestructureerde data uit facturen/bonnen via LLM-vision.",
+      price: "0.001 SOL",
       status: "Live",
       color: "emerald"
     },
     {
       name: "verify_business",
       desc: "Controleert bedrijfsgegevens direct in het Nederlandse Handelsregister.",
+      price: "0.001 SOL",
       status: "Coming Soon",
       color: "amber"
     },
     {
       name: "analyze_contract",
       desc: "Analyseert contracten op risico's en ongunstige clausules.",
+      price: "0.002 SOL",
       status: "Coming Soon",
       color: "violet"
     }
@@ -269,7 +272,12 @@ export default async function MCPPage({
                   }`}>
                     {tool.status}
                   </div>
-                  <div className={`${mono.className} text-[10px] text-white/30`}>MCP</div>
+                  <div className="flex items-center gap-2">
+                    <div className={`${mono.className} text-[10px] text-violet-400 font-bold bg-violet-500/5 px-2 py-0.5 rounded border border-violet-500/10`}>
+                      {tool.price}
+                    </div>
+                    <div className={`${mono.className} text-[10px] text-white/30`}>MCP</div>
+                  </div>
                 </div>
 
                 {/* Tool icon */}

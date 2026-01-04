@@ -314,23 +314,22 @@ export default async function DevelopersLanding({
               Start gratis. Schaal wanneer je klaar bent.
             </p>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               {[
-                { tier: "Developer", price: "Gratis", calls: "100 calls/maand", highlight: false },
-                { tier: "Growth", price: "€0.05", calls: "per API call", highlight: true },
-                { tier: "Enterprise", price: "Custom", calls: "Volume korting", highlight: false },
+                { tier: "AI Agents", price: "0.001 SOL", calls: "per scan (X402)", highlight: true },
+                { tier: "Enterprise", price: "Custom", calls: "Volume korting & API keys", highlight: false },
               ].map((plan, i) => (
                 <div
                   key={i}
                   className={`relative p-8 rounded-2xl border transition-all ${
                     plan.highlight
-                      ? 'bg-linear-to-b from-emerald-500/10 to-transparent border-emerald-500/30'
+                      ? 'bg-linear-to-b from-violet-500/10 to-transparent border-violet-500/30'
                       : 'bg-white/2 border-white/5 hover:border-white/10'
                   }`}
                 >
                   {plan.highlight && (
-                    <div className={`${mono.className} absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-500 text-black text-[10px] font-bold rounded-full uppercase`}>
-                      Popular
+                    <div className={`${mono.className} absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-violet-500 text-white text-[10px] font-bold rounded-full uppercase`}>
+                      Agent Ready
                     </div>
                   )}
                   <div className={`${mono.className} text-sm text-white/40 mb-2`}>{plan.tier}</div>

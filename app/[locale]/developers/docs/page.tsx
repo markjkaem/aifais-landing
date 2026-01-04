@@ -38,10 +38,8 @@ export default async function DocsPage({
   ];
 
   const pricing = [
-    { tier: "Developer", calls: "100", price: "Gratis", extra: "N/A" },
-    { tier: "Growth", calls: "1.000+", price: "€0,05", extra: "per call" },
-    { tier: "Scale", calls: "10.000+", price: "€0,03", extra: "per call" },
-    { tier: "Enterprise", calls: "Custom", price: "Custom", extra: "Volume korting" }
+    { tier: "AI Agents", calls: "Unlimited", price: "0,001 SOL", extra: "per call" },
+    { tier: "Enterprise", calls: "Custom", price: "Custom", extra: "Contact sales" }
   ];
 
   const navItems = [
@@ -260,36 +258,73 @@ export default async function DocsPage({
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h2 className={`${h1_font.className} text-3xl font-bold text-white`}>Usage-Based Pricing</h2>
+                  <h2 className={`${h1_font.className} text-3xl font-bold text-white`}>Pricing Model</h2>
                 </div>
 
-                <div className="bg-white/2 border border-white/5 rounded-2xl overflow-hidden">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-white/5">
-                        <th className={`${mono.className} text-left p-4 text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]`}>Tier</th>
-                        <th className={`${mono.className} text-left p-4 text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]`}>Calls / Maand</th>
-                        <th className={`${mono.className} text-left p-4 text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]`}>Prijs</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {pricing.map((p, i) => (
-                        <tr key={i} className="border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors">
-                          <td className="p-4">
-                            <span className="font-bold text-white">{p.tier}</span>
-                          </td>
-                          <td className={`${mono.className} p-4 text-white/50`}>{p.calls}</td>
-                          <td className="p-4">
-                            <span className="text-emerald-400 font-bold">{p.price}</span>
-                            <span className="text-white/30 text-sm ml-2">{p.extra}</span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="grid md:grid-cols-2 gap-6 mb-12">
+                  <div className="p-8 bg-linear-to-b from-violet-500/10 to-transparent border border-violet-500/20 rounded-2xl">
+                    <div className={`${mono.className} text-violet-400 text-xs font-bold uppercase tracking-wider mb-4 text-center`}>
+                      On-Chain (AI Agents)
+                    </div>
+                    <div className="text-center">
+                      <div className={`${h1_font.className} text-5xl font-bold text-white mb-2`}>0.001 SOL</div>
+                      <div className="text-white/40 text-sm mb-6">per API call</div>
+                    </div>
+                    <ul className="space-y-3 text-sm text-white/60 mb-8">
+                      <li className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Geen account of API key nodig
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Pay-per-call via X402 protocol
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Direct gestructureerde data
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="p-8 bg-linear-to-b from-emerald-500/10 to-transparent border border-emerald-500/20 rounded-2xl">
+                    <div className={`${mono.className} text-emerald-400 text-xs font-bold uppercase tracking-wider mb-4 text-center`}>
+                      Classical (Web & SaaS)
+                    </div>
+                    <div className="text-center">
+                      <div className={`${h1_font.className} text-5xl font-bold text-white mb-2`}>€0.05</div>
+                      <div className="text-white/40 text-sm mb-6">gemiddeld per call</div>
+                    </div>
+                    <ul className="space-y-3 text-sm text-white/60 mb-8">
+                      <li className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Betaling via Stripe (iDEAL/Card)
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Maandelijkse facturatie mogelijk
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Hogere rate limits beschikbaar
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+
                 <p className={`${mono.className} text-xs text-white/30 mt-4`}>
-                  * Alle prijzen zijn exclusief BTW. Billing geschiedt per kalendermaand op basis van werkelijk verbruik.
+                  * Voor bulkafspraken of commerciële integraties buiten de blockchain om, neem contact op via sales@aifais.mobi.
                 </p>
               </section>
 
