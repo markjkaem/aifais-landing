@@ -8,8 +8,14 @@ import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+const apiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
+
+if (!apiKey) {
+    console.warn("⚠️ API Key warning: ANTHROPIC_API_KEY and CLAUDE_API_KEY are missing.");
+}
+
 const anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY!,
+    apiKey: apiKey || "dummy-key",
 });
 
 export const POST = withApiGuard(async (req, body: any) => {
@@ -17,7 +23,7 @@ export const POST = withApiGuard(async (req, body: any) => {
 
     try {
         // Payment verification
-        const payment = await gatekeepPayment(body, 0.01);
+        const payment = await gatekeepPayment(body, 0.001);
 
         if (!payment.success) {
             return NextResponse.json(
@@ -55,7 +61,7 @@ export const POST = withApiGuard(async (req, body: any) => {
 
         // Analyze contract with Claude
         const message = await anthropic.messages.create({
-            model: "claude-3-5-sonnet-20241022",
+            model: "claude-4-sonnet-20250514",
             max_tokens: 4096,
             messages: [
                 {
@@ -97,7 +103,13 @@ Geef je antwoord in JSON formaat:
         let analysis;
 
         try {
-            analysis = JSON.parse(responseText);
+            // Clean up markdown code blocks if present
+            const cleanJson = responseText
+                .replace(/```json/g, "")
+                .replace(/```/g, "")
+                .trim();
+
+            analysis = JSON.parse(cleanJson);
         } catch {
             // Fallback if Claude doesn't return valid JSON
             analysis = {
@@ -141,6 +153,14 @@ async function generatePDFReport(analysis: any): Promise<Buffer> {
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
+    // Helper to clean text for WinAnsi encoding (Helvetica)
+    const cleanText = (text: string) => {
+        return text
+            .replace(/[^\x00-\x7F\xA0-\xFF]/g, "") // Remove non-Latin-1 chars
+            .replace(/\n/g, " ") // Remove newlines within lines
+            .trim();
+    };
+
     let y = height - 80;
 
     // Header
@@ -182,7 +202,7 @@ async function generatePDFReport(analysis: any): Promise<Buffer> {
     });
     y -= 20;
 
-    const summaryText = analysis.summary || "Geen samenvatting beschikbaar.";
+    const summaryText = cleanText(analysis.summary || "Geen samenvatting beschikbaar.");
     const summaryLines = wrapText(summaryText, 495, font, 10);
     for (const line of summaryLines) {
         page.drawText(line, {
@@ -206,7 +226,7 @@ async function generatePDFReport(analysis: any): Promise<Buffer> {
         y -= 20;
 
         for (let i = 0; i < analysis.risks.length; i++) {
-            const riskLines = wrapText(`${i + 1}. ${analysis.risks[i]}`, 475, font, 10);
+            const riskLines = wrapText(cleanText(`${i + 1}. ${analysis.risks[i]}`), 475, font, 10);
             for (const line of riskLines) {
                 page.drawText(line, {
                     x: 70,
@@ -231,7 +251,7 @@ async function generatePDFReport(analysis: any): Promise<Buffer> {
         y -= 20;
 
         for (let i = 0; i < analysis.unclear_clauses.length; i++) {
-            const clauseLines = wrapText(`${i + 1}. ${analysis.unclear_clauses[i]}`, 475, font, 10);
+            const clauseLines = wrapText(cleanText(`${i + 1}. ${analysis.unclear_clauses[i]}`), 475, font, 10);
             for (const line of clauseLines) {
                 page.drawText(line, {
                     x: 70,
@@ -256,7 +276,7 @@ async function generatePDFReport(analysis: any): Promise<Buffer> {
         y -= 20;
 
         for (let i = 0; i < analysis.suggestions.length; i++) {
-            const suggestionLines = wrapText(`${i + 1}. ${analysis.suggestions[i]}`, 475, font, 10);
+            const suggestionLines = wrapText(cleanText(`${i + 1}. ${analysis.suggestions[i]}`), 475, font, 10);
             for (const line of suggestionLines) {
                 page.drawText(line, {
                     x: 70,
@@ -271,7 +291,7 @@ async function generatePDFReport(analysis: any): Promise<Buffer> {
 
     // Footer
     const disclaimerText = "Disclaimer: Dit rapport is gegenereerd door AI en dient alleen als eerste indicatie. Raadpleeg altijd een juridisch adviseur voor definitief advies.";
-    const disclaimerLines = wrapText(disclaimerText, 495, font, 8);
+    const disclaimerLines = wrapText(cleanText(disclaimerText), 495, font, 8);
     let footerY = 60;
     for (const line of disclaimerLines) {
         const lineWidth = font.widthOfTextAtSize(line, 8);

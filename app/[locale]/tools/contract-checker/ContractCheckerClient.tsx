@@ -179,7 +179,7 @@ export default function ContractCheckerClient() {
             </div>
 
             <div className="mt-6 flex items-center justify-center gap-6 text-xs text-slate-500">
-              <span>0.01 SOL / €0.50 per analyse</span>
+              <span>{CONFIG.priceSol} SOL / €{CONFIG.priceEur.toFixed(2)} per analyse</span>
               <span>•</span>
               <span>Claude 3.5 Sonnet</span>
             </div>

@@ -2,12 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 import { withApiGuard } from "@/lib/security/api-guard";
 import { z } from "zod";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 
 import { gatekeepPayment } from "@/lib/payment-gatekeeper";
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+
+const apiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
+
+if (!apiKey) {
+    console.warn("⚠️ API Key warning: ANTHROPIC_API_KEY and CLAUDE_API_KEY are missing.");
+}
+
+const anthropic = new Anthropic({
+    apiKey: apiKey || "dummy-key", // Prevent SDK crash on init, will fail on call if invalid
+});
 
 const termsSchema = z.object({
     companyName: z.string().min(1),
@@ -29,8 +39,8 @@ export const POST = withApiGuard(async (req, body: any) => {
     console.log("--- API START: /api/v1/legal/generate-terms ---");
 
     try {
-        // Enforce Payment (0.005 SOL)
-        await gatekeepPayment(body, 0.005);
+        // Enforce Payment (0.001 SOL)
+        await gatekeepPayment(body, 0.001);
 
         // DEV_BYPASS: Mock generation
         if (body.signature === 'DEV_BYPASS') {
@@ -49,7 +59,7 @@ export const POST = withApiGuard(async (req, body: any) => {
             });
         }
 
-        // Generate terms content with GPT
+        // Generate terms content with Claude
         const termsContent = await generateTermsContent(body);
 
         // Create PDF
@@ -100,28 +110,18 @@ Geef elk artikel als een aparte sectie. Gebruik duidelijke, juridische maar begr
 
 Formaat: Geef alleen de artikelen terug, elk artikel op een nieuwe regel gescheiden door "---". Begin elk artikel met "Artikel X: [Titel]" gevolgd door de inhoud.`;
 
-    // Initialize OpenAI only when needed (lazy load)
-    const openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY || "dummy-key", // Fallback to avoid error if key missing but not used
-    });
-
-    const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+    const message = await anthropic.messages.create({
+        model: "claude-4-sonnet-20250514",
+        max_tokens: 3000,
         messages: [
             {
-                role: "system",
-                content: "Je bent een juridisch expert gespecialiseerd in Nederlandse algemene voorwaarden. Je schrijft duidelijke, professionele voorwaarden die juridisch correct zijn."
-            },
-            {
                 role: "user",
-                content: prompt
+                content: `Je bent een juridisch expert gespecialiseerd in Nederlandse algemene voorwaarden. Je schrijft duidelijke, professionele voorwaarden die juridisch correct zijn.\n\n${prompt}`
             }
-        ],
-        temperature: 0.7,
-        max_tokens: 3000,
+        ]
     });
 
-    const content = completion.choices[0].message.content || "";
+    const content = message.content[0].type === "text" ? message.content[0].text : "";
     return content.split("---").map(s => s.trim()).filter(s => s.length > 0);
 }
 

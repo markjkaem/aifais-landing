@@ -39,14 +39,14 @@ const CONFIG = {
     {
       name: 'check_contract',
       description: 'Analyseer een juridisch contract op risico\'s.',
-      params: ['contractBase64 (required)', 'signature (required, 0.01 SOL)'],
-      price: '0.01 SOL'
+      params: ['contractBase64 (required)', 'signature (required, 0.001 SOL)'],
+      price: '0.001 SOL'
     },
     {
       name: 'generate_terms',
       description: 'Genereer algemene voorwaarden op maat.',
-      params: ['companyName', 'companyType', 'signature (required, 0.005 SOL)'],
-      price: '0.005 SOL'
+      params: ['companyName', 'companyType', 'signature (required, 0.001 SOL)'],
+      price: '0.001 SOL'
     }
   ],
   wallet: 'Bqpo3emFG46VGLX4korYoeta3a317pWbR2DMbWnFpZ8c',
