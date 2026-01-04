@@ -674,125 +674,391 @@ export default async function CityPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      
-      {/* City Specific Hero */}
-      <section className="bg-gradient-to-br from-[#3066be] to-[#1e3a8a] py-24 text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-white opacity-5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
-        <div className="container mx-auto px-6 max-w-7xl relative z-10">
-          <div className="max-w-4xl">
-            <span className="inline-block px-4 py-1 bg-white/10 rounded-full text-sm font-bold mb-6 backdrop-blur-md border border-white/20">
-              Personal AI Partner in {data.name}
-            </span>
-            <h1 className={`${h1_font.className} text-5xl md:text-7xl font-bold mb-8 leading-tight text-white`}>
-              {data.h1}
-            </h1>
-            <p className="text-xl md:text-2xl text-blue-100 mb-8 leading-relaxed max-w-2xl">
-              {data.intro}
-            </p>
 
-            {/* 🔥 Citation Snippet Box */}
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 mb-10 shadow-2xl">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                <span className="text-xs font-bold tracking-widest uppercase text-blue-200">AI Inzicht & Resultaat</span>
+      {/* Hero Section - Premium Dark Design */}
+      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
+        {/* Background layers */}
+        <div className="absolute inset-0 bg-[#0a0a0a]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#3066be]/20 via-transparent to-[#3066be]/10" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(48,102,190,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(48,102,190,0.1),transparent_50%)]" />
+
+        {/* Animated grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
+
+        {/* Floating orbs */}
+        <div className="absolute top-20 right-[20%] w-72 h-72 bg-[#3066be]/20 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute bottom-20 left-[10%] w-96 h-96 bg-[#3066be]/10 rounded-full blur-[120px]" />
+
+        <div className="container mx-auto px-6 max-w-7xl relative z-10 py-20">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left content */}
+            <div>
+              {/* Location badge */}
+              <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl mb-8 group hover:bg-white/10 transition-all cursor-default">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]"></span>
+                </span>
+                <span className="text-sm font-medium text-white/80">AI Partner in {data.name}</span>
+                <svg className="w-4 h-4 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
               </div>
-              <p className="text-lg md:text-xl font-medium leading-relaxed italic text-white/95">
-                "{data.citationSnippet}"
+
+              {/* Main headline */}
+              <h1 className={`${h1_font.className} text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] tracking-tight`}>
+                <span className="text-white">{data.h1.split(' ').slice(0, -2).join(' ')}</span>
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-white">
+                  {data.h1.split(' ').slice(-2).join(' ')}
+                </span>
+              </h1>
+
+              {/* Intro text */}
+              <p className="text-lg md:text-xl text-white/60 mb-10 leading-relaxed max-w-xl">
+                {data.intro}
               </p>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <Link
+                  href={`/${locale}/contact`}
+                  className="group relative px-8 py-4 bg-[#3066be] hover:bg-[#2554a3] text-white font-bold text-base rounded-full transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(48,102,190,0.3)] hover:shadow-[0_0_40px_rgba(48,102,190,0.5)] transform hover:-translate-y-1"
+                >
+                  <span>{t("cta", { city: data.name })}</span>
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+                <Link
+                  href={`/${locale}/tools/roi-calculator`}
+                  className="px-8 py-4 bg-white/5 border border-white/20 rounded-full text-white font-medium hover:bg-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center backdrop-blur-md"
+                >
+                  Bereken uw ROI
+                </Link>
+              </div>
+
+              {/* Trust indicators */}
+              <div className="flex items-center gap-6 text-sm text-white/50">
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>40+ uur besparing/week</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Live binnen 8 weken</span>
+                </div>
+              </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-5">
-              <Link
-                href={`/${locale}/contact`}
-                className="px-8 py-4 bg-white text-[#3066be] font-bold rounded-full text-center hover:bg-blue-50 transition-all hover:scale-105 shadow-xl"
-              >
-                {t("cta", { city: data.name })}
-              </Link>
-              <div className="flex items-center gap-4 text-sm font-medium text-blue-100/80 italic">
-                <span>Al 10+ bedrijven in {data.name} gingen je voor</span>
+            {/* Right side - Citation card */}
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#3066be]/20 to-transparent rounded-3xl blur-2xl" />
+              <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
+                  <span className="text-xs font-bold tracking-[0.2em] uppercase text-white/60">AI Insight</span>
+                </div>
+                <blockquote className="text-xl md:text-2xl font-medium leading-relaxed text-white/90 mb-6">
+                  &ldquo;{data.citationSnippet}&rdquo;
+                </blockquote>
+                <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#3066be] to-blue-600 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-white">AIFAIS</div>
+                    <div className="text-sm text-white/50">Digital Workforce Solutions</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Unique City Content */}
-      <section className="py-24 bg-white border-b border-gray-100">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
+      {/* Stats Section */}
+      <section className="relative py-20 bg-gray-50 overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:32px_32px]" />
+        <div className="container mx-auto px-6 max-w-7xl relative z-10">
+          <div className="grid md:grid-cols-4 gap-6">
+            {/* Stat 1 - Companies */}
+            <div className="group bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#3066be]/20 transition-all duration-300">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#3066be]/10 to-blue-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-7 h-7 text-[#3066be]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <div className="text-4xl font-bold text-gray-900 mb-2">{data.localStats.companies}</div>
+              <div className="text-sm font-medium text-gray-500">Bedrijven in regio {data.name}</div>
+            </div>
+
+            {/* Stat 2 - Sector */}
+            <div className="group bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#3066be]/20 transition-all duration-300">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-7 h-7 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div className="text-xl font-bold text-gray-900 mb-2">{data.localStats.sector}</div>
+              <div className="text-sm font-medium text-gray-500">Primaire sector</div>
+            </div>
+
+            {/* Stat 3 - Response time */}
+            <div className="group bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#3066be]/20 transition-all duration-300">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-100 to-emerald-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-7 h-7 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div className="text-4xl font-bold text-gray-900 mb-2">30 min</div>
+              <div className="text-sm font-medium text-gray-500">Persoonlijk ter plaatse</div>
+            </div>
+
+            {/* Stat 4 - ROI */}
+            <div className="group bg-gradient-to-br from-[#3066be] to-blue-700 rounded-2xl p-8 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <div className="text-4xl font-bold mb-2">20%+</div>
+              <div className="text-sm font-medium text-blue-100">Gemiddelde ROI binnen 12 maanden</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-24 md:py-32 bg-white relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-50 to-purple-50 rounded-full blur-3xl opacity-50" />
+
+        <div className="container mx-auto px-6 max-w-7xl relative z-10">
+          {/* Section header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 border border-gray-200 rounded-full mb-6">
+              <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#3066be] to-purple-500" />
+              <span className="text-sm font-medium text-gray-600">Onze specialisaties</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
+              AI oplossingen voor{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-blue-600">{data.name}</span>
+            </h2>
+            <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+              Wij pakken de {data.localStats.challenge.toLowerCase()} aan met pragmatische AI-oplossingen die direct resultaat leveren.
+            </p>
+          </div>
+
+          {/* Services grid */}
+          <div className="grid md:grid-cols-3 gap-8">
+            {data.localServices.map((service, i) => (
+              <div
+                key={i}
+                className="group relative bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-2xl hover:border-transparent transition-all duration-500 hover:-translate-y-2"
+              >
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#3066be]/5 to-purple-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <div className="relative z-10">
+                  {/* Icon */}
+                  <div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                    {service.icon}
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900 group-hover:text-[#3066be] transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {service.desc}
+                  </p>
+                </div>
+
+                {/* Bottom gradient line */}
+                <div className="absolute bottom-0 left-8 right-8 h-1 bg-gradient-to-r from-[#3066be] to-purple-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why choose us section */}
+      <section className="py-24 bg-gray-50 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000005_1px,transparent_1px),linear-gradient(to_bottom,#00000005_1px,transparent_1px)] bg-[size:48px_48px]" />
+
+        <div className="container mx-auto px-6 max-w-7xl relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 leading-tight">
-                Waarom bedrijven in <span className="text-[#3066be]">{data.name}</span> overstappen op AIFAIS
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-6 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="text-sm font-medium text-gray-600">Waarom AIFAIS</span>
+              </div>
+
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-900 tracking-tight leading-tight">
+                Waarom bedrijven in{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-blue-600">{data.name}</span>{' '}
+                kiezen voor AIFAIS
               </h2>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Regio {data.name} is een kritieke schakel in de Nederlandse economie. Of het nu gaat om de {data.localStats.sector} sector of de zakelijke dienstverlening, de druk om efficiënter te werken is enorm. Onze lokale expertise in {data.name} helpt u om {data.localStats.challenge} aan te pakken met pragmatische AI.
+
+              <p className="text-lg text-gray-600 mb-10 leading-relaxed">
+                Regio {data.name} is een kritieke schakel in de Nederlandse economie.
+                Of het nu gaat om de {data.localStats.sector} sector of de zakelijke dienstverlening,
+                de druk om efficiënter te werken is enorm.
               </p>
-              
-              <div className="grid sm:grid-cols-2 gap-8 mb-10">
-                <div className="p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                  <div className="text-3xl font-bold text-[#3066be] mb-2">{data.localStats.companies}</div>
-                  <div className="text-sm font-bold text-gray-900 uppercase tracking-wide">Bedrijven in regio</div>
-                </div>
-                <div className="p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                  <div className="text-3xl font-bold text-[#3066be] mb-2">30 min</div>
-                  <div className="text-sm font-bold text-gray-900 uppercase tracking-wide">Persoonlijk Ter Plaatse</div>
-                </div>
+
+              {/* Benefits list */}
+              <div className="space-y-5">
+                {[
+                  { icon: '🎯', title: 'Lokale expertise', desc: `Wij kennen de markt in ${data.name} en omgeving` },
+                  { icon: '⚡', title: 'Snelle implementatie', desc: 'Eerste resultaten binnen 2-4 weken zichtbaar' },
+                  { icon: '🤝', title: 'Persoonlijke aanpak', desc: 'Altijd binnen 30 minuten bij u op kantoor' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="text-2xl">{item.icon}</div>
+                    <div>
+                      <div className="font-bold text-gray-900 mb-1">{item.title}</div>
+                      <div className="text-gray-600 text-sm">{item.desc}</div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="grid gap-6">
-              {data.localServices.map((service, i) => (
-                <div key={i} className="group p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-[#3066be]/20 transition-all flex gap-6 items-start">
-                  <div className="text-4xl bg-gray-50 p-4 rounded-xl group-hover:bg-[#3066be]/5 transition-colors">{service.icon}</div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2 text-gray-900">{service.title}</h3>
-                    <p className="text-gray-600">{service.desc}</p>
+            {/* Right side - Visual element */}
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#3066be]/10 to-purple-500/10 rounded-3xl blur-2xl" />
+              <div className="relative bg-white rounded-3xl p-10 border border-gray-100 shadow-xl">
+                <div className="text-center mb-8">
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-[#3066be] to-blue-600 mb-6 shadow-lg shadow-blue-500/30">
+                    <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Resultaatgarantie</h3>
+                  <p className="text-gray-600">Meetbare ROI of uw geld terug</p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                    <span className="text-gray-600">Gemiddelde tijdsbesparing</span>
+                    <span className="font-bold text-gray-900">40+ uur/week</span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                    <span className="text-gray-600">Implementatietijd</span>
+                    <span className="font-bold text-gray-900">2-8 weken</span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-emerald-50 rounded-xl">
+                    <span className="text-emerald-700">Klanttevredenheid</span>
+                    <span className="font-bold text-emerald-700">9.2/10</span>
                   </div>
                 </div>
+
+                <Link
+                  href={`/${locale}/contact`}
+                  className="mt-8 w-full py-4 bg-gray-900 text-white font-bold rounded-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors"
+                >
+                  Start uw gratis proces-scan
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-24 md:py-32 bg-white relative overflow-hidden">
+        <div className="container mx-auto px-6 max-w-4xl relative z-10">
+          {/* Section header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 border border-gray-200 rounded-full mb-6">
+              <span className="w-2 h-2 rounded-full bg-[#3066be]" />
+              <span className="text-sm font-medium text-gray-600">Veelgestelde vragen</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
+              Vragen over AI in{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3066be] to-blue-600">{data.name}</span>
+            </h2>
+          </div>
+
+          {/* FAQ items */}
+          <div className="space-y-4">
+            {data.faq.map((item, i) => (
+              <div
+                key={i}
+                className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-[#3066be]/30 hover:shadow-lg transition-all duration-300"
+              >
+                <div className="p-6 md:p-8">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-[#3066be]/10 to-blue-100 flex items-center justify-center group-hover:from-[#3066be] group-hover:to-blue-600 transition-all duration-300">
+                      <svg className="w-5 h-5 text-[#3066be] group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 group-hover:text-[#3066be] transition-colors">
+                        {item.question}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* More questions CTA */}
+          <div className="mt-12 text-center">
+            <p className="text-gray-500 mb-4">Heeft u een andere vraag?</p>
+            <Link
+              href={`/${locale}/contact`}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-all"
+            >
+              Neem contact op
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Nearby cities section */}
+      <section className="py-16 bg-gray-50 border-t border-gray-100">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Ook actief in de regio</h3>
+              <p className="text-gray-500">Wij helpen bedrijven in {data.name} en omgeving</p>
+            </div>
+            <div className="flex flex-wrap justify-center md:justify-end gap-3">
+              {data.neighborCities.map((neighborCity, i) => (
+                <span
+                  key={i}
+                  className="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-gray-700 font-medium hover:border-[#3066be]/30 hover:text-[#3066be] transition-all cursor-default"
+                >
+                  {neighborCity}
+                </span>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Local FAQ */}
-      <section className="py-24 bg-gray-50">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
-            Veelgestelde vragen over automatisering in {data.name}
-          </h2>
-          <div className="space-y-6">
-            {data.faq.map((item, i) => (
-              <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <h3 className="text-xl font-bold mb-4 text-gray-900 flex items-center gap-3">
-                  <span className="w-8 h-8 bg-[#3066be]/10 text-[#3066be] rounded-full flex items-center justify-center text-sm font-bold">?</span>
-                  {item.question}
-                </h3>
-                <p className="text-gray-600 leading-relaxed pl-11">
-                  {item.answer}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Nearby areas for internal scaling */}
-      <section className="py-12 bg-white border-t border-gray-100">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
-            Ook actief in omliggende gebieden
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 text-gray-600 font-medium">
-            {data.neighborCities.map((city, i) => (
-              <span key={i} className="px-4 py-2 bg-gray-50 rounded-lg">{city}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Main Content Component - Reusing sections from HomeClient but could be unique */}
-      <HomeClient projects={projects} />
+      {/* Main Content Component */}
+      <HomeClient projects={projects} hideHero />
     </main>
   );
 }

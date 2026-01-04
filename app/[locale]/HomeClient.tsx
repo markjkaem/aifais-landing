@@ -14,12 +14,13 @@ import NewsletterCTA from "../Components/home/NewsletterCTA";
 
 interface HomeClientProps {
   projects: Project[];
+  hideHero?: boolean;
 }
 
-export default function HomeClient({ projects }: HomeClientProps) {
+export default function HomeClient({ projects, hideHero = false }: HomeClientProps) {
   return (
     <main className="bg-white text-gray-900 min-h-screen transition-colors duration-500">
-      <HeroSection />
+      {!hideHero && <HeroSection />}
       
       <ExplainerSection />
       
