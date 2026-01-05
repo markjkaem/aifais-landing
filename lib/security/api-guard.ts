@@ -53,6 +53,7 @@ export function withApiGuard<T>(
 
                 const result = options.schema.safeParse(body);
                 if (!result.success) {
+                    console.error("❌ Validation Failed for", req.nextUrl.pathname, result.error.format());
                     return NextResponse.json(
                         { error: "Validation failed", details: result.error.format() },
                         { status: 400 }

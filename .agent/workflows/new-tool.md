@@ -21,16 +21,22 @@ Ensure you understand the standardized tool architecture. Key files:
 
 2. The script will generate:
    - `app/api/v1/[category]/[tool-id]/route.ts` - API endpoint using `createToolHandler`
-   - `app/[locale]/tools/[tool-id]/ClientComponent.tsx` - Frontend using `usePaywallTool`
-   - `app/[locale]/tools/[tool-id]/page.tsx` - Next.js page wrapper
+   - `app/[locale]/tools/[tool-id]/[ToolName]Client.tsx` - Frontend using `usePaywallTool`
+   - `scripts/tests/test-[tool-id].js` - API test with DEV_BYPASS
 
-3. **Add to Tool Registry**: Copy the generated metadata snippet into `config/tools.ts` in the `TOOL_REGISTRY` object. See existing entries for reference.
+3. **Add to Tool Registry**: Copy the generated metadata snippet into `config/tools.ts` in the `TOOL_REGISTRY` object.
 
-4. **Implement Business Logic**: Edit the generated `route.ts` file. Replace the placeholder `// TODO: Implement your tool logic here` with your actual logic. If generating PDFs, use the `PDFGenerator` class from `lib/pdf/generator.ts`.
+4. **Add to Component Map**: Add the component to the `componentMap` in `app/[locale]/tools/[toolId]/page.tsx`:
+   ```typescript
+   "[tool-id]/[ToolName]Client": require("@/app/[locale]/tools/[tool-id]/[ToolName]Client").default,
+   ```
 
-5. **Customize UI (Optional)**: Edit the generated `ClientComponent.tsx` for custom input fields or result displays.
 
-6. **Test**: Run `bun dev` and navigate to your new tool page.
+5. **Implement Business Logic**: Edit the generated `route.ts` file. Replace the placeholder `// TODO: Implement your tool logic here` with your actual logic. If generating PDFs, use the `PDFGenerator` class from `lib/pdf/generator.ts`.
+
+6. **Customize UI (Optional)**: Edit the generated `[ToolName]Client.tsx` for custom input fields or result displays.
+
+7. **Test**: Run `bun dev` and navigate to your new tool page.
 
 7. **Run Automated Test**: The scaffolding script automatically creates a test file and registers it in `test-all.js`. Run:
    ```bash

@@ -29,7 +29,17 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Architecture & Tooling
+## Environment Variables
+
+Required environment variables:
+- `ANTHROPIC_API_KEY` or `CLAUDE_API_KEY` - For AI content generation
+- `NEXT_PUBLIC_SOLANA_WALLET` - Your Solana wallet address for payments
+- `NEXT_PUBLIC_SOLANA_RPC` - Solana RPC endpoint
+- `NOTION_API_KEY` - Notion integration for CRM
+- `NOTION_DATABASE_ID` - Notion database for leads
+- `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS` - Email notifications
+- `NEXT_PUBLIC_SENTRY_DSN` - (Optional) Sentry error tracking
+
 
 ### Tool Refactor 2026
 We follow a standardized architecture for adding new AI tools to the platform.

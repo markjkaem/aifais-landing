@@ -17,8 +17,7 @@ export function PaywallToolWrapper({
     onClose,
     onSuccess,
 }: PaywallToolWrapperProps) {
-    // If tool is free, we don't need the wrapper logic theoretically, 
-    // but the hook/client component decides when to show it.
+    if (!isOpen) return null;
     
     return (
         <CryptoModal

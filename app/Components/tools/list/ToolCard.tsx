@@ -40,7 +40,9 @@ export function ToolCard({ tool, index }: { tool: ToolUI; index: number }) {
         <div className="mt-auto px-6 pb-6 pt-2">
           <div className="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400 mb-4">
             <span className="flex items-center gap-1">
-              {tool.pricing.type === "free" ? "Gratis" : `Vanaf € 0,50`}
+              {tool.pricing.type === "free" ? "Gratis" : 
+               tool.pricing.currency === "SOL" ? `${tool.pricing.price} SOL` : 
+               `Vanaf € ${(tool.pricing.price || 0).toFixed(2)}`}
             </span>
             <span className="capitalize">{tool.category}</span>
           </div>

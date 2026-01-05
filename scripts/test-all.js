@@ -51,6 +51,39 @@ const tests = [
         name: 'Newsletter Signup',
         script: 'test-newsletter.js',
         description: 'Tests newsletter subscription'
+    },
+    // HR Tools
+    {
+        name: 'CV Screener',
+        script: 'test-cv-screener.js',
+        description: 'Tests CV analysis and scoring'
+    },
+    {
+        name: 'Interview Questions',
+        script: 'test-interview-questions.js',
+        description: 'Tests interview question generation'
+    },
+    // Marketing Tools
+    {
+        name: 'Social Media Planner',
+        script: 'test-social-planner.js',
+        description: 'Tests social media content generation'
+    },
+    {
+        name: 'SEO Audit',
+        script: 'test-seo-audit.js',
+        description: 'Tests SEO analysis'
+    },
+    // Sales Tools
+    {
+        name: 'Pitch Deck Generator',
+        script: 'test-pitch-deck.js',
+        description: 'Tests pitch deck generation'
+    },
+    {
+        name: 'Lead Scorer',
+        script: 'test-lead-scorer.js',
+        description: 'Tests lead scoring'
     }
 ];
 

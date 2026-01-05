@@ -30,20 +30,27 @@ async function main() {
   await fs.mkdir(clientPath, { recursive: true });
 
   // 2. Setup API Route Template
-  const apiTemplate = `"use client";
-import { createToolHandler } from "@/lib/tools/createToolHandler";
+  const apiTemplate = `import { createToolHandler } from "@/lib/tools/createToolHandler";
 import { z } from "zod";
+import { getToolBySlug } from "@/config/tools";
 
 // 1. Define input schema
 const schema = z.object({
   // Add your fields here
   prompt: z.string().min(1),
+  signature: z.string().optional(),
+  stripeSessionId: z.string().optional(),
 });
 
 // 2. Define handler
+const tool = getToolBySlug("${id}");
+
 export const POST = createToolHandler({
   schema,
-  pricing: ${isPaid ? `{ price: ${price}, currency: "SOL" }` : "undefined"},
+  pricing: tool?.pricing.type === "paid" ? { 
+    price: tool.pricing.price!, 
+    currency: tool.pricing.currency! 
+  } : undefined,
   handler: async (input, context) => {
     // Add your business logic here
     // Example: const result = await someAIService(input.prompt);
@@ -234,8 +241,9 @@ test${toolNamePascal}();
   // 6. Write Files
   const testPath = path.join(rootDir, "scripts", "tests", `test-${id}.js`);
   await fs.writeFile(path.join(apiPath, "route.ts"), apiTemplate);
-  await fs.writeFile(path.join(clientPath, "ClientComponent.tsx"), clientTemplate);
-  await fs.writeFile(path.join(clientPath, "page.tsx"), pageTemplate);
+  const clientFileName = `${id.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}Client.tsx`;
+  await fs.writeFile(path.join(clientPath, clientFileName), clientTemplate);
+  // NOTE: No page.tsx - the dynamic [toolId]/page.tsx handles routing via componentMap
   await fs.writeFile(testPath, testTemplate);
 
   // 7. Register test in test-all.js
@@ -255,10 +263,10 @@ test${toolNamePascal}();
   );
   await fs.writeFile(testAllPath, testAllContent);
 
+  const componentName = `${id.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}Client`;
   console.log("\n✅ Bestanden aangemaakt:");
   console.log(`- API: app/api/v1/${category}/${id}/route.ts`);
-  console.log(`- Page: app/[locale]/tools/${id}/page.tsx`);
-  console.log(`- Client: app/[locale]/tools/${id}/ClientComponent.tsx`);
+  console.log(`- Client: app/[locale]/tools/${id}/${componentName}.tsx`);
   console.log(`- Test: scripts/tests/test-${id}.js`);
 
   console.log("\n⚠️ Vergeet niet de tool toe te voegen aan config/tools.ts:");
@@ -281,12 +289,15 @@ test${toolNamePascal}();
             type: "${isPaid ? "paid" : "free"}",
             ${isPaid ? `price: ${price}, currency: "SOL"` : ""}
         },
-        componentPath: "${id}/ClientComponent",
+        componentPath: "${id}/${id.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}Client",
     },
     `);
 
   console.log("\n✅ Test automatisch geregistreerd in test-all.js");
-  console.log("   Run 'node scripts/test-all.js' om alle tests uit te voeren.\n");
+  console.log("\n⚠️ BELANGRIJK: Voeg ook de component toe aan de componentMap in:");
+  console.log(`   app/[locale]/tools/[toolId]/page.tsx`);
+  console.log(`   Voeg toe: "${id}/${id.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}Client": require("@/app/[locale]/tools/${id}/${id.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}Client").default,`);
+  console.log("\n   Run 'node scripts/test-all.js' om alle tests uit te voeren.\n");
 
   rl.close();
 }
