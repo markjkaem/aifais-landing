@@ -24,6 +24,11 @@ export interface ToolMetadata {
         currency?: string;
     };
     componentPath: string;
+    keywords?: string[];
+    features?: string[];
+    useCases?: string[];
+    createdAt?: number;
+    usageCount?: number;
 }
 
 export type SectorId = "finance" | "legal" | "hr" | "marketing" | "sales" | "ecommerce" | "technology" | "support" | "creative" | "consulting";
@@ -40,4 +45,5 @@ export interface Sector {
 export interface ToolUI extends ToolMetadata {
     href: string;
     description: string;
+    tags: string[];
 }

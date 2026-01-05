@@ -125,7 +125,7 @@ export default function Header() {
             alt="AI Faiss Logo" 
             width={120} 
             height={40} 
-            className="h-14 md:hidden w-auto object-contain transition-transform group-hover:scale-105 invert" 
+            className="h-14  w-auto object-contain transition-transform group-hover:scale-105 invert" 
             priority
           />
         </Link>

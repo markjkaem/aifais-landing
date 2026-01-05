@@ -2,149 +2,214 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Space_Grotesk } from "next/font/google";
 import { useTranslations, useLocale } from "next-intl";
-
-const h1_font = Space_Grotesk({
-  weight: "700",
-  subsets: ["latin"],
-});
+import { motion } from "framer-motion";
+import { ArrowRight, Calendar, Sparkles, ChevronRight } from "lucide-react";
 
 export default function HeroSection() {
   const t = useTranslations("hero");
   const locale = useLocale();
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden font-sans">
-      {/* Background Video / Overlay */}
-      <div className="absolute inset-0 w-full h-full z-0">
-        {/* Base Background Color (Fallback) */}
-        <div className="absolute inset-0 bg-[#000000]"></div>
-
-        {/* Gradient Overlay - Darkened for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#000000] via-[#3066be]/20 to-[#3066be]/30" />
-
-        {/* Subtle Vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
+    <section className="relative min-h-[calc(100vh-80px)] flex items-center overflow-hidden bg-[#fafaf9]">
+      {/* Subtle background elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Subtle gradient orbs */}
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-amber-100/40 rounded-full blur-[80px]" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-4 flex flex-col h-full justify-center">
-        {/* Top Bar: Badge Left, Logo Right */}
-        <div className="flex w-full items-center justify-between mb-16 md:mb-8">
-          {/* Left Side: Tech Badge */}
-          <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-lg shadow-lg shadow-black/5 cursor-default hover:bg-white/10 transition-colors">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3066be] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#90eb91] shadow-[0_0_8px_#0cff10]"></span>
-            </span>
-            <span className="text-xs font-mono tracking-widest uppercase text-blue-100/80">
-              {t("badge")}
-            </span>
-          </div>
-
-          {/* Right Side: Logo */}
-          <div className="relative group">
-            <Link
-              href="/"
-              className="block transition-transform duration-500 hover:scale-105"
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 py-8 lg:py-12">
+        {/* Main Content - Two columns */}
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left: Text Content */}
+          <div className="lg:col-span-6 xl:col-span-7">
+            {/* Status Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2.5 px-4 py-2 bg-white border border-stone-200 rounded-full shadow-sm mb-6"
             >
-              <Image
-                src="/logo-official.png"
-                alt="Aifais Logo"
-                width={400}
-                height={100}
-                className="hidden md:flex md:w-44 h-auto object-contain drop-shadow-lg opacity-90 group-hover:opacity-100 transition-opacity"
-                priority
-              />
-            </Link>
-          </div>
-        </div>
-
-        {/* Main Content Area */}
-        <div className="max-w-4xl">
-          {/* Main Headline */}
-          <h1
-            className={`${h1_font.className} text-5xl sm:text-6xl md:text-6xl lg:text-8xl font-bold tracking-tighter leading-[1.05] mb-8 text-white`}
-          >
-            <span className="block text-blue-100/90">{t("h1_1")}</span>
-
-            {/* Professional Gradient Text */}
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-200 to-white drop-shadow-sm pb-2">
-              {t("h1_highlight")}
-            </span>
-
-            <span className="block text-blue-100/90">{t("h1_2")}</span>
-          </h1>
-
-          {/* Subheadlines */}
-          <div className="space-y-6 mb-12">
-            <h2 className="text-xl md:text-2xl text-white font-semibold tracking-wide">
-              {t("h2_1")}{" "}
-              <span className="text-blue-300">{t("h2_highlight")}</span>
-            </h2>
-
-            <p className="text-lg md:text-xl text-blue-100/70 leading-relaxed max-w-2xl font-light">
-              {t("p")}
-              <br className="hidden md:block" />
-              <span className="inline-block mt-3 text-white font-medium border-b border-blue-400/30 pb-0.5">
-                {t("guarantee")}
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-            </p>
-          </div>
+              <span className="text-xs font-medium tracking-wide text-stone-600">
+                {t("badge")}
+              </span>
+            </motion.div>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-            <Link
-              href={`/${locale}/contact`}
-              className="group relative px-6 py-3.5 bg-[#3066be] hover:bg-[#2554a3] text-white font-bold text-base rounded-full transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(48,102,190,0.2)] hover:shadow-[0_0_30px_rgba(48,102,190,0.4)] transform hover:-translate-y-1"
+            {/* Headline - More compact */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-stone-900 leading-[1] tracking-tight mb-6"
             >
-              <span>{t("cta")}</span>
-              <svg
-                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Link>
+              <span className="block">{t("h1_1")}</span>
+              <span className="block italic text-stone-400">{t("h1_highlight")}</span>
+              <span className="block">{t("h1_2")}</span>
+            </motion.h1>
 
-            <button
-              onClick={() => {
-                // @ts-ignore
-                if (window.Calendly) {
+            {/* Subheadline - Compact */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="max-w-lg mb-8"
+            >
+              <p className="text-base lg:text-lg text-stone-600 leading-relaxed">
+                {t("p")}
+              </p>
+              <p className="mt-3 text-stone-900 font-medium inline-flex items-center gap-2 text-sm">
+                <Sparkles className="w-4 h-4 text-amber-500" />
+                {t("guarantee")}
+              </p>
+            </motion.div>
+
+            {/* CTAs - Horizontal on larger screens */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-wrap items-center gap-3"
+            >
+              {/* Primary CTA */}
+              <Link
+                href={`/${locale}/contact`}
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-stone-900 hover:bg-stone-800 text-white font-semibold text-sm rounded-full transition-all duration-300 shadow-lg shadow-stone-900/10 hover:shadow-xl hover:-translate-y-0.5"
+              >
+                <span>{t("cta")}</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+
+              {/* Calendly CTA */}
+              <button
+                onClick={() => {
                   // @ts-ignore
-                  window.Calendly.initPopupWidget({
-                    url: "https://calendly.com/markteekenschannel2/30min",
-                  });
-                }
-              }}
-              className="px-6 py-3.5 bg-white text-gray-900 font-bold text-base rounded-full hover:bg-gray-100 transition-all duration-300 flex items-center justify-center gap-3 transform hover:-translate-y-1 shadow-lg border border-gray-200"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                className="w-5 h-5 shrink-0"
-                fill="#0069ff"
-                xmlns="http://www.w3.org/2000/svg"
+                  if (window.Calendly) {
+                    // @ts-ignore
+                    window.Calendly.initPopupWidget({
+                      url: "https://calendly.com/markteekenschannel2/30min",
+                    });
+                  }
+                }}
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-stone-50 text-stone-900 font-semibold text-sm rounded-full transition-all duration-300 border border-stone-200 hover:border-stone-300 shadow-sm hover:-translate-y-0.5"
               >
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm2.5-5c0 1.38-1.12 2.5-2.5 2.5S9.5 13.38 9.5 12s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5z" />
-              </svg>
-              <span>{t("bookMeeting")}</span>
-            </button>
+                <Calendar className="w-4 h-4 text-stone-400" />
+                <span>{t("bookMeeting")}</span>
+              </button>
 
-            <Link
-              href={`/${locale}/tools/roi-calculator`}
-              className="px-6 py-3.5 bg-white/5 border border-white/10 rounded-full text-white font-medium text-base hover:bg-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center backdrop-blur-md"
-            >
-              {t("roi")}
-            </Link>
+              {/* Ghost CTA */}
+              <Link
+                href={`/${locale}/tools/roi-calculator`}
+                className="group inline-flex items-center gap-1.5 px-4 py-3 text-stone-500 hover:text-stone-900 font-medium text-sm transition-colors"
+              >
+                <span>{t("roi")}</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </motion.div>
+
+            
           </div>
+
+          {/* Right: Compact Visual Element */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="lg:col-span-6 xl:col-span-5 relative hidden lg:block"
+          >
+            <div className="relative">
+              {/* Main card - More compact */}
+              <div className="bg-white rounded-2xl shadow-xl shadow-stone-200/50 border border-stone-100 overflow-hidden">
+                {/* Card header */}
+                <div className="px-5 py-4 border-b border-stone-100 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                      <Sparkles className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-stone-900 text-sm">AI Workflow</div>
+                      <div className="text-xs text-stone-400">Actief • 24/7</div>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-50 text-xs font-medium text-emerald-600">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    Live
+                  </span>
+                </div>
+                
+                {/* Card content - Compact tasks */}
+                <div className="p-5 space-y-3">
+                  {[
+                    { label: "Facturen verwerken", progress: 100, time: "2.3s" },
+                    { label: "Data extractie", progress: 100, time: "1.1s" },
+                    { label: "Export naar Excel", progress: 75, time: "..." },
+                  ].map((task, i) => (
+                    <motion.div 
+                      key={task.label}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: 0.6 + (i * 0.1) }}
+                      className="space-y-1.5"
+                    >
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-stone-700 font-medium">{task.label}</span>
+                        <span className="text-stone-400 text-xs tabular-nums">{task.time}</span>
+                      </div>
+                      <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: `${task.progress}%` }}
+                          transition={{ duration: 0.8, delay: 0.8 + (i * 0.15), ease: "easeOut" }}
+                          className={`h-full rounded-full ${task.progress === 100 ? 'bg-emerald-500' : 'bg-blue-500'}`}
+                        />
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+                
+                {/* Card footer */}
+                <div className="px-5 py-4 bg-stone-50 border-t border-stone-100 flex items-center justify-between">
+                  <div className="text-sm">
+                    <span className="text-stone-500">Vandaag bespaard:</span>
+                    <span className="ml-1.5 font-semibold text-stone-900">4.2 uur</span>
+                  </div>
+                  <span className="text-xs font-medium text-blue-600">Details →</span>
+                </div>
+              </div>
+              
+              {/* Floating badges - Repositioned */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 1 }}
+                className="absolute -bottom-3 -left-3 px-3 py-2 bg-white rounded-xl shadow-lg border border-stone-100"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-base">⚡</span>
+                  <div className="text-xs">
+                    <div className="font-semibold text-stone-900">85% sneller</div>
+                  </div>
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 1.1 }}
+                className="absolute -top-3 -right-3 px-3 py-2 bg-stone-900 rounded-xl shadow-lg"
+              >
+                <div className="flex items-center gap-2 text-white text-xs">
+                  <span>🎯</span>
+                  <span className="font-semibold">99.9% nauwkeurig</span>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -20,7 +20,10 @@ export function ToolCard({ tool, index }: { tool: ToolUI; index: number }) {
         <div className="p-6">
           <div className="flex items-start justify-between mb-4">
             <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 transition-colors">
-              <tool.icon className="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+              {(() => {
+                const Icon = tool.icon;
+                return <Icon className="w-6 h-6 text-slate-600 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />;
+              })()}
             </div>
             {tool.new && (
               <span className="px-2 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-emerald-500/20 flex items-center gap-1">

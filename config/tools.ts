@@ -64,6 +64,8 @@ export interface ToolMetadata {
 
     // Component
     componentPath: string; // Path to the client component
+    createdAt?: number;
+    usageCount?: number;
 }
 
 export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
