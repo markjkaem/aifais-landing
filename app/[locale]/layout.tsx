@@ -13,6 +13,7 @@ import { notFound } from "next/navigation";
 import { locales } from "@/i18n";
 import ClientSideAddons from "../Components/ClientSideAddons";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next"
 
 // ✅ Font Initialization
 const anton = Inter({
@@ -335,7 +336,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           src="https://assets.calendly.com/assets/external/widget.js"
           strategy="lazyOnload"
         />
-
+        <Analytics />
         <NextIntlClientProvider messages={messages} locale={locale}>
           <HeaderMockup />
           {children}
