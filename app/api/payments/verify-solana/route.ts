@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
-import { getScansForAmount } from "@/utils/solana-pricing";
 import { withApiGuard } from "@/lib/security/api-guard";
-
+import { getScansForAmount } from "@/utils/solana-pricing";
 export const GET = withApiGuard(async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const signature = searchParams.get("signature");
