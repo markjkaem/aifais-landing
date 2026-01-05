@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
-import { ArrowRight, Calendar, Sparkles, ChevronRight } from "lucide-react";
+import { ArrowRight, Calendar, Sparkles, ChevronRight, Zap, Target } from "lucide-react";
 
 export default function HeroSection() {
   const t = useTranslations("hero");
@@ -187,10 +187,12 @@ export default function HeroSection() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 1 }}
-                className="absolute -bottom-3 -left-3 px-3 py-2 bg-white rounded-xl shadow-lg border border-stone-100"
+                className="absolute -bottom-12 -left-4 px-3 py-2 bg-white rounded-xl shadow-lg border border-stone-100 z-20"
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-base">⚡</span>
+                  <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center">
+                    <Zap className="w-3.5 h-3.5 text-orange-500" fill="currentColor" />
+                  </div>
                   <div className="text-xs">
                     <div className="font-semibold text-stone-900">85% sneller</div>
                   </div>
@@ -204,7 +206,7 @@ export default function HeroSection() {
                 className="absolute -top-3 -right-3 px-3 py-2 bg-stone-900 rounded-xl shadow-lg"
               >
                 <div className="flex items-center gap-2 text-white text-xs">
-                  <span>🎯</span>
+                  <Target className="w-3.5 h-3.5 text-pink-500" />
                   <span className="font-semibold">99.9% nauwkeurig</span>
                 </div>
               </motion.div>
