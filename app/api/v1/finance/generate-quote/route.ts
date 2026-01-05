@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { withApiGuard } from "@/lib/security/api-guard";
+import { NextResponse } from "next/server";
 import { z } from "zod";
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+import { createToolHandler } from "@/lib/tools/createToolHandler";
+import { PDFGenerator } from "@/lib/pdf/generator";
+import { rgb } from "pdf-lib";
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -24,362 +25,72 @@ const quoteSchema = z.object({
     validUntil: z.number().optional().default(30),
 });
 
-export const POST = withApiGuard(async (req, body: any) => {
-    console.log("--- API START: /api/v1/finance/generate-quote ---");
-
-    try {
-        const pdfBytes = await generateQuotePDF(body);
-
-        return NextResponse.json({
-            success: true,
-            data: {
-                pdfBase64: Buffer.from(pdfBytes).toString("base64"),
-            },
-        });
-    } catch (error: any) {
-        console.error("Quote generation error:", error);
-        return NextResponse.json(
-            { error: error.message || "Internal server error" },
-            { status: 500 }
-        );
-    }
-}, {
+export const POST = createToolHandler({
     schema: quoteSchema,
+    pricing: { price: 0, currency: "SOL" }, // Adjust pricing if needed
     rateLimit: { maxRequests: 20, windowMs: 60000 },
+    handler: async (body) => {
+        const gen = await PDFGenerator.create();
+        const { width, height } = gen.page.getSize();
+
+        const quoteNumber = `OFF-${Date.now()}`;
+        const quoteDate = new Date().toLocaleDateString("nl-NL");
+        const validUntilDate = new Date(Date.now() + body.validUntil * 24 * 60 * 60 * 1000).toLocaleDateString("nl-NL");
+
+        // Logo
+        if (body.companyLogo) {
+            await gen.drawLogo(body.companyLogo);
+        }
+
+        // Header
+        gen.y = height - 80;
+        gen.drawText("OFFERTE", { x: width - 200, size: 28, bold: true, color: gen.config.primaryColor });
+        gen.drawText(`Offertenummer: ${quoteNumber}`, { x: width - 200, size: 10, color: gen.config.mutedColor });
+        gen.drawText(`Datum: ${quoteDate}`, { x: width - 200, size: 10, color: gen.config.mutedColor });
+
+        // Info
+        gen.y = height - 150;
+        gen.drawText(body.companyName, { bold: true, size: 12 });
+        if (body.companyAddress) gen.drawText(body.companyAddress, { color: gen.config.mutedColor });
+        if (body.companyKvk) gen.drawText(`KvK: ${body.companyKvk}`, { color: gen.config.mutedColor });
+
+        gen.y = height - 150;
+        gen.drawText("Offerte voor:", { x: 350, size: 10, color: gen.config.mutedColor });
+        gen.drawText(body.clientName, { x: 350, size: 12, bold: true });
+        if (body.clientAddress) gen.drawText(body.clientAddress, { x: 350, color: gen.config.mutedColor });
+
+        // Project
+        gen.y = height - 280;
+        gen.drawText(body.projectTitle, { size: 16, bold: true, color: gen.config.primaryColor });
+        if (body.projectDescription) gen.drawText(body.projectDescription, { color: gen.config.mutedColor });
+
+        // Table
+        gen.y -= 20;
+        const tableData = body.items.map((item: any) => [
+            item.description,
+            item.quantity.toString(),
+            `€ ${item.price.toFixed(2)}`,
+            `€ ${(item.quantity * item.price).toFixed(2)}`
+        ]);
+        gen.drawTable(["Omschrijving", "Aantal", "Prijs", "Totaal"], tableData, [300, 70, 70, 70]);
+
+        // Totals
+        const subtotal = body.items.reduce((acc: number, item: any) => acc + (item.quantity * item.price), 0);
+        const vat = subtotal * 0.21;
+        gen.y -= 10;
+        gen.drawMetadata([
+            { label: "Subtotaal:", value: `€ ${subtotal.toFixed(2)}` },
+            { label: "BTW (21%):", value: `€ ${vat.toFixed(2)}` },
+            { label: "Totaal:", value: `€ ${(subtotal + vat).toFixed(2)}` }
+        ]);
+
+        // Footer
+        gen.y = 50;
+        gen.drawText(`Deze offerte is geldig tot ${validUntilDate}. Prijzen zijn exclusief BTW.`, { size: 9, align: 'center', color: gen.config.mutedColor });
+
+        const pdfBytes = await gen.save();
+        return {
+            pdfBase64: Buffer.from(pdfBytes).toString("base64"),
+        };
+    }
 });
-
-async function generateQuotePDF(data: any): Promise<Uint8Array> {
-    const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([595, 842]); // A4 size
-    const { width, height } = page.getSize();
-
-    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-
-    const quoteNumber = `OFF-${Date.now()}`;
-    const quoteDate = new Date().toLocaleDateString("nl-NL");
-    const validUntilDate = new Date(Date.now() + data.validUntil * 24 * 60 * 60 * 1000).toLocaleDateString("nl-NL");
-
-    let y = height - 80;
-
-    // Logo
-    if (data.companyLogo) {
-        try {
-            const logoImage = await pdfDoc.embedJpg(data.companyLogo);
-            const logoDims = logoImage.scale(0.3); // Adjust scale as needed
-            // Limit max width/height to avoid huge logos
-            let logoWidth = logoDims.width;
-            let logoHeight = logoDims.height;
-            const maxLogoWidth = 100;
-            if (logoWidth > maxLogoWidth) {
-                const scaleFactor = maxLogoWidth / logoWidth;
-                logoWidth *= scaleFactor;
-                logoHeight *= scaleFactor;
-            }
-
-            page.drawImage(logoImage, {
-                x: 50,
-                y: y,
-                width: logoWidth,
-                height: logoHeight,
-            });
-            // Adjust Y so text doesn't overlap logo
-            // y -= (logoHeight + 20); // Actually, let's keep logo on top left or right??
-            // The current layout has "OFFERTE" on top right. Logo should probably be top left.
-            // Let's position logo at x:50, y: height - 80 - logoHeight? No PDF coordinates are bottom-left based.
-            // y starts at height - 80.
-            // Draw logo at y: height - 60 - logoHeight (top left corner)
-            page.drawImage(logoImage, {
-                x: 50,
-                y: height - 50 - logoHeight,
-                width: logoWidth,
-                height: logoHeight,
-            });
-        } catch (e) {
-            console.error("Failed to embed logo", e);
-        }
-    }
-
-    // Header - OFFERTE (Right aligned)
-    y = height - 80;
-    page.drawText("OFFERTE", {
-        x: width - 200,
-        y: y,
-        size: 28,
-        font: fontBold,
-        color: rgb(0.12, 0.25, 0.69), // #1e40af
-    });
-    y -= 20;
-
-    page.drawText(`Offertenummer: ${quoteNumber}`, {
-        x: width - 200,
-        y,
-        size: 10,
-        font,
-        color: rgb(0.39, 0.44, 0.55), // #64748b
-    });
-    y -= 15;
-
-    page.drawText(`Datum: ${quoteDate}`, {
-        x: width - 200,
-        y,
-        size: 10,
-        font,
-        color: rgb(0.39, 0.44, 0.55),
-    });
-
-    // Company Info (Left)
-    y = height - 150;
-    page.drawText(data.companyName, {
-        x: 50,
-        y,
-        size: 12,
-        font: fontBold,
-        color: rgb(0.06, 0.09, 0.16), // #0f172a
-    });
-    y -= 15;
-
-    if (data.companyAddress) {
-        page.drawText(data.companyAddress, {
-            x: 50,
-            y,
-            size: 10,
-            font,
-            color: rgb(0.39, 0.44, 0.55),
-        });
-        y -= 15;
-    }
-
-    if (data.companyKvk) {
-        page.drawText(`KvK: ${data.companyKvk}`, {
-            x: 50,
-            y,
-            size: 10,
-            font,
-            color: rgb(0.39, 0.44, 0.55),
-        });
-        y -= 15;
-    }
-
-    if (data.companyVat) {
-        page.drawText(`BTW: ${data.companyVat}`, {
-            x: 50,
-            y,
-            size: 10,
-            font,
-            color: rgb(0.39, 0.44, 0.55),
-        });
-    }
-
-    // Client Info (Right)
-    y = height - 150;
-    page.drawText("Offerte voor:", {
-        x: 350,
-        y,
-        size: 10,
-        font,
-        color: rgb(0.39, 0.44, 0.55),
-    });
-    y -= 15;
-
-    page.drawText(data.clientName, {
-        x: 350,
-        y,
-        size: 12,
-        font: fontBold,
-        color: rgb(0.06, 0.09, 0.16),
-    });
-    y -= 15;
-
-    if (data.clientAddress) {
-        page.drawText(data.clientAddress, {
-            x: 350,
-            y,
-            size: 10,
-            font,
-            color: rgb(0.39, 0.44, 0.55),
-        });
-    }
-
-    // Project Title
-    y = height - 280;
-    page.drawText(data.projectTitle, {
-        x: 50,
-        y,
-        size: 16,
-        font: fontBold,
-        color: rgb(0.12, 0.25, 0.69),
-    });
-    y -= 25;
-
-    if (data.projectDescription) {
-        const maxWidth = 500;
-        const words = data.projectDescription.split(' ');
-        let line = '';
-
-        for (const word of words) {
-            const testLine = line + word + ' ';
-            const testWidth = font.widthOfTextAtSize(testLine, 10);
-
-            if (testWidth > maxWidth && line.length > 0) {
-                page.drawText(line, {
-                    x: 50,
-                    y,
-                    size: 10,
-                    font,
-                    color: rgb(0.39, 0.44, 0.55),
-                });
-                line = word + ' ';
-                y -= 15;
-            } else {
-                line = testLine;
-            }
-        }
-
-        if (line.length > 0) {
-            page.drawText(line, {
-                x: 50,
-                y,
-                size: 10,
-                font,
-                color: rgb(0.39, 0.44, 0.55),
-            });
-            y -= 25;
-        }
-    }
-
-    // Table Header
-    y -= 10;
-    page.drawText("Omschrijving", {
-        x: 50,
-        y,
-        size: 10,
-        font: fontBold,
-    });
-    page.drawText("Aantal", {
-        x: 350,
-        y,
-        size: 10,
-        font: fontBold,
-    });
-    page.drawText("Prijs", {
-        x: 420,
-        y,
-        size: 10,
-        font: fontBold,
-    });
-    page.drawText("Totaal", {
-        x: 490,
-        y,
-        size: 10,
-        font: fontBold,
-    });
-    y -= 5;
-
-    // Line under header
-    page.drawLine({
-        start: { x: 50, y },
-        end: { x: 550, y },
-        thickness: 1,
-        color: rgb(0.89, 0.91, 0.94), // #e2e8f0
-    });
-    y -= 20;
-
-    // Items
-    let subtotal = 0;
-    for (const item of data.items) {
-        const itemTotal = item.quantity * item.price;
-        subtotal += itemTotal;
-
-        page.drawText(item.description.substring(0, 40), {
-            x: 50,
-            y,
-            size: 10,
-            font,
-        });
-        page.drawText(item.quantity.toString(), {
-            x: 370,
-            y,
-            size: 10,
-            font,
-        });
-        page.drawText(`€ ${item.price.toFixed(2)}`, {
-            x: 420,
-            y,
-            size: 10,
-            font,
-        });
-        page.drawText(`€ ${itemTotal.toFixed(2)}`, {
-            x: 490,
-            y,
-            size: 10,
-            font,
-        });
-        y -= 20;
-    }
-
-    // Totals
-    y -= 10;
-    page.drawLine({
-        start: { x: 50, y },
-        end: { x: 550, y },
-        thickness: 1,
-        color: rgb(0.89, 0.91, 0.94),
-    });
-    y -= 20;
-
-    page.drawText("Subtotaal:", {
-        x: 400,
-        y,
-        size: 10,
-        font,
-    });
-    page.drawText(`€ ${subtotal.toFixed(2)}`, {
-        x: 490,
-        y,
-        size: 10,
-        font,
-    });
-    y -= 20;
-
-    const vat = subtotal * 0.21;
-    page.drawText("BTW (21%):", {
-        x: 400,
-        y,
-        size: 10,
-        font,
-    });
-    page.drawText(`€ ${vat.toFixed(2)}`, {
-        x: 490,
-        y,
-        size: 10,
-        font,
-    });
-    y -= 20;
-
-    page.drawText("Totaal:", {
-        x: 400,
-        y,
-        size: 12,
-        font: fontBold,
-    });
-    page.drawText(`€ ${(subtotal + vat).toFixed(2)}`, {
-        x: 490,
-        y,
-        size: 12,
-        font: fontBold,
-    });
-
-    // Footer
-    const footerText = `Deze offerte is geldig tot ${validUntilDate}. Prijzen zijn exclusief BTW tenzij anders vermeld.`;
-    const footerWidth = font.widthOfTextAtSize(footerText, 9);
-    page.drawText(footerText, {
-        x: (width - footerWidth) / 2,
-        y: 50,
-        size: 9,
-        font,
-        color: rgb(0.39, 0.44, 0.55),
-    });
-
-    return await pdfDoc.save();
-}

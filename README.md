@@ -29,8 +29,29 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Architecture & Tooling
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Tool Refactor 2026
+We follow a standardized architecture for adding new AI tools to the platform.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### 1. Creating a new Tool
+Run the scaffolding script to generate the API route, client component, and page:
+```bash
+npm run tools:create
+```
+
+#### 2. Key Components
+- **`lib/tools/createToolHandler.ts`**: A factory for API routes that handles input validation (Zod), payment gatekeeping (Solana/Stripe), error handling, and standardized response formatting.
+- **`lib/pdf/generator.ts`**: A shared utility for generating professional PDF reports using `pdf-lib`.
+- **`hooks/usePaywallTool.ts`**: A React hook for handling paid tool execution flows on the client.
+- **`hooks/useAsyncForm.ts`**: A general-purpose hook for handling form submission and loading states.
+
+#### 3. Standardized Types
+Shared types are located in `types/common.ts`. Always use `SectorId` and `ToolStatus` from this file for consistency.
+
+## Environment Variables
+Ensure the following are set for full tool functionality:
+- `ANTHROPIC_API_KEY` / `CLAUDE_API_KEY`
+- `NEXT_PUBLIC_SOLANA_WALLET`
+- `STRIPE_PRIVATE_KEY`
+- `SMTP_USER`, `SMTP_PASS`, `TO_EMAIL` (for internal tools)
