@@ -29,6 +29,8 @@ const invoiceSchema = z.object({
     discountPercentage: z.number().default(0),
     notes: z.string().optional(),
     items: z.array(invoiceItemSchema),
+    signature: z.string().optional(),
+    stripeSessionId: z.string().optional(),
 });
 
 export const POST = createToolHandler({

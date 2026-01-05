@@ -1,22 +1,27 @@
 import { z } from "zod";
 
+export const paymentSchema = z.object({
+    signature: z.string().optional(),
+    stripeSessionId: z.string().optional(),
+});
+
 export const newsletterSchema = z.object({
     email: z.string().email("Ongeldig emailadres"),
-});
+}).merge(paymentSchema);
 
 export const contactSchema = z.object({
     name: z.string().min(2, "Naam is te kort"),
     email: z.string().email("Ongeldig emailadres"),
     phone: z.string().optional(),
     message: z.string().min(5, "Bericht is te kort"),
-});
+}).merge(paymentSchema);
 
 export const benchmarkSchema = z.object({
     email: z.string().email("Ongeldig emailadres"),
     sector: z.string().min(1, "Sector is verplicht"),
     score: z.number().min(0).max(100),
     benchmark: z.number().min(0).max(100),
-});
+}).merge(paymentSchema);
 
 export const quickscanSchema = z.object({
     email: z.string().email("Ongeldig emailadres"),
@@ -28,7 +33,7 @@ export const quickscanSchema = z.object({
     formData: z.object({
         name: z.string().optional(),
     }).optional(),
-});
+}).merge(paymentSchema);
 
 export const scanSchema = z.object({
     // Single file mode (legacy)

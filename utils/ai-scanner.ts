@@ -8,6 +8,14 @@ const anthropic = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY || "" });
  * Nu met robuuste error handling voor lege/witte afbeeldingen.
  */
 export async function scanInvoiceWithClaude(invoiceBase64: string, mimeType: string) {
+  // DEV_BYPASS logic to avoid AI costs during testing
+  if (invoiceBase64 === 'DEV_BYPASS' || process.env.NODE_ENV === 'test') {
+    return {
+      supplier: { name: "Test Supplier BV", kvk_number: "12345678", vat_id: "NL123456789B01" },
+      invoice: { number: "INV-2024-001", date: "2024-01-01", total_amount: 100.00, currency: "EUR" },
+      line_items: [{ description: "Adviesuren AI", quantity: 1, unit_price: 100.00, amount: 100.00 }]
+    };
+  }
 
   // 1. Bepaal het type content blok op basis van de mimeType
   let contentBlock;

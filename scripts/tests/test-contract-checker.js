@@ -45,7 +45,8 @@ async function testContractChecker() {
         const response = await fetch(`${LOCAL_API_URL}/api/v1/legal/check-contract`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Origin": LOCAL_API_URL
             },
             body: JSON.stringify(payload)
         });

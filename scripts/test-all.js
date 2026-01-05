@@ -13,6 +13,11 @@ const tests = [
         description: 'Tests bulk invoice scanning with AI'
     },
     {
+        name: 'Invoice Generator',
+        script: 'test-invoice-generator.js',
+        description: 'Tests professional PDF invoice generation'
+    },
+    {
         name: 'Contract Checker',
         script: 'test-contract-checker.js',
         description: 'Tests contract analysis and PDF report generation'
@@ -26,6 +31,26 @@ const tests = [
         name: 'Terms Generator',
         script: 'test-terms-generator.js',
         description: 'Tests AI-powered terms & conditions generation'
+    },
+    {
+        name: 'Benchmark Tool',
+        script: 'test-benchmark.js',
+        description: 'Tests internal benchmark submission and email logic'
+    },
+    {
+        name: 'ROI QuickScan',
+        script: 'test-quickscan.js',
+        description: 'Tests internal ROI calculation lead capture'
+    },
+    {
+        name: 'Contact Form',
+        script: 'test-contact.js',
+        description: 'Tests contact form submission'
+    },
+    {
+        name: 'Newsletter Signup',
+        script: 'test-newsletter.js',
+        description: 'Tests newsletter subscription'
     }
 ];
 

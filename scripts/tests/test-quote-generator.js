@@ -42,7 +42,8 @@ async function testQuoteGenerator() {
             }
         ],
         notes: "Gelieve de offerte binnen 30 dagen te accepteren.",
-        paymentTerms: "Betaling binnen 14 dagen na acceptatie."
+        paymentTerms: "Betaling binnen 14 dagen na acceptatie.",
+        signature: "DEV_BYPASS"
     };
 
     console.log('📤 Sending request to:', `${LOCAL_API_URL}/api/v1/finance/generate-quote`);
@@ -53,7 +54,8 @@ async function testQuoteGenerator() {
         const response = await fetch(`${LOCAL_API_URL}/api/v1/finance/generate-quote`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Origin": LOCAL_API_URL
             },
             body: JSON.stringify(payload)
         });

@@ -67,7 +67,8 @@ async function testInvoiceGenerator() {
                     price: 150.00,
                     vatRate: 0
                 }
-            ]
+            ],
+            signature: "DEV_BYPASS"
         };
 
         console.log(`Sending invoice request... (Items: ${payload.items.length})`);
@@ -77,6 +78,7 @@ async function testInvoiceGenerator() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Origin": "http://localhost:3000"
             },
             body: JSON.stringify(payload),
         });

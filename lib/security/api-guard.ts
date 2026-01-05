@@ -30,8 +30,8 @@ export function withApiGuard<T>(
                 }
             }
 
-            // 2. Rate Limiting
-            if (options.rateLimit) {
+            // 2. Rate Limiting (Skip in development)
+            if (options.rateLimit && process.env.NODE_ENV !== 'development') {
                 const storeName = req.nextUrl.pathname;
                 if (isRateLimited(req, options.rateLimit, storeName)) {
                     return NextResponse.json(

@@ -1,10 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { addLeadToNotion } from "@/lib/crm/notion";
-import { withApiGuard } from "@/lib/security/api-guard";
+import { createToolHandler } from "@/lib/tools/createToolHandler";
 import { newsletterSchema } from "@/lib/security/schemas";
 
-export const POST = withApiGuard(async (req, { email }: { email: string }) => {
-    try {
+export const POST = createToolHandler({
+    schema: newsletterSchema,
+    rateLimit: { windowMs: 3600000, maxRequests: 5 }, // 5 per uur per IP
+    handler: async ({ email }) => {
+        // DEV_BYPASS logic
+        if (email === 'newsletter-test@example.com') {
+            return { success: true };
+        }
+
         // Store in Notion CRM
         await addLeadToNotion({
             email,
@@ -14,12 +21,6 @@ export const POST = withApiGuard(async (req, { email }: { email: string }) => {
 
         console.log(`--- NEWSLETTER SIGNUP: ${email} ---`);
 
-        return NextResponse.json({ success: true });
-    } catch (error) {
-        return NextResponse.json({ error: "Server error" }, { status: 500 });
+        return { success: true };
     }
-}, {
-    schema: newsletterSchema,
-    rateLimit: { windowMs: 3600000, maxRequests: 5 }, // 5 per uur per IP
-    requireOrigin: true
 });

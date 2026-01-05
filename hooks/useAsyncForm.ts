@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ExecutionStatus } from "@/types/common";
+import { ExecutionStatus } from "../types/common";
 
 interface UseAsyncFormOptions<T, R> {
     onSubmit: (data: T) => Promise<R>;

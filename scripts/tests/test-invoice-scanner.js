@@ -50,7 +50,8 @@ async function testInvoiceScanner() {
         const response = await fetch(`${LOCAL_API_URL}/api/v1/finance/scan`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Origin": LOCAL_API_URL
             },
             body: JSON.stringify(payload)
         });

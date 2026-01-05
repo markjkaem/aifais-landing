@@ -4,15 +4,15 @@ import { z } from 'zod';
 import { NextRequest } from 'next/server';
 
 // Mock withApiGuard to just return the inner function for easier testing
-vi.mock('@/lib/security/api-guard', () => ({
+vi.mock('../security/api-guard', () => ({
     withApiGuard: vi.fn((handler) => handler),
 }));
 
-vi.mock('@/lib/payment-gatekeeper', () => ({
+vi.mock('../payment-gatekeeper', () => ({
     gatekeepPayment: vi.fn(),
 }));
 
-import { gatekeepPayment } from '@/lib/payment-gatekeeper';
+import { gatekeepPayment } from '../payment-gatekeeper';
 
 describe('createToolHandler', () => {
     const schema = z.object({ foo: z.string() });
@@ -29,7 +29,7 @@ describe('createToolHandler', () => {
         });
 
         const req = new NextRequest('http://localhost');
-        const response = await handler(req, { foo: 'bar' });
+        const response = await (handler as any)(req, { foo: 'bar' });
         const json = await response.json();
 
         expect(mockHandler).toHaveBeenCalledWith({ foo: 'bar' }, expect.objectContaining({
@@ -50,7 +50,7 @@ describe('createToolHandler', () => {
         });
 
         const req = new NextRequest('http://localhost');
-        const response = await handler(req, { foo: 'bar', signature: 'sig' });
+        const response = await (handler as any)(req, { foo: 'bar', signature: 'sig' });
         const json = await response.json();
 
         expect(gatekeepPayment).toHaveBeenCalled();
@@ -70,7 +70,7 @@ describe('createToolHandler', () => {
         });
 
         const req = new NextRequest('http://localhost');
-        const response = await handler(req, { foo: 'bar' });
+        const response = await (handler as any)(req, { foo: 'bar' });
         const json = await response.json();
 
         expect(response.status).toBe(402);

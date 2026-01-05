@@ -23,6 +23,8 @@ const quoteSchema = z.object({
         price: z.number(),
     })),
     validUntil: z.number().optional().default(30),
+    signature: z.string().optional(),
+    stripeSessionId: z.string().optional(),
 });
 
 export const POST = createToolHandler({
