@@ -22,135 +22,15 @@ export const metadata: Metadata = {
 // CONFIGURATION - Scalable for 100+ APIs
 // ============================================================================
 
-type EndpointParam = {
-  name: string;
-  type: string;
-  required: boolean;
-  description: string;
-};
+import { API_CATEGORIES, API_ENDPOINTS, APIEndpoint, APIParam } from "@/config/apis";
 
-type Endpoint = {
-  id: string;
-  method: "GET" | "POST" | "PUT" | "DELETE";
-  path: string;
-  title: string;
-  description: string;
-  category: string;
-  price: string;
-  isFree?: boolean;
-  params: EndpointParam[];
-  responseExample?: string;
-};
+// ... (other imports)
 
-type Category = {
-  id: string;
-  name: string;
-  icon: string;
-};
+// Use the types and constants from config
+const categories = API_CATEGORIES;
+const endpoints = API_ENDPOINTS;
 
-const categories: Category[] = [
-  { id: "finance", name: "Finance", icon: "💰" },
-  { id: "legal", name: "Legal", icon: "⚖️" },
-];
 
-const endpoints: Endpoint[] = [
-  {
-    id: "scan-invoice",
-    method: "POST",
-    path: "/api/v1/finance/scan",
-    title: "Scan Invoice",
-    description: "Extract structured data from invoices and receipts using AI vision. Supports PDF, JPG, and PNG.",
-    category: "finance",
-    price: "0.001 SOL",
-    params: [
-      { name: "invoiceBase64", type: "string", required: true, description: "Base64 encoded document" },
-      { name: "mimeType", type: "string", required: true, description: "image/jpeg, image/png, or application/pdf" },
-      { name: "signature", type: "string", required: false, description: "X402 payment signature (required for paid requests)" },
-    ],
-    responseExample: `{
-  "success": true,
-  "data": {
-    "vendor": "Bol.com B.V.",
-    "invoiceNumber": "INV-2024-001",
-    "date": "2024-01-15",
-    "total": 149.99,
-    "vat": 26.03,
-    "currency": "EUR",
-    "lineItems": [...]
-  }
-}`,
-  },
-  {
-    id: "create-invoice",
-    method: "POST",
-    path: "/api/v1/finance/create-invoice",
-    title: "Create Invoice",
-    description: "Generate a professional PDF invoice from structured data.",
-    category: "finance",
-    price: "Free",
-    isFree: true,
-    params: [
-      { name: "ownName", type: "string", required: true, description: "Your company name" },
-      { name: "ownAddress", type: "string", required: false, description: "Your company address" },
-      { name: "clientName", type: "string", required: true, description: "Client company name" },
-      { name: "items", type: "array", required: true, description: "Array of invoice line items" },
-      { name: "invoiceNumber", type: "string", required: false, description: "Custom invoice number" },
-    ],
-    responseExample: `{
-  "success": true,
-  "data": {
-    "pdfBase64": "JVBERi0xLjQK...",
-    "invoiceNumber": "2024-001"
-  }
-}`,
-  },
-  {
-    id: "generate-quote",
-    method: "POST",
-    path: "/api/v1/finance/generate-quote",
-    title: "Generate Quote",
-    description: "Generate a professional PDF quote/proposal from structured data.",
-    category: "finance",
-    price: "Free",
-    isFree: true,
-    params: [
-      { name: "companyName", type: "string", required: true, description: "Your company name" },
-      { name: "clientName", type: "string", required: true, description: "Client name" },
-      { name: "projectTitle", type: "string", required: true, description: "Project or quote title" },
-      { name: "items", type: "array", required: true, description: "Array of quote line items" },
-      { name: "validUntil", type: "number", required: false, description: "Validity in days (default: 30)" },
-    ],
-  },
-  {
-    id: "check-contract",
-    method: "POST",
-    path: "/api/v1/legal/check-contract",
-    title: "Check Contract",
-    description: "AI-powered contract analysis. Identifies risks, unfavorable clauses, and compliance issues based on Dutch law.",
-    category: "legal",
-    price: "0.001 SOL",
-    params: [
-      { name: "contractBase64", type: "string", required: true, description: "Base64 encoded PDF contract" },
-      { name: "signature", type: "string", required: true, description: "X402 payment signature" },
-      { name: "focusAreas", type: "array", required: false, description: "Specific areas to analyze" },
-    ],
-  },
-  {
-    id: "generate-terms",
-    method: "POST",
-    path: "/api/v1/legal/generate-terms",
-    title: "Generate Terms",
-    description: "Generate custom terms & conditions tailored to your business type and Dutch regulations.",
-    category: "legal",
-    price: "0.001 SOL",
-    params: [
-      { name: "companyName", type: "string", required: true, description: "Your company name" },
-      { name: "companyType", type: "string", required: true, description: "Business type (BV, VOF, ZZP, etc.)" },
-      { name: "industry", type: "string", required: false, description: "Your industry for specific clauses" },
-      { name: "signature", type: "string", required: true, description: "X402 payment signature" },
-    ],
-  },
-];
 
 const errorCodes = [
   { code: 400, name: "Bad Request", description: "Invalid parameters or missing required fields" },
@@ -179,7 +59,7 @@ function MethodBadge({ method }: { method: string }) {
   );
 }
 
-function ParamRow({ param }: { param: EndpointParam }) {
+function ParamRow({ param }: { param: APIParam }) {
   return (
     <div className="grid grid-cols-12 gap-4 py-3 border-b border-zinc-800/50 last:border-0">
       <div className="col-span-3 flex items-center gap-2">
@@ -200,7 +80,7 @@ function ParamRow({ param }: { param: EndpointParam }) {
   );
 }
 
-function EndpointCard({ endpoint }: { endpoint: Endpoint }) {
+function EndpointCard({ endpoint }: { endpoint: APIEndpoint }) {
   return (
     <div id={endpoint.id} className="scroll-mt-24 mb-12">
       <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-colors">

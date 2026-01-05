@@ -22,48 +22,12 @@ export const metadata: Metadata = {
 // CONFIGURATION
 // ============================================================================
 
-type MCPTool = {
-  name: string;
-  description: string;
-  price: string;
-  isFree?: boolean;
-  status: "live" | "beta" | "coming";
-};
+import { API_ENDPOINTS, APIEndpoint } from "@/config/apis";
 
-const tools: MCPTool[] = [
-  {
-    name: "scan_invoice",
-    description: "Extract structured data from invoices via AI vision",
-    price: "0.001 SOL",
-    status: "live",
-  },
-  {
-    name: "create_invoice",
-    description: "Generate professional PDF invoices",
-    price: "Free",
-    isFree: true,
-    status: "live",
-  },
-  {
-    name: "generate_quote",
-    description: "Generate PDF quotes from JSON input",
-    price: "Free",
-    isFree: true,
-    status: "live",
-  },
-  {
-    name: "check_contract",
-    description: "AI-powered contract risk analysis",
-    price: "0.001 SOL",
-    status: "live",
-  },
-  {
-    name: "generate_terms",
-    description: "Generate custom terms & conditions",
-    price: "0.001 SOL",
-    status: "live",
-  },
-];
+// ... (other imports)
+
+// Use the types and constants from config
+const tools = API_ENDPOINTS.filter(t => t.status === "live");
 
 const platforms = [
   { name: "Claude Desktop", supported: true },
@@ -78,7 +42,7 @@ const platforms = [
 
 import CopyButton from "@/app/Components/CopyButton";
 
-function ToolCard({ tool }: { tool: MCPTool }) {
+function ToolCard({ tool }: { tool: APIEndpoint }) {
   return (
     <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-5 hover:border-zinc-700 transition-colors">
       <div className="flex items-start justify-between mb-3">

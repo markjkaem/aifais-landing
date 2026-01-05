@@ -18,117 +18,16 @@ export const metadata: Metadata = {
     "Agent-ready infrastructure voor de Nederlandse markt. Integreer AIFAIS tools via MCP of REST API met pay-per-use pricing.",
 };
 
-// ============================================================================
-// CONFIGURATION - Easy to scale to 100+ APIs
-// ============================================================================
+import { API_CATEGORIES, API_ENDPOINTS, APIEndpoint } from "@/config/apis";
 
-type APICategory = {
-  id: string;
-  name: string;
-  description: string;
-  color: "emerald" | "violet" | "amber" | "cyan" | "rose" | "blue";
-  icon: string;
-};
+// ... (other imports)
 
-type APIEndpoint = {
-  name: string;
-  description: string;
-  category: string;
-  price: string;
-  status: "live" | "beta" | "coming";
-  isNew?: boolean;
-  isFree?: boolean;
-};
-
-const categories: APICategory[] = [
-  {
-    id: "finance",
-    name: "Finance",
-    description: "Facturen, offertes & financiële documenten",
-    color: "emerald",
-    icon: "💰",
-  },
-  {
-    id: "legal",
-    name: "Legal",
-    description: "Contracten, voorwaarden & compliance",
-    color: "violet",
-    icon: "⚖️",
-  },
-  {
-    id: "hr",
-    name: "HR",
-    description: "Personeelszaken & recruitment",
-    color: "amber",
-    icon: "👥",
-  },
-  {
-    id: "marketing",
-    name: "Marketing",
-    description: "Content, SEO & campagnes",
-    color: "rose",
-    icon: "📢",
-  },
-];
-
-const apis: APIEndpoint[] = [
-  // Finance
-  {
-    name: "scan_invoice",
-    description: "Extract structured data from invoices via AI vision",
-    category: "finance",
-    price: "0.001 SOL",
-    status: "live",
-  },
-  {
-    name: "create_invoice",
-    description: "Generate professional PDF invoices",
-    category: "finance",
-    price: "Free",
-    status: "live",
-    isFree: true,
-  },
-  {
-    name: "generate_quote",
-    description: "Generate PDF quotes from JSON input",
-    category: "finance",
-    price: "Free",
-    status: "live",
-    isFree: true,
-  },
-  // Legal
-  {
-    name: "check_contract",
-    description: "AI-powered contract risk analysis",
-    category: "legal",
-    price: "0.001 SOL",
-    status: "live",
-  },
-  {
-    name: "generate_terms",
-    description: "Generate custom terms & conditions",
-    category: "legal",
-    price: "0.001 SOL",
-    status: "live",
-  },
-  // Coming soon examples
-  {
-    name: "extract_clauses",
-    description: "Extract specific clauses from contracts",
-    category: "legal",
-    price: "0.001 SOL",
-    status: "coming",
-  },
-  {
-    name: "generate_job_post",
-    description: "AI-generated job postings",
-    category: "hr",
-    price: "0.001 SOL",
-    status: "coming",
-  },
-];
+// Use the types and constants from config
+const categories = API_CATEGORIES;
+const apis = API_ENDPOINTS;
 
 const features = [
+// ... (keep features)
   {
     icon: "⚡",
     title: "< 200ms Response",
@@ -211,7 +110,7 @@ function StatusBadge({ status }: { status: "live" | "beta" | "coming" }) {
   );
 }
 
-function APICard({ api, category }: { api: APIEndpoint; category: APICategory }) {
+function APICard({ api, category }: { api: APIEndpoint; category: (typeof API_CATEGORIES)[number] }) {
   const colors = colorClasses[category.color];
 
   return (
