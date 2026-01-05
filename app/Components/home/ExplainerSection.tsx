@@ -77,16 +77,16 @@ export default function ExplainerSection() {
   return (
     <section className="py-24 md:py-32 bg-white relative overflow-hidden">
       {/* Subtle background elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white" />
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-100/40 to-transparent rounded-full blur-3xl" />
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-l from-purple-100/40 to-transparent rounded-full blur-3xl" />
+      <div className="absolute inset-0 bg-gradient-to-b from-stone-50/50 to-white" />
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-100/30 to-transparent rounded-full blur-3xl" />
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-l from-purple-100/30 to-transparent rounded-full blur-3xl" />
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left: Text Content */}
           <div className="order-2 lg:order-1">
             {/* Heading with visual flair */}
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-gray-900 tracking-tight leading-[1.1]">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-stone-900 tracking-tight leading-[1.1]">
               {t("titlePrefix")}{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500">
@@ -97,7 +97,7 @@ export default function ExplainerSection() {
               ,
               <br />
               {t("titleSuffix")}{" "}
-              <span className="text-gray-300 line-through decoration-2">
+              <span className="text-stone-300 line-through decoration-2">
                 {t("titleStrikethrough")}
               </span>
               .
@@ -105,12 +105,12 @@ export default function ExplainerSection() {
 
             {/* Description */}
             <div className="space-y-4 mb-10">
-              <p className="text-xl text-gray-500 leading-relaxed">
+              <p className="text-xl text-stone-500 leading-relaxed">
                 {t("p1")}
               </p>
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-xl text-stone-600 leading-relaxed">
                 {t.rich("p2", {
-                  bold: (children) => <span className="font-semibold text-gray-900">{children}</span>
+                  bold: (children) => <span className="font-semibold text-stone-900">{children}</span>
                 })}
               </p>
             </div>
@@ -120,7 +120,7 @@ export default function ExplainerSection() {
               {features.map((item, i) => (
                 <div
                   key={i}
-                  className="group flex items-start gap-4 p-4 rounded-2xl hover:bg-gray-50 transition-all duration-300 cursor-default"
+                  className="group flex items-start gap-4 p-4 rounded-2xl hover:bg-stone-50 transition-all duration-300 cursor-default"
                 >
                   <div
                     className={`flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 ${
@@ -130,10 +130,10 @@ export default function ExplainerSection() {
                     {item.icon}
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">
+                    <h3 className="font-bold text-stone-900 mb-1">
                       {item.title}
                     </h3>
-                    <p className="text-gray-500 text-sm leading-relaxed">
+                    <p className="text-stone-500 text-sm leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -149,16 +149,16 @@ export default function ExplainerSection() {
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 rounded-[2.5rem] blur-2xl opacity-60" />
 
               {/* Main Card */}
-              <div className="relative bg-white rounded-[2rem] border border-gray-200 shadow-2xl shadow-gray-200/50 overflow-hidden">
+              <div className="relative bg-white rounded-[2rem] border border-stone-200 shadow-2xl shadow-stone-200/50 overflow-hidden">
                 {/* Card Header */}
-                <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
+                <div className="px-6 py-4 border-b border-stone-100 bg-stone-50/50 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="flex gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-red-400" />
                       <div className="w-3 h-3 rounded-full bg-yellow-400" />
                       <div className="w-3 h-3 rounded-full bg-green-400" />
                     </div>
-                    <span className="text-sm text-gray-400 font-mono">
+                    <span className="text-sm text-stone-400 font-mono">
                       agent.process
                     </span>
                   </div>
@@ -176,25 +176,25 @@ export default function ExplainerSection() {
                 {/* Card Body */}
                 <div className="p-6 space-y-4">
                   {/* Input Section */}
-                  <div className="bg-gray-50 rounded-xl p-4">
-                    <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                  <div className="bg-stone-50 rounded-xl p-4">
+                    <div className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">
                       {t("visual.input")}
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <div className="inline-flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-gray-200 text-sm">
+                      <div className="inline-flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-stone-200 text-sm">
                         <div className="w-2 h-2 rounded-full bg-orange-400" />
-                        <span className="text-gray-600">email_inbox</span>
+                        <span className="text-stone-600">email_inbox</span>
                       </div>
-                      <div className="inline-flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-gray-200 text-sm">
+                      <div className="inline-flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-stone-200 text-sm">
                         <div className="w-2 h-2 rounded-full bg-red-400" />
-                        <span className="text-gray-600">invoice.pdf</span>
+                        <span className="text-stone-600">invoice.pdf</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Processing Section */}
                   <div className="relative">
-                    <div className="absolute left-1/2 -top-2 w-px h-2 bg-gray-200" />
+                    <div className="absolute left-1/2 -top-2 w-px h-2 bg-stone-200" />
                     <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-[2px]">
                       <div className="bg-white rounded-[10px] p-4">
                         <div className="flex items-center justify-between mb-4">
@@ -214,7 +214,7 @@ export default function ExplainerSection() {
                                 />
                               </svg>
                             </div>
-                            <span className="font-semibold text-gray-900">
+                            <span className="font-semibold text-stone-900">
                               {t("visual.label")}
                             </span>
                           </div>
@@ -225,7 +225,7 @@ export default function ExplainerSection() {
 
                         <div className="space-y-2 font-mono text-sm">
                           {(t.raw("visual.steps") as string[]).map((text, idx) => (
-                            <div key={idx} className="flex items-center gap-2 text-gray-500">
+                            <div key={idx} className="flex items-center gap-2 text-stone-500">
                               <svg
                                 className="w-4 h-4 text-emerald-500"
                                 fill="none"
@@ -245,7 +245,7 @@ export default function ExplainerSection() {
                         </div>
                       </div>
                     </div>
-                    <div className="absolute left-1/2 -bottom-2 w-px h-2 bg-gray-200" />
+                    <div className="absolute left-1/2 -bottom-2 w-px h-2 bg-stone-200" />
                   </div>
 
                   {/* Output Section */}
@@ -277,12 +277,12 @@ export default function ExplainerSection() {
                 </div>
 
                 {/* Card Footer */}
-                <div className="px-6 py-4 border-t border-gray-100 bg-gray-50/30">
+                <div className="px-6 py-4 border-t border-stone-100 bg-stone-50/30">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-400">
+                    <span className="text-stone-400">
                       {t("visual.footer")}
                     </span>
-                    <span className="text-gray-500 font-medium">
+                    <span className="text-stone-500 font-medium">
                       {t("visual.active")}
                     </span>
                   </div>
@@ -290,7 +290,7 @@ export default function ExplainerSection() {
               </div>
 
               {/* Floating badges */}
-              <div className="absolute -top-3 -right-3 px-3 py-1.5 bg-white rounded-full border border-gray-200 shadow-lg text-xs font-semibold text-gray-600">
+              <div className="absolute -top-3 -right-3 px-3 py-1.5 bg-white rounded-full border border-stone-200 shadow-lg text-xs font-semibold text-stone-600">
                 {t("visual.automatic")}
               </div>
 

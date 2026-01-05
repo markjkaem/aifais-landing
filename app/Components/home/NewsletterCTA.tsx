@@ -34,7 +34,7 @@ export default function NewsletterCTA() {
   return (
     <section className="py-24 px-6 relative overflow-hidden bg-white">
       <div className="max-w-6xl mx-auto">
-        <div className="relative bg-[#0a0f1d] rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden p-8 md:p-16 lg:p-20 border border-white/5 shadow-2xl">
+        <div className="relative bg-[#1c1917] rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden p-8 md:p-16 lg:p-20 border border-white/5 shadow-2xl">
           {/* Enhanced background effects */}
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/10 blur-[130px] rounded-full -mr-48 -mt-48 pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600/10 blur-[130px] rounded-full -ml-32 -mb-32 pointer-events-none" />
@@ -49,12 +49,12 @@ export default function NewsletterCTA() {
               
               <h2 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-8 leading-[1.1]">
                 Mis Geen Trend in <br />
-                <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-cyan-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
                   2026
                 </span>
               </h2>
               
-              <p className="text-lg md:text-xl text-slate-400 mb-12 leading-relaxed max-w-lg">
+              <p className="text-lg md:text-xl text-stone-400 mb-12 leading-relaxed max-w-lg">
                 Wekelijks de scherpste analyses over AI Agents, ROI-optimalisatie en automatisering voor het MKB. Direct in je inbox.
               </p>
               
@@ -83,7 +83,7 @@ export default function NewsletterCTA() {
                       <Check className="w-10 h-10" />
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-2">Je bent aangemeld!</h3>
-                    <p className="text-slate-400">Check je inbox voor de eerste update.</p>
+                    <p className="text-stone-400">Check je inbox voor de eerste update.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
@@ -94,7 +94,7 @@ export default function NewsletterCTA() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full px-8 py-6 bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all text-lg"
+                        className="w-full px-8 py-6 bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all text-lg"
                       />
                     </div>
                     
@@ -113,7 +113,7 @@ export default function NewsletterCTA() {
                       )}
                     </button>
                     
-                    <p className="text-[10px] md:text-xs text-slate-500 text-center uppercase tracking-widest font-bold opacity-60">
+                    <p className="text-[10px] md:text-xs text-stone-500 text-center uppercase tracking-widest font-bold opacity-60">
                       Geen spam. Alleen pure waarde. Afmelden kan met één klik.
                     </p>
                   </form>

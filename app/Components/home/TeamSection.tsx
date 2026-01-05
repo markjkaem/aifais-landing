@@ -33,36 +33,36 @@ export default function TeamSection() {
 
   return (
     <section id="about" className="relative py-24 md:py-32 bg-white overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white" />
+      <div className="absolute inset-0 bg-gradient-to-b from-stone-50/50 to-white" />
 
       <div className="relative max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-6 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-stone-200 rounded-full mb-6 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
-            <span className="text-sm font-medium text-gray-600">
+            <span className="text-sm font-medium text-stone-600">
               {t("badge")}
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-stone-900 tracking-tight">
             {t("title")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">
               {t("titleHighlight")}
             </span>
           </h2>
 
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-stone-500 max-w-2xl mx-auto leading-relaxed">
             {t("subtitle")}
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
           {team.map((member, idx) => (
-            <div key={idx} className="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300">
+            <div key={idx} className="group relative bg-white rounded-2xl border border-stone-200 overflow-hidden hover:border-stone-300 hover:shadow-xl hover:shadow-stone-200/50 transition-all duration-300">
               <div className={`h-1 bg-gradient-to-r ${idx === 0 ? "from-blue-300 to-blue-600" : "from-blue-500 to-blue-800"}`} />
               <div className="p-8">
                 <div className="flex items-center gap-5 mb-6">
-                  <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border border-gray-100 shadow-sm">
+                  <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border border-stone-100 shadow-sm">
                     <Image
                       src={member.image}
                       alt={member.name}
@@ -72,14 +72,14 @@ export default function TeamSection() {
                     />
                   </div>
                   <div className="pt-1">
-                    <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
-                    <p className="text-sm text-gray-500">{member.role}</p>
+                    <h3 className="text-xl font-bold text-stone-900">{member.name}</h3>
+                    <p className="text-sm text-stone-500">{member.role}</p>
                   </div>
                 </div>
-                <p className="text-gray-600 leading-relaxed mb-6">{member.bio}</p>
+                <p className="text-stone-600 leading-relaxed mb-6">{member.bio}</p>
                 <div className="flex flex-wrap gap-2 mb-6">
                   {member.skills.map((skill, sIdx) => (
-                    <span key={sIdx} className="text-xs font-medium text-gray-600 px-3 py-1.5 rounded-lg bg-gray-100">
+                    <span key={sIdx} className="text-xs font-medium text-stone-600 px-3 py-1.5 rounded-lg bg-stone-100">
                       {skill}
                     </span>
                   ))}
@@ -88,7 +88,7 @@ export default function TeamSection() {
                   href={member.link}
                   target={member.linkType === "linkedin" ? "_blank" : undefined}
                   rel={member.linkType === "linkedin" ? "noopener noreferrer" : undefined}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-900 transition-colors group/link"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-stone-400 hover:text-stone-900 transition-colors group/link"
                 >
                   {member.linkType === "linkedin" ? (
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -110,7 +110,7 @@ export default function TeamSection() {
         </div>
 
         {/* Bottom Stats / Trust */}
-        <div className="mt-16 pt-12 border-t border-gray-100">
+        <div className="mt-16 pt-12 border-t border-stone-100">
           <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 text-center">
             {[
               { val: "2", label: t("stats.founders") },
@@ -120,10 +120,10 @@ export default function TeamSection() {
             ].map((stat, idx) => (
               <div key={idx} className="flex flex-wrap items-center gap-x-12">
                 <div>
-                  <div className="text-3xl font-bold text-gray-900">{stat.val}</div>
-                  <div className="text-sm text-gray-500">{stat.label}</div>
+                  <div className="text-3xl font-bold text-stone-900">{stat.val}</div>
+                  <div className="text-sm text-stone-500">{stat.label}</div>
                 </div>
-                {idx < 3 && <div className="hidden sm:block w-px h-10 bg-gray-200" />}
+                {idx < 3 && <div className="hidden sm:block w-px h-10 bg-stone-200" />}
               </div>
             ))}
           </div>

@@ -21,16 +21,16 @@ export default function TechStackSection() {
   ];
 
   return (
-    <section className="py-24 border-b border-gray-100 bg-white overflow-hidden">
+    <section className="py-24 border-b border-stone-100 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-[#3066be] text-sm font-bold uppercase tracking-widest mb-3">
             {t("badge")}
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mb-6">
             {t("title")} <span className="text-[#3066be]">{t("titleHighlight")}</span>
           </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto text-lg">
+          <p className="text-stone-500 max-w-2xl mx-auto text-lg">
             {t("subtitle")}
           </p>
         </div>
@@ -50,10 +50,10 @@ export default function TechStackSection() {
                 />
               </div>
               <div className="text-center">
-                <p className="text-sm font-bold text-gray-900 group-hover:text-[#3066be] transition-colors">
+                <p className="text-sm font-bold text-stone-900 group-hover:text-[#3066be] transition-colors">
                   {tech.name}
                 </p>
-                <p className="text-[10px] text-gray-400 font-mono uppercase tracking-tighter">
+                <p className="text-[10px] text-stone-400 font-mono uppercase tracking-tighter">
                   {t(`techs.${tech.key}`)}
                 </p>
               </div>
@@ -64,5 +64,3 @@ export default function TechStackSection() {
     </section>
   );
 }
-
-

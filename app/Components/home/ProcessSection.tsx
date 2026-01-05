@@ -8,7 +8,7 @@ export default function ProcessSection() {
   const locale = useLocale();
 
   return (
-    <section className="relative py-24 md:py-32 bg-gray-50 overflow-hidden">
+    <section className="relative py-24 md:py-32 bg-[#fafaf9] overflow-hidden">
       {/* Subtle background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:32px_32px]" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-100/50 to-purple-100/50 rounded-full blur-3xl opacity-50" />
@@ -16,21 +16,21 @@ export default function ProcessSection() {
       <div className="container mx-auto px-6 max-w-5xl relative z-10">
         {/* Header */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full mb-6 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-stone-200 rounded-full mb-6 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
-            <span className="text-sm font-medium text-gray-600">
+            <span className="text-sm font-medium text-stone-600">
               {t("badge")}
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-stone-900 tracking-tight">
             {t("title")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">
               {t("titleHighlight")}
             </span>
           </h2>
 
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-stone-500 max-w-2xl mx-auto leading-relaxed">
             {t("subtitle")}
           </p>
         </div>
@@ -38,7 +38,7 @@ export default function ProcessSection() {
         {/* Timeline */}
         <div className="relative">
           {/* Vertical line (desktop) */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-gray-200 via-gray-300 to-gray-200" />
+          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-stone-200 via-stone-300 to-stone-200" />
 
           {/* Step 1 */}
           <div className="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-12 md:mb-20">
@@ -50,10 +50,10 @@ export default function ProcessSection() {
                     {t("steps.step1.label")}
                   </span>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                <h3 className="text-2xl font-bold text-stone-900 mb-3">
                   {t("steps.step1.title")}
                 </h3>
-                <p className="text-gray-500 leading-relaxed mb-4">
+                <p className="text-stone-500 leading-relaxed mb-4">
                   {t("steps.step1.desc")}
                 </p>
                 <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-medium">
@@ -77,7 +77,7 @@ export default function ProcessSection() {
 
             {/* Center node */}
             <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 shadow-lg flex items-center justify-center z-10 group-hover:border-blue-500 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-white border-2 border-stone-200 shadow-lg flex items-center justify-center z-10 group-hover:border-blue-500 transition-colors">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
                   <svg
                     className="w-4 h-4 text-white"
@@ -104,10 +104,10 @@ export default function ProcessSection() {
                     {t("steps.step1.label")}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-stone-900 mb-2">
                   {t("steps.step1.title")}
                 </h3>
-                <p className="text-gray-500 leading-relaxed mb-3">
+                <p className="text-stone-500 leading-relaxed mb-3">
                   {t("steps.step1.desc")}
                 </p>
                 <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-lg text-sm font-medium">
@@ -128,24 +128,24 @@ export default function ProcessSection() {
                 </span>
               </div>
 
-              <div className="hidden md:block bg-white rounded-2xl border border-gray-200 p-6 shadow-lg shadow-gray-200/50">
+              <div className="hidden md:block bg-white rounded-2xl border border-stone-200 p-6 shadow-lg shadow-stone-200/50">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
                     <span className="text-lg">☕</span>
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-sm font-medium text-stone-900">
                       {t("steps.step1.card.title")}
                     </div>
-                    <div className="text-xs text-gray-400">
+                    <div className="text-xs text-stone-400">
                       {t("steps.step1.card.info")}
                     </div>
                   </div>
                 </div>
-                <div className="space-y-2 text-sm text-gray-500">
+                <div className="space-y-2 text-sm text-stone-500">
                   {(t.raw("steps.step1.card.points") as string[]).map((point, idx) => (
                     <div key={idx} className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-gray-300" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-stone-300" />
                       {point}
                     </div>
                   ))}
@@ -157,33 +157,33 @@ export default function ProcessSection() {
           {/* Step 2 */}
           <div className="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 mb-12 md:mb-20">
             <div className="hidden md:flex w-1/2 justify-end pr-12">
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-lg shadow-gray-200/50 max-w-sm">
-                <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">
+              <div className="bg-white rounded-2xl border border-stone-200 p-6 shadow-lg shadow-stone-200/50 max-w-sm">
+                <div className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-4">
                   {t("steps.step2.card.label")}
                 </div>
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center space-x-4 py-2 border-b border-gray-100">
-                    <span className="text-gray-600">{t("steps.step2.card.what")}</span>
-                    <span className="font-medium text-gray-900">
+                  <div className="flex justify-between items-center space-x-4 py-2 border-b border-stone-100">
+                    <span className="text-stone-600">{t("steps.step2.card.what")}</span>
+                    <span className="font-medium text-stone-900">
                       {t("steps.step2.card.agent")}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">{t("steps.step2.card.savings")}</span>
+                  <div className="flex justify-between items-center py-2 border-b border-stone-100">
+                    <span className="text-stone-600">{t("steps.step2.card.savings")}</span>
                     <span className="font-medium text-emerald-600">
                       {t("steps.step2.card.hours")}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="text-gray-600">{t("steps.step2.card.duration")}</span>
-                    <span className="font-medium text-gray-900">{t("steps.step2.card.time")}</span>
+                  <div className="flex justify-between items-center py-2 border-b border-stone-100">
+                    <span className="text-stone-600">{t("steps.step2.card.duration")}</span>
+                    <span className="font-medium text-stone-900">{t("steps.step2.card.time")}</span>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 shadow-lg flex items-center justify-center z-10">
+              <div className="w-12 h-12 rounded-full bg-white border-2 border-stone-200 shadow-lg flex items-center justify-center z-10">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
                   <svg
                     className="w-4 h-4 text-white"
@@ -208,18 +208,18 @@ export default function ProcessSection() {
                   {t("steps.step2.label")}
                 </span>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl md:text-2xl font-bold text-stone-900 mb-3">
                 {t("steps.step2.title")}
               </h3>
-              <p className="text-gray-500 leading-relaxed mb-4">
+              <p className="text-stone-500 leading-relaxed mb-4">
                 {t.rich("steps.step2.desc", {
-                  highlight: (children) => <strong className="text-gray-700">{children}</strong>,
+                  highlight: (children) => <strong className="text-stone-700">{children}</strong>,
                   this_auto: t("steps.step2.auto"),
                   this_yield: t("steps.step2.yield"),
                   this_cost: t("steps.step2.cost")
                 })}
               </p>
-              <p className="text-gray-400 text-sm">
+              <p className="text-stone-400 text-sm">
                 {t("steps.step2.subText")}
               </p>
             </div>
@@ -234,17 +234,17 @@ export default function ProcessSection() {
                     {t("steps.step3.label")}
                   </span>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                <h3 className="text-2xl font-bold text-stone-900 mb-3">
                   {t("steps.step3.title")}
                 </h3>
-                <p className="text-gray-500 leading-relaxed">
+                <p className="text-stone-500 leading-relaxed">
                   {t("steps.step3.desc")}
                 </p>
               </div>
             </div>
 
             <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 shadow-lg flex items-center justify-center z-10">
+              <div className="w-12 h-12 rounded-full bg-white border-2 border-stone-200 shadow-lg flex items-center justify-center z-10">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
                   <svg
                     className="w-4 h-4 text-white"
@@ -276,15 +276,15 @@ export default function ProcessSection() {
                     {t("steps.step3.label")}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-stone-900 mb-2">
                   {t("steps.step3.title")}
                 </h3>
-                <p className="text-gray-500 leading-relaxed">
+                <p className="text-stone-500 leading-relaxed">
                   {t("steps.step3.desc")}
                 </p>
               </div>
 
-              <div className="hidden md:block bg-white rounded-2xl border border-gray-200 p-6 shadow-lg shadow-gray-200/50">
+              <div className="hidden md:block bg-white rounded-2xl border border-stone-200 p-6 shadow-lg shadow-stone-200/50">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex -space-x-2">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white">
@@ -294,20 +294,20 @@ export default function ProcessSection() {
                       F
                     </div>
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-stone-500">
                     {t("steps.step3.card.working")}
                   </div>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <div className="w-full bg-gray-100 rounded-full h-2">
+                    <div className="w-full bg-stone-100 rounded-full h-2">
                       <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full w-3/4" />
                     </div>
-                    <span className="text-sm font-medium text-gray-600 whitespace-nowrap">
+                    <span className="text-sm font-medium text-stone-600 whitespace-nowrap">
                       75%
                     </span>
                   </div>
-                  <div className="text-xs text-gray-400">
+                  <div className="text-xs text-stone-400">
                     {t("steps.step3.card.avgTime")}
                   </div>
                 </div>
@@ -318,7 +318,7 @@ export default function ProcessSection() {
           {/* Step 4 - Final */}
           <div className="relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0">
             <div className="hidden md:flex w-1/2 justify-end pr-12">
-              <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 shadow-xl max-w-sm text-white">
+              <div className="bg-gradient-to-br from-stone-900 to-stone-800 rounded-2xl p-6 shadow-xl max-w-sm text-white">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
                     <svg
@@ -337,12 +337,12 @@ export default function ProcessSection() {
                   </div>
                   <div>
                     <div className="font-semibold">{t("steps.step4.guarantee.title")}</div>
-                    <div className="text-sm text-gray-400">
+                    <div className="text-sm text-stone-400">
                       {t("steps.step4.guarantee.subtitle")}
                     </div>
                   </div>
                 </div>
-                <p className="text-gray-300 text-sm leading-relaxed">
+                <p className="text-stone-300 text-sm leading-relaxed">
                   {t("steps.step4.guarantee.text")}
                 </p>
               </div>
@@ -372,14 +372,14 @@ export default function ProcessSection() {
                   {t("steps.step4.label")}
                 </span>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
+              <h3 className="text-xl md:text-2xl font-bold text-stone-900 mb-3">
                 {t("steps.step4.title")}
               </h3>
-              <p className="text-gray-500 leading-relaxed mb-4">
+              <p className="text-stone-500 leading-relaxed mb-4">
                 {t("steps.step4.desc")}
               </p>
 
-              <div className="md:hidden bg-gray-900 rounded-xl p-4 text-white">
+              <div className="md:hidden bg-stone-900 rounded-xl p-4 text-white">
                 <div className="flex items-center gap-2 mb-2">
                   <svg
                     className="w-5 h-5 text-emerald-400"
@@ -404,11 +404,11 @@ export default function ProcessSection() {
         </div>
 
         <div className="mt-20 text-center">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-2 bg-white rounded-full border border-gray-200 shadow-lg">
-            <span className="text-gray-600 px-4">{t("cta.text")}</span>
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-2 bg-white rounded-full border border-stone-200 shadow-lg">
+            <span className="text-stone-600 px-4">{t("cta.text")}</span>
             <Link
               href={`/${locale}/contact`}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-stone-900 text-white font-semibold rounded-full hover:bg-stone-800 transition-all"
             >
               {t("cta.button")}
               <svg

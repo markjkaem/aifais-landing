@@ -18,7 +18,7 @@ export default function IntroVideoSection() {
   return (
     <section className="py-24 md:py-32 bg-white relative overflow-hidden">
       {/* Subtle background elements matching ExplainerSection */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-50/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white to-stone-50/50" />
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-100/30 to-transparent rounded-full blur-3xl" />
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-l from-purple-100/30 to-transparent rounded-full blur-3xl" />
 
@@ -34,7 +34,7 @@ export default function IntroVideoSection() {
             </span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 tracking-tight leading-[1.1]">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-stone-900 tracking-tight leading-[1.1]">
             {t("title")}{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-500">
@@ -44,7 +44,7 @@ export default function IntroVideoSection() {
             </span>
           </h2>
           
-          <p className="text-xl text-gray-500 leading-relaxed">
+          <p className="text-xl text-stone-500 leading-relaxed">
             {t("subtitle")}
           </p>
         </div>
@@ -54,7 +54,7 @@ export default function IntroVideoSection() {
           <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           
           {/* Video Container */}
-          <div className="relative bg-white rounded-[2rem] border border-gray-200 shadow-2xl overflow-hidden aspect-video cursor-pointer">
+          <div className="relative bg-white rounded-[2rem] border border-stone-200 shadow-2xl overflow-hidden aspect-video cursor-pointer">
             <video
               ref={videoRef}
               src="/intro.mp4"

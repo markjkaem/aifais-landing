@@ -19,7 +19,7 @@ interface HomeClientProps {
 
 export default function HomeClient({ projects, hideHero = false }: HomeClientProps) {
   return (
-    <main className="bg-white text-gray-900 min-h-screen transition-colors duration-500">
+    <main className="bg-white text-stone-900 min-h-screen transition-colors duration-500">
       {!hideHero && <HeroSection />}
       
       <ExplainerSection />

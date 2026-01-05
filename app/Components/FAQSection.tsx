@@ -21,7 +21,7 @@ export default function FAQSection() {
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="relative py-24 bg-white overflow-hidden border-t border-gray-200"
+      className="relative py-24 bg-white overflow-hidden border-t border-stone-200"
     >
       {/* Background effects (Light Mode) */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
@@ -38,11 +38,11 @@ export default function FAQSection() {
           </div>
           <h2
             id="faq-heading"
-            className="text-4xl md:text-5xl font-bold mb-4 text-gray-900"
+            className="text-4xl md:text-5xl font-bold mb-4 text-stone-900"
           >
             {t("title")}
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-stone-600 text-lg max-w-2xl mx-auto">
             {t("subtitle")}
             <a
               href={`/${locale}/contact`}
@@ -61,7 +61,7 @@ export default function FAQSection() {
               className={`group relative bg-white border rounded-xl overflow-hidden transition-all duration-300 ${
                 openIndex === index
                   ? "border-[#3066be]/30 shadow-md ring-1 ring-[#3066be]/10"
-                  : "border-gray-200 hover:border-[#3066be]/30"
+                  : "border-stone-200 hover:border-[#3066be]/30"
               }`}
             >
               <button
@@ -74,7 +74,7 @@ export default function FAQSection() {
                     className={`font-bold text-lg transition-colors pr-8 ${
                       openIndex === index
                         ? "text-[#3066be]"
-                        : "text-gray-900 group-hover:text-[#3066be]"
+                        : "text-stone-900 group-hover:text-[#3066be]"
                     }`}
                   >
                     {faq.question}
@@ -83,7 +83,7 @@ export default function FAQSection() {
                     className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full border transition-transform duration-300 ${
                       openIndex === index
                         ? "bg-[#3066be] border-[#3066be] text-white rotate-180"
-                        : "bg-gray-50 border-gray-200 text-gray-400 group-hover:border-[#3066be] group-hover:text-[#3066be]"
+                        : "bg-stone-50 border-stone-200 text-stone-400 group-hover:border-[#3066be] group-hover:text-[#3066be]"
                     }`}
                     aria-hidden="true"
                   >
@@ -103,7 +103,7 @@ export default function FAQSection() {
                   </span>
                 </dt>
                 <dd
-                  className={`mt-4 text-gray-600 leading-relaxed transition-all duration-300 overflow-hidden ${
+                  className={`mt-4 text-stone-600 leading-relaxed transition-all duration-300 overflow-hidden ${
                     openIndex === index
                       ? "max-h-96 opacity-100"
                       : "max-h-0 opacity-0"
@@ -117,11 +117,11 @@ export default function FAQSection() {
         </dl>
 
         {/* Bottom CTA */}
-        <div className="mt-16 text-center p-8 bg-white border border-gray-200 rounded-2xl shadow-sm">
-          <h3 className="text-2xl font-bold text-gray-900 mb-3">
+        <div className="mt-16 text-center p-8 bg-white border border-stone-200 rounded-2xl shadow-sm">
+          <h3 className="text-2xl font-bold text-stone-900 mb-3">
             {t("ctaTitle")}
           </h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-stone-600 mb-6">
             {t("ctaSubtitle")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -146,7 +146,7 @@ export default function FAQSection() {
             </a>
             <a
               href={`/${locale}/contact`}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-50 border border-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-white hover:border-gray-300 transition-all"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-stone-50 border border-stone-200 text-stone-700 font-semibold rounded-lg hover:bg-white hover:border-stone-300 transition-all"
             >
               <span>{t("ctaSecondary")}</span>
               <svg
@@ -168,7 +168,7 @@ export default function FAQSection() {
 
         {/* Trust badge */}
         <div className="mt-8 text-center">
-          <p className="text-gray-500 text-sm flex items-center justify-center gap-2">
+          <p className="text-stone-500 text-sm flex items-center justify-center gap-2">
             <svg
               className="w-5 h-5 text-green-500"
               fill="currentColor"
