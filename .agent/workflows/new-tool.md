@@ -32,6 +32,15 @@ Ensure you understand the standardized tool architecture. Key files:
 
 6. **Test**: Run `bun dev` and navigate to your new tool page.
 
+7. **Run Automated Test**: The scaffolding script automatically creates a test file and registers it in `test-all.js`. Run:
+   ```bash
+   node scripts/tests/test-[tool-id].js
+   ```
+   Or run all tests with:
+   ```bash
+   node scripts/test-all.js
+   ```
+
 ## Example Command
 ```bash
 npm run tools:create

@@ -3,34 +3,34 @@ import path from "path";
 import readline from "readline";
 
 const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+  input: process.stdin,
+  output: process.stdout
 });
 
 const question = (query) => new Promise((resolve) => rl.question(query, resolve));
 
 async function main() {
-    console.log("\n🚀 AIFAIS Tool Scaffolding\n");
+  console.log("\n🚀 AIFAIS Tool Scaffolding\n");
 
-    const id = await question("Tool ID (e.g. image-optimizer): ");
-    const title = await question("Tool Titel (e.g. Image Optimizer): ");
-    const slug = id;
-    const category = await question("Categorie (finance/legal/hr/marketing/sales/tech): ");
-    const description = await question("Korte beschrijving: ");
-    const price = await question("Prijs in SOL (bijv. 0.001 of 0 voor gratis): ");
+  const id = await question("Tool ID (e.g. image-optimizer): ");
+  const title = await question("Tool Titel (e.g. Image Optimizer): ");
+  const slug = id;
+  const category = await question("Categorie (finance/legal/hr/marketing/sales/tech): ");
+  const description = await question("Korte beschrijving: ");
+  const price = await question("Prijs in SOL (bijv. 0.001 of 0 voor gratis): ");
 
-    const isPaid = parseFloat(price) > 0;
+  const isPaid = parseFloat(price) > 0;
 
-    const rootDir = process.cwd();
-    const apiPath = path.join(rootDir, "app", "api", "v1", category, id);
-    const clientPath = path.join(rootDir, "app", "[locale]", "tools", id);
+  const rootDir = process.cwd();
+  const apiPath = path.join(rootDir, "app", "api", "v1", category, id);
+  const clientPath = path.join(rootDir, "app", "[locale]", "tools", id);
 
-    // 1. Create Directories
-    await fs.mkdir(apiPath, { recursive: true });
-    await fs.mkdir(clientPath, { recursive: true });
+  // 1. Create Directories
+  await fs.mkdir(apiPath, { recursive: true });
+  await fs.mkdir(clientPath, { recursive: true });
 
-    // 2. Setup API Route Template
-    const apiTemplate = `"use client";
+  // 2. Setup API Route Template
+  const apiTemplate = `"use client";
 import { createToolHandler } from "@/lib/tools/createToolHandler";
 import { z } from "zod";
 
@@ -57,8 +57,8 @@ export const POST = createToolHandler({
 });
 `;
 
-    // 3. Setup Client Component Template
-    const clientTemplate = `"use client";
+  // 3. Setup Client Component Template
+  const clientTemplate = `"use client";
 
 import { useState } from "react";
 import { usePaywallTool } from "@/hooks/usePaywallTool";
@@ -157,8 +157,8 @@ export default function ${id.split('-').map(s => s.charAt(0).toUpperCase() + s.s
 }
 `;
 
-    // 4. Create Page Template
-    const pageTemplate = `import { Metadata } from "next";
+  // 4. Create Page Template
+  const pageTemplate = `import { Metadata } from "next";
 import ${id.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}Client from "./ClientComponent"; // Check filename manually
 import { getToolBySlug } from "@/config/tools";
 
@@ -175,19 +175,94 @@ export default function ToolPage() {
 }
 `;
 
-    // 5. Write Files
-    await fs.writeFile(path.join(apiPath, "route.ts"), apiTemplate);
-    // Note: I'm putting Client component in the same folder as page.tsx for simplicity in this template
-    await fs.writeFile(path.join(clientPath, "ClientComponent.tsx"), clientTemplate);
-    await fs.writeFile(path.join(clientPath, "page.tsx"), pageTemplate);
+  // 5. Create Test Template
+  const toolNamePascal = id.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('');
+  const testTemplate = `const LOCAL_API_URL = "http://localhost:3000";
 
-    console.log("\n✅ Bestanden aangemaakt:");
-    console.log(`- API: app/api/v1/${category}/${id}/route.ts`);
-    console.log(`- Page: app/[locale]/tools/${id}/page.tsx`);
-    console.log(`- Client: app/[locale]/tools/${id}/ClientComponent.tsx`);
+// ============================================
+// TEST: ${title}
+// ============================================
 
-    console.log("\n⚠️ Vergeet niet de tool toe te voegen aan config/tools.ts:");
-    console.log(`
+async function test${toolNamePascal}() {
+    console.log('\\n' + '='.repeat(60));
+    console.log('🧪 TEST: ${title}');
+    console.log('='.repeat(60));
+    console.log('📝 Testing ${title} API endpoint');
+    console.log('');
+
+    const payload = {
+        prompt: "Test input voor ${title}",
+        signature: "DEV_BYPASS"
+    };
+
+    console.log('📤 Sending request to:', \`\${LOCAL_API_URL}/api/v1/${category}/${id}\`);
+    console.log('');
+
+    try {
+        const response = await fetch(\`\${LOCAL_API_URL}/api/v1/${category}/${id}\`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Origin": LOCAL_API_URL
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        console.log(\`📊 RESPONSE STATUS: \${response.status}\`);
+        console.log('📋 RESPONSE DATA:');
+        console.log(JSON.stringify(data, null, 2));
+        console.log('');
+
+        if (response.ok && data.success) {
+            console.log("✅ ${title} Test PASSED");
+        } else {
+            console.log("❌ ${title} Test FAILED");
+            console.log(\`   Error: \${data.error || 'Unknown error'}\`);
+        }
+
+    } catch (error) {
+        console.error("\\n❌ Network/Script Error:", error.message);
+        process.exit(1);
+    }
+}
+
+test${toolNamePascal}();
+`;
+
+  // 6. Write Files
+  const testPath = path.join(rootDir, "scripts", "tests", `test-${id}.js`);
+  await fs.writeFile(path.join(apiPath, "route.ts"), apiTemplate);
+  await fs.writeFile(path.join(clientPath, "ClientComponent.tsx"), clientTemplate);
+  await fs.writeFile(path.join(clientPath, "page.tsx"), pageTemplate);
+  await fs.writeFile(testPath, testTemplate);
+
+  // 7. Register test in test-all.js
+  const testAllPath = path.join(rootDir, "scripts", "test-all.js");
+  let testAllContent = await fs.readFile(testAllPath, "utf-8");
+
+  const newTestEntry = `    {
+        name: '${title}',
+        script: 'test-${id}.js',
+        description: 'Tests ${title} API endpoint'
+    },`;
+
+  // Insert before the closing bracket of the tests array
+  testAllContent = testAllContent.replace(
+    /(\s*}\s*\n\];)/,
+    `,\n${newTestEntry}\n];`
+  );
+  await fs.writeFile(testAllPath, testAllContent);
+
+  console.log("\n✅ Bestanden aangemaakt:");
+  console.log(`- API: app/api/v1/${category}/${id}/route.ts`);
+  console.log(`- Page: app/[locale]/tools/${id}/page.tsx`);
+  console.log(`- Client: app/[locale]/tools/${id}/ClientComponent.tsx`);
+  console.log(`- Test: scripts/tests/test-${id}.js`);
+
+  console.log("\n⚠️ Vergeet niet de tool toe te voegen aan config/tools.ts:");
+  console.log(`
     "${slug}": {
         id: "${id}",
         slug: "${slug}",
@@ -210,7 +285,10 @@ export default function ToolPage() {
     },
     `);
 
-    rl.close();
+  console.log("\n✅ Test automatisch geregistreerd in test-all.js");
+  console.log("   Run 'node scripts/test-all.js' om alle tests uit te voeren.\n");
+
+  rl.close();
 }
 
 main().catch(console.error);
