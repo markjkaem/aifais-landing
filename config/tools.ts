@@ -338,24 +338,7 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         pricing: { type: "paid", price: 0.001, currency: "SOL" },
         componentPath: "social-planner/SocialPlannerClient",
     },
-    "seo-audit": {
-        id: "seo-audit",
-        slug: "seo-audit",
-        title: "SEO Audit Tool",
-        shortDescription: "Krijg een complete SEO analyse van je website met concrete verbeterpunten.",
-        longDescription: "Voer je URL in en ontvang scores voor technische SEO, content, on-page en off-page factoren.",
-        icon: TrendingUp,
-        status: "live",
-        category: "marketing",
-        new: true,
-        metaTitle: "AI SEO Audit Tool | Website Analyse | AIFAIS",
-        metaDescription: "Complete SEO audit van je website. Technisch, content, on-page en off-page analyse met aanbevelingen.",
-        keywords: ["seo audit", "website analyse", "seo check", "google ranking"],
-        features: ["Technische SEO", "Content analyse", "On-page factoren", "Aanbevelingen"],
-        useCases: ["Website optimalisatie", "SEO strategie", "Ranking verbeteren"],
-        pricing: { type: "paid", price: 0.001, currency: "SOL" },
-        componentPath: "seo-audit/SeoAuditClient",
-    },
+
 
     // ==================== SALES TOOLS ====================
     "pitch-deck": {

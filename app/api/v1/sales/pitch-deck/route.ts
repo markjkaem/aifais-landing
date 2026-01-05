@@ -70,11 +70,14 @@ Geef JSON met slides:
         const responseText = message.content[0].type === "text" ? message.content[0].text : "";
 
         try {
-            const cleanJson = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
-            const parsed = JSON.parse(cleanJson);
+            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error("Geen geldige JSON gevonden in AI respons");
+
+            const parsed = JSON.parse(jsonMatch[0]);
             return { ...parsed, companyName, generatedAt: new Date().toISOString() };
-        } catch {
-            return { slides: [], companyName, error: "Kon pitch deck niet genereren" };
+        } catch (e) {
+            console.error("Pitch Deck Parsing Error:", e, responseText);
+            throw new Error("Kon het pitch deck niet genereren. Probeer het opnieuw.");
         }
     }
 });

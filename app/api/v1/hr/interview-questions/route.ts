@@ -64,19 +64,18 @@ Geef output als JSON array:
         const responseText = message.content[0].type === "text" ? message.content[0].text : "";
 
         try {
-            const cleanJson = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
-            const parsed = JSON.parse(cleanJson);
+            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error("Geen geldige JSON gevonden in AI respons");
+
+            const parsed = JSON.parse(jsonMatch[0]);
             return {
                 ...parsed,
                 jobTitle,
                 generatedAt: new Date().toISOString()
             };
-        } catch {
-            return {
-                questions: [{ category: "Algemeen", question: responseText.substring(0, 500), difficulty: experienceLevel }],
-                jobTitle,
-                generatedAt: new Date().toISOString()
-            };
+        } catch (e) {
+            console.error("Interview Questions Parsing Error:", e, responseText);
+            throw new Error("Kon de sollicitatievragen niet genereren. Probeer het opnieuw.");
         }
     }
 });

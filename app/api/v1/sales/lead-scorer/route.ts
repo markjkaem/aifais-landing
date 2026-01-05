@@ -88,11 +88,14 @@ Geef JSON score:
         const responseText = message.content[0].type === "text" ? message.content[0].text : "";
 
         try {
-            const cleanJson = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
-            const parsed = JSON.parse(cleanJson);
+            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error("Geen geldige JSON gevonden in AI respons");
+
+            const parsed = JSON.parse(jsonMatch[0]);
             return { ...parsed, companyName, analyzedAt: new Date().toISOString() };
-        } catch {
-            return { score: 50, tier: "unknown", companyName, error: "Kon lead niet scoren" };
+        } catch (e) {
+            console.error("Lead Scorer Parsing Error:", e, responseText);
+            throw new Error("Kon de lead score niet berekenen. Probeer het opnieuw.");
         }
     }
 });

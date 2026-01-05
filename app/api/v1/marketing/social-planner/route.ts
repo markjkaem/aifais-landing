@@ -62,11 +62,14 @@ Geef JSON output:
         const responseText = message.content[0].type === "text" ? message.content[0].text : "";
 
         try {
-            const cleanJson = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
-            const parsed = JSON.parse(cleanJson);
+            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error("Geen geldige JSON gevonden in AI respons");
+
+            const parsed = JSON.parse(jsonMatch[0]);
             return { ...parsed, topic, generatedAt: new Date().toISOString() };
-        } catch {
-            return { posts: [], topic, error: "Kon posts niet genereren" };
+        } catch (e) {
+            console.error("Social Planner Parsing Error:", e, responseText);
+            throw new Error("Kon de social media planning niet genereren. Probeer het opnieuw.");
         }
     }
 });

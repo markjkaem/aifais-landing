@@ -52,12 +52,23 @@ export const POST = createToolHandler({
     currency: tool.pricing.currency! 
   } : undefined,
   handler: async (input, context) => {
-    // Add your business logic here
-    // Example: const result = await someAIService(input.prompt);
+    // 3. Execute AIService (Example)
+    /*
+    const message = await anthropic.messages.create({ ... });
+    const responseText = message.content[0].text;
+    
+    try {
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error("Geen geldige JSON gevonden");
+      return JSON.parse(jsonMatch[0]);
+    } catch (e) {
+      throw new Error("Kon AI respons niet verwerken");
+    }
+    */
     
     return {
+       success: true,
        message: "Tool successfully executed",
-       input: input.prompt,
        timestamp: new Date().toISOString()
     };
   },

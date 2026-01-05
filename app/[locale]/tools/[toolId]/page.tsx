@@ -163,7 +163,7 @@ export default async function ToolPage({ params }: Props) {
     "interview-questions/InterviewQuestionsClient": require("@/app/[locale]/tools/interview-questions/InterviewQuestionsClient").default,
     // Marketing Tools
     "social-planner/SocialPlannerClient": require("@/app/[locale]/tools/social-planner/SocialPlannerClient").default,
-    "seo-audit/SeoAuditClient": require("@/app/[locale]/tools/seo-audit/SeoAuditClient").default,
+
     // Sales Tools
     "pitch-deck/PitchDeckClient": require("@/app/[locale]/tools/pitch-deck/PitchDeckClient").default,
     "lead-scorer/LeadScorerClient": require("@/app/[locale]/tools/lead-scorer/LeadScorerClient").default,

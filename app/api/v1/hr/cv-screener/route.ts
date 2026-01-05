@@ -72,16 +72,12 @@ Geef je analyse in dit format:
         const responseText = message.content[0].type === "text" ? message.content[0].text : "";
 
         try {
-            const cleanJson = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
-            return JSON.parse(cleanJson);
-        } catch {
-            return {
-                score: 50,
-                summary: responseText.substring(0, 500),
-                strengths: [],
-                weaknesses: [],
-                recommendation: "Handmatige review aanbevolen"
-            };
+            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error("Geen geldige JSON gevonden in AI respons");
+            return JSON.parse(jsonMatch[0]);
+        } catch (e) {
+            console.error("CV Screener Parsing Error:", e, responseText);
+            throw new Error("Kon de CV analyse niet verwerken. Probeer het opnieuw.");
         }
     }
 });
