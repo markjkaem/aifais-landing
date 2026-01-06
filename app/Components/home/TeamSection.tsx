@@ -1,7 +1,5 @@
 "use client";
 
-// Force re-render to fix hydration mismatch
-
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
@@ -13,7 +11,7 @@ export default function TeamSection() {
       name: "Mark",
       role: t("mark.role"),
       bio: t("mark.bio"),
-      skills: t.raw("mark.skills") as string[],
+      skills: (t.raw("mark.skills") as string[]) || [],
       image: "/mark.png",
       link: "https://www.linkedin.com/in/mark-v-898408309/",
       linkText: "LinkedIn",
@@ -23,7 +21,7 @@ export default function TeamSection() {
       name: "Faissal",
       role: t("faissal.role"),
       bio: t("faissal.bio"),
-      skills: t.raw("faissal.skills") as string[],
+      skills: (t.raw("faissal.skills") as string[]) || [],
       image: "/faissal.png",
       link: "mailto:faissal@aifais.com",
       linkText: "Email",
