@@ -56,14 +56,6 @@ export default function CryptoModal({
 
       const payUrl = `solana:${recipient}?${params.toString()}`;
       setSolanaPayUrl(payUrl);
-
-      // ✅ Debug logging
-      console.log("🔗 Solana Pay URL gegenereerd:", {
-        recipient,
-        amount: priceInSol,
-        reference,
-        fullUrl: payUrl,
-      });
     };
 
     generatePaymentUrl();
