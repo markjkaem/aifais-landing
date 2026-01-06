@@ -17,6 +17,7 @@ interface CryptoModalProps {
 
 export default function CryptoModal({
   priceInSol,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   priceInEur,
   scansAmount,
   label,
@@ -29,7 +30,9 @@ export default function CryptoModal({
   const [isPaid, setIsPaid] = useState(false);
   const [transactionSignature, setTransactionSignature] = useState<string>("");
   const [copied, setCopied] = useState(false);
-  const [startTime] = useState<number>(Date.now()); // ✅ Timestamp wanneer modal opent
+  // ✅ Timestamp wanneer modal opent
+  // eslint-disable-next-line react-hooks/purity
+  const [startTime] = useState<number>(Date.now());
   const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // ✅ Genereer de Solana Pay URL bij mount
@@ -250,15 +253,6 @@ export default function CryptoModal({
                     includeMargin={true}
                   />
                 </div>
-                {/* ✅ Debug: Manual link voor testen */}
-                <a
-                  href={solanaPayUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs text-gray-400 hover:text-gray-300 underline mb-6 block text-center"
-                >
-                  Open in wallet (debug link)
-                </a>
               </>
             ) : (
               <div className="bg-white/5 h-64 rounded-xl flex items-center justify-center mb-6">
