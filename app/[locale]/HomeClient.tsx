@@ -6,6 +6,7 @@ import ToolsTeaser from "../Components/ToolsTeaser";
 import HeroSection from "../Components/home/HeroSection";
 import IntroVideoSection from "../Components/home/IntroVideoSection";
 import ExplainerSection from "../Components/home/ExplainerSection";
+import AgentDemoSection from "../Components/home/AgentDemoSection";
 import ProcessSection from "../Components/home/ProcessSection";
 import TechStackSection from "../Components/home/TechStackSection";
 import PortfolioSection from "../Components/home/PortfolioSection";
@@ -23,7 +24,9 @@ export default function HomeClient({ projects, hideHero = false }: HomeClientPro
       {!hideHero && <HeroSection />}
       
       <ExplainerSection />
-      
+
+      <AgentDemoSection />
+
       <ProcessSection />
       
       <TechStackSection />
