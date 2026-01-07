@@ -29,10 +29,11 @@ import {
     Image,
     Palette,
     Calculator,
+    Building2,
 } from "lucide-react";
 
 export type ToolStatus = "live" | "beta" | "soon";
-export type ToolCategory = "finance" | "legal" | "hr" | "marketing" | "sales" | "ecommerce" | "technology" | "support" | "creative" | "consulting";
+export type ToolCategory = "finance" | "legal" | "hr" | "marketing" | "sales" | "business" | "ecommerce" | "technology" | "support" | "creative" | "consulting";
 
 export interface ToolMetadata {
     id: string;
@@ -386,6 +387,59 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         useCases: ["Sales prioritering", "Pipeline management", "Lead qualification"],
         pricing: { type: "paid", price: 0.001, currency: "SOL", priceEur: 0.50, stripeLink: process.env.NEXT_PUBLIC_STRIPE_LINK_LEAD },
         componentPath: "lead-scorer/LeadScorerClient",
+    },
+
+    // ==================== BUSINESS INTELLIGENCE TOOLS ====================
+    "kvk-search": {
+        id: "kvk-search",
+        slug: "kvk-search",
+        title: "KVK Bedrijfszoeker",
+        shortDescription: "Zoek en analyseer elk Nederlands bedrijf. KVK data, website, socials, tech stack en AI-analyse.",
+        longDescription: "De ultieme company intelligence tool. Zoek op bedrijfsnaam of KVK nummer en krijg een compleet bedrijfsprofiel: officiële KVK data, website, social media, technologie stack, recent nieuws, reviews en AI-powered bedrijfsanalyse. Perfect voor sales prospecting, due diligence en marktonderzoek.",
+        icon: Building2,
+        status: "live",
+        category: "business",
+        featured: true,
+        new: true,
+        metaTitle: "KVK Bedrijfszoeker | Company Intelligence Tool | AIFAIS",
+        metaDescription: "Zoek elk Nederlands bedrijf op KVK of naam. Krijg volledige bedrijfsinfo: KVK data, website, socials, tech stack, nieuws en AI-analyse.",
+        keywords: [
+            "kvk zoeken",
+            "bedrijf zoeken",
+            "company intelligence",
+            "kvk api",
+            "bedrijfsinformatie",
+            "handelsregister",
+            "due diligence",
+            "sales prospecting",
+            "marktonderzoek",
+            "bedrijfsanalyse"
+        ],
+        features: [
+            "Officiële KVK Handelsregister data",
+            "Website & contact discovery",
+            "Social media profielen",
+            "Tech stack analyse",
+            "Recent nieuws & persberichten",
+            "Google Reviews & Trustpilot",
+            "AI-powered bedrijfsanalyse",
+            "Export naar PDF, Excel, JSON"
+        ],
+        useCases: [
+            "Sales prospecting & lead research",
+            "Due diligence bij overnames",
+            "Leveranciers doorlichten",
+            "Concurrentie analyse",
+            "Marktonderzoek"
+        ],
+        pricing: {
+            type: "paid",
+            price: 0.001,
+            currency: "SOL",
+            priceEur: 0.50,
+            stripeLink: process.env.NEXT_PUBLIC_STRIPE_LINK_KVK,
+        },
+        componentPath: "kvk-search/KvkSearchClient",
     },
 };
 

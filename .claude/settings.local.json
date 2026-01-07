@@ -19,9 +19,16 @@
       "Bash(npx tsx:*)",
       "Bash(find:*)",
       "Read(//*/.claude/skills/**)",
-      "Bash(claude --diagnostics:*)"
+      "Bash(claude --diagnostics:*)",
+      "WebSearch",
+      "WebFetch(domain:developers.kvk.nl)",
+      "WebFetch(domain:www.kvk.nl)",
+      "Bash(npm run build:*)"
     ]
   },
+  "disabledMcpjsonServers": [
+    "sentry"
+  ],
   "hooks": {
     "SessionStart": [
       {
@@ -52,8 +59,5 @@
     "type": "command",
     "command": "echo \"$(git branch --show-current 2>/dev/null || echo 'no-branch') | AIFAISS\"",
     "padding": 2
-  },
-  "disabledMcpjsonServers": [
-    "sentry"
-  ]
+  }
 }

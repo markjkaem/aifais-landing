@@ -167,6 +167,9 @@ export default async function ToolPage({ params }: Props) {
     // Sales Tools
     "pitch-deck/PitchDeckClient": require("@/app/[locale]/tools/pitch-deck/PitchDeckClient").default,
     "lead-scorer/LeadScorerClient": require("@/app/[locale]/tools/lead-scorer/LeadScorerClient").default,
+
+    // Business Intelligence Tools
+    "kvk-search/KvkSearchClient": require("@/app/[locale]/tools/kvk-search/KvkSearchClient").default,
   };
 
   const ToolComponent = componentMap[tool.componentPath];

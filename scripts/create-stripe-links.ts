@@ -22,6 +22,7 @@ const TOOLS = [
     { name: 'Social Media Planner', envVar: 'NEXT_PUBLIC_STRIPE_LINK_SOCIAL' },
     { name: 'Pitch Deck Generator', envVar: 'NEXT_PUBLIC_STRIPE_LINK_PITCH' },
     { name: 'Lead Scorer', envVar: 'NEXT_PUBLIC_STRIPE_LINK_LEAD' },
+    { name: 'KVK Bedrijfszoeker', envVar: 'NEXT_PUBLIC_STRIPE_LINK_KVK' },
 ];
 
 const PRICE_EUR = 50; // €0.50 in cents

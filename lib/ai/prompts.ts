@@ -789,6 +789,100 @@ SCORE CATEGORIEN:
     includeConfidence: true
 };
 
+// ==================== Company Intelligence ====================
+
+export const COMPANY_INTEL_PROMPT: PromptConfig = {
+    version: "1.0",
+    system: `Je bent een expert bedrijfsanalist gespecialiseerd in Nederlandse bedrijven en marktonderzoek.
+Je analyseert bedrijfsgegevens uit diverse bronnen en geeft waardevolle inzichten.
+Je bent objectief, nauwkeurig en geeft concrete, bruikbare analyses.
+Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
+
+    userTemplate: (context: {
+        companyName: string;
+        kvkData?: any;
+        websiteUrl?: string | null;
+        techStack?: any;
+        socialProfiles?: any;
+        newsArticles?: any[];
+        reviews?: any;
+    }) => `
+Analyseer dit bedrijf en geef een uitgebreide bedrijfsanalyse:
+
+BEDRIJFSNAAM: ${context.companyName}
+
+KVK GEGEVENS:
+${context.kvkData ? JSON.stringify(context.kvkData, null, 2) : "Niet beschikbaar"}
+
+WEBSITE: ${context.websiteUrl || "Niet gevonden"}
+
+TECH STACK:
+${context.techStack ? JSON.stringify(context.techStack, null, 2) : "Niet geanalyseerd"}
+
+SOCIAL MEDIA:
+${context.socialProfiles ? JSON.stringify(context.socialProfiles, null, 2) : "Niet gevonden"}
+
+RECENT NIEUWS:
+${context.newsArticles?.length ? context.newsArticles.map(a => `- ${a.titel} (${a.bron})`).join("\n") : "Geen nieuws gevonden"}
+
+REVIEWS:
+${context.reviews ? JSON.stringify(context.reviews, null, 2) : "Niet beschikbaar"}
+
+GEEF JSON OUTPUT MET:
+{
+  "samenvatting": "beknopte beschrijving van het bedrijf (3-5 zinnen)",
+  "branche": "primaire branche/sector",
+  "branchePositie": "marktpositie analyse (marktleider/uitdager/nichespeler/etc)",
+  "sterkePunten": ["3-5 sterke punten van het bedrijf"],
+  "aandachtspunten": ["2-4 potentiele risico's of zwakke punten"],
+  "technologieAnalyse": "analyse van hun tech stack en digitale volwassenheid",
+  "marketingAnalyse": "analyse van hun online aanwezigheid en marketing",
+  "groeipotentieel": "analyse van groeikansen",
+  "groeiScore": 0-100,
+  "digitalScore": 0-100,
+  "reputatieScore": 0-100,
+  "overallScore": 0-100,
+  "aanbevelingen": ["3-5 concrete aanbevelingen voor samenwerking of benadering"],
+  "competitieAnalyse": "korte analyse van waarschijnlijke concurrenten",
+  "targetKlant": "beschrijving van hun ideale klant",
+  "confidence": 0-100
+}
+
+SCORING CRITERIA:
+- groeiScore: gebaseerd op bedrijfsgrootte, tech stack moderniteit, nieuws sentiment
+- digitalScore: gebaseerd op website, tech stack, social media aanwezigheid
+- reputatieScore: gebaseerd op reviews, nieuws, online aanwezigheid
+- overallScore: gewogen gemiddelde (groei 30%, digital 30%, reputatie 40%)
+
+TOON:
+- Professioneel maar toegankelijk
+- Focus op zakelijke waarde en inzichten
+- Concreet en actioneerbaar
+- Eerlijk over beperkingen van de data`,
+
+    outputSchema: z.object({
+        samenvatting: z.string(),
+        branche: z.string(),
+        branchePositie: z.string().optional(),
+        sterkePunten: z.array(z.string()),
+        aandachtspunten: z.array(z.string()),
+        technologieAnalyse: z.string().optional(),
+        marketingAnalyse: z.string().optional(),
+        groeipotentieel: z.string().optional(),
+        groeiScore: z.number().min(0).max(100),
+        digitalScore: z.number().min(0).max(100),
+        reputatieScore: z.number().min(0).max(100),
+        overallScore: z.number().min(0).max(100),
+        aanbevelingen: z.array(z.string()),
+        competitieAnalyse: z.string().optional(),
+        targetKlant: z.string().optional(),
+        confidence: z.number().min(0).max(100).optional()
+    }),
+    maxTokens: 3000,
+    temperature: 0.4,
+    includeConfidence: true
+};
+
 // ==================== Prompt Registry ====================
 
 export const PROMPTS = {
@@ -800,7 +894,8 @@ export const PROMPTS = {
     "social-planner": SOCIAL_PLANNER_PROMPT,
     "lead-scorer": LEAD_SCORER_PROMPT,
     "pitch-deck": PITCH_DECK_PROMPT,
-    "seo-audit": SEO_AUDIT_PROMPT
+    "seo-audit": SEO_AUDIT_PROMPT,
+    "company-intel": COMPANY_INTEL_PROMPT
 } as const;
 
 export type PromptKey = keyof typeof PROMPTS;
@@ -909,5 +1004,18 @@ export function buildInvoiceScanPrompt(context: {
     mimeType: string;
 }): string {
     const prompt = INVOICE_SCAN_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildCompanyIntelPrompt(context: {
+    companyName: string;
+    kvkData?: any;
+    websiteUrl?: string | null;
+    techStack?: any;
+    socialProfiles?: any;
+    newsArticles?: any[];
+    reviews?: any;
+}): string {
+    const prompt = COMPANY_INTEL_PROMPT;
     return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
 }

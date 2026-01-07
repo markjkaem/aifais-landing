@@ -261,6 +261,26 @@ export const pitchDeckSchema = z.object({
     includeFinancials: z.boolean().optional().default(false),
 }).merge(paymentSchema);
 
+// ==================== Business Intelligence Schemas ====================
+
+export const kvkSearchSchema = z.object({
+    query: z.string().min(1, "Zoekterm is verplicht").max(200),
+    type: z.enum(["naam", "kvkNummer", "vestigingsnummer"]).default("naam"),
+    plaats: z.string().max(100).optional(),
+    inclusiefInactief: z.boolean().optional().default(false),
+    // For detailed lookup after search
+    getFullProfile: z.boolean().optional().default(false),
+    // Enrichment options
+    enrichments: z.object({
+        website: z.boolean().default(true),
+        socials: z.boolean().default(true),
+        techStack: z.boolean().default(true),
+        news: z.boolean().default(true),
+        reviews: z.boolean().default(true),
+        aiAnalysis: z.boolean().default(true),
+    }).optional(),
+}).merge(paymentSchema);
+
 // ==================== Consulting Schemas ====================
 
 export const roiCalculatorSchema = z.object({
@@ -292,4 +312,5 @@ export type SeoAuditInput = z.infer<typeof seoAuditSchema>;
 export type LeadScorerInput = z.infer<typeof leadScorerSchema>;
 export type PitchDeckInput = z.infer<typeof pitchDeckSchema>;
 export type RoiCalculatorInput = z.infer<typeof roiCalculatorSchema>;
+export type KvkSearchInput = z.infer<typeof kvkSearchSchema>;
 
