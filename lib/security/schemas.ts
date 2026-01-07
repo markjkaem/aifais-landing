@@ -24,8 +24,8 @@ const documentMimeType = z.enum(["image/jpeg", "image/png", "image/webp", "appli
 // ==================== Payment Schema ====================
 
 export const paymentSchema = z.object({
-    signature: z.string().optional(),
-    stripeSessionId: z.string().optional(),
+    signature: z.string().nullable().optional(),
+    stripeSessionId: z.string().nullable().optional(),
 });
 
 // ==================== Internal Schemas ====================
@@ -51,13 +51,13 @@ export const benchmarkSchema = z.object({
 export const quickscanSchema = z.object({
     email: z.string().email("Ongeldig emailadres"),
     results: z.object({
-        totalSavings: z.string().optional(),
-        hoursReclaimed: z.union([z.string(), z.number()]).optional(),
-        fteRecovered: z.union([z.string(), z.number()]).optional(),
-    }).optional(),
+        totalSavings: z.string().nullable().optional(),
+        hoursReclaimed: z.union([z.string(), z.number()]).nullable().optional(),
+        fteRecovered: z.union([z.string(), z.number()]).nullable().optional(),
+    }).nullable().optional(),
     formData: z.object({
-        name: z.string().optional(),
-    }).optional(),
+        name: z.string().nullable().optional(),
+    }).nullable().optional(),
 }).merge(paymentSchema);
 
 // ==================== Finance Schemas ====================
@@ -74,9 +74,9 @@ export const scanSchema = z.object({
         filename: z.string().max(255).optional()
     })).max(MAX_BULK_FILES, `Maximaal ${MAX_BULK_FILES} bestanden tegelijk`).optional(),
 
-    signature: z.string().optional(),
-    stripeSessionId: z.string().optional(),
-    format: z.enum(["json", "csv", "xlsx"]).optional().default("json"),
+    signature: z.string().nullable().optional(),
+    stripeSessionId: z.string().nullable().optional(),
+    format: z.enum(["json", "csv", "xlsx"]).nullable().optional().default("json"),
 }).refine(
     data => data.invoiceBase64 || (data.invoices && data.invoices.length > 0),
     { message: "Minimaal 1 factuur is verplicht" }

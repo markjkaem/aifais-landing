@@ -9,14 +9,14 @@ export const dynamic = 'force-dynamic';
 
 const quoteSchema = z.object({
     companyName: z.string().min(1),
-    companyAddress: z.string().optional(),
-    companyKvk: z.string().optional(),
-    companyVat: z.string().optional(),
-    companyLogo: z.string().optional(), // Base64 string
+    companyAddress: z.string().nullable().optional(),
+    companyKvk: z.string().nullable().optional(),
+    companyVat: z.string().nullable().optional(),
+    companyLogo: z.string().nullable().optional(), // Base64 string
     clientName: z.string().min(1),
-    clientAddress: z.string().optional(),
+    clientAddress: z.string().nullable().optional(),
     projectTitle: z.string().min(1),
-    projectDescription: z.string().optional(),
+    projectDescription: z.string().nullable().optional(),
     items: z.array(z.object({
         description: z.string(),
         quantity: z.number(),
@@ -29,7 +29,7 @@ const quoteSchema = z.object({
 
 export const POST = createToolHandler({
     schema: quoteSchema,
-    pricing: { price: 0, currency: "SOL" }, // Adjust pricing if needed
+    // pricing: { price: 0, currency: "SOL" }, // Adjust pricing if needed
     rateLimit: { maxRequests: 20, windowMs: 60000 },
     handler: async (body) => {
         const gen = await PDFGenerator.create();
@@ -88,7 +88,12 @@ export const POST = createToolHandler({
 
         // Footer
         gen.y = 50;
-        gen.drawText(`Deze offerte is geldig tot ${validUntilDate}. Prijzen zijn exclusief BTW.`, { size: 9, align: 'center', color: gen.config.mutedColor });
+        gen.drawText(`Deze offerte is geldig tot ${validUntilDate}. Prijzen zijn exclusief BTW.`, {
+            size: 9,
+            align: 'center',
+            color: gen.config.mutedColor,
+            skipPageBreak: true
+        });
 
         const pdfBytes = await gen.save();
         return {

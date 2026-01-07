@@ -1,9 +1,4 @@
-/**
- * Centralized AI Prompts Library
- * Version-controlled prompts for all tools with confidence scoring
- */
-
-import { z } from "zod";
+import { z, ZodSchema } from "zod";
 
 // ==================== Types ====================
 
@@ -87,7 +82,7 @@ MIME Type: ${context.mimeType}`,
         }).optional(),
         confidence: z.object({
             overall: z.number(),
-            fields: z.record(z.number())
+            fields: z.record(z.string(), z.number())
         }).optional(),
         error: z.string().optional()
     }),
@@ -146,7 +141,7 @@ SCORE RANGES:
         recommendation: z.string(),
         keySkillsMatch: z.array(z.string()),
         experienceYears: z.number().nullable(),
-        skillMatchPercentages: z.record(z.number()).optional(),
+        skillMatchPercentages: z.record(z.string(), z.number()).optional(),
         confidence: z.number().min(0).max(100).optional(),
         redFlags: z.array(z.string()).optional(),
         suggestedInterviewQuestions: z.array(z.string()).optional()
@@ -165,13 +160,26 @@ Je genereert relevante, effectieve vragen die kandidaten helpen hun competenties
 Je volgt de STAR-methode voor gedragsvragen.
 Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
 
-    userTemplate: (context: { jobTitle: string; jobDescription: string; experienceLevel: string; questionCount: number }) => `
+    userTemplate: (context: {
+        jobTitle: string;
+        jobDescription: string;
+        experienceLevel: string;
+        questionCount: number;
+        includeCategories?: string[] | null;
+        includeRubrics?: boolean | null;
+        includeFollowUps?: boolean | null;
+    }) => `
 Genereer ${context.questionCount} sollicitatievragen voor deze functie:
 
 FUNCTIE: ${context.jobTitle}
 NIVEAU: ${context.experienceLevel}
 BESCHRIJVING:
 ${context.jobDescription}
+
+INSTELLINGEN:
+- Categorieën: ${context.includeCategories?.join(", ") || "Alle"}
+- Rubrics: ${context.includeRubrics !== false ? "Ja" : "Nee"}
+- Vervolgvragen: ${context.includeFollowUps !== false ? "Ja" : "Nee"}
 
 GEEF JSON OUTPUT MET:
 {
@@ -181,9 +189,10 @@ GEEF JSON OUTPUT MET:
       "question": "de vraag",
       "difficulty": "junior|medior|senior",
       "followUpQuestions": ["verdiepende vragen"],
-      "rubric": "waar te letten bij het antwoord",
       "estimatedTime": minuten voor deze vraag,
       "competency": "welke competentie wordt gemeten"
+      ${context.includeRubrics !== false ? ', "rubric": "waar te letten bij het antwoord"' : ''}
+      ${context.includeFollowUps !== false ? ', "followUpQuestions": ["verdiepende vragen"]' : ''}
     }
   ],
   "interviewGuide": {
@@ -237,7 +246,7 @@ Je analyseert contracten grondig en identificeert risico's, onduidelijkheden en 
 Je geeft concrete, bruikbare adviezen.
 Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
 
-    userTemplate: (context: { contractType?: string }) => `
+    userTemplate: (context: { contractType?: string | null }) => `
 Analyseer dit contract grondig en geef een uitgebreide juridische beoordeling.
 ${context.contractType ? `Type contract: ${context.contractType}` : ""}
 
@@ -336,15 +345,15 @@ Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
     userTemplate: (context: {
         companyName: string;
         companyType: string;
-        industry?: string;
+        industry?: string | null;
         hasPhysicalProducts: boolean;
         hasDigitalProducts: boolean;
         hasServices: boolean;
         acceptsReturns: boolean;
-        returnDays?: number;
+        returnDays?: number | null;
         paymentTerms: number;
         jurisdiction: string;
-        includeGDPR?: boolean;
+        includeGDPR?: boolean | null;
     }) => `
 Genereer professionele algemene voorwaarden voor:
 
@@ -429,8 +438,8 @@ Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
         tone: string;
         postCount: number;
         includeHashtags: boolean;
-        targetAudience?: string;
-        generateVariants?: boolean;
+        targetAudience?: string | null;
+        generateVariants?: boolean | null;
     }) => `
 Maak ${context.postCount} social media posts over: "${context.topic}"
 
@@ -522,8 +531,8 @@ Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
         industry: string;
         companySize: string;
         budget: string;
-        engagement?: any;
-        notes?: string;
+        engagement?: any | null;
+        notes?: string | null;
     }) => `
 Score deze lead:
 
@@ -579,7 +588,7 @@ TIER INDELING:
             timing: z.number(),
             budget: z.number()
         }),
-        factorExplanations: z.record(z.string()).optional(),
+        factorExplanations: z.record(z.string(), z.string()).optional(),
         recommendations: z.array(z.string()),
         nextAction: z.string(),
         emailTemplate: z.string().optional(),
@@ -608,9 +617,9 @@ Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
         targetAudience: string;
         problemSolution: string;
         uniqueValue: string;
-        askAmount?: string;
+        askAmount?: string | null;
         slideCount: number;
-        audienceType?: string;
+        audienceType?: string | null;
     }) => `
 Maak een ${context.slideCount}-slide pitch deck:
 
@@ -696,7 +705,7 @@ export const SEO_AUDIT_PROMPT: PromptConfig = {
 Je analyseert websites grondig en geeft concrete, prioritized verbeterpunten.
 Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
 
-    userTemplate: (context: { url: string; focusKeywords?: string; htmlContent?: string }) => `
+    userTemplate: (context: { url: string; focusKeywords?: string | null; htmlContent?: string | null }) => `
 Analyseer deze pagina voor SEO:
 
 URL: ${context.url}
@@ -798,4 +807,107 @@ export type PromptKey = keyof typeof PROMPTS;
 
 export function getPrompt(key: PromptKey): PromptConfig {
     return PROMPTS[key];
+}
+
+// ==================== Builder Functions ====================
+
+export function buildInterviewQuestionsPrompt(context: {
+    jobTitle: string;
+    jobDescription: string;
+    experienceLevel: string;
+    questionCount: number;
+    includeCategories?: string[] | null;
+    includeRubrics?: boolean | null;
+    includeFollowUps?: boolean | null;
+}): string {
+    const prompt = INTERVIEW_QUESTIONS_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildSocialPlannerPrompt(context: {
+    topic: string;
+    platforms: string[];
+    tone: string;
+    postCount: number;
+    includeHashtags: boolean;
+    targetAudience?: string | null;
+    generateVariants?: boolean | null;
+}): string {
+    const prompt = SOCIAL_PLANNER_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildLeadScorerPrompt(context: {
+    companyName: string;
+    industry: string;
+    companySize: string;
+    budget: string;
+    engagement?: any | null;
+    notes?: string | null;
+    generateEmail?: boolean | null;
+}): string {
+    const prompt = LEAD_SCORER_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildPitchDeckPrompt(context: {
+    companyName: string;
+    productService: string;
+    targetAudience: string;
+    problemSolution: string;
+    uniqueValue: string;
+    askAmount?: string | null;
+    slideCount: number;
+    audienceType?: string | null;
+    includeFinancials?: boolean | null;
+}): string {
+    const prompt = PITCH_DECK_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildCvScreenerPrompt(context: {
+    jobDescription: string;
+}): string {
+    const prompt = CV_SCREENER_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildContractCheckerPrompt(context: {
+    contractType?: string | null;
+}): string {
+    const prompt = CONTRACT_CHECKER_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildTermsGeneratorPrompt(context: {
+    companyName: string;
+    companyType: string;
+    industry?: string | null;
+    hasPhysicalProducts: boolean;
+    hasDigitalProducts: boolean;
+    hasServices: boolean;
+    acceptsReturns: boolean;
+    returnDays?: number | null;
+    paymentTerms: number;
+    jurisdiction: string;
+    includeGDPR?: boolean | null;
+}): string {
+    const prompt = TERMS_GENERATOR_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildSeoAuditPrompt(context: {
+    url: string;
+    focusKeywords?: string | null;
+    htmlContent?: string | null;
+}): string {
+    const prompt = SEO_AUDIT_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildInvoiceScanPrompt(context: {
+    mimeType: string;
+}): string {
+    const prompt = INVOICE_SCAN_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
 }

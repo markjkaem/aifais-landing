@@ -12,7 +12,9 @@ import {
     FileJson,
     FileSpreadsheet,
     FileText,
-    File
+    File,
+    History,
+    BookTemplate
 } from "lucide-react";
 import { ExportFormat } from "@/lib/tools/types";
 import { exportData, downloadExport, ExportOptions, ExportColumn, DocumentContent } from "@/lib/export";
@@ -47,6 +49,12 @@ interface ToolActionBarProps {
     // Custom actions
     customActions?: React.ReactNode;
 
+    // History/Templates toggles
+    showHistory?: boolean;
+    setShowHistory?: (show: boolean) => void;
+    showTemplates?: boolean;
+    setShowTemplates?: (show: boolean) => void;
+
     className?: string;
 }
 
@@ -66,7 +74,7 @@ const FORMAT_LABELS: Record<ExportFormat, string> = {
     docx: "Word"
 };
 
-export default function ToolActionBar({
+export function ToolActionBar({
     exportFormats = [],
     onExport,
     exportData: exportDataProp,
@@ -82,6 +90,10 @@ export default function ToolActionBar({
     onReset,
     onShare,
     customActions,
+    showHistory,
+    setShowHistory,
+    showTemplates,
+    setShowTemplates,
     className = ""
 }: ToolActionBarProps) {
     const [exportOpen, setExportOpen] = useState(false);
@@ -126,7 +138,7 @@ export default function ToolActionBar({
 
     const hasCopyOptions = copyText || copyJson || copyMarkdown || copyTable;
     const hasExportOptions = exportFormats.length > 0;
-    const hasActions = hasCopyOptions || hasExportOptions || onSaveToHistory || onReset || onShare || customActions;
+    const hasActions = hasCopyOptions || hasExportOptions || onSaveToHistory || onReset || onShare || customActions || setShowHistory || setShowTemplates;
 
     if (!hasActions) return null;
 
@@ -213,6 +225,38 @@ export default function ToolActionBar({
                     <span>Nieuw</span>
                 </button>
             )}
+            
+            {/* History Toggle */}
+            {setShowHistory && (
+                <button
+                    onClick={() => setShowHistory(!showHistory)}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-colors ${
+                        showHistory
+                            ? "bg-emerald-500/20 text-emerald-400"
+                            : "bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white"
+                    }`}
+                    title="Geschiedenis"
+                >
+                    <History className="w-3.5 h-3.5" />
+                    <span>Geschiedenis</span>
+                </button>
+            )}
+
+            {/* Templates Toggle */}
+            {setShowTemplates && (
+                <button
+                    onClick={() => setShowTemplates(!showTemplates)}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-colors ${
+                        showTemplates
+                            ? "bg-violet-500/20 text-violet-400"
+                            : "bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white"
+                    }`}
+                    title="Templates"
+                >
+                    <BookTemplate className="w-3.5 h-3.5" />
+                    <span>Templates</span>
+                </button>
+            )}
 
             {/* Share (future) */}
             {onShare && (
@@ -230,3 +274,6 @@ export default function ToolActionBar({
         </div>
     );
 }
+
+// Default export for backwards compatibility
+export default ToolActionBar;

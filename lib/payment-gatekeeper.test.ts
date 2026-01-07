@@ -46,7 +46,9 @@ describe('gatekeepPayment', () => {
         const result = await gatekeepPayment({ signature: 'fake-sig' });
 
         expect(result.success).toBe(true);
-        expect(result.method).toBe('solana_x402');
+        if (result.success) {
+            expect(result.method).toBe('solana_x402');
+        }
     });
 
     it('should return error if Solana payment fails', async () => {
@@ -55,6 +57,8 @@ describe('gatekeepPayment', () => {
         const result = await gatekeepPayment({ signature: 'fake-sig' });
 
         expect(result.success).toBe(false);
-        expect(result.error).toBe('Invalid payment');
+        if (!result.success) {
+            expect(result.error).toBe('Invalid payment');
+        }
     });
 });

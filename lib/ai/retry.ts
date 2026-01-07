@@ -303,13 +303,15 @@ export function extractJSON<T>(responseText: string): T {
     }
 }
 
+import { z, ZodSchema } from "zod";
+
 /**
  * Validate extracted data against a Zod schema
  */
-export function validateWithSchema<T>(data: unknown, schema: import("zod").ZodSchema<T>): T {
+export function validateWithSchema<T>(data: unknown, schema: ZodSchema<T>): T {
     const result = schema.safeParse(data);
     if (!result.success) {
-        const errors = result.error.errors.map(e => `${e.path.join(".")}: ${e.message}`).join(", ");
+        const errors = result.error.issues.map((e: any) => `${e.path.join(".")}: ${e.message}`).join(", ");
         throw new Error(`Validation failed: ${errors}`);
     }
     return result.data;

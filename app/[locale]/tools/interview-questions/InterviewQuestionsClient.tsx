@@ -6,9 +6,9 @@ import { usePaywallTool } from "@/hooks/usePaywallTool";
 import { useResultHistory } from "@/hooks/useResultHistory";
 import { PaywallToolWrapper } from "@/app/Components/tools/PaywallToolWrapper";
 import { getToolBySlug } from "@/config/tools";
-import ResultHistory from "@/app/Components/tools/ResultHistory";
+import {ResultHistory} from "@/app/Components/tools/ResultHistory";
 import TemplateSelector from "@/app/Components/tools/TemplateSelector";
-import ToolLoadingState from "@/app/Components/tools/ToolLoadingState";
+import {ToolLoadingState} from "@/app/Components/tools/ToolLoadingState";
 import { ToolActionBar } from "@/app/Components/tools/ToolActionBar";
 import { CopyDropdown } from "@/app/Components/tools/CopyActions";
 import { exportToXLSX, exportToPDFReport, downloadExport, INTERVIEW_COLUMNS } from "@/lib/export";
@@ -97,8 +97,16 @@ export default function InterviewQuestionsClient() {
     const [filterCategory, setFilterCategory] = useState<string | null>(null);
     const [showGuide, setShowGuide] = useState(false);
 
-    // History
-    const { saveToHistory, loadEntry, history } = useResultHistory("interview-questions");
+    const {
+        history,
+        saveToHistory,
+        loadEntry,
+        deleteEntry,
+        clearHistory,
+        toggleStar,
+        exportHistory,
+        importHistory
+    } = useResultHistory<InterviewResult>("interview-questions");
 
     // Paywall
     const { state, execute, showPaymentModal, setShowPaymentModal, handlePaymentSuccess, reset } = usePaywallTool({
@@ -125,23 +133,23 @@ export default function InterviewQuestionsClient() {
 
     const handleSaveToHistory = useCallback(() => {
         if (data) {
-            saveToHistory({
-                title: `${data.jobTitle} - ${data.experienceLevel}`,
+            saveToHistory(
+                {
+                    jobTitle: data.jobTitle,
+                    experienceLevel: data.experienceLevel,
+                    questionCount: data.totalQuestions
+                },
                 data,
-                metadata: {
-                    questionCount: data.totalQuestions,
-                    duration: data.estimatedDuration
-                }
-            });
+                ["interview", data.experienceLevel]
+            );
         }
     }, [data, saveToHistory]);
 
-    const handleLoadFromHistory = (entry: any) => {
-        const historyData = entry.data as InterviewResult;
+    const handleLoadHistory = useCallback((entry: any) => {
+        const historyData = entry.result as InterviewResult;
         setJobTitle(historyData.jobTitle);
         setExperienceLevel(historyData.experienceLevel as any);
-        // Re-execute or just display results
-    };
+    }, []);
 
     const handleApplyTemplate = (templateData: any) => {
         if (templateData.jobTitle) setJobTitle(templateData.jobTitle);
@@ -205,8 +213,10 @@ export default function InterviewQuestionsClient() {
             rubricGemiddeld: q.rubric?.average,
             rubricUitstekend: q.rubric?.excellent
         }));
-        const blob = await exportToXLSX(exportData, INTERVIEW_COLUMNS);
-        downloadExport(blob, `interview-vragen-${data.jobTitle.toLowerCase().replace(/\s+/g, '-')}.xlsx`);
+        const result = await exportToXLSX(exportData, INTERVIEW_COLUMNS, {
+            filename: `interview-vragen-${data.jobTitle.toLowerCase().replace(/\s+/g, '-')}`
+        });
+        downloadExport(result);
     };
 
     const handleExportPDF = async () => {
@@ -229,13 +239,15 @@ export default function InterviewQuestionsClient() {
             });
         }
 
-        const blob = await exportToPDFReport({
-            title: `Interview Gids: ${data.jobTitle}`,
-            subtitle: `${data.experienceLevel} niveau - ${data.totalQuestions} vragen`,
-            sections,
-            generatedAt: data.generatedAt
-        });
-        downloadExport(blob, `interview-gids-${data.jobTitle.toLowerCase().replace(/\s+/g, '-')}.pdf`);
+        const result = await exportToPDFReport(
+            { sections },
+            {
+                title: `Interview Gids: ${data.jobTitle}`,
+                subtitle: `${data.experienceLevel} niveau - ${data.totalQuestions} vragen`,
+                filename: `interview-gids-${data.jobTitle.toLowerCase().replace(/\s+/g, '-')}`
+            }
+        );
+        downloadExport(result);
     };
 
     const handleReset = () => {
@@ -265,8 +277,19 @@ export default function InterviewQuestionsClient() {
                         </div>
                     </div>
                     <ResultHistory
-                        toolId="interview-questions"
-                        onLoadEntry={handleLoadFromHistory}
+                        history={history}
+                        onLoadEntry={handleLoadHistory}
+                        onDeleteEntry={deleteEntry}
+                        onClearHistory={clearHistory}
+                        onToggleStar={toggleStar}
+                        onExportHistory={exportHistory}
+                        onImportHistory={importHistory}
+                        renderPreview={({ result }) => (
+                            <div className="space-y-1 text-xs">
+                                <p className="text-white line-clamp-1">{result.jobTitle}</p>
+                                <p className="text-zinc-500">{result.totalQuestions} vragen • {result.experienceLevel}</p>
+                            </div>
+                        )}
                     />
                 </div>
 
@@ -279,8 +302,8 @@ export default function InterviewQuestionsClient() {
                                 <h2 className="text-lg font-semibold text-white">Vacature Details</h2>
                                 <TemplateSelector
                                     toolId="interview-questions"
-                                    onApplyTemplate={handleApplyTemplate}
-                                    currentFormData={{
+                                    onSelectTemplate={handleApplyTemplate}
+                                    currentData={{
                                         jobTitle,
                                         jobDescription,
                                         experienceLevel,
@@ -449,13 +472,13 @@ export default function InterviewQuestionsClient() {
                                 className="space-y-4"
                             >
                                 {/* Action Bar */}
-                                <ToolActionBar
-                                    onExportPDF={handleExportPDF}
-                                    onExportXLSX={handleExportXLSX}
-                                    onCopy={copyAllQuestions}
-                                    onSave={handleSaveToHistory}
-                                    onReset={handleReset}
-                                />
+                                 <ToolActionBar
+                                     exportFormats={["pdf", "xlsx"]}
+                                     onExport={(format) => format === "pdf" ? handleExportPDF() : handleExportXLSX()}
+                                     copyText={data.questions.map(q => q.question).join("\n\n")}
+                                     onSaveToHistory={handleSaveToHistory}
+                                     onReset={handleReset}
+                                 />
 
                                 {/* Summary */}
                                 <div className="bg-zinc-900 rounded-xl border border-zinc-800 p-4">

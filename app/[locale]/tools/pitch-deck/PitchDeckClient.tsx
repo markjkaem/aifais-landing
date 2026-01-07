@@ -6,9 +6,9 @@ import { usePaywallTool } from "@/hooks/usePaywallTool";
 import { useResultHistory } from "@/hooks/useResultHistory";
 import { PaywallToolWrapper } from "@/app/Components/tools/PaywallToolWrapper";
 import { getToolBySlug } from "@/config/tools";
-import ResultHistory from "@/app/Components/tools/ResultHistory";
+import { ResultHistory } from "@/app/Components/tools/ResultHistory";
 import TemplateSelector from "@/app/Components/tools/TemplateSelector";
-import ToolLoadingState from "@/app/Components/tools/ToolLoadingState";
+import { ToolLoadingState } from "@/app/Components/tools/ToolLoadingState";
 import { ToolActionBar } from "@/app/Components/tools/ToolActionBar";
 import { exportToPDFReport, downloadExport } from "@/lib/export";
 import {
@@ -110,8 +110,16 @@ export default function PitchDeckClient() {
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
     const [slides, setSlides] = useState<PitchSlide[]>([]);
 
-    // History
-    const { saveToHistory } = useResultHistory("pitch-deck");
+    const {
+        history,
+        saveToHistory,
+        loadEntry,
+        deleteEntry,
+        clearHistory,
+        toggleStar,
+        exportHistory,
+        importHistory
+    } = useResultHistory<PitchDeckResult>("pitch-deck");
 
     // Paywall
     const { state, execute, showPaymentModal, setShowPaymentModal, handlePaymentSuccess, reset } = usePaywallTool({
@@ -144,22 +152,23 @@ export default function PitchDeckClient() {
 
     const handleSaveToHistory = useCallback(() => {
         if (data) {
-            saveToHistory({
-                title: `${data.companyName} - ${data.totalSlides} slides`,
-                data: { ...data, slides },
-                metadata: {
-                    slideCount: slides.length,
-                    audienceType: data.audienceType
-                }
-            });
+            saveToHistory(
+                {
+                    companyName: data.companyName,
+                    audienceType: data.audienceType,
+                    slideCount: slides.length
+                },
+                { ...data, slides },
+                ["pitch-deck", data.audienceType]
+            );
         }
     }, [data, slides, saveToHistory]);
 
-    const handleLoadFromHistory = (entry: any) => {
-        const historyData = entry.data as PitchDeckResult;
+    const handleLoadHistory = useCallback((entry: any) => {
+        const historyData = entry.result as PitchDeckResult;
         setCompanyName(historyData.companyName);
         setSlides(historyData.slides);
-    };
+    }, []);
 
     const handleApplyTemplate = (templateData: any) => {
         if (templateData.companyName) setCompanyName(templateData.companyName);
@@ -200,13 +209,15 @@ export default function PitchDeckClient() {
             content: `${slide.content}\n${slide.bulletPoints?.length ? `\n${slide.bulletPoints.map(b => `• ${b}`).join('\n')}` : ''}${slide.speakerNotes ? `\n\nSpeaker Notes:\n${slide.speakerNotes}` : ''}${slide.imageSuggestion ? `\n\nAfbeelding suggestie: ${slide.imageSuggestion}` : ''}`
         }));
 
-        const blob = await exportToPDFReport({
-            title: `Pitch Deck: ${data?.companyName || companyName}`,
-            subtitle: `${slides.length} slides - ${audienceType}`,
-            sections,
-            generatedAt: data?.generatedAt || new Date().toISOString()
-        });
-        downloadExport(blob, `pitch-deck-${companyName.toLowerCase().replace(/\s+/g, '-')}.pdf`);
+        const result = await exportToPDFReport(
+            { sections },
+            {
+                title: `Pitch Deck: ${data?.companyName || companyName}`,
+                subtitle: `${slides.length} slides - ${audienceType}`,
+                filename: `pitch-deck-${companyName.toLowerCase().replace(/\s+/g, '-')}`
+            }
+        );
+        downloadExport(result);
     };
 
     const handleReset = () => {
@@ -235,8 +246,19 @@ export default function PitchDeckClient() {
                         </div>
                     </div>
                     <ResultHistory
-                        toolId="pitch-deck"
-                        onLoadEntry={handleLoadFromHistory}
+                        history={history}
+                        onLoadEntry={handleLoadHistory}
+                        onDeleteEntry={deleteEntry}
+                        onClearHistory={clearHistory}
+                        onToggleStar={toggleStar}
+                        onExportHistory={exportHistory}
+                        onImportHistory={importHistory}
+                        renderPreview={({ result }) => (
+                            <div className="space-y-1 text-xs">
+                                <p className="text-white line-clamp-1">{result.companyName}</p>
+                                <p className="text-zinc-500">{result.totalSlides} slides</p>
+                            </div>
+                        )}
                     />
                 </div>
 
@@ -249,8 +271,8 @@ export default function PitchDeckClient() {
                                 <h2 className="text-lg font-semibold text-white">Pitch Details</h2>
                                 <TemplateSelector
                                     toolId="pitch-deck"
-                                    onApplyTemplate={handleApplyTemplate}
-                                    currentFormData={{
+                                    onSelectTemplate={handleApplyTemplate}
+                                    currentData={{
                                         companyName,
                                         productService,
                                         targetAudience,
@@ -448,9 +470,10 @@ export default function PitchDeckClient() {
                                 {/* Action Bar */}
                                 <div className="flex items-center justify-between">
                                     <ToolActionBar
-                                        onExportPDF={handleExportPDF}
-                                        onCopy={copyAllSlides}
-                                        onSave={handleSaveToHistory}
+                                        exportFormats={["pdf"]}
+                                        onExport={(format) => handleExportPDF()}
+                                        copyText={slides.map(s => s.content).join("\n\n")}
+                                        onSaveToHistory={handleSaveToHistory}
                                         onReset={handleReset}
                                     />
                                     <div className="flex items-center gap-2 bg-zinc-800 rounded-lg p-1">

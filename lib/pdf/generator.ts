@@ -13,7 +13,7 @@ const DEFAULT_CONFIG: Required<PDFConfig> = {
     margin: 50,
     pageSize: [595, 842], // A4
     primaryColor: rgb(0.12, 0.25, 0.69), // #1e40af
-    secondaryColor: rgb(0.06, 0.73, 0.50), // #10b981
+    secondaryColor: rgb(0.31, 0.4, 0.75), // #4f66bf - slightly lighter blue
     textColor: rgb(0.06, 0.09, 0.16), // #0f172a
     mutedColor: rgb(0.39, 0.44, 0.55), // #64748b
 };
@@ -53,6 +53,72 @@ export class PDFGenerator {
         }
     }
 
+    drawSectionHeader(text: string) {
+        this.checkPageBreak(40);
+        this.y -= 10;
+
+        // Background for header
+        this.page.drawRectangle({
+            x: this.config.margin - 10,
+            y: this.y - 5,
+            width: 4,
+            height: 20,
+            color: this.config.primaryColor,
+        });
+
+        this.drawText(text, { size: 14, bold: true, x: this.config.margin });
+        this.y -= 5;
+    }
+
+    drawStatBox(label: string, value: string, subvalue?: string, x?: number, width = 150) {
+        const drawX = x || this.config.margin;
+        const height = 70;
+
+        this.page.drawRectangle({
+            x: drawX,
+            y: this.y - height,
+            width,
+            height,
+            color: rgb(0.97, 0.98, 1),
+            borderColor: rgb(0.9, 0.92, 0.96),
+            borderWidth: 1,
+        });
+
+        const centerX = drawX + (width / 2);
+
+        // Label
+        const labelSize = 8;
+        this.page.drawText(label.toUpperCase(), {
+            x: centerX - (this.font.widthOfTextAtSize(label.toUpperCase(), labelSize) / 2),
+            y: this.y - 20,
+            size: labelSize,
+            font: this.font,
+            color: this.config.mutedColor,
+        });
+
+        // Value
+        const valueSize = 22;
+        this.page.drawText(value, {
+            x: centerX - (this.fontBold.widthOfTextAtSize(value, valueSize) / 2),
+            y: this.y - 48,
+            size: valueSize,
+            font: this.fontBold,
+            color: this.config.primaryColor,
+        });
+
+        // Subvalue
+        if (subvalue) {
+            const subSize = 8;
+            this.page.drawText(subvalue, {
+                x: centerX - (this.font.widthOfTextAtSize(subvalue, subSize) / 2),
+                y: this.y - 62,
+                size: subSize,
+                font: this.font,
+                color: this.config.mutedColor,
+            });
+        }
+    }
+
     drawText(text: string, options: {
         size?: number;
         bold?: boolean;
@@ -60,15 +126,18 @@ export class PDFGenerator {
         align?: 'left' | 'center' | 'right';
         x?: number;
         maxWidth?: number;
+        skipPageBreak?: boolean;
     } = {}) {
-        const { size = 10, bold = false, color = this.config.textColor, align = 'left', maxWidth } = options;
+        const { size = 10, bold = false, color = this.config.textColor, align = 'left', maxWidth, skipPageBreak = false } = options;
         const font = bold ? this.fontBold : this.font;
         const actualMaxWidth = maxWidth || (this.config.pageSize[0] - (this.config.margin * 2));
 
         const lines = this.wrapText(text, actualMaxWidth, font, size);
 
         for (const line of lines) {
-            this.checkPageBreak(size + 5);
+            if (!skipPageBreak) {
+                this.checkPageBreak(size + 5);
+            }
 
             let x = options.x || this.config.margin;
             if (align === 'center') {
@@ -90,18 +159,25 @@ export class PDFGenerator {
 
     async drawLogo(base64: string, maxWidth = 100) {
         try {
-            // Remove data:image/jpeg;base64, if present
+            const isPng = base64.startsWith("data:image/png") || base64.length > 50 && base64.includes("iVBORw0KGgo");
+            // Remove data:image/... base64, if present
             const cleanBase64 = base64.replace(/^data:image\/\w+;base64,/, "");
-            const logoImage = await this.doc.embedJpg(cleanBase64);
-            const logoDims = logoImage.scale(0.3);
-            let logoWidth = logoDims.width;
-            let logoHeight = logoDims.height;
 
-            if (logoWidth > maxWidth) {
-                const scaleFactor = maxWidth / logoWidth;
-                logoWidth *= scaleFactor;
-                logoHeight *= scaleFactor;
+            let logoImage;
+            if (isPng) {
+                logoImage = await this.doc.embedPng(cleanBase64);
+            } else {
+                try {
+                    logoImage = await this.doc.embedJpg(cleanBase64);
+                } catch (jpgError) {
+                    // Fallback to PNG if JPG embedding fails (common when files are mislabeled)
+                    logoImage = await this.doc.embedPng(cleanBase64);
+                }
             }
+
+            const scaleFactor = Math.min(0.3, maxWidth / logoImage.width);
+            const logoWidth = logoImage.width * scaleFactor;
+            const logoHeight = logoImage.height * scaleFactor;
 
             this.page.drawImage(logoImage, {
                 x: this.config.margin,
@@ -110,6 +186,7 @@ export class PDFGenerator {
                 height: logoHeight,
             });
 
+            this.y -= (logoHeight + 10);
             return logoHeight;
         } catch (e) {
             console.error("PDF Logo embedding failed", e);
@@ -119,6 +196,7 @@ export class PDFGenerator {
 
     drawMetadata(items: { label: string; value: string }[], xOffset = 350) {
         for (const item of items) {
+            this.checkPageBreak(15);
             this.page.drawText(item.label, { x: xOffset, y: this.y, size: 10, font: this.font, color: this.config.mutedColor });
             this.page.drawText(item.value, { x: xOffset + 80, y: this.y, size: 10, font: this.fontBold });
             this.y -= 15;
@@ -183,22 +261,33 @@ export class PDFGenerator {
     }
 
     wrapText(text: string, maxWidth: number, font: PDFFont, fontSize: number): string[] {
-        const cleanText = text.replace(/[^\x00-\x7F\xA0-\xFF]/g, "").replace(/\n/g, " ").trim();
-        const words = cleanText.split(' ');
-        const lines: string[] = [];
-        let currentLine = '';
+        // Handle newlines explicitly
+        const lines = text.split('\n');
+        const wrappedLines: string[] = [];
 
-        for (const word of words) {
-            const testLine = currentLine + (currentLine ? ' ' : '') + word;
-            if (font.widthOfTextAtSize(testLine, fontSize) > maxWidth && currentLine) {
-                lines.push(currentLine);
-                currentLine = word;
-            } else {
-                currentLine = testLine;
+        for (const line of lines) {
+            const cleanLine = line.replace(/[^\x00-\x7F\xA0-\xFF]/g, "").trim();
+            if (cleanLine === '') {
+                wrappedLines.push('');
+                continue;
             }
+
+            const words = cleanLine.split(' ');
+            let currentLine = '';
+
+            for (const word of words) {
+                const testLine = currentLine + (currentLine ? ' ' : '') + word;
+                if (font.widthOfTextAtSize(testLine, fontSize) > maxWidth && currentLine) {
+                    wrappedLines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            if (currentLine) wrappedLines.push(currentLine);
         }
-        if (currentLine) lines.push(currentLine);
-        return lines;
+
+        return wrappedLines;
     }
 
     async save() {

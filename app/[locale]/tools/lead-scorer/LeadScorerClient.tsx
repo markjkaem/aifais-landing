@@ -6,9 +6,9 @@ import { usePaywallTool } from "@/hooks/usePaywallTool";
 import { useResultHistory } from "@/hooks/useResultHistory";
 import { PaywallToolWrapper } from "@/app/Components/tools/PaywallToolWrapper";
 import { getToolBySlug } from "@/config/tools";
-import ResultHistory from "@/app/Components/tools/ResultHistory";
+import {ResultHistory} from "@/app/Components/tools/ResultHistory";
 import TemplateSelector from "@/app/Components/tools/TemplateSelector";
-import ToolLoadingState from "@/app/Components/tools/ToolLoadingState";
+import { ToolLoadingState } from "@/app/Components/tools/ToolLoadingState";
 import { ToolActionBar } from "@/app/Components/tools/ToolActionBar";
 import { exportToPDFReport, downloadExport, exportToCSV } from "@/lib/export";
 import {
@@ -122,8 +122,16 @@ export default function LeadScorerClient() {
     const [expandedSection, setExpandedSection] = useState<string | null>("factors");
     const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
 
-    // History
-    const { saveToHistory } = useResultHistory("lead-scorer");
+    const {
+        history,
+        saveToHistory,
+        loadEntry,
+        deleteEntry,
+        clearHistory,
+        toggleStar,
+        exportHistory,
+        importHistory
+    } = useResultHistory<LeadScorerResult>("lead-scorer");
 
     // Paywall
     const { state, execute, showPaymentModal, setShowPaymentModal, handlePaymentSuccess, reset } = usePaywallTool({
@@ -154,21 +162,22 @@ export default function LeadScorerClient() {
 
     const handleSaveToHistory = useCallback(() => {
         if (data) {
-            saveToHistory({
-                title: `${data.companyName} - ${data.tier}`,
-                data,
-                metadata: {
-                    score: data.score,
+            saveToHistory(
+                {
+                    companyName: data.companyName,
+                    industry: industry,
                     tier: data.tier
-                }
-            });
+                },
+                data,
+                ["lead-scorer", data.tier]
+            );
         }
     }, [data, saveToHistory]);
 
-    const handleLoadFromHistory = (entry: any) => {
-        const historyData = entry.data as LeadScorerResult;
+    const handleLoadHistory = useCallback((entry: any) => {
+        const historyData = entry.result as LeadScorerResult;
         setCompanyName(historyData.companyName);
-    };
+    }, []);
 
     const handleApplyTemplate = (templateData: any) => {
         if (templateData.companyName) setCompanyName(templateData.companyName);
@@ -217,13 +226,15 @@ export default function LeadScorerClient() {
             });
         }
 
-        const blob = await exportToPDFReport({
-            title: `Lead Score Report: ${data.companyName}`,
-            subtitle: `${tierConfig.label} - Score: ${data.score}/100`,
-            sections,
-            generatedAt: data.analyzedAt
-        });
-        downloadExport(blob, `lead-score-${data.companyName.toLowerCase().replace(/\s+/g, '-')}.pdf`);
+        const result = await exportToPDFReport(
+            { sections },
+            {
+                title: `Lead Score Report: ${data.companyName}`,
+                subtitle: `${tierConfig.label} - Score: ${data.score}/100`,
+                filename: `lead-score-${data.companyName.toLowerCase().replace(/\s+/g, '-')}`
+            }
+        );
+        downloadExport(result);
     };
 
     const handleExportCSV = async () => {
@@ -240,8 +251,14 @@ export default function LeadScorerClient() {
             prioriteit: data.nextAction.priority,
             geanalyseerd: data.analyzedAt
         }];
-        const csv = exportToCSV(exportData);
-        downloadExport(new Blob([csv], { type: "text/csv" }), `lead-score-${data.companyName.toLowerCase().replace(/\s+/g, '-')}.csv`);
+        const columns = [
+            { key: "bedrijf", label: "Bedrijf" },
+            { key: "score", label: "Score" },
+            { key: "tier", label: "Tier" },
+            { key: "volgendeActie", label: "Volgende Actie" }
+        ];
+        const result = exportToCSV(exportData, columns, { filename: `lead-score-${data.companyName.toLowerCase().replace(/\s+/g, '-')}` });
+        downloadExport(result);
     };
 
     const toggleSection = (section: string) => {
@@ -271,8 +288,19 @@ export default function LeadScorerClient() {
                         </div>
                     </div>
                     <ResultHistory
-                        toolId="lead-scorer"
-                        onLoadEntry={handleLoadFromHistory}
+                        history={history}
+                        onLoadEntry={handleLoadHistory}
+                        onDeleteEntry={deleteEntry}
+                        onClearHistory={clearHistory}
+                        onToggleStar={toggleStar}
+                        onExportHistory={exportHistory}
+                        onImportHistory={importHistory}
+                        renderPreview={({ result }) => (
+                            <div className="space-y-1 text-xs">
+                                <p className="text-white line-clamp-1">{result.companyName}</p>
+                                <p className="text-zinc-500">Score: {result.score} • {result.tier}</p>
+                            </div>
+                        )}
                     />
                 </div>
 
@@ -285,8 +313,8 @@ export default function LeadScorerClient() {
                                 <h2 className="text-lg font-semibold text-white">Lead Informatie</h2>
                                 <TemplateSelector
                                     toolId="lead-scorer"
-                                    onApplyTemplate={handleApplyTemplate}
-                                    currentFormData={{
+                                    onSelectTemplate={handleApplyTemplate}
+                                    currentData={{
                                         companyName,
                                         industry,
                                         companySize,
@@ -483,9 +511,9 @@ export default function LeadScorerClient() {
                             >
                                 {/* Action Bar */}
                                 <ToolActionBar
-                                    onExportPDF={handleExportPDF}
-                                    onExportCSV={handleExportCSV}
-                                    onSave={handleSaveToHistory}
+                                    exportFormats={["pdf", "csv"]}
+                                    onExport={(format) => format === "pdf" ? handleExportPDF() : handleExportCSV()}
+                                    onSaveToHistory={handleSaveToHistory}
                                     onReset={reset}
                                 />
 

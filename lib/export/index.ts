@@ -245,18 +245,20 @@ export async function exportToDOCX(
 
     // Content sections
     content.sections.forEach(section => {
-        if (section.heading) {
+        const heading = section.heading || section.title;
+        if (heading) {
             children.push(
                 new Paragraph({
-                    text: section.heading,
+                    text: heading,
                     heading: HeadingLevel.HEADING_2,
                     spacing: { before: 300, after: 150 }
                 })
             );
         }
 
-        if (section.paragraphs) {
-            section.paragraphs.forEach(p => {
+        const paragraphs = section.paragraphs || (typeof section.content === 'string' ? [section.content] : section.content);
+        if (paragraphs) {
+            paragraphs.forEach(p => {
                 children.push(
                     new Paragraph({
                         text: p,
@@ -341,7 +343,7 @@ export async function exportToDOCX(
     });
 
     const buffer = await Packer.toBuffer(doc);
-    const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+    const blob = new Blob([buffer as any], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
 
     return {
         blob,
@@ -359,9 +361,27 @@ export async function exportToPDFReport(
     const pdf = await PDFGenerator.create();
 
     // Logo
-    if (options.styling?.logo) {
-        await pdf.drawLogo(options.styling.logo);
-        pdf.y -= 20;
+    let logo = options.styling?.logo;
+
+    // Default logo if none provided (AIFAIS branding)
+    if (!logo && typeof window !== 'undefined') {
+        try {
+            const resp = await fetch('/og-image.jpg');
+            if (resp.ok) {
+                const blob = await resp.blob();
+                logo = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result as string);
+                    reader.readAsDataURL(blob);
+                });
+            }
+        } catch (e) {
+            console.error("Default logo fetch failed", e);
+        }
+    }
+
+    if (logo) {
+        await pdf.drawLogo(logo, 120);
     }
 
     // Title
@@ -388,14 +408,14 @@ export async function exportToPDFReport(
 
     // Content sections
     for (const section of content.sections) {
-        if (section.heading) {
-            pdf.y -= 10;
-            pdf.drawText(section.heading, { size: 14, bold: true });
-            pdf.y -= 5;
+        const heading = section.heading || section.title;
+        if (heading) {
+            pdf.drawSectionHeader(heading);
         }
 
-        if (section.paragraphs) {
-            section.paragraphs.forEach(p => {
+        const paragraphs = section.paragraphs || (typeof section.content === 'string' ? [section.content] : section.content);
+        if (paragraphs) {
+            paragraphs.forEach(p => {
                 pdf.drawText(p, { size: 10 });
             });
         }
@@ -404,6 +424,22 @@ export async function exportToPDFReport(
             section.bullets.forEach(bullet => {
                 pdf.drawText(`• ${bullet}`, { size: 10, x: pdf.config.margin + 10 });
             });
+        }
+
+        if (section.statCards) {
+            pdf.checkPageBreak(80);
+            const cardWidth = 150;
+            const gap = 15;
+            section.statCards.forEach((card, i) => {
+                pdf.drawStatBox(
+                    card.label,
+                    card.value,
+                    card.subvalue,
+                    pdf.config.margin + (i * (cardWidth + gap)),
+                    cardWidth
+                );
+            });
+            pdf.y -= 80;
         }
 
         if (section.table) {
@@ -429,7 +465,7 @@ export async function exportToPDFReport(
     }
 
     const pdfBytes = await pdf.save();
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const blob = new Blob([pdfBytes as any], { type: "application/pdf" });
 
     return {
         blob,
@@ -444,10 +480,19 @@ export interface DocumentContent {
     sections: DocumentSection[];
 }
 
+export interface StatCard {
+    label: string;
+    value: string;
+    subvalue?: string;
+}
+
 export interface DocumentSection {
     heading?: string;
+    title?: string; // Alias for heading
     paragraphs?: string[];
+    content?: string | string[]; // Alias for paragraphs
     bullets?: string[];
+    statCards?: StatCard[];
     table?: {
         headers: string[];
         rows: (string | number | null)[][];

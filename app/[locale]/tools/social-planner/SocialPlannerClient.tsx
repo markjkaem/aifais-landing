@@ -6,9 +6,9 @@ import { usePaywallTool } from "@/hooks/usePaywallTool";
 import { useResultHistory } from "@/hooks/useResultHistory";
 import { PaywallToolWrapper } from "@/app/Components/tools/PaywallToolWrapper";
 import { getToolBySlug } from "@/config/tools";
-import ResultHistory from "@/app/Components/tools/ResultHistory";
+import { ResultHistory } from "@/app/Components/tools/ResultHistory";
 import TemplateSelector from "@/app/Components/tools/TemplateSelector";
-import ToolLoadingState from "@/app/Components/tools/ToolLoadingState";
+import { ToolLoadingState } from "@/app/Components/tools/ToolLoadingState";
 import { ToolActionBar } from "@/app/Components/tools/ToolActionBar";
 import { exportToCSV, exportToPDFReport, downloadExport } from "@/lib/export";
 import {
@@ -36,8 +36,8 @@ import {
 interface SocialPost {
     platform: string;
     content: string;
-    hashtags?: string[];
-    bestTime?: string;
+    hashtags: string[];
+    bestTime: string;
     characterCount?: number;
     characterLimit?: number;
     imageSuggestion?: string;
@@ -134,8 +134,16 @@ export default function SocialPlannerClient() {
     const [filterPlatform, setFilterPlatform] = useState<string | null>(null);
     const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
 
-    // History
-    const { saveToHistory } = useResultHistory("social-planner");
+    const {
+        history,
+        saveToHistory,
+        loadEntry,
+        deleteEntry,
+        clearHistory,
+        toggleStar,
+        exportHistory,
+        importHistory
+    } = useResultHistory<SocialPlannerResult>("social-planner");
 
     // Paywall
     const { state, execute, showPaymentModal, setShowPaymentModal, handlePaymentSuccess, reset } = usePaywallTool({
@@ -165,22 +173,23 @@ export default function SocialPlannerClient() {
 
     const handleSaveToHistory = useCallback(() => {
         if (data) {
-            saveToHistory({
-                title: data.topic.substring(0, 50),
+            saveToHistory(
+                {
+                    topic: data.topic,
+                    platforms: platforms.join(", "),
+                    postCount: data.totalPosts
+                },
                 data,
-                metadata: {
-                    postCount: data.totalPosts,
-                    platforms: platforms.join(", ")
-                }
-            });
+                ["social-media", ...platforms]
+            );
         }
     }, [data, saveToHistory, platforms]);
 
-    const handleLoadFromHistory = (entry: any) => {
-        const historyData = entry.data as SocialPlannerResult;
+    const handleLoadHistory = useCallback((entry: any) => {
+        const historyData = entry.result as SocialPlannerResult;
         setTopic(historyData.topic);
         setTone(historyData.tone as any);
-    };
+    }, []);
 
     const handleApplyTemplate = (templateData: any) => {
         if (templateData.topic) setTopic(templateData.topic);
@@ -223,8 +232,15 @@ export default function SocialPlannerClient() {
             afbeeldingSuggestie: post.imageSuggestion,
             variant: post.variant || ""
         }));
-        const csv = exportToCSV(exportData);
-        downloadExport(new Blob([csv], { type: "text/csv" }), `social-posts-${Date.now()}.csv`);
+        const columns = [
+            { key: "nummer", label: "Nr" },
+            { key: "platform", label: "Platform" },
+            { key: "content", label: "Content" },
+            { key: "hashtags", label: "Hashtags" },
+            { key: "besteTijd", label: "Beste Tijd" }
+        ];
+        const result = exportToCSV(exportData, columns, { filename: `social-posts-${Date.now()}` });
+        downloadExport(result);
     };
 
     const handleExportPDF = async () => {
@@ -240,13 +256,15 @@ export default function SocialPlannerClient() {
             }))
         ];
 
-        const blob = await exportToPDFReport({
-            title: `Social Media Content Plan`,
-            subtitle: data.topic,
-            sections,
-            generatedAt: data.generatedAt
-        });
-        downloadExport(blob, `social-media-plan-${Date.now()}.pdf`);
+        const result = await exportToPDFReport(
+            { sections },
+            {
+                title: `Social Media Content Plan`,
+                subtitle: data.topic,
+                filename: `social-media-plan-${Date.now()}`
+            }
+        );
+        downloadExport(result);
     };
 
     const handleReset = () => {
@@ -275,8 +293,19 @@ export default function SocialPlannerClient() {
                         </div>
                     </div>
                     <ResultHistory
-                        toolId="social-planner"
-                        onLoadEntry={handleLoadFromHistory}
+                        history={history}
+                        onLoadEntry={handleLoadHistory}
+                        onDeleteEntry={deleteEntry}
+                        onClearHistory={clearHistory}
+                        onToggleStar={toggleStar}
+                        onExportHistory={exportHistory}
+                        onImportHistory={importHistory}
+                        renderPreview={({ result }) => (
+                            <div className="space-y-1 text-xs">
+                                <p className="text-white line-clamp-1">{result.topic}</p>
+                                <p className="text-zinc-500">{result.totalPosts} posts • {result.tone}</p>
+                            </div>
+                        )}
                     />
                 </div>
 
@@ -289,8 +318,8 @@ export default function SocialPlannerClient() {
                                 <h2 className="text-lg font-semibold text-white">Content Details</h2>
                                 <TemplateSelector
                                     toolId="social-planner"
-                                    onApplyTemplate={handleApplyTemplate}
-                                    currentFormData={{
+                                    onSelectTemplate={handleApplyTemplate}
+                                    currentData={{
                                         topic,
                                         platforms,
                                         postCount,
@@ -466,10 +495,10 @@ export default function SocialPlannerClient() {
                             >
                                 {/* Action Bar */}
                                 <ToolActionBar
-                                    onExportPDF={handleExportPDF}
-                                    onExportCSV={handleExportCSV}
-                                    onCopy={copyAllPosts}
-                                    onSave={handleSaveToHistory}
+                                    exportFormats={["pdf", "csv"]}
+                                    onExport={(format) => format === "pdf" ? handleExportPDF() : handleExportCSV()}
+                                    copyText={data.posts.map(p => p.content).join("\n\n")}
+                                    onSaveToHistory={handleSaveToHistory}
                                     onReset={handleReset}
                                 />
 

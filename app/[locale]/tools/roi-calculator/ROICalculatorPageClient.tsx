@@ -14,7 +14,7 @@ export default function ROICalculatorPageClient() {
   return (
     <div className="relative">
       {/* Subtle frame */}
-      <div className="absolute -inset-px bg-gradient-to-b from-gray-200 to-gray-300/50 rounded-2xl" />
+      <div className="absolute -inset-px bg-linear-to-b from-gray-200 to-gray-300/50 rounded-2xl" />
       <div className="relative bg-white rounded-2xl shadow-xl shadow-gray-200/50 overflow-hidden">
         <AdvancedROICalculator />
       </div>

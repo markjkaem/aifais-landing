@@ -27,11 +27,11 @@ interface ResultHistoryProps<T> {
     onToggleStar: (id: string) => void;
     onExportHistory: () => string;
     onImportHistory: (json: string) => boolean;
-    renderPreview?: (result: T) => React.ReactNode;
+    renderPreview?: (entry: HistoryEntry<T>) => React.ReactNode;
     className?: string;
 }
 
-export default function ResultHistory<T>({
+export function ResultHistory<T>({
     history,
     onLoadEntry,
     onDeleteEntry,
@@ -276,7 +276,7 @@ export default function ResultHistory<T>({
                                                     >
                                                         <div className="px-3 py-2 text-xs">
                                                             {renderPreview ? (
-                                                                renderPreview(entry.result)
+                                                                renderPreview(entry)
                                                             ) : (
                                                                 <pre className="text-zinc-400 overflow-x-auto max-h-32">
                                                                     {JSON.stringify(entry.result, null, 2).slice(0, 500)}

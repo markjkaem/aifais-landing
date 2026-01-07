@@ -20,7 +20,7 @@ interface LoadingStep {
     status: "pending" | "active" | "complete";
 }
 
-export default function ToolLoadingState({
+export function ToolLoadingState({
     message = "Bezig met verwerken...",
     subMessage,
     steps,

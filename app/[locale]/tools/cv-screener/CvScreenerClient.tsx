@@ -4,9 +4,9 @@ import { useState, useCallback } from "react";
 import { usePaywallTool } from "@/hooks/usePaywallTool";
 import { useResultHistory } from "@/hooks/useResultHistory";
 import { PaywallToolWrapper } from "@/app/Components/tools/PaywallToolWrapper";
-import ResultHistory from "@/app/Components/tools/ResultHistory";
+import {ResultHistory} from "@/app/Components/tools/ResultHistory";
 import ResultDisplay, { ScoreDisplay, TierBadge } from "@/app/Components/tools/ResultDisplay";
-import ToolActionBar from "@/app/Components/tools/ToolActionBar";
+import { ToolActionBar } from "@/app/Components/tools/ToolActionBar";
 import { ToolLoadingState, BatchProgress } from "@/app/Components/tools/ToolLoadingState";
 import { CopyAsText } from "@/app/Components/tools/CopyActions";
 import { getToolBySlug } from "@/config/tools";
@@ -192,8 +192,6 @@ export default function CvScreenerClient() {
                 state.data as CVScreenerResult,
                 [cvFiles[0]?.file.name || "CV"]
             );
-            setIsSaved(true);
-            setTimeout(() => setIsSaved(false), 3000);
         }
     }, [state, jobDescription, cvFiles, saveToHistory]);
 
@@ -478,7 +476,6 @@ export default function CvScreenerClient() {
                             onExport={(format) => handleExport(format as "xlsx" | "pdf")}
                             copyJson={data}
                             onSaveToHistory={handleSaveToHistory}
-                            isSaved={isSaved}
                             onReset={handleReset}
                         >
                             <div className="space-y-6">
@@ -661,7 +658,7 @@ export default function CvScreenerClient() {
                         onToggleStar={toggleStar}
                         onExportHistory={exportHistory}
                         onImportHistory={importHistory}
-                        renderPreview={(result) => (
+                        renderPreview={({ result }) => (
                             <div className="space-y-1">
                                 <div className="flex items-center gap-2">
                                     <span className={`font-medium ${

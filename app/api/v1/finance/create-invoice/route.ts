@@ -8,7 +8,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const invoiceItemSchema = z.object({
-    id: z.string().optional(),
+    id: z.string().nullable().optional(),
     description: z.string(),
     quantity: z.number(),
     price: z.number(),
@@ -18,8 +18,8 @@ const invoiceItemSchema = z.object({
 const invoiceSchema = z.object({
     ownName: z.string(),
     ownAddress: z.string(),
-    ownKvk: z.string().optional(),
-    ownIban: z.string().optional(),
+    ownKvk: z.string().nullable().optional(),
+    ownIban: z.string().nullable().optional(),
     ownLogo: z.string().nullable().optional(),
     clientName: z.string(),
     clientAddress: z.string(),
@@ -27,15 +27,15 @@ const invoiceSchema = z.object({
     invoiceDate: z.string(),
     expiryDate: z.string(),
     discountPercentage: z.number().default(0),
-    notes: z.string().optional(),
+    notes: z.string().nullable().optional(),
     items: z.array(invoiceItemSchema),
-    signature: z.string().optional(),
-    stripeSessionId: z.string().optional(),
+    signature: z.string().nullable().optional(),
+    stripeSessionId: z.string().nullable().optional(),
 });
 
 export const POST = createToolHandler({
     schema: invoiceSchema,
-    pricing: { price: 0, currency: "SOL" },
+    // pricing: { price: 0, currency: "SOL" },
     rateLimit: { maxRequests: 20, windowMs: 60000 },
     handler: async (body) => {
         const gen = await PDFGenerator.create({ primaryColor: rgb(0.06, 0.73, 0.50) });
@@ -101,7 +101,11 @@ export const POST = createToolHandler({
 
         if (body.notes) {
             gen.y = 80;
-            gen.drawText(body.notes, { size: 9, color: gen.config.mutedColor });
+            gen.drawText(body.notes, {
+                size: 9,
+                color: gen.config.mutedColor,
+                skipPageBreak: true
+            });
         }
 
         const pdfBytes = await gen.save();

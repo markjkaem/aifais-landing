@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { HistoryEntry } from "@/lib/tools/types";
+export type { HistoryEntry };
 
 const STORAGE_PREFIX = "aifais_history_";
 const MAX_ENTRIES = 50;

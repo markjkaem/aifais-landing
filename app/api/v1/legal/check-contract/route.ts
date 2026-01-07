@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { createToolHandler } from "@/lib/tools/createToolHandler";
 import { checkContractSchema } from "@/lib/security/schemas";
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+import { PDFGenerator } from "@/lib/pdf/generator";
+import { rgb } from "pdf-lib";
+import { CONTRACT_CHECKER_PROMPT, buildContractCheckerPrompt } from "@/lib/ai/prompts";
+import { withRetryAndTimeout, extractJSON } from "@/lib/ai/retry";
+import fs from "fs";
+import path from "path";
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -17,160 +22,212 @@ export const POST = createToolHandler({
     pricing: { price: 0.001, currency: "SOL" },
     rateLimit: { maxRequests: 5, windowMs: 60000 },
     handler: async (body, context) => {
+        const startTime = Date.now();
         console.log(`Payment authorized via ${context.payment.method}. Starting contract analysis...`);
 
         // DEV_BYPASS logic
         if (context.payment.method === 'dev_bypass') {
             const mockAnalysis = {
-                summary: "Dit is een gesimuleerde analyse voor testdoeleinden.",
-                risks: ["Dit is een testrisico", "Automatische verlenging zonder notificatie"],
-                unclear_clauses: ["Artikel 3.2 is vaag gedefinieerd"],
-                suggestions: ["Voeg een opzegtermijn toe", "Specificeer de aansprakelijkheid"],
-                overall_score: 8
+                summary: "Dit contract betreft een standaard dienstverleningsovereenkomst tussen twee partijen. De algemene structuur is degelijk, maar er zijn enkele punten die aandacht vereisen.",
+                contractType: "Dienstverleningsovereenkomst",
+                parties: ["Opdrachtgever BV", "Dienstverlener VOF"],
+                risks: [
+                    {
+                        severity: "high",
+                        description: "Automatische verlenging zonder notificatie",
+                        clause: "Artikel 7.1",
+                        recommendation: "Voeg een notificatietermijn van minimaal 30 dagen toe"
+                    },
+                    {
+                        severity: "medium",
+                        description: "Onduidelijke aansprakelijkheidsbeperking",
+                        clause: "Artikel 12.3",
+                        recommendation: "Specificeer maximale aansprakelijkheid in concrete bedragen"
+                    },
+                    {
+                        severity: "low",
+                        description: "Geen forum-keuze clausule",
+                        recommendation: "Voeg bevoegde rechtbank toe voor geschillenbeslechting"
+                    }
+                ],
+                unclear_clauses: [
+                    {
+                        clause: "Artikel 3.2 - Scope of Work",
+                        issue: "De omschrijving van diensten is te algemeen",
+                        suggestion: "Voeg een gedetailleerde bijlage toe met specifieke deliverables"
+                    },
+                    {
+                        clause: "Artikel 9.1 - Intellectueel Eigendom",
+                        issue: "Onduidelijk wie eigenaar wordt van ontwikkelde materialen",
+                        suggestion: "Specificeer eigendom per type deliverable"
+                    }
+                ],
+                missing_protections: [
+                    "Geheimhoudingsclausule (NDA)",
+                    "Overmacht bepaling",
+                    "Verzekeringsvereisten",
+                    "Audit rechten"
+                ],
+                suggestions: [
+                    "Voeg een escalatieprocedure toe voor geschillen",
+                    "Specificeer betalingstermijnen en late payment penalties",
+                    "Neem GDPR/AVG bepalingen op indien persoonsgegevens worden verwerkt",
+                    "Overweeg een proefperiode met verkorte opzegtermijn"
+                ],
+                clauses: [
+                    { id: "art-1", title: "Artikel 1 - Definities", content: "Standaard definities", category: "algemeen", riskLevel: "safe" },
+                    { id: "art-2", title: "Artikel 2 - Toepasselijkheid", content: "Toepassingsgebied overeenkomst", category: "algemeen", riskLevel: "safe" },
+                    { id: "art-3", title: "Artikel 3 - Scope", content: "Beschrijving diensten", category: "diensten", riskLevel: "caution" },
+                    { id: "art-7", title: "Artikel 7 - Duur & Beëindiging", content: "Looptijd en opzegging", category: "beeindiging", riskLevel: "risky" },
+                    { id: "art-9", title: "Artikel 9 - IE Rechten", content: "Intellectueel eigendom", category: "ip", riskLevel: "caution" },
+                    { id: "art-12", title: "Artikel 12 - Aansprakelijkheid", content: "Beperking aansprakelijkheid", category: "aansprakelijkheid", riskLevel: "risky" }
+                ],
+                overall_score: 6.5,
+                confidence: 87,
+                jurisdiction: "Nederland"
             };
+
             const pdfBuffer = await generatePDFReport(mockAnalysis);
+
             return {
-                summary: mockAnalysis.summary,
-                risks: mockAnalysis.risks,
-                score: mockAnalysis.overall_score,
+                ...mockAnalysis,
                 pdfBase64: pdfBuffer.toString("base64"),
+                analyzedAt: new Date().toISOString(),
+                processingTime: Date.now() - startTime,
+                version: CONTRACT_CHECKER_PROMPT.version
             };
         }
 
-        const { contractBase64, mimeType } = body;
+        const { contractBase64, mimeType, contractType } = body;
 
-        const message = await anthropic.messages.create({
-            model: "claude-4-sonnet-20250514",
-            max_tokens: 4096,
-            messages: [
-                {
-                    role: "user",
-                    content: [
+        // Call AI with retry logic
+        const response = await withRetryAndTimeout(
+            async () => {
+                const message = await anthropic.messages.create({
+                    model: "claude-4-sonnet-20250514",
+                    max_tokens: 5000,
+                    messages: [
                         {
-                            type: "document",
-                            source: {
-                                type: "base64",
-                                media_type: mimeType as any,
-                                data: contractBase64,
-                            },
-                            cache_control: { type: "ephemeral" },
-                        },
-                        {
-                            type: "text",
-                            text: `Je bent een ervaren juridisch adviseur. Analyseer dit contract grondig en identificeer:
-1. **Belangrijkste risico's**
-2. **Onduidelijke clausules**
-3. **Ontbrekende bescherming**
-4. **Suggesties**
-
-Geef je antwoord in JSON formaat:
-{
-  "summary": "Korte samenvatting",
-  "risks": [],
-  "unclear_clauses": [],
-  "suggestions": [],
-  "overall_score": 1-10
-}`,
+                            role: "user",
+                            content: [
+                                {
+                                    type: "document",
+                                    source: {
+                                        type: "base64",
+                                        media_type: mimeType as any,
+                                        data: contractBase64,
+                                    },
+                                    cache_control: { type: "ephemeral" },
+                                },
+                                {
+                                    type: "text",
+                                    text: buildContractCheckerPrompt({ contractType }),
+                                },
+                            ],
                         },
                     ],
-                },
-            ],
-        });
+                });
 
-        const responseText = message.content[0].type === "text" ? message.content[0].text : "";
-        let analysis;
+                const responseText = message.content[0].type === "text" ? message.content[0].text : "";
+                return responseText;
+            },
+            {
+                maxRetries: 2,
+                timeoutMs: 90000,
+                onRetry: (error, attempt) => {
+                    console.log(`Contract Checker retry ${attempt}:`, error.message);
+                }
+            }
+        );
 
         try {
-            const cleanJson = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
-            analysis = JSON.parse(cleanJson);
-        } catch {
-            analysis = {
-                summary: responseText.substring(0, 500),
-                risks: ["Kon analyse niet parseren"],
-                unclear_clauses: [],
-                suggestions: [],
-                overall_score: 5,
+            const analysis = extractJSON<{
+                summary: string;
+                contractType?: string;
+                parties?: string[];
+                risks: Array<{ severity: string; description: string; clause?: string; recommendation?: string }>;
+                unclear_clauses?: Array<{ clause: string; issue: string; suggestion?: string }>;
+                missing_protections?: string[];
+                suggestions: string[];
+                clauses?: Array<{ id: string; title: string; content: string; category: string; riskLevel: string }>;
+                overall_score: number;
+                confidence?: number;
+                jurisdiction?: string;
+            }>(response);
+
+            const pdfBuffer = await generatePDFReport(analysis);
+
+            return {
+                ...analysis,
+                pdfBase64: pdfBuffer.toString("base64"),
+                analyzedAt: new Date().toISOString(),
+                processingTime: Date.now() - startTime,
+                version: CONTRACT_CHECKER_PROMPT.version
             };
+        } catch (e) {
+            console.error("Contract Checker Parsing Error:", e, response);
+            throw new Error("Kon de contractanalyse niet verwerken. Probeer het opnieuw.");
         }
-
-        const pdfBuffer = await generatePDFReport(analysis);
-
-        return {
-            summary: analysis.summary,
-            risks: analysis.risks,
-            score: analysis.overall_score,
-            pdfBase64: pdfBuffer.toString("base64"),
-        };
     }
 });
 
-// PDF Generation Utilities (Keep as is)
+// PDF Generation Utilities
 async function generatePDFReport(analysis: any): Promise<Buffer> {
-    const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([595, 842]);
-    const { width, height } = page.getSize();
-    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+    const gen = await PDFGenerator.create();
+    const { width, height } = gen.page.getSize();
 
-    const cleanText = (text: string) => text.replace(/[^\x00-\x7F\xA0-\xFF]/g, "").replace(/\n/g, " ").trim();
-    let y = height - 80;
-
-    page.drawText("Contract Analyse Rapport", {
-        x: (width - fontBold.widthOfTextAtSize("Contract Analyse Rapport", 24)) / 2,
-        y: y,
-        size: 24,
-        font: fontBold,
-        color: rgb(0.06, 0.09, 0.16),
-    });
-    y -= 70;
-
-    // Simplified for brevity, original logic preserved in real file
-    const sections = [
-        { title: `Score: ${analysis.overall_score}/10`, content: analysis.summary, isSummary: true },
-        { title: "Risico's", items: analysis.risks },
-        { title: "Onduidelijk", items: analysis.unclear_clauses },
-        { title: "Suggesties", items: analysis.suggestions }
-    ];
-
-    for (const section of sections) {
-        page.drawText(section.title, { x: 50, y, size: 12, font: fontBold });
-        y -= 20;
-        if (section.content) {
-            const lines = wrapText(cleanText(section.content), 495, font, 10);
-            for (const line of lines) {
-                page.drawText(line, { x: 50, y, size: 10, font });
-                y -= 15;
-            }
+    // AIFAIS Logo
+    try {
+        const logoPath = path.join(process.cwd(), "public", "og-image.jpg");
+        if (fs.existsSync(logoPath)) {
+            const logoBase64 = fs.readFileSync(logoPath, { encoding: "base64" });
+            await gen.drawLogo(logoBase64, 120);
         }
-        if (section.items) {
-            for (const item of section.items) {
-                const lines = wrapText(cleanText(`• ${item}`), 475, font, 10);
-                for (const line of lines) {
-                    page.drawText(line, { x: 60, y, size: 10, font });
-                    y -= 15;
-                }
-            }
-        }
-        y -= 15;
+    } catch (e) {
+        console.error("Failed to load logo in API", e);
     }
 
-    const pdfBytes = await pdfDoc.save();
+    // Title
+    gen.drawText("Contract Analyse Rapport", { size: 24, bold: true, align: 'center' });
+    gen.y -= 20;
+    gen.drawHorizontalLine();
+    gen.y -= 20;
+
+    // Summary Section
+    gen.drawSectionHeader(`Score: ${analysis.overall_score}/10`);
+    gen.drawText(analysis.summary, { size: 10 });
+    gen.y -= 10;
+
+    // Risks Section
+    if (analysis.risks && analysis.risks.length > 0) {
+        gen.drawSectionHeader("Risico-analyse");
+        analysis.risks.forEach((risk: any) => {
+            const riskText = typeof risk === 'string' ? risk : `${risk.severity.toUpperCase()}: ${risk.description}`;
+            gen.drawText(`• ${riskText}`, { size: 10, x: 60 });
+            if (risk.recommendation) {
+                gen.drawText(`  Advies: ${risk.recommendation}`, { size: 9, color: gen.config.mutedColor, x: 60 });
+            }
+        });
+        gen.y -= 10;
+    }
+
+    // Unclear Clauses
+    if (analysis.unclear_clauses && analysis.unclear_clauses.length > 0) {
+        gen.drawSectionHeader("Onduidelijke bepalingen");
+        analysis.unclear_clauses.forEach((item: any) => {
+            gen.drawText(`• ${item.clause}: ${item.issue}`, { size: 10, x: 60 });
+        });
+        gen.y -= 10;
+    }
+
+    // Suggestions
+    if (analysis.suggestions && analysis.suggestions.length > 0) {
+        gen.drawSectionHeader("Verbetersuggesties");
+        analysis.suggestions.forEach((suggestion: string) => {
+            gen.drawText(`• ${suggestion}`, { size: 10, x: 60 });
+        });
+    }
+
+    const pdfBytes = await gen.save();
     return Buffer.from(pdfBytes);
-}
-
-function wrapText(text: string, maxWidth: number, font: any, fontSize: number): string[] {
-    const words = text.split(' ');
-    const lines: string[] = [];
-    let currentLine = '';
-    for (const word of words) {
-        const testLine = currentLine + (currentLine ? ' ' : '') + word;
-        if (font.widthOfTextAtSize(testLine, fontSize) > maxWidth && currentLine) {
-            lines.push(currentLine);
-            currentLine = word;
-        } else {
-            currentLine = testLine;
-        }
-    }
-    if (currentLine) lines.push(currentLine);
-    return lines;
 }
