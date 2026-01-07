@@ -1,6 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
+import { Play, Sparkles, Shield } from "lucide-react";
 
 export default function ExplainerSection() {
   const t = useTranslations("explainer");
@@ -9,61 +11,19 @@ export default function ExplainerSection() {
     {
       title: t("features.execution.title"),
       desc: t("features.execution.desc"),
-      icon: (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={1.5}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
-          />
-        </svg>
-      ),
+      icon: <Play className="w-5 h-5" />,
       color: "blue" as const,
     },
     {
       title: t("features.context.title"),
       desc: t("features.context.desc"),
-      icon: (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={1.5}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"
-          />
-        </svg>
-      ),
+      icon: <Sparkles className="w-5 h-5" />,
       color: "purple" as const,
     },
     {
       title: t("features.guarantee.title"),
       desc: t("features.guarantee.desc"),
-      icon: (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={1.5}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
-          />
-        </svg>
-      ),
+      icon: <Shield className="w-5 h-5" />,
       color: "emerald" as const,
     },
   ];
@@ -75,17 +35,24 @@ export default function ExplainerSection() {
   };
 
   return (
-    <section className="py-24 md:py-32 bg-white relative overflow-hidden">
-      {/* Subtle background elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-stone-50/50 to-white" />
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-100/30 to-transparent rounded-full blur-3xl" />
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-l from-purple-100/30 to-transparent rounded-full blur-3xl" />
+    <section className="py-24 md:py-32 bg-[#fafaf9] relative overflow-hidden">
+      {/* Background elements matching Hero */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-purple-100/30 rounded-full blur-[80px]" />
+      </div>
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left: Text Content */}
-          <div className="order-2 lg:order-1">
-            {/* Heading with visual flair */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="order-2 lg:order-1"
+          >
+            {/* Heading */}
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-stone-900 tracking-tight leading-[1.1]">
               {t("titlePrefix")}{" "}
               <span className="relative inline-block">
@@ -105,10 +72,10 @@ export default function ExplainerSection() {
 
             {/* Description */}
             <div className="space-y-4 mb-10">
-              <p className="text-xl text-stone-500 leading-relaxed">
+              <p className="text-lg text-stone-500 leading-relaxed">
                 {t("p1")}
               </p>
-              <p className="text-xl text-stone-600 leading-relaxed">
+              <p className="text-lg text-stone-600 leading-relaxed">
                 {t.rich("p2", {
                   bold: (children) => <span className="font-semibold text-stone-900">{children}</span>
                 })}
@@ -116,16 +83,18 @@ export default function ExplainerSection() {
             </div>
 
             {/* Feature Cards */}
-            <div className="space-y-4">
+            <div className="space-y-3">
               {features.map((item, i) => (
-                <div
+                <motion.div
                   key={i}
-                  className="group flex items-start gap-4 p-4 rounded-2xl hover:bg-stone-50 transition-all duration-300 cursor-default"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: i * 0.1 }}
+                  className="group flex items-start gap-4 p-4 rounded-2xl bg-white border border-stone-100 hover:border-stone-200 hover:shadow-lg hover:shadow-stone-200/50 transition-all duration-300"
                 >
                   <div
-                    className={`flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                      colors[item.color]
-                    }`}
+                    className={`flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 ${colors[item.color]}`}
                   >
                     {item.icon}
                   </div>
@@ -137,26 +106,32 @@ export default function ExplainerSection() {
                       {item.desc}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Right: Interactive Visual */}
-          <div className="order-1 lg:order-2">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="order-1 lg:order-2"
+          >
             <div className="relative">
               {/* Glow effect behind card */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 rounded-[2.5rem] blur-2xl opacity-60" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-[2.5rem] blur-2xl" />
 
               {/* Main Card */}
-              <div className="relative bg-white rounded-[2rem] border border-stone-200 shadow-2xl shadow-stone-200/50 overflow-hidden">
+              <div className="relative bg-white rounded-2xl border border-stone-200 shadow-xl shadow-stone-200/50 overflow-hidden">
                 {/* Card Header */}
-                <div className="px-6 py-4 border-b border-stone-100 bg-stone-50/50 flex items-center justify-between">
+                <div className="px-6 py-4 border-b border-stone-100 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="flex gap-1.5">
-                      <div className="w-3 h-3 rounded-full bg-red-400" />
-                      <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                      <div className="w-3 h-3 rounded-full bg-green-400" />
+                      <div className="w-3 h-3 rounded-full bg-stone-200" />
+                      <div className="w-3 h-3 rounded-full bg-stone-200" />
+                      <div className="w-3 h-3 rounded-full bg-stone-200" />
                     </div>
                     <span className="text-sm text-stone-400 font-mono">
                       agent.process
@@ -200,19 +175,7 @@ export default function ExplainerSection() {
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-2">
                             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
-                              <svg
-                                className="w-4 h-4 text-white"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                                />
-                              </svg>
+                              <Sparkles className="w-4 h-4 text-white" />
                             </div>
                             <span className="font-semibold text-stone-900">
                               {t("visual.label")}
@@ -225,7 +188,14 @@ export default function ExplainerSection() {
 
                         <div className="space-y-2 font-mono text-sm">
                           {(t.raw("visual.steps") as string[]).map((text, idx) => (
-                            <div key={idx} className="flex items-center gap-2 text-stone-500">
+                            <motion.div
+                              key={idx}
+                              initial={{ opacity: 0, x: -10 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: 0.5 + idx * 0.15 }}
+                              className="flex items-center gap-2 text-stone-500"
+                            >
                               <svg
                                 className="w-4 h-4 text-emerald-500"
                                 fill="none"
@@ -240,7 +210,7 @@ export default function ExplainerSection() {
                                 />
                               </svg>
                               <span>{text}</span>
-                            </div>
+                            </motion.div>
                           ))}
                         </div>
                       </div>
@@ -277,12 +247,12 @@ export default function ExplainerSection() {
                 </div>
 
                 {/* Card Footer */}
-                <div className="px-6 py-4 border-t border-stone-100 bg-stone-50/30">
+                <div className="px-6 py-4 border-t border-stone-100 bg-stone-50/50">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-stone-400">
                       {t("visual.footer")}
                     </span>
-                    <span className="text-stone-500 font-medium">
+                    <span className="text-stone-600 font-medium">
                       {t("visual.active")}
                     </span>
                   </div>
@@ -290,15 +260,27 @@ export default function ExplainerSection() {
               </div>
 
               {/* Floating badges */}
-              <div className="absolute -top-3 -right-3 px-3 py-1.5 bg-white rounded-full border border-stone-200 shadow-lg text-xs font-semibold text-stone-600">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.8 }}
+                className="absolute -top-3 -right-3 px-3 py-1.5 bg-white rounded-full border border-stone-200 shadow-lg text-xs font-semibold text-stone-600"
+              >
                 {t("visual.automatic")}
-              </div>
+              </motion.div>
 
-              <div className="absolute -bottom-3 -left-3 px-3 py-1.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-lg text-xs font-semibold text-white">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.9 }}
+                className="absolute -bottom-3 -left-3 px-3 py-1.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-lg text-xs font-semibold text-white"
+              >
                 {t("visual.poweredBy")}
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

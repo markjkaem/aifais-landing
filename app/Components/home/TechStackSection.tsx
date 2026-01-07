@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
 
 export default function TechStackSection() {
   const t = useTranslations("techStack");
@@ -21,43 +22,68 @@ export default function TechStackSection() {
   ];
 
   return (
-    <section className="py-24 border-b border-stone-100 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <p className="text-[#3066be] text-sm font-bold uppercase tracking-widest mb-3">
-            {t("badge")}
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mb-6">
-            {t("title")} <span className="text-[#3066be]">{t("titleHighlight")}</span>
+    <section className="py-24 md:py-28 bg-white relative overflow-hidden">
+      {/* Subtle background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-gradient-to-r from-stone-100/50 to-stone-50/30 rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-stone-200 rounded-full mb-6 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
+            <span className="text-sm font-medium text-stone-600">
+              {t("badge")}
+            </span>
+          </div>
+
+          <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mb-4 tracking-tight">
+            {t("title")}{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-600">
+              {t("titleHighlight")}
+            </span>
           </h2>
           <p className="text-stone-500 max-w-2xl mx-auto text-lg">
             {t("subtitle")}
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 md:gap-y-16 items-center justify-items-center transition-all duration-700">
+        {/* Tech Grid */}
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 md:gap-8">
           {techs.map((tech, idx) => (
-            <div 
-              key={idx} 
-              className="flex flex-col items-center gap-4 group cursor-default"
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.05 }}
+              className="group"
             >
-              <div className="relative w-16 h-16 flex items-center justify-center grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500">
-                <img 
-                  src={`https://cdn.simpleicons.org/${tech.slug}`} 
-                  alt={tech.name}
-                  className="w-10 h-10 object-contain opacity-60 group-hover:opacity-100 transition-opacity"
-                  loading="lazy"
-                />
+              <div className="flex flex-col items-center gap-3 p-4 rounded-2xl bg-white border border-stone-100 hover:border-stone-200 hover:shadow-lg hover:shadow-stone-200/50 transition-all duration-300 hover:-translate-y-1">
+                <div className="w-12 h-12 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-300">
+                  <img
+                    src={`https://cdn.simpleicons.org/${tech.slug}`}
+                    alt={tech.name}
+                    className="w-8 h-8 object-contain opacity-50 group-hover:opacity-100 transition-opacity"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="text-center">
+                  <p className="text-sm font-semibold text-stone-700 group-hover:text-stone-900 transition-colors">
+                    {tech.name}
+                  </p>
+                  <p className="text-[10px] text-stone-400 font-medium uppercase tracking-wide">
+                    {t(`techs.${tech.key}`)}
+                  </p>
+                </div>
               </div>
-              <div className="text-center">
-                <p className="text-sm font-bold text-stone-900 group-hover:text-[#3066be] transition-colors">
-                  {tech.name}
-                </p>
-                <p className="text-[10px] text-stone-400 font-mono uppercase tracking-tighter">
-                  {t(`techs.${tech.key}`)}
-                </p>
-              </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
