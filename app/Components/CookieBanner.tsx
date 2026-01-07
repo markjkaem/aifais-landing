@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Cookie, ChevronRight, Shield, BarChart3, Megaphone } from "lucide-react";
 
 export default function CookieBanner() {
+  const t = useTranslations("cookieBanner");
   const [showBanner, setShowBanner] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
@@ -91,10 +93,10 @@ export default function CookieBanner() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <h3 className="text-lg font-bold text-stone-900 mb-1">
-                            Cookies op AIFAIS
+                            {t("title")}
                           </h3>
                           <p className="text-sm text-stone-500 leading-relaxed">
-                            We gebruiken cookies om je ervaring te verbeteren en onze site te analyseren.
+                            {t("description")}
                           </p>
                         </div>
                       </div>
@@ -110,7 +112,7 @@ export default function CookieBanner() {
                               showDetails ? "rotate-90" : ""
                             }`}
                           />
-                          <span>Meer informatie</span>
+                          <span>{t("moreInfo")}</span>
                         </button>
 
                         <AnimatePresence>
@@ -131,14 +133,14 @@ export default function CookieBanner() {
                                   <div>
                                     <div className="flex items-center gap-2">
                                       <span className="text-sm font-semibold text-stone-900">
-                                        Noodzakelijk
+                                        {t("categories.necessary.title")}
                                       </span>
                                       <span className="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] font-medium rounded">
-                                        Altijd aan
+                                        {t("categories.necessary.badge")}
                                       </span>
                                     </div>
                                     <p className="text-xs text-stone-500 mt-0.5">
-                                      Essentieel voor de werking van de website
+                                      {t("categories.necessary.description")}
                                     </p>
                                   </div>
                                 </div>
@@ -150,10 +152,10 @@ export default function CookieBanner() {
                                   </div>
                                   <div>
                                     <span className="text-sm font-semibold text-stone-900">
-                                      Analytics
+                                      {t("categories.analytics.title")}
                                     </span>
                                     <p className="text-xs text-stone-500 mt-0.5">
-                                      Google Analytics voor websitegebruik analyse
+                                      {t("categories.analytics.description")}
                                     </p>
                                   </div>
                                 </div>
@@ -165,29 +167,29 @@ export default function CookieBanner() {
                                   </div>
                                   <div>
                                     <span className="text-sm font-semibold text-stone-900">
-                                      Marketing
+                                      {t("categories.marketing.title")}
                                     </span>
                                     <p className="text-xs text-stone-500 mt-0.5">
-                                      Voor het meten van campagne-effectiviteit
+                                      {t("categories.marketing.description")}
                                     </p>
                                   </div>
                                 </div>
 
                                 {/* Links */}
                                 <p className="text-xs text-stone-400 pt-1">
-                                  Lees meer in onze{" "}
+                                  {t("links.intro")}{" "}
                                   <Link
                                     href="/privacy"
                                     className="text-blue-600 hover:underline"
                                   >
-                                    privacyverklaring
+                                    {t("links.privacy")}
                                   </Link>{" "}
-                                  en{" "}
+                                  {t("links.and")}{" "}
                                   <Link
                                     href="/cookies"
                                     className="text-blue-600 hover:underline"
                                   >
-                                    cookiebeleid
+                                    {t("links.cookies")}
                                   </Link>
                                   .
                                 </p>
@@ -204,13 +206,13 @@ export default function CookieBanner() {
                         onClick={acceptAll}
                         className="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-stone-900/10 hover:shadow-xl hover:-translate-y-0.5 whitespace-nowrap"
                       >
-                        Accepteer alles
+                        {t("acceptAll")}
                       </button>
                       <button
                         onClick={acceptNecessary}
                         className="px-5 py-2.5 bg-white hover:bg-stone-50 text-stone-700 font-semibold text-sm rounded-xl transition-all border border-stone-200 hover:border-stone-300 whitespace-nowrap"
                       >
-                        Alleen noodzakelijk
+                        {t("acceptNecessary")}
                       </button>
                     </div>
                   </div>

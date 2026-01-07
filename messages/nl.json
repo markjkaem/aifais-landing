@@ -820,5 +820,210 @@
       "subtitle": "Dit is geen standaard software. Dit is maatwerk architectuur. We bouwen dit specifiek voor jouw datastromen.",
       "button": "Plan een Strategie Sessie"
     }
+  },
+  "agentDemo": {
+    "badge": "Live Demo Beschikbaar",
+    "title": "Zie een AI Agent",
+    "titleHighlight": "in actie",
+    "description": "Geen praatjes, maar resultaat. Bekijk hoe onze AI-agent een complete inbox verwerkt — volledig autonoom, zonder jouw input. Real-time. In 4 minuten.",
+    "features": {
+      "emails": "5 emails in 4 min",
+      "autonomous": "Volledig autonoom",
+      "realAi": "Echte AI responses",
+      "free": "Gratis te proberen"
+    },
+    "cta": "Start Live Demo",
+    "noAccount": "Geen account nodig",
+    "visual": {
+      "header": "Inbox Agent",
+      "headerSub": "Verwerkt emails automatisch",
+      "live": "Live",
+      "inbox": "Inbox",
+      "inboxCount": "5 emails",
+      "agent": "Agent",
+      "processing": "Verwerkt",
+      "drafts": "Concepten",
+      "ready": "Klaar",
+      "emails": {
+        "email1": "Offerte aanvraag voor 8 gebruikers",
+        "email2": "Factuur #2024-0892 niet ontvangen",
+        "email3": "Probleem met exportfunctie",
+        "email4": "Kennismakingsgesprek plannen"
+      },
+      "processingText": "Verwerken...",
+      "avgTime": "Gemiddeld:",
+      "avgValue": "45 sec/email",
+      "savings": "Besparing:",
+      "savingsValue": "30+ min/dag"
+    },
+    "badges": {
+      "noCode": "Geen code nodig",
+      "powered": "Claude AI Powered"
+    }
+  },
+  "articleCta": {
+    "header": "Bereken jouw besparing",
+    "description": "Ontdek in 30 seconden hoeveel je kunt besparen met AI-automatisering",
+    "tabs": {
+      "calculator": "ROI Calculator",
+      "scan": "Gratis Scan",
+      "contact": "Direct Contact"
+    },
+    "calculator": {
+      "hoursLabel": "Uren besteed per week aan repetitieve taken",
+      "hoursUnit": "uur/week",
+      "rateLabel": "Gemiddeld uurtarief",
+      "teamLabel": "Teamleden betrokken",
+      "teamUnit": "personen",
+      "results": {
+        "title": "Jouw potentiële besparing",
+        "yearly": "Jaarlijkse besparing",
+        "hours": "Uren vrijgemaakt",
+        "hoursUnit": "uur/jaar",
+        "payback": "Terugverdientijd",
+        "paybackUnit": "maanden"
+      },
+      "cta": "Ontvang persoonlijke analyse",
+      "note": "Gebaseerd op 70% automatiseringspotentieel"
+    },
+    "scan": {
+      "title": "Gratis proces scan",
+      "description": "Vul je gegevens in en ontvang binnen 24 uur een persoonlijke analyse van jouw automatiseringskansen.",
+      "namePlaceholder": "Jouw naam",
+      "emailPlaceholder": "E-mailadres",
+      "companyPlaceholder": "Bedrijfsnaam",
+      "processPlaceholder": "Welk proces wil je automatiseren?",
+      "submit": "Vraag gratis scan aan",
+      "sending": "Verzenden...",
+      "success": {
+        "title": "Aanvraag ontvangen!",
+        "description": "We nemen binnen 24 uur contact met je op met je persoonlijke analyse."
+      },
+      "error": "Er ging iets mis. Probeer het opnieuw."
+    },
+    "contact": {
+      "title": "Liever direct contact?",
+      "description": "Plan een vrijblijvend gesprek. We bespreken samen je processen.",
+      "cta": "Plan gratis gesprek",
+      "responseTime": "Reactie binnen 4 uur"
+    }
+  },
+  "leadMagnet": {
+    "badge": "Gratis Download",
+    "title": "AI Readiness Checklist",
+    "description": "Ontdek welke processen geschikt zijn voor AI-automatisering binnen jouw bedrijf. Praktische checklist met 15 criteria.",
+    "benefits": {
+      "b1": "15 beoordelingscriteria",
+      "b2": "Prioriteitenmatrix inbegrepen",
+      "b3": "Direct inzicht in 5 minuten"
+    },
+    "emailPlaceholder": "Jouw e-mailadres",
+    "submit": "Download Checklist",
+    "sending": "Verzenden...",
+    "privacy": "We respecteren je privacy. Geen spam.",
+    "success": {
+      "title": "Check je inbox!",
+      "description": "We hebben de checklist naar je e-mailadres gestuurd."
+    },
+    "error": "Er ging iets mis. Probeer het opnieuw."
+  },
+  "cookieBanner": {
+    "title": "Cookies op AIFAIS",
+    "description": "We gebruiken cookies om je ervaring te verbeteren en onze site te analyseren.",
+    "moreInfo": "Meer informatie",
+    "categories": {
+      "necessary": {
+        "title": "Noodzakelijk",
+        "badge": "Altijd aan",
+        "description": "Essentieel voor de werking van de website"
+      },
+      "analytics": {
+        "title": "Analytics",
+        "description": "Google Analytics voor websitegebruik analyse"
+      },
+      "marketing": {
+        "title": "Marketing",
+        "description": "Voor het meten van campagne-effectiviteit"
+      }
+    },
+    "links": {
+      "intro": "Lees meer in onze",
+      "privacy": "privacyverklaring",
+      "and": "en",
+      "cookies": "cookiebeleid"
+    },
+    "acceptAll": "Accepteer alles",
+    "acceptNecessary": "Alleen noodzakelijk"
+  },
+  "developersPage": {
+    "meta": {
+      "title": "Developers | AIFAIS API & MCP Infrastructure",
+      "description": "Agent-ready infrastructure voor de Nederlandse markt. Integreer AIFAIS tools via MCP of REST API met pay-per-use pricing."
+    },
+    "hero": {
+      "status": "Alle systemen operationeel",
+      "apisLive": "APIs live",
+      "title": "Agent-Ready",
+      "titleHighlight": "API Infrastructure",
+      "subtitle": "Nederlandse AI infrastructure gebouwd voor agents. Integreer via MCP of REST API met pay-per-use pricing via Solana.",
+      "ctaDocs": "Bekijk Documentatie",
+      "ctaMcp": "Setup MCP Server"
+    },
+    "features": {
+      "response": {
+        "title": "< 200ms Response",
+        "description": "Geoptimaliseerd voor real-time agent workflows"
+      },
+      "security": {
+        "title": "Enterprise Security",
+        "description": "SOC2 ready, Nederlandse data sovereignty"
+      },
+      "context": {
+        "title": "NL Context",
+        "description": "Gebouwd voor Nederlandse regelgeving & taal"
+      },
+      "payment": {
+        "title": "X402 Native",
+        "description": "Pay-per-call via Solana of traditionele facturatie"
+      }
+    },
+    "apis": {
+      "title": "Plug & Play Tools",
+      "fullRef": "Volledige API Reference",
+      "comingSoon": "Binnenkort",
+      "inDevelopment": "APIs in ontwikkeling"
+    },
+    "integration": {
+      "title": "Simpele JSON Schema",
+      "description": "Vergeet complexe enterprise integraties. Roep tools aan met simpele JSON. Werkt met Claude, GPT, of je eigen agent.",
+      "checks": {
+        "mcp": "MCP Server voor Cursor & Claude Desktop",
+        "payment": "Pay-per-use via Solana (X402 protocol)",
+        "dutch": "Nederlandse context & data sovereignty",
+        "sdk": "TypeScript SDK beschikbaar"
+      }
+    },
+    "pricing": {
+      "title": "Usage-Based Pricing",
+      "subtitle": "Start gratis. Betaal alleen wat je gebruikt.",
+      "payPerUse": {
+        "label": "Pay-per-use",
+        "recommended": "Aanbevolen",
+        "price": "Vanaf 0.001 SOL",
+        "unit": "Per API call (X402)"
+      },
+      "enterprise": {
+        "label": "Enterprise",
+        "price": "Custom",
+        "unit": "Volume kortingen & API keys"
+      },
+      "viewFull": "Bekijk volledige pricing"
+    },
+    "cta": {
+      "title": "Klaar om te Bouwen?",
+      "subtitle": "Geen sign-up nodig. Start direct met de MCP server of lees de documentatie.",
+      "getStarted": "Get Started",
+      "contactSales": "Contact Sales"
+    }
   }
 }

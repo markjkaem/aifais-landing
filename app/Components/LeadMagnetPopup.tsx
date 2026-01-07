@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { X, Download, CheckCircle2, Sparkles, FileText, Loader2 } from "lucide-react";
 
 interface LeadMagnetPopupProps {
@@ -16,6 +17,7 @@ export default function LeadMagnetPopup({
   delay = 30000,
   exitIntent = true
 }: LeadMagnetPopupProps) {
+  const t = useTranslations("leadMagnet");
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -126,14 +128,14 @@ export default function LeadMagnetPopup({
               <div className="relative">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white/90 text-xs font-medium mb-4">
                   <Sparkles className="w-3 h-3" />
-                  Gratis Download
+                  {t("badge")}
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-                  AI Readiness Checklist
+                  {t("title")}
                 </h2>
                 <p className="text-blue-100 text-sm sm:text-base">
-                  Ontdek in 5 minuten welke processen jij kunt automatiseren
+                  {t("description")}
                 </p>
               </div>
 
@@ -155,21 +157,17 @@ export default function LeadMagnetPopup({
                     <CheckCircle2 className="w-8 h-8 text-emerald-600" />
                   </div>
                   <h3 className="text-xl font-bold text-stone-900 mb-2">
-                    Check je inbox!
+                    {t("success.title")}
                   </h3>
                   <p className="text-stone-500 text-sm">
-                    De checklist is onderweg naar {email}
+                    {t("success.description")}
                   </p>
                 </motion.div>
               ) : (
                 <>
                   {/* Benefits */}
                   <ul className="space-y-3 mb-6">
-                    {[
-                      "10 vragen om je AI-gereedheid te testen",
-                      "ROI calculator template (Excel)",
-                      "Prioriteiten matrix voor processen",
-                    ].map((item, i) => (
+                    {[t("benefits.b1"), t("benefits.b2"), t("benefits.b3")].map((item, i) => (
                       <li key={i} className="flex items-start gap-3">
                         <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
                           <CheckCircle2 className="w-3 h-3 text-emerald-600" />
@@ -183,7 +181,7 @@ export default function LeadMagnetPopup({
                   <form onSubmit={handleSubmit} className="space-y-3">
                     <input
                       type="email"
-                      placeholder="jouw@email.nl"
+                      placeholder={t("emailPlaceholder")}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -200,20 +198,20 @@ export default function LeadMagnetPopup({
                       ) : (
                         <>
                           <Download className="w-5 h-5" />
-                          <span>Download Gratis Checklist</span>
+                          <span>{t("submit")}</span>
                         </>
                       )}
                     </button>
 
                     {status === "error" && (
                       <p className="text-red-500 text-sm text-center">
-                        Er ging iets mis. Probeer het opnieuw.
+                        {t("error")}
                       </p>
                     )}
                   </form>
 
                   <p className="text-xs text-stone-400 text-center mt-4">
-                    Geen spam. Je kunt je altijd uitschrijven.
+                    {t("privacy")}
                   </p>
                 </>
               )}

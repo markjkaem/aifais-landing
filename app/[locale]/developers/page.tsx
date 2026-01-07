@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { getTranslations } from "next-intl/server";
 
 const heading = Space_Grotesk({
   weight: ["600", "700"],
@@ -12,43 +13,25 @@ const mono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Developers | AIFAIS API & MCP Infrastructure",
-  description:
-    "Agent-ready infrastructure voor de Nederlandse markt. Integreer AIFAIS tools via MCP of REST API met pay-per-use pricing.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "developersPage.meta" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 import { API_CATEGORIES, API_ENDPOINTS, APIEndpoint } from "@/config/apis";
-
-// ... (other imports)
 
 // Use the types and constants from config
 const categories = API_CATEGORIES;
 const apis = API_ENDPOINTS;
-
-const features = [
-// ... (keep features)
-  {
-    icon: "⚡",
-    title: "< 200ms Response",
-    description: "Optimized for real-time agent workflows",
-  },
-  {
-    icon: "🔐",
-    title: "Enterprise Security",
-    description: "SOC2 ready, Dutch data sovereignty",
-  },
-  {
-    icon: "🇳🇱",
-    title: "NL Context",
-    description: "Built for Dutch regulations & language",
-  },
-  {
-    icon: "💳",
-    title: "X402 Native",
-    description: "Pay-per-call via Solana or traditional billing",
-  },
-];
 
 // ============================================================================
 // HELPER COMPONENTS
@@ -158,9 +141,40 @@ export default async function DevelopersPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "developersPage" });
 
   const liveApis = apis.filter((a) => a.status === "live");
   const comingApis = apis.filter((a) => a.status !== "live");
+
+  const features = [
+    {
+      icon: "⚡",
+      title: t("features.response.title"),
+      description: t("features.response.description"),
+    },
+    {
+      icon: "🔐",
+      title: t("features.security.title"),
+      description: t("features.security.description"),
+    },
+    {
+      icon: "🇳🇱",
+      title: t("features.context.title"),
+      description: t("features.context.description"),
+    },
+    {
+      icon: "💳",
+      title: t("features.payment.title"),
+      description: t("features.payment.description"),
+    },
+  ];
+
+  const integrationChecks = [
+    t("integration.checks.mcp"),
+    t("integration.checks.payment"),
+    t("integration.checks.dutch"),
+    t("integration.checks.sdk"),
+  ];
 
   return (
     <main className="bg-zinc-950 text-white min-h-screen">
@@ -185,25 +199,24 @@ export default async function DevelopersPage({
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
-              <span className="text-zinc-500">All systems operational</span>
-              <span className="text-emerald-400">{liveApis.length} APIs live</span>
+              <span className="text-zinc-500">{t("hero.status")}</span>
+              <span className="text-emerald-400">{liveApis.length} {t("hero.apisLive")}</span>
             </div>
 
             {/* Headline */}
             <h1
               className={`${heading.className} text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight leading-[1.1]`}
             >
-              <span className="text-white">Agent-Ready</span>
+              <span className="text-white">{t("hero.title")}</span>
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400">
-                API Infrastructure
+                {t("hero.titleHighlight")}
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mb-10 leading-relaxed">
-              Nederlandse AI infrastructure gebouwd voor agents. Integreer via MCP of REST API met pay-per-use
-              pricing via Solana.
+              {t("hero.subtitle")}
             </p>
 
             {/* CTAs */}
@@ -212,7 +225,7 @@ export default async function DevelopersPage({
                 href={`/${locale}/developers/docs`}
                 className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-zinc-900 font-semibold rounded-xl hover:bg-zinc-100 transition-colors"
               >
-                View Documentation
+                {t("hero.ctaDocs")}
                 <svg
                   className="w-4 h-4 group-hover:translate-x-0.5 transition-transform"
                   fill="none"
@@ -227,7 +240,7 @@ export default async function DevelopersPage({
                 className={`${mono.className} inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-zinc-900 border border-zinc-800 text-white font-medium rounded-xl hover:bg-zinc-800 hover:border-zinc-700 transition-colors`}
               >
                 <span className="text-emerald-400">$</span>
-                Setup MCP Server
+                {t("hero.ctaMcp")}
               </Link>
             </div>
 
@@ -275,14 +288,14 @@ export default async function DevelopersPage({
               <div>
                 <p className={`${mono.className} text-emerald-400 text-sm mb-2`}>// Available APIs</p>
                 <h2 className={`${heading.className} text-3xl sm:text-4xl font-bold text-white`}>
-                  Plug & Play Tools
+                  {t("apis.title")}
                 </h2>
               </div>
               <Link
                 href={`/${locale}/developers/docs`}
                 className={`${mono.className} flex items-center gap-2 text-sm text-zinc-500 hover:text-emerald-400 transition-colors`}
               >
-                Full API Reference
+                {t("apis.fullRef")}
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
@@ -323,8 +336,8 @@ export default async function DevelopersPage({
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-xl">🚀</span>
                   <div>
-                    <h3 className={`${heading.className} text-lg font-semibold text-white`}>Coming Soon</h3>
-                    <p className="text-sm text-zinc-500">{comingApis.length} APIs in development</p>
+                    <h3 className={`${heading.className} text-lg font-semibold text-white`}>{t("apis.comingSoon")}</h3>
+                    <p className="text-sm text-zinc-500">{comingApis.length} {t("apis.inDevelopment")}</p>
                   </div>
                 </div>
 
@@ -351,20 +364,14 @@ export default async function DevelopersPage({
               <div>
                 <p className={`${mono.className} text-cyan-400 text-sm mb-2`}>// Integration</p>
                 <h2 className={`${heading.className} text-3xl sm:text-4xl font-bold text-white mb-6`}>
-                  Simple JSON Schema
+                  {t("integration.title")}
                 </h2>
                 <p className="text-lg text-zinc-400 leading-relaxed mb-8">
-                  Vergeet complexe enterprise integraties. Roep tools aan met simpele JSON. Werkt met Claude, GPT,
-                  of je eigen agent.
+                  {t("integration.description")}
                 </p>
 
                 <div className="space-y-4">
-                  {[
-                    "MCP Server voor Cursor & Claude Desktop",
-                    "Pay-per-use via Solana (X402 protocol)",
-                    "Nederlandse context & data sovereignty",
-                    "TypeScript SDK beschikbaar",
-                  ].map((item, i) => (
+                  {integrationChecks.map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className="w-5 h-5 rounded bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5">
                         <svg className="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -441,8 +448,8 @@ export default async function DevelopersPage({
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center">
             <p className={`${mono.className} text-violet-400 text-sm mb-2`}>// Pricing</p>
-            <h2 className={`${heading.className} text-3xl sm:text-4xl font-bold text-white mb-4`}>Usage-Based Pricing</h2>
-            <p className="text-zinc-400 mb-12">Start gratis. Betaal alleen wat je gebruikt.</p>
+            <h2 className={`${heading.className} text-3xl sm:text-4xl font-bold text-white mb-4`}>{t("pricing.title")}</h2>
+            <p className="text-zinc-400 mb-12">{t("pricing.subtitle")}</p>
 
             <div className="grid sm:grid-cols-2 gap-6 max-w-xl mx-auto">
               {/* Pay per use */}
@@ -450,18 +457,18 @@ export default async function DevelopersPage({
                 <div
                   className={`${mono.className} absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-500 text-zinc-900 text-[10px] font-bold rounded-full uppercase`}
                 >
-                  Recommended
+                  {t("pricing.payPerUse.recommended")}
                 </div>
-                <p className={`${mono.className} text-sm text-zinc-400 mb-2`}>Pay-per-use</p>
-                <p className={`${heading.className} text-2xl font-bold text-white mb-1`}>From 0.001 SOL</p>
-                <p className="text-xs text-zinc-500">Per API call (X402)</p>
+                <p className={`${mono.className} text-sm text-zinc-400 mb-2`}>{t("pricing.payPerUse.label")}</p>
+                <p className={`${heading.className} text-2xl font-bold text-white mb-1`}>{t("pricing.payPerUse.price")}</p>
+                <p className="text-xs text-zinc-500">{t("pricing.payPerUse.unit")}</p>
               </div>
 
               {/* Enterprise */}
               <div className="p-6 rounded-xl bg-zinc-900/50 border border-zinc-800">
-                <p className={`${mono.className} text-sm text-zinc-400 mb-2`}>Enterprise</p>
-                <p className={`${heading.className} text-2xl font-bold text-white mb-1`}>Custom</p>
-                <p className="text-xs text-zinc-500">Volume discounts & API keys</p>
+                <p className={`${mono.className} text-sm text-zinc-400 mb-2`}>{t("pricing.enterprise.label")}</p>
+                <p className={`${heading.className} text-2xl font-bold text-white mb-1`}>{t("pricing.enterprise.price")}</p>
+                <p className="text-xs text-zinc-500">{t("pricing.enterprise.unit")}</p>
               </div>
             </div>
 
@@ -469,7 +476,7 @@ export default async function DevelopersPage({
               href={`/${locale}/developers/docs#pricing`}
               className={`${mono.className} inline-flex items-center gap-2 mt-8 text-sm text-zinc-500 hover:text-emerald-400 transition-colors`}
             >
-              View full pricing
+              {t("pricing.viewFull")}
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -493,9 +500,9 @@ export default async function DevelopersPage({
               npx github:aifais/aifais-mcp-server
             </div>
 
-            <h2 className={`${heading.className} text-3xl sm:text-4xl font-bold text-white mb-4`}>Ready to Build?</h2>
+            <h2 className={`${heading.className} text-3xl sm:text-4xl font-bold text-white mb-4`}>{t("cta.title")}</h2>
             <p className="text-zinc-400 mb-8">
-              Geen sign-up nodig. Start direct met de MCP server of lees de documentatie.
+              {t("cta.subtitle")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -503,13 +510,13 @@ export default async function DevelopersPage({
                 href={`/${locale}/developers/docs`}
                 className="px-8 py-4 bg-white text-zinc-900 font-semibold rounded-xl hover:bg-zinc-100 transition-colors"
               >
-                Get Started
+                {t("cta.getStarted")}
               </Link>
               <Link
                 href={`/${locale}/contact`}
                 className={`${mono.className} px-8 py-4 bg-zinc-900 border border-zinc-800 text-white rounded-xl hover:bg-zinc-800 transition-colors`}
               >
-                Contact Sales
+                {t("cta.contactSales")}
               </Link>
             </div>
           </div>

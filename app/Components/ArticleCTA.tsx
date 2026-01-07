@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   Calculator,
   Clock,
@@ -21,6 +21,7 @@ type TabType = "calculator" | "scan" | "contact";
 
 export default function ArticleCTA() {
   const locale = useLocale();
+  const t = useTranslations("articleCta");
   const [activeTab, setActiveTab] = useState<TabType>("calculator");
 
   // Calculator state
@@ -78,9 +79,9 @@ export default function ArticleCTA() {
   };
 
   const tabs = [
-    { id: "calculator" as const, label: "ROI Calculator", icon: Calculator },
-    { id: "scan" as const, label: "Gratis Scan", icon: Sparkles },
-    { id: "contact" as const, label: "Direct Contact", icon: Send },
+    { id: "calculator" as const, label: t("tabs.calculator"), icon: Calculator },
+    { id: "scan" as const, label: t("tabs.scan"), icon: Sparkles },
+    { id: "contact" as const, label: t("tabs.contact"), icon: Send },
   ];
 
   return (
@@ -92,11 +93,11 @@ export default function ArticleCTA() {
             <TrendingUp className="w-5 h-5 text-white" />
           </div>
           <h3 className="text-xl sm:text-2xl font-bold text-white">
-            Bereken jouw besparing
+            {t("header")}
           </h3>
         </div>
         <p className="text-stone-400">
-          Ontdek in 30 seconden hoeveel je kunt besparen met AI-automatisering
+          {t("description")}
         </p>
       </div>
 
@@ -137,9 +138,9 @@ export default function ArticleCTA() {
                   <div className="flex justify-between items-center mb-2">
                     <label className="text-stone-300 text-sm font-medium flex items-center gap-2">
                       <Clock className="w-4 h-4 text-blue-400" />
-                      Uren per week aan repetitief werk
+                      {t("calculator.hoursLabel")}
                     </label>
-                    <span className="text-white font-bold">{hoursPerWeek} uur</span>
+                    <span className="text-white font-bold">{hoursPerWeek} {t("calculator.hoursUnit")}</span>
                   </div>
                   <input
                     type="range"
@@ -156,7 +157,7 @@ export default function ArticleCTA() {
                   <div className="flex justify-between items-center mb-2">
                     <label className="text-stone-300 text-sm font-medium flex items-center gap-2">
                       <Euro className="w-4 h-4 text-emerald-400" />
-                      Gemiddeld uurtarief (incl. overhead)
+                      {t("calculator.rateLabel")}
                     </label>
                     <span className="text-white font-bold">€{hourlyRate}</span>
                   </div>
@@ -176,9 +177,9 @@ export default function ArticleCTA() {
                   <div className="flex justify-between items-center mb-2">
                     <label className="text-stone-300 text-sm font-medium flex items-center gap-2">
                       <Users className="w-4 h-4 text-purple-400" />
-                      Aantal medewerkers met dit werk
+                      {t("calculator.teamLabel")}
                     </label>
-                    <span className="text-white font-bold">{teamSize}</span>
+                    <span className="text-white font-bold">{teamSize} {t("calculator.teamUnit")}</span>
                   </div>
                   <input
                     type="range"
@@ -195,26 +196,26 @@ export default function ArticleCTA() {
               <div className="grid sm:grid-cols-3 gap-4 mb-8">
                 <div className="bg-white/5 rounded-2xl p-5 border border-white/10">
                   <div className="text-stone-400 text-xs uppercase tracking-wider mb-1">
-                    Maandelijkse besparing
+                    {t("calculator.results.yearly")}
                   </div>
                   <div className="text-2xl sm:text-3xl font-bold text-emerald-400">
-                    €{monthlySavings.toLocaleString("nl-NL")}
-                  </div>
-                </div>
-                <div className="bg-white/5 rounded-2xl p-5 border border-white/10">
-                  <div className="text-stone-400 text-xs uppercase tracking-wider mb-1">
-                    Jaarlijkse besparing
-                  </div>
-                  <div className="text-2xl sm:text-3xl font-bold text-blue-400">
                     €{yearlySavings.toLocaleString("nl-NL")}
                   </div>
                 </div>
                 <div className="bg-white/5 rounded-2xl p-5 border border-white/10">
                   <div className="text-stone-400 text-xs uppercase tracking-wider mb-1">
-                    Terugverdientijd
+                    {t("calculator.results.hours")}
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-bold text-blue-400">
+                    {Math.round(weeklyHoursSaved * 52 * teamSize)} {t("calculator.results.hoursUnit")}
+                  </div>
+                </div>
+                <div className="bg-white/5 rounded-2xl p-5 border border-white/10">
+                  <div className="text-stone-400 text-xs uppercase tracking-wider mb-1">
+                    {t("calculator.results.payback")}
                   </div>
                   <div className="text-2xl sm:text-3xl font-bold text-purple-400">
-                    {paybackMonths} {paybackMonths === 1 ? "maand" : "maanden"}
+                    {paybackMonths} {t("calculator.results.paybackUnit")}
                   </div>
                 </div>
               </div>
@@ -226,16 +227,20 @@ export default function ArticleCTA() {
                   className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 bg-white hover:bg-stone-100 text-stone-900 font-semibold rounded-xl transition-all"
                 >
                   <Sparkles className="w-5 h-5" />
-                  Vraag gratis scan aan
+                  {t("calculator.cta")}
                 </button>
                 <Link
                   href={`/${locale}/tools/roi-calculator`}
                   className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl transition-all border border-white/10"
                 >
-                  Uitgebreide calculator
+                  {locale === "nl" ? "Uitgebreide calculator" : "Advanced calculator"}
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
+
+              <p className="text-stone-500 text-xs text-center mt-4">
+                {t("calculator.note")}
+              </p>
             </motion.div>
           )}
 
@@ -254,10 +259,10 @@ export default function ArticleCTA() {
                     <CheckCircle2 className="w-8 h-8 text-emerald-400" />
                   </div>
                   <h4 className="text-xl font-bold text-white mb-2">
-                    Aanvraag ontvangen!
+                    {t("scan.success.title")}
                   </h4>
                   <p className="text-stone-400">
-                    We nemen binnen 24 uur contact met je op.
+                    {t("scan.success.description")}
                   </p>
                 </div>
               ) : (
@@ -265,7 +270,7 @@ export default function ArticleCTA() {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-stone-400 text-sm mb-2">
-                        Naam
+                        {locale === "nl" ? "Naam" : "Name"}
                       </label>
                       <input
                         type="text"
@@ -275,12 +280,12 @@ export default function ArticleCTA() {
                           setFormData({ ...formData, name: e.target.value })
                         }
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
-                        placeholder="Je naam"
+                        placeholder={t("scan.namePlaceholder")}
                       />
                     </div>
                     <div>
                       <label className="block text-stone-400 text-sm mb-2">
-                        E-mail
+                        {locale === "nl" ? "E-mail" : "Email"}
                       </label>
                       <input
                         type="email"
@@ -290,14 +295,14 @@ export default function ArticleCTA() {
                           setFormData({ ...formData, email: e.target.value })
                         }
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
-                        placeholder="je@bedrijf.nl"
+                        placeholder={t("scan.emailPlaceholder")}
                       />
                     </div>
                   </div>
 
                   <div>
                     <label className="block text-stone-400 text-sm mb-2">
-                      Bedrijfsnaam
+                      {locale === "nl" ? "Bedrijfsnaam" : "Company name"}
                     </label>
                     <input
                       type="text"
@@ -307,13 +312,13 @@ export default function ArticleCTA() {
                         setFormData({ ...formData, company: e.target.value })
                       }
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
-                      placeholder="Je bedrijf"
+                      placeholder={t("scan.companyPlaceholder")}
                     />
                   </div>
 
                   <div>
                     <label className="block text-stone-400 text-sm mb-2">
-                      Welk proces wil je automatiseren?
+                      {t("scan.processPlaceholder").split("?")[0] + "?"}
                     </label>
                     <textarea
                       rows={3}
@@ -322,7 +327,7 @@ export default function ArticleCTA() {
                         setFormData({ ...formData, process: e.target.value })
                       }
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 resize-none"
-                      placeholder="Bijv. factuurverwerking, email triage, lead opvolging..."
+                      placeholder={locale === "nl" ? "Bijv. factuurverwerking, email triage, lead opvolging..." : "E.g. invoice processing, email triage, lead follow-up..."}
                     />
                   </div>
 
@@ -330,10 +335,10 @@ export default function ArticleCTA() {
                   {monthlySavings > 0 && (
                     <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 flex items-center justify-between">
                       <span className="text-emerald-400 text-sm">
-                        Je geschatte besparing:
+                        {locale === "nl" ? "Je geschatte besparing:" : "Your estimated savings:"}
                       </span>
                       <span className="text-white font-bold">
-                        €{yearlySavings.toLocaleString("nl-NL")}/jaar
+                        €{yearlySavings.toLocaleString("nl-NL")}/{locale === "nl" ? "jaar" : "year"}
                       </span>
                     </div>
                   )}
@@ -348,19 +353,21 @@ export default function ArticleCTA() {
                     ) : (
                       <>
                         <Sparkles className="w-5 h-5" />
-                        Vraag gratis scan aan
+                        {t("scan.submit")}
                       </>
                     )}
                   </button>
 
                   {formStatus === "error" && (
                     <p className="text-red-400 text-sm text-center">
-                      Er ging iets mis. Probeer het opnieuw.
+                      {t("scan.error")}
                     </p>
                   )}
 
                   <p className="text-stone-500 text-xs text-center">
-                    Vrijblijvend • Reactie binnen 24 uur • Geen verplichtingen
+                    {locale === "nl"
+                      ? "Vrijblijvend • Reactie binnen 24 uur • Geen verplichtingen"
+                      : "No obligation • Response within 24 hours • No commitments"}
                   </p>
                 </form>
               )}
@@ -382,11 +389,10 @@ export default function ArticleCTA() {
               </div>
 
               <h4 className="text-xl font-bold text-white mb-2">
-                Liever direct contact?
+                {t("contact.title")}
               </h4>
               <p className="text-stone-400 mb-8 max-w-md mx-auto">
-                Plan een vrijblijvend gesprek in of neem contact op via het
-                contactformulier.
+                {t("contact.description")}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -403,16 +409,20 @@ export default function ArticleCTA() {
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-stone-100 text-stone-900 font-semibold rounded-xl transition-all"
                 >
                   <Clock className="w-5 h-5" />
-                  Plan een gesprek
+                  {t("contact.cta")}
                 </button>
                 <Link
                   href={`/${locale}/contact`}
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl transition-all border border-white/10"
                 >
-                  Contactformulier
+                  {locale === "nl" ? "Contactformulier" : "Contact form"}
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
+
+              <p className="text-stone-500 text-xs mt-6">
+                {t("contact.responseTime")}
+              </p>
             </motion.div>
           )}
         </AnimatePresence>

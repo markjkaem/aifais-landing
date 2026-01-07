@@ -778,5 +778,210 @@
       "subtitle": "This is not standard software. This is custom architecture. We build this specifically for your data streams.",
       "button": "Plan a Strategy Session"
     }
+  },
+  "agentDemo": {
+    "badge": "Live Demo Available",
+    "title": "See an AI Agent",
+    "titleHighlight": "in action",
+    "description": "No talk, just results. Watch how our AI agent processes a complete inbox — fully autonomous, without your input. Real-time. In 4 minutes.",
+    "features": {
+      "emails": "5 emails in 4 min",
+      "autonomous": "Fully autonomous",
+      "realAi": "Real AI responses",
+      "free": "Free to try"
+    },
+    "cta": "Start Live Demo",
+    "noAccount": "No account needed",
+    "visual": {
+      "header": "Inbox Agent",
+      "headerSub": "Processes emails automatically",
+      "live": "Live",
+      "inbox": "Inbox",
+      "inboxCount": "5 emails",
+      "agent": "Agent",
+      "processing": "Processing",
+      "drafts": "Drafts",
+      "ready": "Ready",
+      "emails": {
+        "email1": "Quote request for 8 users",
+        "email2": "Invoice #2024-0892 not received",
+        "email3": "Problem with export function",
+        "email4": "Schedule introduction meeting"
+      },
+      "processingText": "Processing...",
+      "avgTime": "Average:",
+      "avgValue": "45 sec/email",
+      "savings": "Savings:",
+      "savingsValue": "30+ min/day"
+    },
+    "badges": {
+      "noCode": "No code needed",
+      "powered": "Claude AI Powered"
+    }
+  },
+  "articleCta": {
+    "header": "Calculate your savings",
+    "description": "Discover in 30 seconds how much you can save with AI automation",
+    "tabs": {
+      "calculator": "ROI Calculator",
+      "scan": "Free Scan",
+      "contact": "Direct Contact"
+    },
+    "calculator": {
+      "hoursLabel": "Hours spent weekly on repetitive tasks",
+      "hoursUnit": "hours/week",
+      "rateLabel": "Average hourly rate",
+      "teamLabel": "Team members involved",
+      "teamUnit": "persons",
+      "results": {
+        "title": "Your potential savings",
+        "yearly": "Yearly savings",
+        "hours": "Hours reclaimed",
+        "hoursUnit": "hours/year",
+        "payback": "Payback period",
+        "paybackUnit": "months"
+      },
+      "cta": "Receive personal analysis",
+      "note": "Based on 70% automation potential"
+    },
+    "scan": {
+      "title": "Free process scan",
+      "description": "Fill in your details and receive a personal analysis of your automation opportunities within 24 hours.",
+      "namePlaceholder": "Your name",
+      "emailPlaceholder": "Email address",
+      "companyPlaceholder": "Company name",
+      "processPlaceholder": "Which process would you like to automate?",
+      "submit": "Request free scan",
+      "sending": "Sending...",
+      "success": {
+        "title": "Request received!",
+        "description": "We will contact you within 24 hours with your personal analysis."
+      },
+      "error": "Something went wrong. Please try again."
+    },
+    "contact": {
+      "title": "Prefer direct contact?",
+      "description": "Schedule a no-obligation call. We will discuss your processes together.",
+      "cta": "Schedule free call",
+      "responseTime": "Response within 4 hours"
+    }
+  },
+  "leadMagnet": {
+    "badge": "Free Download",
+    "title": "AI Readiness Checklist",
+    "description": "Discover which processes are suitable for AI automation within your company. Practical checklist with 15 criteria.",
+    "benefits": {
+      "b1": "15 assessment criteria",
+      "b2": "Priority matrix included",
+      "b3": "Direct insight in 5 minutes"
+    },
+    "emailPlaceholder": "Your email address",
+    "submit": "Download Checklist",
+    "sending": "Sending...",
+    "privacy": "We respect your privacy. No spam.",
+    "success": {
+      "title": "Check your inbox!",
+      "description": "We have sent the checklist to your email address."
+    },
+    "error": "Something went wrong. Please try again."
+  },
+  "cookieBanner": {
+    "title": "Cookies on AIFAIS",
+    "description": "We use cookies to improve your experience and analyze our site.",
+    "moreInfo": "More information",
+    "categories": {
+      "necessary": {
+        "title": "Necessary",
+        "badge": "Always on",
+        "description": "Essential for the website to function"
+      },
+      "analytics": {
+        "title": "Analytics",
+        "description": "Google Analytics for website usage analysis"
+      },
+      "marketing": {
+        "title": "Marketing",
+        "description": "For measuring campaign effectiveness"
+      }
+    },
+    "links": {
+      "intro": "Read more in our",
+      "privacy": "privacy policy",
+      "and": "and",
+      "cookies": "cookie policy"
+    },
+    "acceptAll": "Accept all",
+    "acceptNecessary": "Necessary only"
+  },
+  "developersPage": {
+    "meta": {
+      "title": "Developers | AIFAIS API & MCP Infrastructure",
+      "description": "Agent-ready infrastructure for the Dutch market. Integrate AIFAIS tools via MCP or REST API with pay-per-use pricing."
+    },
+    "hero": {
+      "status": "All systems operational",
+      "apisLive": "APIs live",
+      "title": "Agent-Ready",
+      "titleHighlight": "API Infrastructure",
+      "subtitle": "Dutch AI infrastructure built for agents. Integrate via MCP or REST API with pay-per-use pricing via Solana.",
+      "ctaDocs": "View Documentation",
+      "ctaMcp": "Setup MCP Server"
+    },
+    "features": {
+      "response": {
+        "title": "< 200ms Response",
+        "description": "Optimized for real-time agent workflows"
+      },
+      "security": {
+        "title": "Enterprise Security",
+        "description": "SOC2 ready, Dutch data sovereignty"
+      },
+      "context": {
+        "title": "NL Context",
+        "description": "Built for Dutch regulations & language"
+      },
+      "payment": {
+        "title": "X402 Native",
+        "description": "Pay-per-call via Solana or traditional billing"
+      }
+    },
+    "apis": {
+      "title": "Plug & Play Tools",
+      "fullRef": "Full API Reference",
+      "comingSoon": "Coming Soon",
+      "inDevelopment": "APIs in development"
+    },
+    "integration": {
+      "title": "Simple JSON Schema",
+      "description": "Forget complex enterprise integrations. Call tools with simple JSON. Works with Claude, GPT, or your own agent.",
+      "checks": {
+        "mcp": "MCP Server for Cursor & Claude Desktop",
+        "payment": "Pay-per-use via Solana (X402 protocol)",
+        "dutch": "Dutch context & data sovereignty",
+        "sdk": "TypeScript SDK available"
+      }
+    },
+    "pricing": {
+      "title": "Usage-Based Pricing",
+      "subtitle": "Start free. Pay only what you use.",
+      "payPerUse": {
+        "label": "Pay-per-use",
+        "recommended": "Recommended",
+        "price": "From 0.001 SOL",
+        "unit": "Per API call (X402)"
+      },
+      "enterprise": {
+        "label": "Enterprise",
+        "price": "Custom",
+        "unit": "Volume discounts & API keys"
+      },
+      "viewFull": "View full pricing"
+    },
+    "cta": {
+      "title": "Ready to Build?",
+      "subtitle": "No sign-up needed. Start directly with the MCP server or read the documentation.",
+      "getStarted": "Get Started",
+      "contactSales": "Contact Sales"
+    }
   }
 }

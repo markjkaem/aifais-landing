@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import {
   Play,
@@ -17,6 +17,21 @@ import {
 
 export default function AgentDemoSection() {
   const locale = useLocale();
+  const t = useTranslations("agentDemo");
+
+  const features = [
+    { icon: Clock, text: t("features.emails"), color: "text-blue-400" },
+    { icon: Bot, text: t("features.autonomous"), color: "text-purple-400" },
+    { icon: Sparkles, text: t("features.realAi"), color: "text-amber-400" },
+    { icon: Zap, text: t("features.free"), color: "text-emerald-400" },
+  ];
+
+  const emails = [
+    { subject: t("visual.emails.email1"), status: "done" },
+    { subject: t("visual.emails.email2"), status: "done" },
+    { subject: t("visual.emails.email3"), status: "processing" },
+    { subject: t("visual.emails.email4"), status: "pending" },
+  ];
 
   return (
     <section className="py-24 md:py-32 bg-gradient-to-b from-stone-900 via-stone-900 to-stone-800 relative overflow-hidden">
@@ -49,7 +64,7 @@ export default function AgentDemoSection() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
               </span>
               <span className="text-sm font-medium text-white/80">
-                Live Demo Beschikbaar
+                {t("badge")}
               </span>
             </motion.div>
 
@@ -61,9 +76,9 @@ export default function AgentDemoSection() {
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]"
             >
-              Zie een AI Agent{" "}
+              {t("title")}{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-                in actie
+                {t("titleHighlight")}
               </span>
             </motion.h2>
 
@@ -75,9 +90,7 @@ export default function AgentDemoSection() {
               transition={{ delay: 0.2 }}
               className="text-lg text-stone-400 mb-8 leading-relaxed max-w-lg"
             >
-              Geen praatjes, maar resultaat. Bekijk hoe onze AI-agent een
-              complete inbox verwerkt — volledig autonoom, zonder jouw input.
-              Real-time. In 4 minuten.
+              {t("description")}
             </motion.p>
 
             {/* Features */}
@@ -88,12 +101,7 @@ export default function AgentDemoSection() {
               transition={{ delay: 0.3 }}
               className="grid grid-cols-2 gap-4 mb-10"
             >
-              {[
-                { icon: Clock, text: "5 emails in 4 min", color: "text-blue-400" },
-                { icon: Bot, text: "Volledig autonoom", color: "text-purple-400" },
-                { icon: Sparkles, text: "Echte AI responses", color: "text-amber-400" },
-                { icon: Zap, text: "Gratis te proberen", color: "text-emerald-400" },
-              ].map((item, i) => (
+              {features.map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <div className={`${item.color}`}>
                     <item.icon className="w-5 h-5" />
@@ -118,11 +126,11 @@ export default function AgentDemoSection() {
                 className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-stone-900 font-semibold rounded-full hover:bg-stone-100 transition-all duration-300 shadow-2xl shadow-white/10 hover:-translate-y-0.5"
               >
                 <Play className="w-5 h-5" />
-                <span>Start Live Demo</span>
+                <span>{t("cta")}</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <span className="text-stone-500 text-sm">
-                Geen account nodig
+                {t("noAccount")}
               </span>
             </motion.div>
           </div>
@@ -147,13 +155,13 @@ export default function AgentDemoSection() {
                     <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-white font-semibold text-sm sm:text-base truncate">Inbox Agent</div>
-                    <div className="text-stone-500 text-[10px] sm:text-xs truncate">Verwerkt emails automatisch</div>
+                    <div className="text-white font-semibold text-sm sm:text-base truncate">{t("visual.header")}</div>
+                    <div className="text-stone-500 text-[10px] sm:text-xs truncate">{t("visual.headerSub")}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-emerald-500/20 rounded-full flex-shrink-0">
                   <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-emerald-400 text-[10px] sm:text-xs font-medium">Live</span>
+                  <span className="text-emerald-400 text-[10px] sm:text-xs font-medium">{t("visual.live")}</span>
                 </div>
               </div>
 
@@ -167,8 +175,8 @@ export default function AgentDemoSection() {
                       <Mail className="w-5 h-5 sm:w-7 sm:h-7 text-blue-400" />
                     </div>
                     <div className="sm:text-center">
-                      <span className="text-stone-400 text-xs block">Inbox</span>
-                      <span className="text-white text-sm font-semibold">5 emails</span>
+                      <span className="text-stone-400 text-xs block">{t("visual.inbox")}</span>
+                      <span className="text-white text-sm font-semibold">{t("visual.inboxCount")}</span>
                     </div>
                   </div>
 
@@ -194,8 +202,8 @@ export default function AgentDemoSection() {
                       <Bot className="w-5 h-5 sm:w-7 sm:h-7 text-purple-400" />
                     </motion.div>
                     <div className="sm:text-center">
-                      <span className="text-stone-400 text-xs block">Agent</span>
-                      <span className="text-white text-sm font-semibold">Verwerkt</span>
+                      <span className="text-stone-400 text-xs block">{t("visual.agent")}</span>
+                      <span className="text-white text-sm font-semibold">{t("visual.processing")}</span>
                     </div>
                   </div>
 
@@ -217,20 +225,15 @@ export default function AgentDemoSection() {
                       <FileText className="w-5 h-5 sm:w-7 sm:h-7 text-emerald-400" />
                     </div>
                     <div className="sm:text-center">
-                      <span className="text-stone-400 text-xs block">Concepten</span>
-                      <span className="text-white text-sm font-semibold">Klaar</span>
+                      <span className="text-stone-400 text-xs block">{t("visual.drafts")}</span>
+                      <span className="text-white text-sm font-semibold">{t("visual.ready")}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Sample emails being processed */}
                 <div className="space-y-2 sm:space-y-3">
-                  {[
-                    { subject: "Offerte aanvraag voor 8 gebruikers", status: "done" },
-                    { subject: "Factuur #2024-0892 niet ontvangen", status: "done" },
-                    { subject: "Probleem met exportfunctie", status: "processing" },
-                    { subject: "Kennismakingsgesprek plannen", status: "pending" },
-                  ].map((email, i) => (
+                  {emails.map((email, i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, x: -10 }}
@@ -280,7 +283,7 @@ export default function AgentDemoSection() {
                       </span>
                       {email.status === "processing" && (
                         <span className="text-[10px] sm:text-xs text-purple-400 font-medium flex-shrink-0">
-                          Verwerken...
+                          {t("visual.processingText")}
                         </span>
                       )}
                     </motion.div>
@@ -291,12 +294,12 @@ export default function AgentDemoSection() {
               {/* Footer */}
               <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/10 bg-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
                 <div className="text-xs sm:text-sm">
-                  <span className="text-stone-500">Gemiddeld:</span>
-                  <span className="ml-1 sm:ml-2 text-white font-semibold">45 sec/email</span>
+                  <span className="text-stone-500">{t("visual.avgTime")}</span>
+                  <span className="ml-1 sm:ml-2 text-white font-semibold">{t("visual.avgValue")}</span>
                 </div>
                 <div className="text-xs sm:text-sm">
-                  <span className="text-stone-500">Besparing:</span>
-                  <span className="ml-1 sm:ml-2 text-emerald-400 font-semibold">30+ min/dag</span>
+                  <span className="text-stone-500">{t("visual.savings")}</span>
+                  <span className="ml-1 sm:ml-2 text-emerald-400 font-semibold">{t("visual.savingsValue")}</span>
                 </div>
               </div>
             </div>
@@ -312,7 +315,7 @@ export default function AgentDemoSection() {
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-500" />
                 <span className="text-sm font-semibold text-stone-900">
-                  Geen code nodig
+                  {t("badges.noCode")}
                 </span>
               </div>
             </motion.div>
@@ -326,7 +329,7 @@ export default function AgentDemoSection() {
             >
               <div className="flex items-center gap-2 text-white">
                 <Zap className="w-4 h-4" />
-                <span className="text-sm font-semibold">Claude AI Powered</span>
+                <span className="text-sm font-semibold">{t("badges.powered")}</span>
               </div>
             </motion.div>
           </motion.div>
