@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { usePaywallTool } from "@/hooks/usePaywallTool";
 import { PaywallToolWrapper } from "@/app/Components/tools/PaywallToolWrapper";
 import { ToolLoadingState } from "@/app/Components/tools/ToolLoadingState";
 import { getToolBySlug } from "@/config/tools";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     Building2,
@@ -134,12 +135,14 @@ type ApiResponse =
 
 export default function KvkSearchClient() {
     const toolMetadata = getToolBySlug("kvk-search");
+    const searchParams = useSearchParams();
 
     // Search state
     const [searchQuery, setSearchQuery] = useState("");
     const [searchType, setSearchType] = useState<"naam" | "kvkNummer">("naam");
     const [plaats, setPlaats] = useState("");
     const [inclusiefInactief, setInclusiefInactief] = useState(false);
+    const [stripeProcessed, setStripeProcessed] = useState(false);
 
     // Results state
     const [searchResults, setSearchResults] = useState<CompanySearchResult[] | null>(null);
@@ -151,6 +154,73 @@ export default function KvkSearchClient() {
         requiredAmount: toolMetadata?.pricing.price,
     });
 
+    // Handle Stripe redirect with session_id
+    useEffect(() => {
+        const sessionId = searchParams.get("session_id");
+        if (sessionId && !stripeProcessed) {
+            setStripeProcessed(true);
+
+            // Get stored query from localStorage
+            const storedQuery = localStorage.getItem("kvk_pending_query");
+            if (storedQuery) {
+                try {
+                    const parsed = JSON.parse(storedQuery);
+                    localStorage.removeItem("kvk_pending_query");
+
+                    // Update form state
+                    setSearchQuery(parsed.query || "");
+                    setSearchType(parsed.type || "naam");
+                    setPlaats(parsed.plaats || "");
+                    setInclusiefInactief(parsed.inclusiefInactief || false);
+
+                    // Execute with Stripe session
+                    executeWithStripe(parsed, sessionId);
+                } catch (e) {
+                    console.error("Failed to parse stored query:", e);
+                }
+            }
+
+            // Clean up URL
+            const url = new URL(window.location.href);
+            url.searchParams.delete("session_id");
+            window.history.replaceState({}, "", url.toString());
+        }
+    }, [searchParams, stripeProcessed]);
+
+    // Execute API call with Stripe session ID
+    const executeWithStripe = async (input: any, sessionId: string) => {
+        const body = {
+            ...input,
+            stripeSessionId: sessionId,
+        };
+
+        try {
+            const response = await fetch("/api/v1/business/kvk-search", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                const data = result.data as ApiResponse;
+                if (data.type === "search") {
+                    setSearchResults(data.results);
+                } else if (data.type === "profile") {
+                    setSelectedProfile(data.profile);
+                }
+            }
+        } catch (error) {
+            console.error("API call failed:", error);
+        }
+    };
+
+    // Store query before Stripe redirect
+    const storeQueryForStripe = (query: any) => {
+        localStorage.setItem("kvk_pending_query", JSON.stringify(query));
+    };
+
     // Handle search
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -159,22 +229,27 @@ export default function KvkSearchClient() {
         setSearchResults(null);
         setSelectedProfile(null);
 
-        execute({
+        const queryData = {
             query: searchQuery.trim(),
             type: searchType,
             plaats: plaats.trim() || undefined,
             inclusiefInactief,
             getFullProfile: false,
-        });
+        };
+
+        // Store query for Stripe redirect
+        storeQueryForStripe(queryData);
+
+        execute(queryData);
     };
 
     // Handle selecting a company for full profile
     const handleSelectCompany = async (kvkNummer: string) => {
         setSelectedProfile(null);
 
-        execute({
+        const queryData = {
             query: kvkNummer,
-            type: "kvkNummer",
+            type: "kvkNummer" as const,
             getFullProfile: true,
             enrichments: {
                 website: true,
@@ -184,7 +259,12 @@ export default function KvkSearchClient() {
                 reviews: true,
                 aiAnalysis: true,
             },
-        });
+        };
+
+        // Store query for Stripe redirect
+        storeQueryForStripe(queryData);
+
+        execute(queryData);
     };
 
     // Update results when state changes
