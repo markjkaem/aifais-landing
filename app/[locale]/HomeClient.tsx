@@ -12,6 +12,7 @@ import TechStackSection from "../Components/home/TechStackSection";
 import PortfolioSection from "../Components/home/PortfolioSection";
 import TeamSection from "../Components/home/TeamSection";
 import NewsletterCTA from "../Components/home/NewsletterCTA";
+import LeadMagnetPopup from "../Components/LeadMagnetPopup";
 
 interface HomeClientProps {
   projects: Project[];
@@ -22,19 +23,19 @@ export default function HomeClient({ projects, hideHero = false }: HomeClientPro
   return (
     <main className="bg-white text-stone-900 min-h-screen transition-colors duration-500">
       {!hideHero && <HeroSection />}
-      
+
       <ExplainerSection />
 
       <AgentDemoSection />
 
       <ProcessSection />
-      
+
       <TechStackSection />
-      
+
       <IntroVideoSection />
-      
+
       <PortfolioSection projects={projects} />
-      
+
       <TeamSection />
 
       <div id="demo" className="scroll-mt-24">
@@ -43,6 +44,9 @@ export default function HomeClient({ projects, hideHero = false }: HomeClientPro
 
       <FAQSection />
       <NewsletterCTA />
+
+      {/* Lead Magnet Popup - shows after 30 seconds or on exit intent */}
+      <LeadMagnetPopup delay={30000} exitIntent={true} />
     </main>
   );
 }
