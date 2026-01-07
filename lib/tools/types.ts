@@ -44,8 +44,6 @@ export interface ToolState<T> {
 
 // Result history types
 export interface HistoryEntry<T = any> {
-    totalSlides: ReactNode;
-    companyName: ReactNode;
     id: string;
     toolId: string;
     timestamp: number;
