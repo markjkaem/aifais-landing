@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { isDevBypass } from "@/lib/security/dev-bypass";
 
 // Initialiseer Claude
 const anthropic = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY || "" });
@@ -9,7 +10,8 @@ const anthropic = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY || "" });
  */
 export async function scanInvoiceWithClaude(invoiceBase64: string, mimeType: string) {
   // DEV_BYPASS logic to avoid AI costs during testing
-  if (invoiceBase64 === 'DEV_BYPASS' || process.env.NODE_ENV === 'test') {
+  // NOTE: We keep explicit NODE_ENV === 'test' check as well because sometimes tests might not pass 'DEV_BYPASS' explicitly but rely on env
+  if (isDevBypass(invoiceBase64) || process.env.NODE_ENV === 'test') {
     return {
       supplier: { name: "Test Supplier BV", kvk_number: "12345678", vat_id: "NL123456789B01" },
       invoice: { number: "INV-2024-001", date: "2024-01-01", total_amount: 100.00, currency: "EUR" },

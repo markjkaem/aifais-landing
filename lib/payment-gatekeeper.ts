@@ -2,6 +2,7 @@ import { Connection, clusterApiUrl } from "@solana/web3.js";
 import Stripe from "stripe";
 import { redis } from "@/lib/redis";
 import { checkPayment, markPaymentUsed } from "@/utils/x402-guard"; // Zorg dat deze import klopt met jouw structuur
+import { isDevBypass } from "@/lib/security/dev-bypass";
 
 // Init services (singleton pattern buiten de functie)
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY || "");
@@ -25,7 +26,7 @@ export async function gatekeepPayment(reqBody: any, requiredAmount?: number): Pr
   // --- OPTIE A: SOLANA (X402) ---
   if (signature) {
     // DEVELOPMENT BACKDOOR
-    if (process.env.NODE_ENV === 'development' && signature === 'DEV_BYPASS') {
+    if (isDevBypass(signature)) {
       console.warn("⚠️ DEV_BYPASS used for payment verification");
       return { success: true, method: "dev_bypass" };
     }
