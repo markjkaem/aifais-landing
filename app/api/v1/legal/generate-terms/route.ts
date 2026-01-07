@@ -4,6 +4,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { createToolHandler } from "@/lib/tools/createToolHandler";
 import { PDFGenerator } from "@/lib/pdf/generator";
 import { rgb } from "pdf-lib";
+import { isDevBypass } from "@/lib/security/dev-bypass";
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -34,7 +35,7 @@ export const POST = createToolHandler({
         let articles: string[];
 
         // DEV_BYPASS or Mock
-        if (context.payment.method === 'dev_bypass' || body.signature === 'DEV_BYPASS') {
+        if (context.payment.method === 'dev_bypass' || isDevBypass(body.signature)) {
             articles = [
                 "Artikel 1: Definities\nIn deze voorwaarden wordt verstaan onder...",
                 "Artikel 2: Toepasselijkheid\nDeze voorwaarden zijn van toepassing op alle aanbiedingen...",

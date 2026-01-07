@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import { addLeadToNotion } from "@/lib/crm/notion";
 import { createToolHandler } from "@/lib/tools/createToolHandler";
 import { contactSchema } from "@/lib/security/schemas";
+import { isDevBypass } from "@/lib/security/dev-bypass";
 
 export const POST = createToolHandler({
     schema: contactSchema,
@@ -11,7 +12,7 @@ export const POST = createToolHandler({
         const { name, email, phone, message } = data;
 
         // DEV_BYPASS logic
-        if (email === 'DEV_BYPASS@example.com' || name === 'DEV_BYPASS') {
+        if (isDevBypass(email) || isDevBypass(name)) {
             console.log("DEV_BYPASS: Skipping email and Notion for contact form");
             return { ok: true };
         }
