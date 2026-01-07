@@ -141,84 +141,90 @@ export default function AgentDemoSection() {
             {/* Main visual card */}
             <div className="relative bg-stone-800/80 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
               {/* Header */}
-              <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                    <Bot className="w-5 h-5 text-white" />
+              <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-white/10 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+                    <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <div>
-                    <div className="text-white font-semibold">Inbox Agent</div>
-                    <div className="text-stone-500 text-xs">Verwerkt emails automatisch</div>
+                  <div className="min-w-0">
+                    <div className="text-white font-semibold text-sm sm:text-base truncate">Inbox Agent</div>
+                    <div className="text-stone-500 text-[10px] sm:text-xs truncate">Verwerkt emails automatisch</div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/20 rounded-full">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-emerald-400 text-xs font-medium">Live</span>
+                <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-emerald-500/20 rounded-full flex-shrink-0">
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-emerald-400 text-[10px] sm:text-xs font-medium">Live</span>
                 </div>
               </div>
 
               {/* Content - Simulated workflow */}
-              <div className="p-6">
-                {/* Flow visualization */}
-                <div className="flex items-center justify-between mb-8">
+              <div className="p-4 sm:p-6">
+                {/* Flow visualization - Mobile: vertical, Desktop: horizontal */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-2 mb-6 sm:mb-8">
                   {/* Inbox */}
-                  <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-2xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center mb-2">
-                      <Mail className="w-7 h-7 text-blue-400" />
+                  <div className="flex sm:flex-col items-center gap-3 sm:gap-0">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center sm:mb-2">
+                      <Mail className="w-5 h-5 sm:w-7 sm:h-7 text-blue-400" />
                     </div>
-                    <span className="text-stone-400 text-xs">Inbox</span>
-                    <span className="text-white text-sm font-semibold">5 emails</span>
+                    <div className="sm:text-center">
+                      <span className="text-stone-400 text-xs block">Inbox</span>
+                      <span className="text-white text-sm font-semibold">5 emails</span>
+                    </div>
                   </div>
 
-                  {/* Arrow */}
-                  <div className="flex-1 flex items-center justify-center px-4">
+                  {/* Arrow - hidden on mobile, shown on desktop */}
+                  <div className="hidden sm:flex flex-1 items-center justify-center px-2 md:px-4">
                     <motion.div
                       animate={{ x: [0, 10, 0] }}
                       transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
                       className="flex items-center gap-1"
                     >
-                      <div className="w-16 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
+                      <div className="w-8 md:w-16 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
                       <ArrowRight className="w-4 h-4 text-purple-400" />
                     </motion.div>
                   </div>
 
                   {/* Agent */}
-                  <div className="flex flex-col items-center">
+                  <div className="flex sm:flex-col items-center gap-3 sm:gap-0">
                     <motion.div
                       animate={{ scale: [1, 1.05, 1] }}
                       transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                      className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 border border-purple-500/30 flex items-center justify-center mb-2"
+                      className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 border border-purple-500/30 flex items-center justify-center sm:mb-2"
                     >
-                      <Bot className="w-7 h-7 text-purple-400" />
+                      <Bot className="w-5 h-5 sm:w-7 sm:h-7 text-purple-400" />
                     </motion.div>
-                    <span className="text-stone-400 text-xs">Agent</span>
-                    <span className="text-white text-sm font-semibold">Verwerkt</span>
+                    <div className="sm:text-center">
+                      <span className="text-stone-400 text-xs block">Agent</span>
+                      <span className="text-white text-sm font-semibold">Verwerkt</span>
+                    </div>
                   </div>
 
-                  {/* Arrow */}
-                  <div className="flex-1 flex items-center justify-center px-4">
+                  {/* Arrow - hidden on mobile, shown on desktop */}
+                  <div className="hidden sm:flex flex-1 items-center justify-center px-2 md:px-4">
                     <motion.div
                       animate={{ x: [0, 10, 0] }}
                       transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0.5 }}
                       className="flex items-center gap-1"
                     >
-                      <div className="w-16 h-0.5 bg-gradient-to-r from-purple-500 to-emerald-500 rounded-full" />
+                      <div className="w-8 md:w-16 h-0.5 bg-gradient-to-r from-purple-500 to-emerald-500 rounded-full" />
                       <ArrowRight className="w-4 h-4 text-emerald-400" />
                     </motion.div>
                   </div>
 
                   {/* Drafts */}
-                  <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-2">
-                      <FileText className="w-7 h-7 text-emerald-400" />
+                  <div className="flex sm:flex-col items-center gap-3 sm:gap-0">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center sm:mb-2">
+                      <FileText className="w-5 h-5 sm:w-7 sm:h-7 text-emerald-400" />
                     </div>
-                    <span className="text-stone-400 text-xs">Concepten</span>
-                    <span className="text-white text-sm font-semibold">Klaar</span>
+                    <div className="sm:text-center">
+                      <span className="text-stone-400 text-xs block">Concepten</span>
+                      <span className="text-white text-sm font-semibold">Klaar</span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Sample emails being processed */}
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {[
                     { subject: "Offerte aanvraag voor 8 gebruikers", status: "done" },
                     { subject: "Factuur #2024-0892 niet ontvangen", status: "done" },
@@ -231,7 +237,7 @@ export default function AgentDemoSection() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.5 + i * 0.1 }}
-                      className={`flex items-center gap-3 p-3 rounded-xl ${
+                      className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg sm:rounded-xl ${
                         email.status === "processing"
                           ? "bg-purple-500/10 border border-purple-500/20"
                           : email.status === "done"
@@ -240,7 +246,7 @@ export default function AgentDemoSection() {
                       }`}
                     >
                       <div
-                        className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                        className={`w-7 h-7 sm:w-8 sm:h-8 rounded-md sm:rounded-lg flex items-center justify-center flex-shrink-0 ${
                           email.status === "done"
                             ? "bg-emerald-500/20"
                             : email.status === "processing"
@@ -249,20 +255,20 @@ export default function AgentDemoSection() {
                         }`}
                       >
                         {email.status === "done" ? (
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                          <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
                         ) : email.status === "processing" ? (
                           <motion.div
                             animate={{ rotate: 360 }}
                             transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
                           >
-                            <Bot className="w-4 h-4 text-purple-400" />
+                            <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400" />
                           </motion.div>
                         ) : (
-                          <Mail className="w-4 h-4 text-stone-500" />
+                          <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-stone-500" />
                         )}
                       </div>
                       <span
-                        className={`text-sm truncate ${
+                        className={`text-xs sm:text-sm truncate flex-1 min-w-0 ${
                           email.status === "done"
                             ? "text-stone-300"
                             : email.status === "processing"
@@ -273,7 +279,7 @@ export default function AgentDemoSection() {
                         {email.subject}
                       </span>
                       {email.status === "processing" && (
-                        <span className="ml-auto text-xs text-purple-400 font-medium">
+                        <span className="text-[10px] sm:text-xs text-purple-400 font-medium flex-shrink-0">
                           Verwerken...
                         </span>
                       )}
@@ -283,25 +289,25 @@ export default function AgentDemoSection() {
               </div>
 
               {/* Footer */}
-              <div className="px-6 py-4 border-t border-white/10 bg-white/5 flex items-center justify-between">
-                <div className="text-sm">
+              <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/10 bg-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                <div className="text-xs sm:text-sm">
                   <span className="text-stone-500">Gemiddeld:</span>
-                  <span className="ml-2 text-white font-semibold">45 sec/email</span>
+                  <span className="ml-1 sm:ml-2 text-white font-semibold">45 sec/email</span>
                 </div>
-                <div className="text-sm">
+                <div className="text-xs sm:text-sm">
                   <span className="text-stone-500">Besparing:</span>
-                  <span className="ml-2 text-emerald-400 font-semibold">30+ min/dag</span>
+                  <span className="ml-1 sm:ml-2 text-emerald-400 font-semibold">30+ min/dag</span>
                 </div>
               </div>
             </div>
 
-            {/* Floating elements */}
+            {/* Floating elements - hidden on mobile to prevent overflow */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.8 }}
-              className="absolute -top-4 -right-4 px-4 py-2 bg-white rounded-xl shadow-xl"
+              className="hidden sm:block absolute -top-4 -right-4 px-4 py-2 bg-white rounded-xl shadow-xl"
             >
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-amber-500" />
@@ -316,7 +322,7 @@ export default function AgentDemoSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.9 }}
-              className="absolute -bottom-4 -left-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-xl"
+              className="hidden sm:block absolute -bottom-4 -left-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-xl"
             >
               <div className="flex items-center gap-2 text-white">
                 <Zap className="w-4 h-4" />

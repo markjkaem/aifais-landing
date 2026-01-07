@@ -53,12 +53,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   locales.forEach((locale) => {
-    const prefix = locale === "nl" ? "" : \`/\${locale}\`;
+    const prefix = locale === "nl" ? "" : `/${locale}`;
 
     // Static Pages
     staticPaths.forEach((route) => {
       routes.push({
-        url: \`\${BASE_URL}\${prefix}\${route}\`,
+        url: `${BASE_URL}${prefix}${route}`,
         lastModified: new Date(),
         changeFrequency: route === "" ? "weekly" : "monthly",
         priority: route === "" ? 1 : 0.8,
@@ -68,7 +68,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Dynamic Tools (all tools from registry)
     toolSlugs.forEach((slug) => {
       routes.push({
-        url: \`\${BASE_URL}\${prefix}/tools/\${slug}\`,
+        url: `${BASE_URL}${prefix}/tools/${slug}`,
         lastModified: new Date(),
         changeFrequency: "weekly",
         priority: 0.85,
@@ -78,7 +78,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Regional Pages
     cities.forEach((city) => {
       routes.push({
-        url: \`\${BASE_URL}\${prefix}/locatie/\${city}\`,
+        url: `${BASE_URL}${prefix}/locatie/${city}`,
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: 0.8,
@@ -88,7 +88,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Sector Pages
     sectors.forEach((sector) => {
       routes.push({
-        url: \`\${BASE_URL}\${prefix}/mkb/\${sector}\`,
+        url: `${BASE_URL}${prefix}/mkb/${sector}`,
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: 0.85,
@@ -98,7 +98,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Dynamic Services
     services.forEach((service) => {
       routes.push({
-        url: \`\${BASE_URL}\${prefix}/diensten/\${service.slug}\`,
+        url: `${BASE_URL}${prefix}/diensten/${service.slug}`,
         lastModified: new Date(),
         changeFrequency: "weekly",
         priority: 0.9,
@@ -108,7 +108,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Dynamic Portfolio
     projects.forEach((project) => {
       routes.push({
-        url: \`\${BASE_URL}\${prefix}/portfolio/\${project.slug}\`,
+        url: `${BASE_URL}${prefix}/portfolio/${project.slug}`,
         lastModified: new Date(),
         changeFrequency: "monthly",
         priority: 0.7,
@@ -118,7 +118,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Dynamic News
     news.forEach((post) => {
       routes.push({
-        url: \`\${BASE_URL}\${prefix}/news/\${post.slug}\`,
+        url: `${BASE_URL}${prefix}/news/${post.slug}`,
         lastModified: new Date(post.date),
         changeFrequency: "weekly",
         priority: 0.6,
