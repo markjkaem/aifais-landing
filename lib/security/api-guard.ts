@@ -21,8 +21,23 @@ export function withApiGuard<T>(
                 const host = req.headers.get("host");
                 const referer = req.headers.get("referer");
 
-                const isSelf = origin && host && origin.includes(host);
-                const isSelfReferer = referer && host && referer.includes(host);
+                const checkOrigin = (urlStr: string | null, hostHeader: string | null) => {
+                    if (!urlStr || !hostHeader) return false;
+                    try {
+                        // If urlStr is just a path (which referer shouldn't be, but good to be safe)
+                        if (!urlStr.startsWith('http')) return false;
+
+                        const url = new URL(urlStr);
+                        // Strict check: protocol must be http/https and host must match exactly
+                        return (url.protocol === 'https:' || url.protocol === 'http:') &&
+                               url.host === hostHeader;
+                    } catch {
+                        return false;
+                    }
+                };
+
+                const isSelf = checkOrigin(origin, host);
+                const isSelfReferer = checkOrigin(referer, host);
 
                 if (!isSelf && !isSelfReferer) {
                     console.warn("❌ Suspicious origin blocked:", { origin, referer, host });
