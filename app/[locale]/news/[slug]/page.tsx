@@ -166,58 +166,63 @@ export default async function NewsArticlePage({ params }: PageProps) {
       </nav>
 
       {/* Hero Header */}
-      <div className="bg-white pt-12 md:pt-20 pb-0 border-b border-gray-100">
-        <div className="max-w-3xl px-6 mx-auto">
-          <header className="mb-10">
-            {article.category && (
-              <span className="inline-block px-4 py-1.5 bg-[#3066be]/5 text-[#3066be] border border-[#3066be]/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
-                {article.category}
-              </span>
+      {/* Main content wrapper with consistent background */}
+      <div className="bg-white min-h-screen">
+        {/* Hero Header */}
+        <div className="pt-12 md:pt-20 pb-0 border-b border-gray-100">
+          <div className="max-w-3xl px-6 mx-auto">
+            <header className="mb-10">
+              {article.category && (
+                <span className="inline-block px-4 py-1.5 bg-[#3066be]/5 text-[#3066be] border border-[#3066be]/20 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+                  {article.category}
+                </span>
+              )}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight text-gray-900 tracking-tight">
+                {article.title}
+              </h1>
+
+              {/* Meta Data Row */}
+              <div className="flex items-center gap-4 text-gray-500 text-sm pb-8 border-b border-gray-200">
+                <span className="font-bold text-gray-900">{article.author}</span>
+                <span>•</span>
+                <time>{new Date(article.date).toLocaleDateString("nl-NL")}</time>
+                <span>•</span>
+                <span>{readTime} min lezen</span>
+              </div>
+
+              {/* Intro / Excerpt */}
+              <p className="text-xl text-gray-600 leading-relaxed mt-8 font-light">
+                {article.excerpt}
+              </p>
+            </header>
+
+            {/* Featured Image */}
+            {article.image && (
+              <figure className="mb-12 relative shadow-2xl rounded-xl overflow-hidden">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  width={1200}
+                  height={630}
+                  priority
+                  className="w-full object-cover aspect-video"
+                />
+              </figure>
             )}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight text-gray-900 tracking-tight">
-              {article.title}
-            </h1>
+          </div>
+        </div>
 
-            {/* Meta Data Row */}
-            <div className="flex items-center gap-4 text-gray-500 text-sm pb-8 border-b border-gray-200">
-              <span className="font-bold text-gray-900">{article.author}</span>
-              <span>•</span>
-              <time>{new Date(article.date).toLocaleDateString("nl-NL")}</time>
-              <span>•</span>
-              <span>{readTime} min lezen</span>
-            </div>
-
-            {/* Intro / Excerpt */}
-            <p className="text-xl text-gray-600 leading-relaxed mt-8 font-light">
-              {article.excerpt}
-            </p>
-          </header>
-
-          {/* Featured Image */}
-          {article.image && (
-            <figure className="mb-12 relative shadow-2xl rounded-xl overflow-hidden">
-              <Image
-                src={article.image}
-                alt={article.title}
-                width={1200}
-                height={630}
-                priority
-                className="w-full object-cover aspect-video"
-              />
-            </figure>
-          )}
+        {/* Main Content Area */}
+        <div>
+          <ClientWrapper
+            article={article}
+            slug={slug}
+            cleanContent={cleanContent}
+            relatedArticles={relatedArticles}
+          />
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="bg-white">
-        <ClientWrapper
-          article={article}
-          slug={slug}
-          cleanContent={cleanContent}
-          relatedArticles={relatedArticles}
-        />
-      </div>
     </>
   );
 }

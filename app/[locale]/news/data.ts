@@ -10,6 +10,8 @@ import { visaAiPurchasesArticle } from "./articles/visa-ai-agents-autonome-aanko
 import { replitAutonomousAgentsArticle } from "./articles/replit-autonome-coding-agents";
 import { aiTrends2026Article } from "./articles/ai-trends-2026-kansen-mkb";
 import { startingWithAiArticle } from "./articles/starten-met-ai-mkb";
+import { aiEngineeringSummitArticle } from "./articles/ai-engineering-summit-insights";
+
 
 // Dit type helpt je om consistent te blijven met AEO velden
 export interface AEOArticle {
@@ -39,4 +41,6 @@ export const news: AEOArticle[] = [
   visaAiPurchasesArticle,
   invoiceArticle,
   replitAutonomousAgentsArticle,
+  aiEngineeringSummitArticle,
 ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+

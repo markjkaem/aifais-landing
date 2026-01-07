@@ -7,6 +7,8 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useEffect, useState, useMemo } from "react";
+import Link from "next/link";
+
 
 // Types (Zorg dat aeoSnippet hierin zit)
 interface Article {
@@ -102,13 +104,40 @@ export function ClientWrapper({
       ),
 
       // ... voeg je andere custom components hier toe (img, code, etc) ...
+      a: ({ href, children, ...props }: any) => {
+        const isCTA = children?.toString().includes("→") || children?.toString().toLowerCase().includes("contact") || children?.toString().toLowerCase().includes("gesprek");
+        if (isCTA && href) {
+          const isInternal = href.startsWith("/") || !href.startsWith("http");
+          const buttonClasses = "inline-flex items-center gap-2 px-8 py-4 bg-[#3066be] hover:bg-[#234a8c] text-white font-bold rounded-xl transition-all hover:scale-105 shadow-xl shadow-[#3066be]/25 active:scale-95 no-underline";
+          
+          if (isInternal) {
+            return (
+              <div className="my-12">
+                <Link href={href} className={buttonClasses} {...props}>
+                  {children}
+                </Link>
+              </div>
+            );
+          }
+          return (
+            <div className="my-12">
+              <a href={href} className={buttonClasses} target="_blank" rel="noopener noreferrer" {...props}>
+                {children}
+              </a>
+            </div>
+          );
+        }
+
+        return <a href={href} className="text-[#3066be] hover:underline font-medium" {...props}>{children}</a>;
+      },
     }),
     []
   );
 
+
   return (
     <>
-      <article className="pb-12 md:pb-20 bg-white min-h-screen">
+      <article className="pb-12 md:pb-20">
         <div className="max-w-3xl px-6 mx-auto">
           {/* 🔥 AEO / KEY TAKEAWAY BOX (NIEUW) */}
           {/* Dit blok toont direct het antwoord voor scannende lezers en bots */}
@@ -136,18 +165,19 @@ export function ClientWrapper({
           {/* FAQ Sectie (Visueel weergeven voor de lezer) */}
           {article.faq && article.faq.length > 0 && (
             <div className="mt-16 pt-10 border-t border-gray-200">
-              <h2 className="text-2xl font-bold mb-6">Veelgestelde Vragen</h2>
+              <h2 className="text-3xl font-bold mb-8 text-[#1e3a8a]">Veelgestelde Vragen</h2>
               <div className="space-y-6">
                 {article.faq.map((item, i) => (
-                  <div key={i} className="bg-gray-50 rounded-lg p-6">
-                    <h3 className="font-bold text-gray-900 mb-2">
+                  <div key={i} className="bg-[#3066be]/5 border border-[#3066be]/10 rounded-2xl p-8 shadow-sm">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
                       {item.question}
                     </h3>
-                    <p className="text-gray-700">{item.answer}</p>
+                    <p className="text-gray-700 leading-relaxed text-lg">{item.answer}</p>
                   </div>
                 ))}
               </div>
             </div>
+
           )}
 
           {/* Author Bio Box (Bestaand) */}
