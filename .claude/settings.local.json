@@ -2,7 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(bun add:*)",
-      "WebFetch(domain:aifaiss.com)",
+      "WebFetch(domain:aifais.com)",
       "Bash(cat:*)",
       "Bash(bun run build)",
       "Bash(tree:*)",
@@ -41,8 +41,8 @@
           {
             "type": "command",
             "command": "npx tsc --noEmit 2>&1 | head -20 || true",
-            "statusMessage": "Running type check...",
-            "timeout": 60
+            "timeout": 60,
+            "statusMessage": "Running type check..."
           }
         ]
       }
@@ -52,5 +52,8 @@
     "type": "command",
     "command": "echo \"$(git branch --show-current 2>/dev/null || echo 'no-branch') | AIFAISS\"",
     "padding": 2
-  }
+  },
+  "disabledMcpjsonServers": [
+    "sentry"
+  ]
 }
