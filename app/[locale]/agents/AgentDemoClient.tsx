@@ -216,7 +216,7 @@ export default function AgentDemoClient() {
   // Landing page
   if (demoState === "landing") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-linear-to-b from-gray-50 to-white flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -289,7 +289,7 @@ export default function AgentDemoClient() {
   // Complete screen
   if (demoState === "complete") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-linear-to-b from-gray-50 to-white flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -592,10 +592,10 @@ export default function AgentDemoClient() {
                           {draft.subject}
                         </span>
                       </div>
-                      <div className="text-xs text-gray-600 whitespace-pre-wrap line-clamp-4 font-mono bg-gray-50 p-2 rounded-lg">
+                      <div className="text-xs text-gray-600 whitespace-pre-wrap font-mono bg-gray-50 p-3 rounded-lg max-h-[200px] overflow-y-auto custom-scrollbar">
                         {draft.content}
                         {draft.isTyping && (
-                          <span className="inline-block w-1.5 h-4 bg-gray-400 animate-pulse ml-0.5" />
+                          <span className="inline-block w-1.5 h-3 bg-gray-400 animate-pulse ml-0.5 align-middle" />
                         )}
                       </div>
                     </motion.div>
