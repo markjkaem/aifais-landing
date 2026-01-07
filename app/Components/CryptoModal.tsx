@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { QRCodeSVG } from "qrcode.react";
-import { X, CheckCircle2, Loader2, ExternalLink, Copy } from "lucide-react";
+import { X, CheckCircle2, Loader2, ExternalLink, Copy, Smartphone } from "lucide-react";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 
 interface CryptoModalProps {
@@ -30,6 +30,7 @@ export default function CryptoModal({
   const [isPaid, setIsPaid] = useState(false);
   const [transactionSignature, setTransactionSignature] = useState<string>("");
   const [copied, setCopied] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   // ✅ Timestamp wanneer modal opent
   // eslint-disable-next-line react-hooks/purity
   const [startTime] = useState<number>(Date.now());
@@ -63,6 +64,16 @@ export default function CryptoModal({
 
     generatePaymentUrl();
   }, [priceInSol, label, scansAmount]);
+
+  // Detect if user is on mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor;
+      const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+      setIsMobile(mobileRegex.test(userAgent));
+    };
+    checkMobile();
+  }, []);
 
   // ✅ Poll de blockchain voor de transactie
   useEffect(() => {
@@ -180,6 +191,13 @@ export default function CryptoModal({
     }
   };
 
+  // Open wallet app directly on mobile
+  const openInWallet = () => {
+    if (solanaPayUrl) {
+      window.location.href = solanaPayUrl;
+    }
+  };
+
   const viewOnExplorer = () => {
     if (transactionSignature) {
       window.open(
@@ -238,9 +256,20 @@ export default function CryptoModal({
                 {priceInSol} SOL
               </div>
               <p className="text-gray-500 text-xs">
-                Scan de QR-code met je Solana wallet
+                {isMobile ? 'Tik op de knop om je wallet te openen' : 'Scan de QR-code met je Solana wallet'}
               </p>
             </div>
+
+            {/* Mobile: Open in Wallet button */}
+            {isMobile && solanaPayUrl && (
+              <button
+                onClick={openInWallet}
+                className="w-full bg-gradient-to-r from-[#14F195] to-[#9945FF] hover:opacity-90 text-black font-bold py-4 rounded-xl flex items-center justify-center gap-3 transition mb-4"
+              >
+                <Smartphone className="w-5 h-5" />
+                Open in Wallet App
+              </button>
+            )}
 
             {/* QR Code - responsive container */}
             {solanaPayUrl ? (

@@ -32,6 +32,9 @@ export const paymentSchema = z.object({
 
 export const newsletterSchema = z.object({
     email: z.string().email("Ongeldig emailadres"),
+    source: z.enum(["newsletter", "lead_magnet", "article_cta", "homepage"]).optional().default("newsletter"),
+    resource: z.string().max(100).optional(), // e.g., "ai_checklist", "roi_template"
+    name: z.string().max(100).optional(),
 }).merge(paymentSchema);
 
 export const contactSchema = z.object({
@@ -57,6 +60,8 @@ export const quickscanSchema = z.object({
     }).nullable().optional(),
     formData: z.object({
         name: z.string().nullable().optional(),
+        company: z.string().nullable().optional(),
+        process: z.string().nullable().optional(),
     }).nullable().optional(),
 }).merge(paymentSchema);
 

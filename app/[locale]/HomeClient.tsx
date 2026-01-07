@@ -24,9 +24,10 @@ export default function HomeClient({ projects, hideHero = false }: HomeClientPro
     <main className="bg-white text-stone-900 min-h-screen transition-colors duration-500">
       {!hideHero && <HeroSection />}
 
+<AgentDemoSection />
+
       <ExplainerSection />
 
-      <AgentDemoSection />
 
       <ProcessSection />
 

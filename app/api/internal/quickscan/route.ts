@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { addLeadToNotion } from "@/lib/crm/notion";
 import nodemailer from "nodemailer";
 import { createToolHandler } from "@/lib/tools/createToolHandler";
@@ -10,13 +9,15 @@ export const POST = createToolHandler({
     handler: async (data) => {
         const { email, results, formData } = data;
 
-        // 1. Capture high-intent lead in Notion CRM
+        // 1. Capture high-intent lead in Notion CRM with tags
         await addLeadToNotion({
             name: formData?.name || "QuickScan User",
             email: email,
+            company: formData?.company || undefined,
             source: "ROI Calculator",
             priority: "Hoog",
-            message: `QuickScan ROI Resultaten:\n- Besparing: ${results?.totalSavings}\n- Uren: ${results?.hoursReclaimed}\n- FTE: ${results?.fteRecovered}`,
+            tags: ["QuickScan", "High Intent"],
+            message: `QuickScan ROI Resultaten:\n- Besparing: ${results?.totalSavings}\n- Uren: ${results?.hoursReclaimed}\n- FTE: ${results?.fteRecovered}${formData?.process ? `\n\nProces om te automatiseren:\n${formData.process}` : ""}`,
             metadata: {
                 calculationResults: results,
                 inputData: formData
@@ -56,8 +57,8 @@ export const POST = createToolHandler({
             const adminMailOptions = {
                 from: `"AIFAIS ROI Tool" <${SMTP_USER}>`,
                 to: TO_EMAIL,
-                subject: `Nieuwe ROI Lead: ${formData?.name || email}`,
-                text: `Naam: ${formData?.name}\nBesparing: ${results?.totalSavings}\nUren: ${results?.hoursReclaimed}`
+                subject: `🔥 High Intent Lead: ${formData?.name || email}${formData?.company ? ` (${formData.company})` : ""}`,
+                text: `NIEUWE ROI CALCULATOR LEAD\n${"=".repeat(40)}\n\nNaam: ${formData?.name || "Niet opgegeven"}\nEmail: ${email}\nBedrijf: ${formData?.company || "Niet opgegeven"}\n\nBERAAMDE BESPARING:\n- Jaarlijks: ${results?.totalSavings}\n- Uren: ${results?.hoursReclaimed} uur/jaar\n- FTE: ${results?.fteRecovered}\n\nPROCES OM TE AUTOMATISEREN:\n${formData?.process || "Niet gespecificeerd"}\n\n${"=".repeat(40)}\nDeze lead is ook opgeslagen in Notion met tags: QuickScan, High Intent`
             };
 
             await Promise.all([

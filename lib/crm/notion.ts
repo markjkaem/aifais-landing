@@ -1,7 +1,9 @@
 export type LeadSource =
     | "Contact Form"
     | "Newsletter"
+    | "Lead Magnet"
     | "ROI Calculator"
+    | "Article CTA"
     | "Developer CTA"
     | "Tool Landing Page"
     | "Demo Request";
@@ -9,13 +11,25 @@ export type LeadSource =
 export type LeadPriority = "Hoog" | "Normaal" | "Laag";
 export type LeadStatus = "Nieuw" | "In behandeling" | "Beantwoord" | "Geconverteerd";
 
+export type LeadTag =
+    | "AI Checklist"
+    | "ROI Template"
+    | "Newsletter"
+    | "QuickScan"
+    | "Contact"
+    | "High Intent"
+    | "MKB"
+    | "Enterprise";
+
 export interface NotionLeadData {
     name?: string;
     email: string;
     phone?: string;
+    company?: string;
     message?: string;
     source: LeadSource;
     priority?: LeadPriority;
+    tags?: LeadTag[];
     metadata?: Record<string, any>;
 }
 
@@ -62,6 +76,24 @@ export async function addLeadToNotion(data: NotionLeadData): Promise<boolean> {
         if (data.phone) {
             properties["Telefoon"] = {
                 phone_number: data.phone,
+            };
+        }
+
+        if (data.company) {
+            properties["Bedrijf"] = {
+                rich_text: [
+                    {
+                        text: {
+                            content: data.company.slice(0, 200),
+                        },
+                    },
+                ],
+            };
+        }
+
+        if (data.tags && data.tags.length > 0) {
+            properties["Tags"] = {
+                multi_select: data.tags.map(tag => ({ name: tag })),
             };
         }
 

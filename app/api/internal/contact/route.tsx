@@ -39,14 +39,15 @@ export const POST = createToolHandler({
             });
         }
 
-        // Add to Notion CRM
+        // Add to Notion CRM with tags
         await addLeadToNotion({
             name,
             email,
             phone,
             message,
             source: "Contact Form",
-            priority: "Normaal"
+            priority: "Normaal",
+            tags: ["Contact"]
         });
 
         return { ok: true };

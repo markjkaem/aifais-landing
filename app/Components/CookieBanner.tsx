@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Cookie, ChevronRight, Shield, BarChart3, Megaphone } from "lucide-react";
 
 export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
     // Check if user has already made a choice
@@ -14,8 +16,7 @@ export default function CookieBanner() {
       // Small delay for better UX
       setTimeout(() => {
         setShowBanner(true);
-        setTimeout(() => setIsVisible(true), 100);
-      }, 1000);
+      }, 1500);
     } else if (consent === "accepted") {
       // Load analytics if user previously accepted
       loadAnalytics();
@@ -34,15 +35,12 @@ export default function CookieBanner() {
     if (typeof window !== "undefined" && (window as any).hj) {
       (window as any).hj("stateChange", window.location.pathname);
     }
-
-    // Mailchimp tracking (if applicable)
-    // Add any other tracking scripts here
   };
 
   const acceptAll = () => {
     localStorage.setItem("cookie-consent", "accepted");
     loadAnalytics();
-    closeBanner();
+    setShowBanner(false);
   };
 
   const acceptNecessary = () => {
@@ -53,146 +51,175 @@ export default function CookieBanner() {
         analytics_storage: "denied",
       });
     }
-    closeBanner();
+    setShowBanner(false);
   };
-
-  const closeBanner = () => {
-    setIsVisible(false);
-    setTimeout(() => setShowBanner(false), 300);
-  };
-
-  if (!showBanner) return null;
 
   return (
-    <>
-      {/* Backdrop */}
-      <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}
-        onClick={acceptNecessary}
-      />
+    <AnimatePresence>
+      {showBanner && (
+        <>
+          {/* Subtle backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-stone-900/20 backdrop-blur-[2px] z-[9990]"
+            onClick={acceptNecessary}
+          />
 
-      {/* Banner */}
-      <div
-        className={`fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 transition-transform duration-300 ${
-          isVisible ? "translate-y-0" : "translate-y-full"
-        }`}
-      >
-        <div className="max-w-6xl mx-auto">
-          <div className="relative bg-gradient-to-br from-zinc-900/95 to-zinc-950/95 backdrop-blur-xl border border-gray-500/30 rounded-2xl p-6 md:p-8 shadow-2xl">
-            {/* Decorative gradient accent */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gray-600 via-gray-400 to-amber-400 rounded-t-2xl" />
+          {/* Banner */}
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="fixed bottom-4 left-4 right-4 z-[9991] md:bottom-6 md:left-6 md:right-6"
+          >
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-white rounded-2xl shadow-2xl shadow-stone-200/50 border border-stone-200 overflow-hidden">
+                {/* Top accent line */}
+                <div className="h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500" />
 
-            {/* Decorative corner glow */}
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-gray-600/20 rounded-full blur-3xl" />
-
-            <div className="relative">
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                {/* Content */}
-                <div className="flex-1">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gray-600/20 rounded-xl flex items-center justify-center">
-                      <span className="text-2xl">🍪</span>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-2">
-                        We Gebruiken Cookies
-                      </h3>
-                      <p className="text-gray-300 text-sm leading-relaxed">
-                        We gebruiken cookies om onze website te verbeteren en te
-                        analyseren hoe bezoekers onze site gebruiken. Met
-                        "Accepteer Alles" stem je in met alle cookies, inclusief
-                        analytics en marketing. Met "Alleen Noodzakelijk"
-                        gebruiken we alleen cookies die essentieel zijn voor de
-                        werking van de site.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Cookie types info */}
-                  <div className="ml-16 space-y-2 mb-4 md:mb-0">
-                    <details className="group">
-                      <summary className="text-sm text-gray-400 hover:text-gray-300 cursor-pointer list-none flex items-center gap-2">
-                        <svg
-                          className="w-4 h-4 transition-transform group-open:rotate-90"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                        Meer informatie over cookies
-                      </summary>
-                      <div className="mt-3 pl-6 text-xs text-gray-400 space-y-2">
-                        <p>
-                          <strong className="text-gray-300">
-                            Noodzakelijke cookies:
-                          </strong>{" "}
-                          Essentieel voor de werking van de website (altijd
-                          actief)
-                        </p>
-                        <p>
-                          <strong className="text-gray-300">
-                            Analytics cookies:
-                          </strong>{" "}
-                          Google Analytics voor het analyseren van
-                          websitegebruik
-                        </p>
-                        <p>
-                          <strong className="text-gray-300">
-                            Marketing cookies:
-                          </strong>{" "}
-                          Mailchimp voor het bijhouden van
-                          campagne-effectiviteit
-                        </p>
-                        <p className="pt-2">
-                          Lees meer in onze{" "}
-                          <Link
-                            href="/privacy"
-                            className="text-gray-400 hover:text-gray-300 underline"
-                          >
-                            privacyverklaring
-                          </Link>{" "}
-                          en{" "}
-                          <Link
-                            href="/cookies"
-                            className="text-gray-400 hover:text-gray-300 underline"
-                          >
-                            cookie policy
-                          </Link>
-                          .
-                        </p>
+                <div className="p-5 sm:p-6">
+                  <div className="flex flex-col lg:flex-row lg:items-center gap-5">
+                    {/* Icon and Content */}
+                    <div className="flex-1">
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-11 h-11 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center border border-amber-200/50">
+                          <Cookie className="w-5 h-5 text-amber-600" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-lg font-bold text-stone-900 mb-1">
+                            Cookies op AIFAIS
+                          </h3>
+                          <p className="text-sm text-stone-500 leading-relaxed">
+                            We gebruiken cookies om je ervaring te verbeteren en onze site te analyseren.
+                          </p>
+                        </div>
                       </div>
-                    </details>
-                  </div>
-                </div>
 
-                {/* Buttons */}
-                <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto md:flex-shrink-0">
-                  <button
-                    onClick={acceptAll}
-                    className="px-6 py-3 bg-gradient-to-r from-gray-600 via-gray-500 to-gray-300 text-white font-semibold rounded-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-gray-500/25 hover:shadow-gray-500/50 whitespace-nowrap"
-                  >
-                    Accepteer Alles
-                  </button>
-                  <button
-                    onClick={acceptNecessary}
-                    className="px-6 py-3 bg-zinc-800 border border-zinc-700 text-gray-300 font-semibold rounded-lg hover:bg-zinc-700 hover:border-zinc-600 transition-all whitespace-nowrap"
-                  >
-                    Alleen Noodzakelijk
-                  </button>
+                      {/* Expandable details */}
+                      <div className="mt-4 ml-15">
+                        <button
+                          onClick={() => setShowDetails(!showDetails)}
+                          className="flex items-center gap-1.5 text-sm text-stone-500 hover:text-stone-700 transition-colors group"
+                        >
+                          <ChevronRight
+                            className={`w-4 h-4 transition-transform ${
+                              showDetails ? "rotate-90" : ""
+                            }`}
+                          />
+                          <span>Meer informatie</span>
+                        </button>
+
+                        <AnimatePresence>
+                          {showDetails && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="pt-4 space-y-3">
+                                {/* Necessary */}
+                                <div className="flex items-start gap-3 p-3 bg-stone-50 rounded-xl">
+                                  <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                                    <Shield className="w-4 h-4 text-emerald-600" />
+                                  </div>
+                                  <div>
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-sm font-semibold text-stone-900">
+                                        Noodzakelijk
+                                      </span>
+                                      <span className="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] font-medium rounded">
+                                        Altijd aan
+                                      </span>
+                                    </div>
+                                    <p className="text-xs text-stone-500 mt-0.5">
+                                      Essentieel voor de werking van de website
+                                    </p>
+                                  </div>
+                                </div>
+
+                                {/* Analytics */}
+                                <div className="flex items-start gap-3 p-3 bg-stone-50 rounded-xl">
+                                  <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                    <BarChart3 className="w-4 h-4 text-blue-600" />
+                                  </div>
+                                  <div>
+                                    <span className="text-sm font-semibold text-stone-900">
+                                      Analytics
+                                    </span>
+                                    <p className="text-xs text-stone-500 mt-0.5">
+                                      Google Analytics voor websitegebruik analyse
+                                    </p>
+                                  </div>
+                                </div>
+
+                                {/* Marketing */}
+                                <div className="flex items-start gap-3 p-3 bg-stone-50 rounded-xl">
+                                  <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
+                                    <Megaphone className="w-4 h-4 text-purple-600" />
+                                  </div>
+                                  <div>
+                                    <span className="text-sm font-semibold text-stone-900">
+                                      Marketing
+                                    </span>
+                                    <p className="text-xs text-stone-500 mt-0.5">
+                                      Voor het meten van campagne-effectiviteit
+                                    </p>
+                                  </div>
+                                </div>
+
+                                {/* Links */}
+                                <p className="text-xs text-stone-400 pt-1">
+                                  Lees meer in onze{" "}
+                                  <Link
+                                    href="/privacy"
+                                    className="text-blue-600 hover:underline"
+                                  >
+                                    privacyverklaring
+                                  </Link>{" "}
+                                  en{" "}
+                                  <Link
+                                    href="/cookies"
+                                    className="text-blue-600 hover:underline"
+                                  >
+                                    cookiebeleid
+                                  </Link>
+                                  .
+                                </p>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-2.5 lg:flex-col xl:flex-row lg:w-auto">
+                      <button
+                        onClick={acceptAll}
+                        className="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-stone-900/10 hover:shadow-xl hover:-translate-y-0.5 whitespace-nowrap"
+                      >
+                        Accepteer alles
+                      </button>
+                      <button
+                        onClick={acceptNecessary}
+                        className="px-5 py-2.5 bg-white hover:bg-stone-50 text-stone-700 font-semibold text-sm rounded-xl transition-all border border-stone-200 hover:border-stone-300 whitespace-nowrap"
+                      >
+                        Alleen noodzakelijk
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 }

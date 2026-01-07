@@ -6,8 +6,9 @@
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useEffect, useState, useMemo } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
+import ArticleCTA from "@/app/Components/ArticleCTA";
 
 
 // Types (Zorg dat aeoSnippet hierin zit)
@@ -112,19 +113,19 @@ export function ClientWrapper({
           
           if (isInternal) {
             return (
-              <div className="my-12">
+              <span className="block my-12">
                 <Link href={href} className={buttonClasses} {...props}>
                   {children}
                 </Link>
-              </div>
+              </span>
             );
           }
           return (
-            <div className="my-12">
+            <span className="block my-12">
               <a href={href} className={buttonClasses} target="_blank" rel="noopener noreferrer" {...props}>
                 {children}
               </a>
-            </div>
+            </span>
           );
         }
 
@@ -177,8 +178,10 @@ export function ClientWrapper({
                 ))}
               </div>
             </div>
-
           )}
+
+          {/* Interactive CTA - ROI Calculator & Gratis Scan */}
+          <ArticleCTA />
 
           {/* Author Bio Box (Bestaand) */}
           {article.authorBio && (

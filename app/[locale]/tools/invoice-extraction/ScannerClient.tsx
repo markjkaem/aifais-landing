@@ -229,6 +229,72 @@ interface ScanResult {
     processingTime?: number;
 }
 
+// Storage key for persisting files across payment redirects
+const STORAGE_KEY = 'invoice-scanner-pending-files';
+
+interface StoredFileData {
+    name: string;
+    type: string;
+    size: number;
+    base64: string;
+    preview?: string;
+}
+
+// Helper to save files to sessionStorage before Stripe redirect
+async function saveFilesToStorage(files: File[]): Promise<void> {
+    const fileDataPromises = files.map(async (file): Promise<StoredFileData> => {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                resolve({
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    base64: reader.result as string,
+                    preview: file.type.startsWith('image/') ? reader.result as string : undefined
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+    const fileData = await Promise.all(fileDataPromises);
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(fileData));
+}
+
+// Helper to restore files from sessionStorage after Stripe redirect
+function restoreFilesFromStorage(): { files: File[], previews: Record<string, string> } | null {
+    const stored = sessionStorage.getItem(STORAGE_KEY);
+    if (!stored) return null;
+
+    try {
+        const fileData: StoredFileData[] = JSON.parse(stored);
+        const previews: Record<string, string> = {};
+        const files: File[] = fileData.map((data) => {
+            // Convert base64 back to File
+            const byteString = atob(data.base64.split(',')[1]);
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            const blob = new Blob([ab], { type: data.type });
+            const file = new globalThis.File([blob], data.name, { type: data.type });
+
+            if (data.preview) {
+                previews[data.name] = data.preview;
+            }
+            return file;
+        });
+
+        // Clear storage after restore
+        sessionStorage.removeItem(STORAGE_KEY);
+        return { files, previews };
+    } catch {
+        sessionStorage.removeItem(STORAGE_KEY);
+        return null;
+    }
+}
+
 function ScannerClient() {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [previews, setPreviews] = useState<{ [key: string]: string }>({});
@@ -289,6 +355,13 @@ function ScannerClient() {
         if (sessionId) {
             setPaymentProof({ type: "stripe", id: sessionId });
             window.history.replaceState({}, document.title, window.location.pathname);
+            
+            // Restore files from sessionStorage after Stripe redirect
+            const restored = restoreFilesFromStorage();
+            if (restored) {
+                setSelectedFiles(restored.files);
+                setPreviews(restored.previews);
+            }
         }
     }, []);
 
@@ -581,7 +654,11 @@ function ScannerClient() {
 
                             <div className="p-6 space-y-3">
                                 <button
-                                    onClick={() => (window.location.href = STRIPE_LINK_SINGLE)}
+                                    onClick={async () => {
+                                        // Save files to sessionStorage before redirect
+                                        await saveFilesToStorage(selectedFiles);
+                                        window.location.href = STRIPE_LINK_SINGLE;
+                                    }}
                                     className="group w-full bg-zinc-800 hover:bg-zinc-700 text-white font-semibold py-4 px-5 rounded-xl flex items-center justify-between transition-all"
                                 >
                                     <div className="flex items-center gap-3">
@@ -1007,13 +1084,14 @@ function ScannerClient() {
                                                                         ].map(field => {
                                                                             const value = result.result![field.key as keyof typeof result.result];
                                                                             const confidence = result.result!.confidence?.fields?.[field.key];
-                                                                            if (!value) return null;
 
                                                                             return (
                                                                                 <div key={field.key} className="flex items-start justify-between">
                                                                                     <div>
                                                                                         <span className="text-xs text-zinc-500 block">{field.label}</span>
-                                                                                        <span className="text-sm text-white">{String(value)}</span>
+                                                                                        <span className={`text-sm ${value ? 'text-white' : 'text-zinc-600 italic'}`}>
+                                                                                            {value ? String(value) : 'Niet gevonden'}
+                                                                                        </span>
                                                                                     </div>
                                                                                     {confidence !== undefined && (
                                                                                         <span className={`text-xs ${getConfidenceColor(confidence)}`}>
