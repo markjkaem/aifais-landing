@@ -442,6 +442,21 @@ export function getMockSearchResults(query: string): KvkSearchResponse {
             type: "hoofdvestiging",
             actief: "Ja",
         },
+        {
+            kvkNummer: "90123456",
+            vestigingsnummer: "000011112222",
+            naam: "AIFAIS B.V.",
+            adres: {
+                binnenlandsAdres: {
+                    straatnaam: "Herengracht",
+                    huisnummer: 420,
+                    postcode: "1017 BZ",
+                    plaats: "Amsterdam",
+                }
+            },
+            type: "hoofdvestiging",
+            actief: "Ja",
+        },
     ];
 
     // Filter by query if it looks like a KVK number
@@ -463,6 +478,49 @@ export function getMockSearchResults(query: string): KvkSearchResponse {
  * Mock basisprofiel for development
  */
 export function getMockBasisprofiel(kvkNummer: string): KvkBasisprofiel {
+    // AIFAIS specific mock data
+    if (kvkNummer === "90123456") {
+        return {
+            kvkNummer,
+            indNonMailing: "Nee",
+            naam: "AIFAIS B.V.",
+            formeleRegistratiedatum: "2024-01-01",
+            materieleRegistratie: {
+                datumAanvang: "2024-01-01",
+            },
+            totaalWerkzamePersonen: 5,
+            statutaireNaam: "AIFAIS B.V.",
+            handelsnamen: [
+                { naam: "AIFAIS", volgorde: 1 },
+                { naam: "AI For All In Seconds", volgorde: 2 },
+            ],
+            sbiActiviteiten: [
+                {
+                    sbiCode: "6201",
+                    sbiOmschrijving: "Ontwikkelen, produceren en uitgeven van software",
+                    indHoofdactiviteit: "Ja",
+                },
+                {
+                    sbiCode: "6311",
+                    sbiOmschrijving: "Gegevensverwerking, webhosting en aanverwante activiteiten",
+                    indHoofdactiviteit: "Nee",
+                },
+            ],
+            embedded: {
+                eigenaar: {
+                    rechtsvorm: "Besloten Vennootschap",
+                    uitgebreideRechtsvorm: "Besloten Vennootschap met beperkte aansprakelijkheid",
+                    rsin: "901234567",
+                },
+                hoofdvestiging: {
+                    vestigingsnummer: "000011112222",
+                    websites: ["https://aifais.com"],
+                },
+            },
+        };
+    }
+
+    // Default mock data
     return {
         kvkNummer,
         indNonMailing: "Nee",
