@@ -100,20 +100,64 @@ export default function Header() {
   };
 
   const localizedProjects = getProjects(locale);
-  // Assuming news is an array for now as it was before, or if it has getNews, use that.
-  // For now I'll just use news as it is imported.
+
+  // MKB Sector data for search
+  const mkbSectors = [
+    { slug: "accountants", name: locale === "nl" ? "Accountancy" : "Accountancy" },
+    { slug: "advocaten", name: locale === "nl" ? "Advocatuur" : "Legal" },
+    { slug: "e-commerce", name: "E-commerce" },
+    { slug: "makelaars", name: locale === "nl" ? "Makelaardij" : "Real Estate" },
+    { slug: "hypotheekadviseurs", name: locale === "nl" ? "Hypotheekadviseurs" : "Mortgage Advisors" },
+    { slug: "installatiebedrijven", name: locale === "nl" ? "Installatiebedrijven" : "Installation Companies" },
+    { slug: "bouwbedrijven", name: locale === "nl" ? "Bouwbedrijven" : "Construction" },
+    { slug: "horeca", name: "Horeca" },
+    { slug: "logistiek", name: locale === "nl" ? "Logistiek" : "Logistics" },
+    { slug: "hr-recruitment", name: "HR & Recruitment" },
+    { slug: "zorg", name: locale === "nl" ? "Zorg" : "Healthcare" },
+    { slug: "fitness-sport", name: "Fitness & Sport" },
+    { slug: "marketing-bureaus", name: locale === "nl" ? "Marketing Bureaus" : "Marketing Agencies" },
+    { slug: "architecten", name: locale === "nl" ? "Architecten" : "Architects" },
+    { slug: "productiebedrijven", name: locale === "nl" ? "Productiebedrijven" : "Manufacturing" },
+  ];
 
   const allSearchableContent = [
+    // Main pages
     { type: "page", title: "Home", slug: "/" },
-    ...translatedServiceLinks.map((s) => ({ type: "service", title: s.title, slug: s.slug })),
-    ...(localizedProjects || []).map((p) => ({ type: "case", title: p.title, slug: `/portfolio/${p.slug}` })),
-    ...(news || []).map((n) => ({ type: "news", title: n.title, slug: `/news/${n.slug}` })),
-    { type: "page", title: "Tools", slug: "/tools" },
+    { type: "page", title: locale === "nl" ? "Over Ons" : "About Us", slug: "/about" },
     { type: "page", title: "Contact", slug: "/contact" },
+    { type: "page", title: "Portfolio", slug: "/portfolio" },
+    { type: "page", title: locale === "nl" ? "Nieuws" : "News", slug: "/news" },
+
+    // Tools overview and individual tools
+    { type: "page", title: "Tools", slug: "/tools" },
+    ...toolLinks.map((tool) => ({ type: "tool", title: tool.title, slug: tool.slug })),
+
+    // Services
+    ...translatedServiceLinks.map((s) => ({ type: "service", title: s.title, slug: s.slug })),
+
+    // Developer pages
+    { type: "developer", title: "Developers", slug: "/developers" },
+    { type: "developer", title: "API Documentation", slug: "/developers/docs" },
+    { type: "developer", title: "MCP Server", slug: "/developers/mcp" },
+
+    // MKB sectors
+    { type: "mkb", title: locale === "nl" ? "MKB Oplossingen" : "SME Solutions", slug: "/mkb" },
+    ...mkbSectors.map((sector) => ({ type: "mkb", title: `${sector.name} AI`, slug: `/mkb/${sector.slug}` })),
+
+    // Portfolio cases
+    ...(localizedProjects || []).map((p) => ({ type: "case", title: p.title, slug: `/portfolio/${p.slug}` })),
+
+    // News articles
+    ...(news || []).map((n) => ({ type: "news", title: n.title, slug: `/news/${n.slug}` })),
+
+    // Legal pages
+    { type: "legal", title: locale === "nl" ? "Privacy Beleid" : "Privacy Policy", slug: "/privacy" },
+    { type: "legal", title: locale === "nl" ? "Cookie Beleid" : "Cookie Policy", slug: "/cookies" },
+    { type: "legal", title: locale === "nl" ? "Algemene Voorwaarden" : "Terms & Conditions", slug: "/agv" },
   ];
 
   const searchResults = searchQuery.length > 0
-    ? allSearchableContent.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 5)
+    ? allSearchableContent.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 8)
     : [];
 
   return (
