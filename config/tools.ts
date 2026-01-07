@@ -60,6 +60,8 @@ export interface ToolMetadata {
         type: "free" | "paid" | "freemium";
         price?: number;
         currency?: string;
+        priceEur?: number;
+        stripeLink?: string;
     };
 
     // Component
@@ -97,6 +99,8 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
             type: "paid",
             price: 0.001,
             currency: "SOL",
+            priceEur: 0.50,
+            stripeLink: process.env.NEXT_PUBLIC_STRIPE_LINK_SINGLE,
         },
         componentPath: "invoice-extraction/ScannerClient",
     },
@@ -190,6 +194,8 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
             type: "paid",
             price: 0.001,
             currency: "SOL",
+            priceEur: 0.50,
+            stripeLink: process.env.NEXT_PUBLIC_STRIPE_LINK_CONTRACT,
         },
         componentPath: "contract-checker/ContractCheckerClient",
     },
@@ -221,6 +227,8 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
             type: "paid",
             price: 0.001,
             currency: "SOL",
+            priceEur: 0.50,
+            stripeLink: process.env.NEXT_PUBLIC_STRIPE_LINK_TERMS,
         },
         componentPath: "terms-generator/TermsGeneratorClient",
     },
@@ -299,7 +307,7 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         keywords: ["cv screener", "kandidaat analyse", "recruitment AI", "cv beoordelen"],
         features: ["Match score 0-100", "Sterke/zwakke punten", "Skill matching", "Ervaring analyse"],
         useCases: ["Recruitment versnellen", "Objectieve beoordeling", "Bulk CV screening"],
-        pricing: { type: "paid", price: 0.001, currency: "SOL" },
+        pricing: { type: "paid", price: 0.001, currency: "SOL", priceEur: 0.50, stripeLink: process.env.NEXT_PUBLIC_STRIPE_LINK_CV },
         componentPath: "cv-screener/CvScreenerClient",
     },
     "interview-questions": {
@@ -317,7 +325,7 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         keywords: ["sollicitatievragen", "interview vragen", "hr tool", "recruitment"],
         features: ["Technische vragen", "Gedragsvragen", "Situatievragen", "Niveau-specifiek"],
         useCases: ["Interview voorbereiding", "Consistente evaluatie", "HR processen"],
-        pricing: { type: "paid", price: 0.001, currency: "SOL" },
+        pricing: { type: "paid", price: 0.001, currency: "SOL", priceEur: 0.50, stripeLink: process.env.NEXT_PUBLIC_STRIPE_LINK_INTERVIEW },
         componentPath: "interview-questions/InterviewQuestionsClient",
     },
 
@@ -337,7 +345,7 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         keywords: ["social media", "content planner", "linkedin posts", "instagram content"],
         features: ["Multi-platform", "Hashtag suggesties", "Tone customization", "Post timing"],
         useCases: ["Content strategie", "Marketing automatisering", "Social media management"],
-        pricing: { type: "paid", price: 0.001, currency: "SOL" },
+        pricing: { type: "paid", price: 0.001, currency: "SOL", priceEur: 0.50, stripeLink: process.env.NEXT_PUBLIC_STRIPE_LINK_SOCIAL },
         componentPath: "social-planner/SocialPlannerClient",
     },
 
@@ -358,7 +366,7 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         keywords: ["pitch deck", "investor pitch", "presentatie", "sales deck"],
         features: ["Slide content", "Speaker notes", "Aanpasbaar", "Best practices"],
         useCases: ["Funding rondes", "Sales presentaties", "Startup pitches"],
-        pricing: { type: "paid", price: 0.001, currency: "SOL" },
+        pricing: { type: "paid", price: 0.001, currency: "SOL", priceEur: 0.50, stripeLink: process.env.NEXT_PUBLIC_STRIPE_LINK_PITCH },
         componentPath: "pitch-deck/PitchDeckClient",
     },
     "lead-scorer": {
@@ -376,7 +384,7 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         keywords: ["lead scoring", "sales tool", "crm", "pipeline management"],
         features: ["Company fit score", "Engagement tracking", "Budget analyse", "Next action"],
         useCases: ["Sales prioritering", "Pipeline management", "Lead qualification"],
-        pricing: { type: "paid", price: 0.001, currency: "SOL" },
+        pricing: { type: "paid", price: 0.001, currency: "SOL", priceEur: 0.50, stripeLink: process.env.NEXT_PUBLIC_STRIPE_LINK_LEAD },
         componentPath: "lead-scorer/LeadScorerClient",
     },
 };
