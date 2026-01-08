@@ -416,8 +416,11 @@ export interface KvkSearchParams {
 // =============================================================================
 
 export interface OpenKvkApiResult {
-  kvk: string;
+  // API returns dossiernummer (not kvk) as primary identifier
+  dossiernummer?: string;
+  kvk?: string; // Legacy/alternative field
   vestigingsnummer?: string;
+  subdossiernummer?: string;
   rsin?: string;
   handelsnaam: string;
   handelsnamen?: string[];
@@ -430,10 +433,16 @@ export interface OpenKvkApiResult {
   hoofdactiviteit?: string;
   sbiActiviteiten?: string[];
   rechtsvorm?: string;
+  rechtsvormOmschrijving?: string;
   statutaireNaam?: string;
   startdatum?: string;
   einddatum?: string;
   actief?: boolean;
+  website?: string;
+  locatie?: {
+    lat: number;
+    lon: number;
+  };
   _links?: {
     self: { href: string };
   };

@@ -31,6 +31,7 @@ import { getCachedOrFetch, checkRateLimit, cacheNotFound, isNotFoundCached } fro
 // =============================================================================
 
 const OPENKVK_BASE_URL = "https://api.overheid.io/openkvk";
+const OPENKVK_SUGGEST_URL = "https://api.overheid.io/suggest/openkvk";
 const OPENKVK_API_KEY = process.env.OPENKVK_API_KEY;
 
 const RATE_LIMIT_CONFIG: RateLimitConfig = {
@@ -224,8 +225,11 @@ function determineProvince(plaats: string | undefined): string | null {
 function transformToSearchResult(result: OpenKvkApiResult): CompanySearchResult {
   const rechtsvorm = parseRechtsvorm(result.type || result.rechtsvorm);
 
+  // API returns dossiernummer, not kvk
+  const kvkNummer = result.dossiernummer || result.kvk || "";
+
   return {
-    kvkNummer: result.kvk,
+    kvkNummer,
     naam: result.handelsnaam || result.statutaireNaam || "Onbekend",
     handelsnamen: result.handelsnamen || [result.handelsnaam].filter(Boolean) as string[],
     adres: {
@@ -246,8 +250,11 @@ function transformToSearchResult(result: OpenKvkApiResult): CompanySearchResult 
 function transformToCoreData(result: OpenKvkApiResult): KvkCoreData {
   const rechtsvorm = parseRechtsvorm(result.type || result.rechtsvorm);
 
+  // API returns dossiernummer, not kvk
+  const kvkNummer = result.dossiernummer || result.kvk || "";
+
   return {
-    kvkNummer: result.kvk,
+    kvkNummer,
     naam: result.handelsnaam || result.statutaireNaam || "Onbekend",
     handelsnamen: result.handelsnamen || [result.handelsnaam].filter(Boolean) as string[],
     rechtsvorm,
@@ -279,11 +286,55 @@ function transformToAddress(result: OpenKvkApiResult): Address {
 }
 
 // =============================================================================
+// SUGGEST API TYPES
+// =============================================================================
+
+interface SuggestResult {
+  text: string;
+  dossiernummer: string;
+  link: string;
+  id: string;
+  handelsnaam: string;
+  plaats?: string;
+}
+
+interface SuggestResponse {
+  handelsnaam?: SuggestResult[];
+}
+
+// =============================================================================
 // PUBLIC API FUNCTIONS
 // =============================================================================
 
 /**
- * Search companies by name
+ * Fetch full company details by ID (link from suggest results)
+ */
+async function fetchCompanyDetails(companyId: string): Promise<OpenKvkApiResult | null> {
+  const url = `${OPENKVK_BASE_URL}/${companyId}`;
+
+  const response = await fetch(url, {
+    headers: getHeaders(),
+    signal: AbortSignal.timeout(10000),
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      return null;
+    }
+    throw new KvkSourceError(
+      `OpenKVK API error: ${response.status}`,
+      "openkvk",
+      "UNAVAILABLE",
+      true
+    );
+  }
+
+  return response.json();
+}
+
+/**
+ * Search companies by name using the /suggest endpoint
+ * This is the correct way to search for companies by name in OpenKVK
  */
 export async function searchByName(
   query: string,
@@ -310,18 +361,8 @@ export async function searchByName(
   const result = await getCachedOrFetch<CompanySearchResult[]>(
     cacheKey,
     async () => {
-      // Build URL with query parameters
-      const params = new URLSearchParams();
-      params.append("handelsnaam", query);
-
-      if (plaats) {
-        params.append("plaats", plaats);
-      }
-
-      // Note: OpenKVK doesn't have a direct "actief" filter in all versions
-      // We filter client-side if needed
-
-      const url = `${OPENKVK_BASE_URL}?${params.toString()}`;
+      // Use the /suggest endpoint for name search
+      const url = `${OPENKVK_SUGGEST_URL}/${encodeURIComponent(query.toLowerCase())}`;
 
       const response = await fetch(url, {
         headers: getHeaders(),
@@ -348,17 +389,91 @@ export async function searchByName(
         );
       }
 
-      const data: OpenKvkApiResponse = await response.json();
-      const results = data._embedded?.bedrijf || [];
+      const suggestData: SuggestResponse = await response.json();
+      const suggestions = suggestData.handelsnaam || [];
 
-      // Transform and filter
-      let transformed = results.map(transformToSearchResult);
-
-      if (!inclusiefInactief) {
-        transformed = transformed.filter((r) => r.actief);
+      // Filter empty results
+      if (suggestions.length === 0) {
+        return [];
       }
 
-      return transformed;
+      // Filter by plaats if specified
+      let filtered = suggestions;
+      if (plaats) {
+        const plaatsLower = plaats.toLowerCase();
+        filtered = suggestions.filter((s) =>
+          s.plaats?.toLowerCase().includes(plaatsLower)
+        );
+      }
+
+      // Fetch full details for each unique company (by dossiernummer)
+      // Dedupe by dossiernummer to avoid fetching same company multiple times
+      const uniqueByKvk = new Map<string, SuggestResult>();
+      for (const suggestion of filtered) {
+        if (!uniqueByKvk.has(suggestion.dossiernummer)) {
+          uniqueByKvk.set(suggestion.dossiernummer, suggestion);
+        }
+      }
+
+      // Limit to first 25 unique companies to avoid too many requests
+      const uniqueSuggestions = Array.from(uniqueByKvk.values()).slice(0, 25);
+
+      // Fetch details in parallel (max 5 concurrent)
+      const results: CompanySearchResult[] = [];
+      const batchSize = 5;
+
+      for (let i = 0; i < uniqueSuggestions.length; i += batchSize) {
+        const batch = uniqueSuggestions.slice(i, i + batchSize);
+        const detailsPromises = batch.map(async (suggestion) => {
+          try {
+            const details = await fetchCompanyDetails(suggestion.id);
+            if (details) {
+              return transformToSearchResult(details);
+            }
+            // Fallback to basic data from suggestion
+            return {
+              kvkNummer: suggestion.dossiernummer,
+              naam: suggestion.handelsnaam,
+              handelsnamen: [suggestion.handelsnaam],
+              adres: {
+                postcode: null,
+                plaats: suggestion.plaats || null,
+                volledig: suggestion.plaats || "Adres onbekend",
+              },
+              sbiCodes: [],
+              hoofdactiviteit: null,
+              actief: true, // Assume active if in suggest results
+              type: "overig" as const,
+            };
+          } catch {
+            // On error, use basic suggestion data
+            return {
+              kvkNummer: suggestion.dossiernummer,
+              naam: suggestion.handelsnaam,
+              handelsnamen: [suggestion.handelsnaam],
+              adres: {
+                postcode: null,
+                plaats: suggestion.plaats || null,
+                volledig: suggestion.plaats || "Adres onbekend",
+              },
+              sbiCodes: [],
+              hoofdactiviteit: null,
+              actief: true,
+              type: "overig" as const,
+            };
+          }
+        });
+
+        const batchResults = await Promise.all(detailsPromises);
+        results.push(...batchResults);
+      }
+
+      // Filter inactive if needed
+      if (!inclusiefInactief) {
+        return results.filter((r) => r.actief);
+      }
+
+      return results;
     },
     CacheTTL.SEARCH_RESULTS,
     "openkvk"
@@ -405,7 +520,19 @@ export async function searchByKvkNummer(kvkNummer: string): Promise<CompanySearc
   const result = await getCachedOrFetch<CompanySearchResult | null>(
     cacheKey,
     async () => {
-      const url = `${OPENKVK_BASE_URL}?kvk=${cleanKvk}`;
+      // OpenKVK uses 'filters[dossiernummer]' or direct query for KVK lookup
+      const params = new URLSearchParams();
+      params.append("filters[dossiernummer]", cleanKvk);
+      params.append("fields[]", "dossiernummer");
+      params.append("fields[]", "handelsnaam");
+      params.append("fields[]", "postcode");
+      params.append("fields[]", "plaats");
+      params.append("fields[]", "straat");
+      params.append("fields[]", "huisnummer");
+      params.append("fields[]", "type");
+      params.append("fields[]", "actief");
+
+      const url = `${OPENKVK_BASE_URL}?${params.toString()}`;
 
       const response = await fetch(url, {
         headers: getHeaders(),
@@ -480,7 +607,15 @@ export async function searchByPostcode(
     cacheKey,
     async () => {
       const params = new URLSearchParams();
-      params.append("postcode", cleanPostcode);
+      params.append("filters[postcode]", cleanPostcode);
+      params.append("fields[]", "dossiernummer");
+      params.append("fields[]", "handelsnaam");
+      params.append("fields[]", "postcode");
+      params.append("fields[]", "plaats");
+      params.append("fields[]", "straat");
+      params.append("fields[]", "huisnummer");
+      params.append("fields[]", "type");
+      params.append("fields[]", "actief");
 
       const url = `${OPENKVK_BASE_URL}?${params.toString()}`;
 
@@ -562,12 +697,21 @@ export async function searchBySbiCode(
   const result = await getCachedOrFetch<CompanySearchResult[]>(
     cacheKey,
     async () => {
-      // OpenKVK uses wildcard search for SBI
+      // OpenKVK uses query with sbi filter
       const params = new URLSearchParams();
-      params.append("sbi", `${cleanSbi}*`);
+      params.append("query", `${cleanSbi}*`);
+      params.append("queryfields[]", "sbi");
+      params.append("fields[]", "dossiernummer");
+      params.append("fields[]", "handelsnaam");
+      params.append("fields[]", "postcode");
+      params.append("fields[]", "plaats");
+      params.append("fields[]", "straat");
+      params.append("fields[]", "huisnummer");
+      params.append("fields[]", "type");
+      params.append("fields[]", "actief");
 
       if (plaats) {
-        params.append("plaats", plaats);
+        params.append("filters[plaats]", plaats);
       }
 
       const url = `${OPENKVK_BASE_URL}?${params.toString()}`;
@@ -646,7 +790,26 @@ export async function getCompanyByKvk(kvkNummer: string): Promise<{
   const result = await getCachedOrFetch<{ core: KvkCoreData; adres: Address } | null>(
     cacheKey,
     async () => {
-      const url = `${OPENKVK_BASE_URL}?kvk=${cleanKvk}`;
+      // Use filters[dossiernummer] for exact KVK lookup
+      const params = new URLSearchParams();
+      params.append("filters[dossiernummer]", cleanKvk);
+      // Request all available fields for full profile
+      params.append("fields[]", "dossiernummer");
+      params.append("fields[]", "handelsnaam");
+      params.append("fields[]", "handelsnamen");
+      params.append("fields[]", "postcode");
+      params.append("fields[]", "plaats");
+      params.append("fields[]", "straat");
+      params.append("fields[]", "huisnummer");
+      params.append("fields[]", "huisnummertoevoeging");
+      params.append("fields[]", "type");
+      params.append("fields[]", "rechtsvorm");
+      params.append("fields[]", "actief");
+      params.append("fields[]", "startdatum");
+      params.append("fields[]", "rsin");
+      params.append("fields[]", "vestigingsnummer");
+
+      const url = `${OPENKVK_BASE_URL}?${params.toString()}`;
 
       const response = await fetch(url, {
         headers: getHeaders(),
@@ -698,7 +861,8 @@ export async function healthCheck(): Promise<{
   const start = Date.now();
 
   try {
-    const response = await fetch(`${OPENKVK_BASE_URL}?kvk=30181992`, {
+    // Use a known company (Coolblue B.V.) for health check
+    const response = await fetch(`${OPENKVK_BASE_URL}?filters[dossiernummer]=30181992`, {
       headers: getHeaders(),
       signal: AbortSignal.timeout(5000),
     });
