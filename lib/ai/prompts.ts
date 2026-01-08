@@ -806,6 +806,14 @@ Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
         socialProfiles?: any;
         newsArticles?: any[];
         reviews?: any;
+        // NEW v2.0 fields
+        legalStatus?: {
+            hasBankruptcy: boolean;
+            riskIndicator: string | null;
+            recentAnnouncements: number;
+        };
+        directors?: number;
+        companyAge?: number | null;
     }) => `
 Analyseer dit bedrijf en geef een uitgebreide bedrijfsanalyse:
 
@@ -813,6 +821,15 @@ BEDRIJFSNAAM: ${context.companyName}
 
 KVK GEGEVENS:
 ${context.kvkData ? JSON.stringify(context.kvkData, null, 2) : "Niet beschikbaar"}
+
+BEDRIJFSLEEFTIJD: ${context.companyAge ? `${context.companyAge} jaar` : "Onbekend"}
+
+BESTUURDERS: ${context.directors !== undefined ? `${context.directors} geregistreerd` : "Onbekend"}
+
+JURIDISCHE STATUS:
+${context.legalStatus ? `- Faillissement: ${context.legalStatus.hasBankruptcy ? "JA - WAARSCHUWING" : "Nee"}
+- Risico-indicator: ${context.legalStatus.riskIndicator || "Niet bepaald"}
+- Recente bekendmakingen: ${context.legalStatus.recentAnnouncements}` : "Niet gecontroleerd"}
 
 WEBSITE: ${context.websiteUrl || "Niet gevonden"}
 
@@ -1015,6 +1032,14 @@ export function buildCompanyIntelPrompt(context: {
     socialProfiles?: any;
     newsArticles?: any[];
     reviews?: any;
+    // NEW v2.0 fields
+    legalStatus?: {
+        hasBankruptcy: boolean;
+        riskIndicator: string | null;
+        recentAnnouncements: number;
+    };
+    directors?: number;
+    companyAge?: number | null;
 }): string {
     const prompt = COMPANY_INTEL_PROMPT;
     return `${prompt.system}\n\n${prompt.userTemplate(context)}`;

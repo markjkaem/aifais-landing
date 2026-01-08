@@ -40,6 +40,17 @@ import {
     BarChart3,
     Target,
     Lightbulb,
+    // NEW: Icons for v2.0 features
+    AlertTriangle,
+    UserCircle,
+    GitBranch,
+    Clock,
+    Gavel,
+    Banknote,
+    TrendingDown,
+    Building,
+    Briefcase,
+    History,
 } from "lucide-react";
 
 // Types matching the API response
@@ -50,6 +61,73 @@ interface CompanySearchResult {
     plaats: string;
     type: string;
     actief: boolean;
+    sbiCodes?: string[];
+    hoofdactiviteit?: string;
+}
+
+// NEW: Director type
+interface Director {
+    naam: string;
+    functie: string;
+    functieOmschrijving: string | null;
+    startDatum: string | null;
+    eindDatum: string | null;
+    bevoegdheid: string | null;
+    isNatuurlijkPersoon: boolean;
+}
+
+// NEW: Company relation type
+interface CompanyRelation {
+    kvkNummer: string;
+    naam: string;
+    relatietype: string;
+    percentage: number | null;
+    viaDirecteur: string | null;
+    vertrouwensscore: number;
+}
+
+// NEW: Legal status types
+interface BankruptcyInfo {
+    status: string;
+    type: string;
+    datum: string;
+    curator: string | null;
+    rechtbank: string | null;
+    publicatieUrl: string | null;
+}
+
+interface DissolutionInfo {
+    status: string;
+    datum: string | null;
+    reden: string | null;
+}
+
+interface Announcement {
+    type: string;
+    titel: string;
+    datum: string;
+    url: string;
+    bron: string;
+}
+
+// NEW: Financial indicators
+interface FinancialIndicators {
+    creditScore: number | null;
+    paymentBehavior: string | null;
+    riskIndicator: string | null;
+    companyAge: number | null;
+    employeeTrend: string | null;
+    sectorRisk: string | null;
+}
+
+// NEW: Timeline event
+interface TimelineEvent {
+    datum: string;
+    type: string;
+    titel: string;
+    beschrijving: string | null;
+    bron: string;
+    url: string | null;
 }
 
 interface CompanyProfile {
@@ -70,9 +148,29 @@ interface CompanyProfile {
         huisnummer: string | null;
         postcode: string | null;
         plaats: string | null;
+        provincie: string | null;
         volledig: string;
         geoLocatie: { lat: number; lng: number } | null;
     };
+    // NEW: Directors
+    bestuurders: Director[] | null;
+    // NEW: Company relations
+    relaties: {
+        moedermaatschappij: CompanyRelation | null;
+        dochtermaatschappijen: CompanyRelation[];
+        verwanteOndernemingen: CompanyRelation[];
+        totaalRelaties: number;
+    } | null;
+    // NEW: Legal status
+    juridischeStatus: {
+        faillissement: BankruptcyInfo | null;
+        surseance: BankruptcyInfo | null;
+        ontbinding: DissolutionInfo | null;
+        bekendmakingen: Announcement[];
+        risicoIndicator: string | null;
+    } | null;
+    // NEW: Financial indicators
+    financieel: FinancialIndicators | null;
     online: {
         website: string | null;
         email: string | null;
@@ -120,11 +218,12 @@ interface CompanyProfile {
         aanbevelingen: string[];
         confidence: number;
     } | null;
+    // NEW: Timeline
+    tijdlijn: TimelineEvent[];
     meta: {
         timestamp: string;
         bronnen: string[];
         verwerkingstijd: number;
-        kvkConfigured: boolean;
         errors: string[];
     };
 }
@@ -137,11 +236,14 @@ export default function KvkSearchClient() {
     const toolMetadata = getToolBySlug("kvk-search");
     const searchParams = useSearchParams();
 
-    // Search state
+    // Search state - expanded for v2.0
     const [searchQuery, setSearchQuery] = useState("");
-    const [searchType, setSearchType] = useState<"naam" | "kvkNummer">("naam");
+    const [searchType, setSearchType] = useState<"naam" | "kvkNummer" | "postcode" | "sbiCode">("naam");
     const [plaats, setPlaats] = useState("");
+    const [postcodeFilter, setPostcodeFilter] = useState("");
+    const [sbiCodeFilter, setSbiCodeFilter] = useState("");
     const [inclusiefInactief, setInclusiefInactief] = useState(false);
+    const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
     const [stripeProcessed, setStripeProcessed] = useState(false);
 
     // Results state
@@ -221,18 +323,25 @@ export default function KvkSearchClient() {
         localStorage.setItem("kvk_pending_query", JSON.stringify(query));
     };
 
-    // Handle search
+    // Handle search - v2.0 with new search types
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!searchQuery.trim()) return;
+
+        // Validate based on search type
+        if (searchType === "naam" && !searchQuery.trim()) return;
+        if (searchType === "kvkNummer" && !searchQuery.trim()) return;
+        if (searchType === "postcode" && !postcodeFilter.trim() && !searchQuery.trim()) return;
+        if (searchType === "sbiCode" && !sbiCodeFilter.trim() && !searchQuery.trim()) return;
 
         setSearchResults(null);
         setSelectedProfile(null);
 
         const queryData = {
-            query: searchQuery.trim(),
+            query: searchQuery.trim() || undefined,
             type: searchType,
             plaats: plaats.trim() || undefined,
+            postcode: postcodeFilter.trim() || undefined,
+            sbiCode: sbiCodeFilter.trim() || undefined,
             inclusiefInactief,
             getFullProfile: false,
         };
@@ -243,7 +352,7 @@ export default function KvkSearchClient() {
         execute(queryData);
     };
 
-    // Handle selecting a company for full profile
+    // Handle selecting a company for full profile - v2.0 with new include options
     const handleSelectCompany = async (kvkNummer: string) => {
         setSelectedProfile(null);
 
@@ -251,6 +360,13 @@ export default function KvkSearchClient() {
             query: kvkNummer,
             type: "kvkNummer" as const,
             getFullProfile: true,
+            // NEW: Include options for v2.0 data
+            include: {
+                directors: true,
+                relations: true,  // Now enabled - company network
+                legalStatus: true,
+                financial: true,
+            },
             enrichments: {
                 website: true,
                 socials: true,
@@ -354,8 +470,8 @@ export default function KvkSearchClient() {
                     className="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm"
                 >
                     <form onSubmit={handleSearch} className="space-y-4">
-                        {/* Search Type Toggle */}
-                        <div className="flex gap-2 p-1 bg-zinc-100 rounded-lg w-fit">
+                        {/* Search Type Toggle - v2.0 expanded */}
+                        <div className="flex flex-wrap gap-2 p-1 bg-zinc-100 rounded-lg w-fit">
                             <button
                                 type="button"
                                 onClick={() => setSearchType("naam")}
@@ -378,6 +494,28 @@ export default function KvkSearchClient() {
                             >
                                 KVK Nummer
                             </button>
+                            <button
+                                type="button"
+                                onClick={() => setSearchType("postcode")}
+                                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                                    searchType === "postcode"
+                                        ? "bg-white text-zinc-900 shadow-sm"
+                                        : "text-zinc-500 hover:text-zinc-700"
+                                }`}
+                            >
+                                Postcode
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setSearchType("sbiCode")}
+                                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                                    searchType === "sbiCode"
+                                        ? "bg-white text-zinc-900 shadow-sm"
+                                        : "text-zinc-500 hover:text-zinc-700"
+                                }`}
+                            >
+                                SBI Code
+                            </button>
                         </div>
 
                         {/* Main Search Input */}
@@ -387,29 +525,79 @@ export default function KvkSearchClient() {
                                 type="text"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                placeholder={searchType === "naam" ? "Zoek op bedrijfsnaam..." : "Voer KVK nummer in (8 cijfers)..."}
+                                placeholder={
+                                    searchType === "naam" ? "Zoek op bedrijfsnaam..." :
+                                    searchType === "kvkNummer" ? "Voer KVK nummer in (8 cijfers)..." :
+                                    searchType === "postcode" ? "Zoek op bedrijfsnaam binnen postcode..." :
+                                    "Zoek op bedrijfsnaam binnen sector..."
+                                }
                                 className="w-full pl-12 pr-4 py-4 rounded-xl border border-zinc-200 bg-white text-zinc-900 placeholder-zinc-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all text-lg"
                             />
                         </div>
 
-                        {/* Additional Filters */}
-                        {searchType === "naam" && (
-                            <div className="flex flex-wrap gap-4">
-                                <div className="flex-1 min-w-[200px]">
-                                    <label className="block text-sm font-medium text-zinc-600 mb-1">
-                                        Plaats (optioneel)
-                                    </label>
-                                    <div className="relative">
-                                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
-                                        <input
-                                            type="text"
-                                            value={plaats}
-                                            onChange={(e) => setPlaats(e.target.value)}
-                                            placeholder="Amsterdam, Rotterdam..."
-                                            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-zinc-200 text-zinc-900 placeholder-zinc-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all"
-                                        />
-                                    </div>
+                        {/* Postcode-specific input */}
+                        {searchType === "postcode" && (
+                            <div className="flex-1">
+                                <label className="block text-sm font-medium text-zinc-600 mb-1">
+                                    Postcode *
+                                </label>
+                                <div className="relative">
+                                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+                                    <input
+                                        type="text"
+                                        value={postcodeFilter}
+                                        onChange={(e) => setPostcodeFilter(e.target.value.toUpperCase())}
+                                        placeholder="1234AB"
+                                        maxLength={6}
+                                        className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-zinc-200 text-zinc-900 placeholder-zinc-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all font-mono"
+                                    />
                                 </div>
+                            </div>
+                        )}
+
+                        {/* SBI Code-specific input */}
+                        {searchType === "sbiCode" && (
+                            <div className="flex-1">
+                                <label className="block text-sm font-medium text-zinc-600 mb-1">
+                                    SBI Code * (CBS branchecode)
+                                </label>
+                                <div className="relative">
+                                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+                                    <input
+                                        type="text"
+                                        value={sbiCodeFilter}
+                                        onChange={(e) => setSbiCodeFilter(e.target.value.replace(/\D/g, ""))}
+                                        placeholder="62 (ICT), 47 (Retail), 85 (Onderwijs)..."
+                                        maxLength={5}
+                                        className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-zinc-200 text-zinc-900 placeholder-zinc-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all font-mono"
+                                    />
+                                </div>
+                                <p className="text-xs text-zinc-400 mt-1">
+                                    Bijvoorbeeld: 62 = ICT, 47 = Retail, 85 = Onderwijs, 70 = Consultancy
+                                </p>
+                            </div>
+                        )}
+
+                        {/* Additional Filters for name search */}
+                        {(searchType === "naam" || searchType === "postcode" || searchType === "sbiCode") && (
+                            <div className="flex flex-wrap gap-4">
+                                {searchType === "naam" && (
+                                    <div className="flex-1 min-w-[200px]">
+                                        <label className="block text-sm font-medium text-zinc-600 mb-1">
+                                            Plaats (optioneel)
+                                        </label>
+                                        <div className="relative">
+                                            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+                                            <input
+                                                type="text"
+                                                value={plaats}
+                                                onChange={(e) => setPlaats(e.target.value)}
+                                                placeholder="Amsterdam, Rotterdam..."
+                                                className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-zinc-200 text-zinc-900 placeholder-zinc-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all"
+                                            />
+                                        </div>
+                                    </div>
+                                )}
                                 <div className="flex items-end">
                                     <label className="flex items-center gap-2 py-2.5 cursor-pointer">
                                         <input
@@ -1024,7 +1212,388 @@ export default function KvkSearchClient() {
                                     </div>
                                 </div>
                             )}
+
+                            {/* NEW v2.0: Legal Status Card */}
+                            {selectedProfile.juridischeStatus && (
+                                <div className={`rounded-2xl border p-6 ${
+                                    selectedProfile.juridischeStatus.faillissement || selectedProfile.juridischeStatus.surseance
+                                        ? "bg-red-50 border-red-200"
+                                        : selectedProfile.juridischeStatus.risicoIndicator === "hoog" || selectedProfile.juridischeStatus.risicoIndicator === "kritiek"
+                                            ? "bg-amber-50 border-amber-200"
+                                            : "bg-white border-zinc-200"
+                                }`}>
+                                    <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-900 mb-4">
+                                        <Gavel className={`w-5 h-5 ${
+                                            selectedProfile.juridischeStatus.faillissement ? "text-red-500" : "text-zinc-400"
+                                        }`} />
+                                        Juridische Status
+                                        {selectedProfile.juridischeStatus.risicoIndicator && (
+                                            <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+                                                selectedProfile.juridischeStatus.risicoIndicator === "laag" ? "bg-emerald-100 text-emerald-700" :
+                                                selectedProfile.juridischeStatus.risicoIndicator === "gemiddeld" ? "bg-amber-100 text-amber-700" :
+                                                selectedProfile.juridischeStatus.risicoIndicator === "hoog" ? "bg-orange-100 text-orange-700" :
+                                                "bg-red-100 text-red-700"
+                                            }`}>
+                                                {selectedProfile.juridischeStatus.risicoIndicator} risico
+                                            </span>
+                                        )}
+                                    </h2>
+
+                                    {/* Bankruptcy Warning */}
+                                    {selectedProfile.juridischeStatus.faillissement && (
+                                        <div className="flex items-start gap-3 p-4 bg-red-100 rounded-xl mb-4">
+                                            <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 shrink-0" />
+                                            <div>
+                                                <h3 className="font-semibold text-red-800">Faillissement</h3>
+                                                <p className="text-sm text-red-700 mt-1">
+                                                    Status: {selectedProfile.juridischeStatus.faillissement.status} |
+                                                    Datum: {new Date(selectedProfile.juridischeStatus.faillissement.datum).toLocaleDateString("nl-NL")}
+                                                </p>
+                                                {selectedProfile.juridischeStatus.faillissement.curator && (
+                                                    <p className="text-sm text-red-600 mt-1">
+                                                        Curator: {selectedProfile.juridischeStatus.faillissement.curator}
+                                                    </p>
+                                                )}
+                                                {selectedProfile.juridischeStatus.faillissement.publicatieUrl && (
+                                                    <a
+                                                        href={selectedProfile.juridischeStatus.faillissement.publicatieUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-xs text-red-600 hover:underline mt-2 inline-flex items-center gap-1"
+                                                    >
+                                                        Bekijk publicatie <ExternalLink className="w-3 h-3" />
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Surseance */}
+                                    {selectedProfile.juridischeStatus.surseance && (
+                                        <div className="flex items-start gap-3 p-4 bg-amber-100 rounded-xl mb-4">
+                                            <AlertCircle className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
+                                            <div>
+                                                <h3 className="font-semibold text-amber-800">Surseance van Betaling</h3>
+                                                <p className="text-sm text-amber-700 mt-1">
+                                                    Status: {selectedProfile.juridischeStatus.surseance.status} |
+                                                    Datum: {new Date(selectedProfile.juridischeStatus.surseance.datum).toLocaleDateString("nl-NL")}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Dissolution */}
+                                    {selectedProfile.juridischeStatus.ontbinding && (
+                                        <div className="flex items-start gap-3 p-4 bg-zinc-100 rounded-xl mb-4">
+                                            <Building2 className="w-5 h-5 text-zinc-500 mt-0.5 shrink-0" />
+                                            <div>
+                                                <h3 className="font-semibold text-zinc-700">Ontbinding</h3>
+                                                <p className="text-sm text-zinc-600 mt-1">
+                                                    Status: {selectedProfile.juridischeStatus.ontbinding.status}
+                                                    {selectedProfile.juridischeStatus.ontbinding.datum && (
+                                                        <> | Datum: {new Date(selectedProfile.juridischeStatus.ontbinding.datum).toLocaleDateString("nl-NL")}</>
+                                                    )}
+                                                </p>
+                                                {selectedProfile.juridischeStatus.ontbinding.reden && (
+                                                    <p className="text-sm text-zinc-500 mt-1">
+                                                        Reden: {selectedProfile.juridischeStatus.ontbinding.reden}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Good standing message */}
+                                    {!selectedProfile.juridischeStatus.faillissement &&
+                                     !selectedProfile.juridischeStatus.surseance &&
+                                     !selectedProfile.juridischeStatus.ontbinding && (
+                                        <div className="flex items-center gap-2 text-emerald-700">
+                                            <CheckCircle2 className="w-5 h-5" />
+                                            <span>Geen faillissement, surseance of ontbinding geregistreerd</span>
+                                        </div>
+                                    )}
+
+                                    {/* Recent Announcements */}
+                                    {selectedProfile.juridischeStatus.bekendmakingen.length > 0 && (
+                                        <div className="mt-4 pt-4 border-t border-zinc-200">
+                                            <h3 className="text-sm font-medium text-zinc-500 mb-3">
+                                                Recente Bekendmakingen ({selectedProfile.juridischeStatus.bekendmakingen.length})
+                                            </h3>
+                                            <div className="space-y-2">
+                                                {selectedProfile.juridischeStatus.bekendmakingen.slice(0, 3).map((item, i) => (
+                                                    <a
+                                                        key={i}
+                                                        href={item.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-start gap-2 p-2 hover:bg-zinc-50 rounded-lg transition-colors group"
+                                                    >
+                                                        <span className={`px-1.5 py-0.5 text-xs rounded ${
+                                                            item.type === "faillissement" || item.type === "ontbinding" ? "bg-red-100 text-red-700" :
+                                                            item.type === "fusie" ? "bg-blue-100 text-blue-700" :
+                                                            "bg-zinc-100 text-zinc-600"
+                                                        }`}>
+                                                            {item.type}
+                                                        </span>
+                                                        <div className="flex-1 min-w-0">
+                                                            <p className="text-sm text-zinc-700 group-hover:text-emerald-600 truncate">{item.titel}</p>
+                                                            <p className="text-xs text-zinc-400">{new Date(item.datum).toLocaleDateString("nl-NL")} - {item.bron}</p>
+                                                        </div>
+                                                        <ExternalLink className="w-3 h-3 text-zinc-300 group-hover:text-emerald-500" />
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* NEW v2.0: Financial Health Card */}
+                            {selectedProfile.financieel && (
+                                <div className="bg-white rounded-2xl border border-zinc-200 p-6">
+                                    <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-900 mb-4">
+                                        <Banknote className="w-5 h-5 text-zinc-400" />
+                                        Financiële Indicatoren
+                                    </h2>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {selectedProfile.financieel.creditScore !== null && (
+                                            <div className="p-4 bg-zinc-50 rounded-xl">
+                                                <div className="text-2xl font-bold text-zinc-900">{selectedProfile.financieel.creditScore}</div>
+                                                <div className="text-sm text-zinc-500">Credit Score</div>
+                                            </div>
+                                        )}
+                                        {selectedProfile.financieel.companyAge !== null && (
+                                            <div className="p-4 bg-zinc-50 rounded-xl">
+                                                <div className="text-2xl font-bold text-zinc-900">{selectedProfile.financieel.companyAge}</div>
+                                                <div className="text-sm text-zinc-500">Jaar oud</div>
+                                            </div>
+                                        )}
+                                        {selectedProfile.financieel.paymentBehavior && (
+                                            <div className="p-4 bg-zinc-50 rounded-xl">
+                                                <div className={`text-lg font-semibold ${
+                                                    selectedProfile.financieel.paymentBehavior === "uitstekend" || selectedProfile.financieel.paymentBehavior === "goed" ? "text-emerald-600" :
+                                                    selectedProfile.financieel.paymentBehavior === "gemiddeld" ? "text-amber-600" : "text-red-600"
+                                                }`}>
+                                                    {selectedProfile.financieel.paymentBehavior}
+                                                </div>
+                                                <div className="text-sm text-zinc-500">Betaalgedrag</div>
+                                            </div>
+                                        )}
+                                        {selectedProfile.financieel.riskIndicator && (
+                                            <div className="p-4 bg-zinc-50 rounded-xl">
+                                                <div className={`text-lg font-semibold ${
+                                                    selectedProfile.financieel.riskIndicator === "laag" ? "text-emerald-600" :
+                                                    selectedProfile.financieel.riskIndicator === "gemiddeld" ? "text-amber-600" : "text-red-600"
+                                                }`}>
+                                                    {selectedProfile.financieel.riskIndicator}
+                                                </div>
+                                                <div className="text-sm text-zinc-500">Risico indicator</div>
+                                            </div>
+                                        )}
+                                        {selectedProfile.financieel.employeeTrend && (
+                                            <div className="p-4 bg-zinc-50 rounded-xl flex items-center gap-2">
+                                                {selectedProfile.financieel.employeeTrend === "groeiend" && <TrendingUp className="w-5 h-5 text-emerald-500" />}
+                                                {selectedProfile.financieel.employeeTrend === "krimpend" && <TrendingDown className="w-5 h-5 text-red-500" />}
+                                                <div>
+                                                    <div className="text-lg font-semibold text-zinc-900 capitalize">{selectedProfile.financieel.employeeTrend}</div>
+                                                    <div className="text-sm text-zinc-500">Personeelstrend</div>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {selectedProfile.financieel.sectorRisk && (
+                                            <div className="p-4 bg-zinc-50 rounded-xl">
+                                                <div className={`text-lg font-semibold ${
+                                                    selectedProfile.financieel.sectorRisk === "laag" ? "text-emerald-600" :
+                                                    selectedProfile.financieel.sectorRisk === "gemiddeld" ? "text-amber-600" : "text-red-600"
+                                                }`}>
+                                                    {selectedProfile.financieel.sectorRisk}
+                                                </div>
+                                                <div className="text-sm text-zinc-500">Sector risico</div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
+
+                        {/* NEW v2.0: Directors Section */}
+                        {selectedProfile.bestuurders && selectedProfile.bestuurders.length > 0 && (
+                            <div className="bg-white rounded-2xl border border-zinc-200 p-6">
+                                <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-900 mb-4">
+                                    <UserCircle className="w-5 h-5 text-zinc-400" />
+                                    Bestuurders ({selectedProfile.bestuurders.length})
+                                </h2>
+
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    {selectedProfile.bestuurders.map((director, i) => (
+                                        <div key={i} className="p-4 bg-zinc-50 rounded-xl">
+                                            <div className="flex items-start justify-between">
+                                                <div>
+                                                    <h3 className="font-medium text-zinc-900">{director.naam}</h3>
+                                                    <p className="text-sm text-zinc-500 capitalize">{director.functie}</p>
+                                                    {director.functieOmschrijving && (
+                                                        <p className="text-xs text-zinc-400 mt-1">{director.functieOmschrijving}</p>
+                                                    )}
+                                                </div>
+                                                {director.bevoegdheid && (
+                                                    <span className={`px-2 py-0.5 text-xs rounded-full ${
+                                                        director.bevoegdheid === "alleen" ? "bg-emerald-100 text-emerald-700" :
+                                                        director.bevoegdheid === "gezamenlijk" ? "bg-blue-100 text-blue-700" :
+                                                        "bg-zinc-100 text-zinc-600"
+                                                    }`}>
+                                                        {director.bevoegdheid}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            {director.startDatum && (
+                                                <p className="text-xs text-zinc-400 mt-2">
+                                                    Sinds {new Date(director.startDatum).toLocaleDateString("nl-NL")}
+                                                    {director.eindDatum && ` - ${new Date(director.eindDatum).toLocaleDateString("nl-NL")}`}
+                                                </p>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* NEW v2.0: Company Relations */}
+                        {selectedProfile.relaties && selectedProfile.relaties.totaalRelaties > 0 && (
+                            <div className="bg-white rounded-2xl border border-zinc-200 p-6">
+                                <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-900 mb-4">
+                                    <GitBranch className="w-5 h-5 text-zinc-400" />
+                                    Bedrijfsrelaties ({selectedProfile.relaties.totaalRelaties})
+                                </h2>
+
+                                {/* Parent Company */}
+                                {selectedProfile.relaties.moedermaatschappij && (
+                                    <div className="mb-4">
+                                        <h3 className="text-sm font-medium text-zinc-500 mb-2">Moedermaatschappij</h3>
+                                        <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                                            <div className="flex items-center gap-3">
+                                                <Building className="w-8 h-8 text-blue-500" />
+                                                <div>
+                                                    <h4 className="font-medium text-zinc-900">{selectedProfile.relaties.moedermaatschappij.naam}</h4>
+                                                    <p className="text-sm text-zinc-500">KVK: {selectedProfile.relaties.moedermaatschappij.kvkNummer}</p>
+                                                </div>
+                                                {selectedProfile.relaties.moedermaatschappij.percentage && (
+                                                    <span className="ml-auto text-lg font-semibold text-blue-600">
+                                                        {selectedProfile.relaties.moedermaatschappij.percentage}%
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Subsidiaries */}
+                                {selectedProfile.relaties.dochtermaatschappijen.length > 0 && (
+                                    <div className="mb-4">
+                                        <h3 className="text-sm font-medium text-zinc-500 mb-2">
+                                            Dochtermaatschappijen ({selectedProfile.relaties.dochtermaatschappijen.length})
+                                        </h3>
+                                        <div className="space-y-2">
+                                            {selectedProfile.relaties.dochtermaatschappijen.map((sub, i) => (
+                                                <div key={i} className="p-3 bg-emerald-50 rounded-xl border border-emerald-100 flex items-center justify-between">
+                                                    <div>
+                                                        <h4 className="font-medium text-zinc-900">{sub.naam}</h4>
+                                                        <p className="text-xs text-zinc-500">KVK: {sub.kvkNummer}</p>
+                                                    </div>
+                                                    {sub.percentage && (
+                                                        <span className="text-sm font-semibold text-emerald-600">{sub.percentage}%</span>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Related Companies */}
+                                {selectedProfile.relaties.verwanteOndernemingen.length > 0 && (
+                                    <div>
+                                        <h3 className="text-sm font-medium text-zinc-500 mb-2">
+                                            Verwante Ondernemingen ({selectedProfile.relaties.verwanteOndernemingen.length})
+                                        </h3>
+                                        <div className="space-y-2">
+                                            {selectedProfile.relaties.verwanteOndernemingen.map((rel, i) => (
+                                                <div key={i} className="p-3 bg-zinc-50 rounded-xl flex items-center justify-between">
+                                                    <div>
+                                                        <h4 className="font-medium text-zinc-900">{rel.naam}</h4>
+                                                        <p className="text-xs text-zinc-500">
+                                                            KVK: {rel.kvkNummer}
+                                                            {rel.viaDirecteur && ` • Via: ${rel.viaDirecteur}`}
+                                                        </p>
+                                                    </div>
+                                                    <span className="text-xs text-zinc-400 capitalize">{rel.relatietype}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* NEW v2.0: Timeline */}
+                        {selectedProfile.tijdlijn && selectedProfile.tijdlijn.length > 0 && (
+                            <div className="bg-white rounded-2xl border border-zinc-200 p-6">
+                                <h2 className="flex items-center gap-2 text-lg font-semibold text-zinc-900 mb-4">
+                                    <History className="w-5 h-5 text-zinc-400" />
+                                    Bedrijfsgeschiedenis
+                                </h2>
+
+                                <div className="relative">
+                                    {/* Timeline line */}
+                                    <div className="absolute left-4 top-0 bottom-0 w-px bg-zinc-200" />
+
+                                    <div className="space-y-4">
+                                        {selectedProfile.tijdlijn.slice(0, 10).map((event, i) => (
+                                            <div key={i} className="relative pl-10">
+                                                {/* Timeline dot */}
+                                                <div className={`absolute left-2 w-4 h-4 rounded-full border-2 ${
+                                                    event.type === "oprichting" ? "bg-emerald-500 border-emerald-300" :
+                                                    event.type === "faillissement" || event.type === "ontbinding" ? "bg-red-500 border-red-300" :
+                                                    event.type === "bestuurswisseling" ? "bg-blue-500 border-blue-300" :
+                                                    "bg-zinc-400 border-zinc-300"
+                                                }`} />
+
+                                                <div className="p-3 bg-zinc-50 rounded-lg">
+                                                    <div className="flex items-start justify-between">
+                                                        <div>
+                                                            <span className={`inline-block px-2 py-0.5 text-xs rounded-full mb-1 ${
+                                                                event.type === "oprichting" ? "bg-emerald-100 text-emerald-700" :
+                                                                event.type === "faillissement" || event.type === "ontbinding" ? "bg-red-100 text-red-700" :
+                                                                event.type === "bestuurswisseling" ? "bg-blue-100 text-blue-700" :
+                                                                "bg-zinc-100 text-zinc-600"
+                                                            }`}>
+                                                                {event.type}
+                                                            </span>
+                                                            <h4 className="font-medium text-zinc-900">{event.titel}</h4>
+                                                            {event.beschrijving && (
+                                                                <p className="text-sm text-zinc-500 mt-1">{event.beschrijving}</p>
+                                                            )}
+                                                        </div>
+                                                        <span className="text-xs text-zinc-400 whitespace-nowrap">
+                                                            {new Date(event.datum).toLocaleDateString("nl-NL")}
+                                                        </span>
+                                                    </div>
+                                                    {event.url && (
+                                                        <a
+                                                            href={event.url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-xs text-emerald-600 hover:underline mt-1 inline-flex items-center gap-1"
+                                                        >
+                                                            Meer info <ExternalLink className="w-3 h-3" />
+                                                        </a>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         {/* News */}
                         {selectedProfile.nieuws.length > 0 && (

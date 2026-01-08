@@ -20,7 +20,7 @@ import { discoverWebsite, WebsiteDiscoveryResult } from "./website-discovery";
 import { findSocialProfiles, SocialFinderResult } from "./social-finder";
 import { analyzeTechStack, TechStackResult } from "./tech-stack";
 import { searchNews, NewsSearchResult } from "./news-search";
-import { getReviews, getMockReviews, ReviewsResult } from "./reviews";
+import { getReviews, ReviewsResult } from "./reviews";
 
 export interface CompanyEnrichment {
     website: WebsiteDiscoveryResult;
@@ -35,17 +35,17 @@ export interface CompanyEnrichment {
 /**
  * Run all enrichment services for a company
  *
+ * NO MOCK DATA - Returns real data or null/empty values with proper error handling.
+ *
  * @param companyName Company name for lookups
  * @param knownWebsite Known website URL (from KVK data)
  * @param city City for local business lookups
- * @param useMocks Use mock data (for development without API keys)
  * @returns Combined enrichment data
  */
 export async function enrichCompanyData(
     companyName: string,
     knownWebsite?: string,
-    city?: string,
-    useMocks = false
+    city?: string
 ): Promise<CompanyEnrichment> {
     const startTime = Date.now();
     const errors: string[] = [];
@@ -66,6 +66,7 @@ export async function enrichCompanyData(
     }
 
     // Step 2: Run remaining enrichments in parallel
+    // NO MOCK DATA - Each service returns real data or empty/null values
     const [socials, techStack, news, reviews] = await Promise.all([
         // Social profiles
         findSocialProfiles(companyName, website.website).catch(error => {
@@ -93,19 +94,24 @@ export async function enrichCompanyData(
                 totalDetected: 0,
             } as TechStackResult),
 
-        // News search
+        // News search - NO MOCK FALLBACK
         searchNews(companyName).catch(error => {
             errors.push(`News search failed: ${error instanceof Error ? error.message : "Unknown error"}`);
-            return { articles: [], source: "mock" as const, totalFound: 0 };
+            return { articles: [], source: "none" as const, totalFound: 0, error: "News search failed" };
         }),
 
-        // Reviews (use mocks in development or if no API keys)
-        useMocks
-            ? Promise.resolve(getMockReviews(companyName))
-            : getReviews(companyName, city).catch(error => {
-                errors.push(`Reviews fetch failed: ${error instanceof Error ? error.message : "Unknown error"}`);
-                return getMockReviews(companyName);
-            }),
+        // Reviews - NO MOCK FALLBACK
+        getReviews(companyName, city).catch(error => {
+            errors.push(`Reviews fetch failed: ${error instanceof Error ? error.message : "Unknown error"}`);
+            return {
+                google: null,
+                trustpilot: null,
+                averageRating: null,
+                totalReviews: 0,
+                sources: [],
+                error: "Reviews fetch failed",
+            } as ReviewsResult;
+        }),
     ]);
 
     return {

@@ -18,6 +18,7 @@ export interface ReviewsResult {
     averageRating: number | null;
     totalReviews: number;
     sources: string[];
+    error?: string;
 }
 
 const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
@@ -200,29 +201,10 @@ export async function getReviews(
 }
 
 /**
- * Get mock reviews for development
+ * Note: Mock reviews have been removed.
+ * This service now returns real data only.
+ * If no reviews are found, it returns null values with proper indication.
  */
-export function getMockReviews(companyName: string): ReviewsResult {
-    // Generate somewhat random but consistent ratings based on company name
-    const hash = companyName.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const baseRating = 3.5 + (hash % 15) / 10; // 3.5 - 5.0
-
-    return {
-        google: {
-            rating: Math.round(baseRating * 10) / 10,
-            count: 50 + (hash % 500),
-            url: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(companyName)}`,
-        },
-        trustpilot: {
-            rating: Math.round((baseRating - 0.2) * 10) / 10,
-            count: 20 + (hash % 200),
-            url: `https://www.trustpilot.com/review/${companyName.toLowerCase().replace(/\s+/g, "-")}`,
-        },
-        averageRating: Math.round((baseRating - 0.1) * 10) / 10,
-        totalReviews: 70 + (hash % 700),
-        sources: ["Google", "Trustpilot"],
-    };
-}
 
 /**
  * Check if reviews APIs are configured

@@ -17,8 +17,9 @@ export interface NewsArticle {
 
 export interface NewsSearchResult {
     articles: NewsArticle[];
-    source: "newsapi" | "rss" | "mock";
+    source: "newsapi" | "rss" | "none";
     totalFound: number;
+    error?: string;
 }
 
 const NEWS_API_KEY = process.env.NEWS_API_KEY;
@@ -146,66 +147,48 @@ function decodeHtmlEntities(text: string): string {
 }
 
 /**
- * Generate mock news for development
- */
-function getMockNews(companyName: string): NewsArticle[] {
-    return [
-        {
-            titel: `${companyName} kondigt uitbreiding aan`,
-            bron: "FD",
-            datum: "2 dagen geleden",
-            url: "#",
-            beschrijving: `${companyName} heeft plannen aangekondigd om uit te breiden naar nieuwe markten.`,
-        },
-        {
-            titel: `Nieuw partnership voor ${companyName}`,
-            bron: "RTL Z",
-            datum: "1 week geleden",
-            url: "#",
-            beschrijving: `${companyName} gaat samenwerking aan met internationale partner.`,
-        },
-        {
-            titel: `${companyName} in top 100 snelst groeiende bedrijven`,
-            bron: "MT/Sprout",
-            datum: "2 weken geleden",
-            url: "#",
-            beschrijving: `Het bedrijf ${companyName} is opgenomen in de lijst van snelst groeiende ondernemingen.`,
-        },
-    ];
-}
-
-/**
  * Search for news about a company
+ *
+ * Returns real news data from available sources.
+ * NO MOCK DATA - returns empty array if no news found.
  */
 export async function searchNews(companyName: string): Promise<NewsSearchResult> {
     // Try NewsAPI first if configured
     if (NEWS_API_KEY) {
-        const articles = await fetchFromNewsApi(companyName);
-        if (articles.length > 0) {
-            return {
-                articles,
-                source: "newsapi",
-                totalFound: articles.length,
-            };
+        try {
+            const articles = await fetchFromNewsApi(companyName);
+            if (articles.length > 0) {
+                return {
+                    articles,
+                    source: "newsapi",
+                    totalFound: articles.length,
+                };
+            }
+        } catch (error) {
+            console.warn("[NewsSearch] NewsAPI failed:", error);
         }
     }
 
     // Try Google News RSS as fallback
-    const rssArticles = await fetchFromGoogleNews(companyName);
-    if (rssArticles.length > 0) {
-        return {
-            articles: rssArticles,
-            source: "rss",
-            totalFound: rssArticles.length,
-        };
+    try {
+        const rssArticles = await fetchFromGoogleNews(companyName);
+        if (rssArticles.length > 0) {
+            return {
+                articles: rssArticles,
+                source: "rss",
+                totalFound: rssArticles.length,
+            };
+        }
+    } catch (error) {
+        console.warn("[NewsSearch] Google News RSS failed:", error);
     }
 
-    // Return mock data for development
-    const mockArticles = getMockNews(companyName);
+    // NO MOCK DATA - Return empty results with indication that no news was found
     return {
-        articles: mockArticles,
-        source: "mock",
-        totalFound: mockArticles.length,
+        articles: [],
+        source: "none",
+        totalFound: 0,
+        error: "Geen nieuws gevonden voor dit bedrijf",
     };
 }
 

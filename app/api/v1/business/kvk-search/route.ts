@@ -1,8 +1,10 @@
 /**
- * KVK Bedrijfszoeker API
+ * KVK Bedrijfszoeker API v2.0
  *
- * Company Intelligence Tool that combines KVK data with enrichments:
- * - Official KVK Handelsregister data
+ * Company Intelligence Tool that combines FREE data sources with enrichments:
+ * - OpenKVK (overheid.io) - FREE company data
+ * - Bankruptcy Register (rechtspraak.nl) - Legal status
+ * - Official Announcements (Staatscourant) - Corporate events
  * - Website & contact discovery
  * - Social media profiles
  * - Technology stack analysis
@@ -10,7 +12,8 @@
  * - Reviews & reputation
  * - AI-powered business analysis
  *
- * Cost: €0.04-0.06 per full lookup (KVK API costs)
+ * NO MOCK DATA - Real data or proper error responses.
+ *
  * Price: 0.001 SOL / €0.50
  */
 
@@ -18,125 +21,24 @@ import { createToolHandler } from "@/lib/tools/createToolHandler";
 import { kvkSearchSchema } from "@/lib/security/schemas";
 import { getToolBySlug } from "@/config/tools";
 import Anthropic from "@anthropic-ai/sdk";
+
+// New KVK v2.0 module
 import {
-    searchKvk,
-    getFullCompanyProfile,
-    isKvkConfigured,
-    getMockSearchResults,
-    getMockBasisprofiel,
-    formatAddress,
-    formatEmployeeCount,
-    getMainActivity,
-    isValidKvkNummer,
-    KvkSearchResult,
-    KvkBasisprofiel,
-} from "@/lib/external/kvk-client";
+    searchCompanies,
+    getCompanyProfile,
+    KvkSourceError,
+    type SearchResponse,
+    type ProfileResponse,
+    type CompanyProfile,
+} from "@/lib/external/kvk";
+
+// Enrichment services
 import { enrichCompanyData, CompanyEnrichment } from "@/lib/external/enrichment";
+
+// AI Prompts
 import { buildCompanyIntelPrompt, COMPANY_INTEL_PROMPT } from "@/lib/ai/prompts";
 
 const toolMetadata = getToolBySlug("kvk-search");
-
-// Types for response
-interface CompanySearchResult {
-    kvkNummer: string;
-    naam: string;
-    adres: string;
-    plaats: string;
-    type: string;
-    actief: boolean;
-}
-
-interface CompanyProfile {
-    // KVK Data
-    kvk: {
-        kvkNummer: string;
-        rsin: string | null;
-        naam: string;
-        handelsnamen: string[];
-        rechtsvorm: string | null;
-        oprichtingsdatum: string | null;
-        actief: boolean;
-        sbiCodes: Array<{ code: string; omschrijving: string }>;
-        aantalMedewerkers: string;
-        hoofdactiviteit: string;
-    };
-
-    // Address
-    adres: {
-        straat: string | null;
-        huisnummer: string | null;
-        postcode: string | null;
-        plaats: string | null;
-        volledig: string;
-        geoLocatie: { lat: number; lng: number } | null;
-    };
-
-    // Online Presence
-    online: {
-        website: string | null;
-        email: string | null;
-        telefoon: string | null;
-        socials: {
-            linkedin: string | null;
-            twitter: string | null;
-            facebook: string | null;
-            instagram: string | null;
-            youtube: string | null;
-        };
-    };
-
-    // Tech Stack
-    techStack: {
-        cms: string[];
-        frameworks: string[];
-        analytics: string[];
-        payments: string[];
-        marketing: string[];
-        ecommerce: string[];
-        hosting: string[];
-        other: string[];
-        totalDetected: number;
-    };
-
-    // Reviews
-    reviews: {
-        google: { rating: number; count: number; url?: string } | null;
-        trustpilot: { rating: number; count: number; url?: string } | null;
-        averageRating: number | null;
-        totalReviews: number;
-    };
-
-    // News
-    nieuws: Array<{
-        titel: string;
-        bron: string;
-        datum: string;
-        url: string;
-    }>;
-
-    // AI Analysis
-    aiAnalyse: {
-        samenvatting: string;
-        branche: string;
-        sterkePunten: string[];
-        aandachtspunten: string[];
-        groeiScore: number;
-        digitalScore: number;
-        reputatieScore: number;
-        overallScore: number;
-        aanbevelingen: string[];
-        confidence: number;
-    } | null;
-
-    // Meta
-    meta: {
-        timestamp: string;
-        bronnen: string[];
-        verwerkingstijd: number;
-        kvkConfigured: boolean;
-        errors: string[];
-    };
-}
 
 export const POST = createToolHandler({
     schema: kvkSearchSchema,
@@ -150,259 +52,393 @@ export const POST = createToolHandler({
         const errors: string[] = [];
         const bronnen: string[] = [];
 
-        const { query, type, plaats, inclusiefInactief, getFullProfile, enrichments } = input;
-        const kvkConfigured = isKvkConfigured();
+        const {
+            query,
+            type = "naam",
+            plaats,
+            postcode,
+            provincie,
+            sbiCode,
+            inclusiefInactief = false,
+            getFullProfile = false,
+            include,
+            enrichments,
+        } = input;
 
-        // Determine if we should use mock data
-        const useMocks = context.payment.method === "dev_bypass" || !kvkConfigured;
+        // Determine the search query based on type
+        let searchQuery = query || "";
+        if (type === "postcode" && postcode && !query) {
+            searchQuery = postcode;
+        } else if (type === "sbiCode" && sbiCode && !query) {
+            searchQuery = sbiCode;
+        }
 
-        // ========== STEP 1: Search KVK ==========
-        let searchResults: KvkSearchResult[] = [];
-
+        // ========== STEP 1: Search Companies ==========
         try {
-            if (useMocks) {
-                const mockResponse = getMockSearchResults(query);
-                searchResults = mockResponse.resultaten;
-                bronnen.push("KVK (mock)");
-            } else {
-                // Build search params based on type
-                const searchParams = type === "kvkNummer" && isValidKvkNummer(query)
-                    ? { kvkNummer: query, inclusiefInactieveRegistraties: inclusiefInactief }
-                    : type === "vestigingsnummer"
-                        ? { vestigingsnummer: query, inclusiefInactieveRegistraties: inclusiefInactief }
-                        : { naam: query, plaats, inclusiefInactieveRegistraties: inclusiefInactief };
+            const searchResponse = await searchCompanies({
+                query: searchQuery,
+                type: type as "naam" | "kvkNummer" | "postcode" | "sbiCode",
+                plaats,
+                postcode,
+                provincie,
+                sbiCode,
+                inclusiefInactief,
+            });
 
-                const response = await searchKvk(searchParams);
-                searchResults = response.resultaten;
-                bronnen.push("KVK Handelsregister");
+            // Add sources
+            for (const source of searchResponse.meta.sources) {
+                bronnen.push(source.name);
             }
-        } catch (error) {
-            errors.push(`KVK search failed: ${error instanceof Error ? error.message : "Unknown error"}`);
-            // Fall back to mock data
-            const mockResponse = getMockSearchResults(query);
-            searchResults = mockResponse.resultaten;
-            bronnen.push("KVK (fallback mock)");
-        }
 
-        // If no results, return early
-        if (searchResults.length === 0) {
-            return {
-                type: "search",
-                results: [],
-                total: 0,
-                meta: {
-                    timestamp: new Date().toISOString(),
-                    bronnen,
-                    verwerkingstijd: Date.now() - startTime,
-                    kvkConfigured,
-                    errors,
-                },
-            };
-        }
-
-        // If just searching (not getting full profile), return search results
-        if (!getFullProfile) {
-            const formattedResults: CompanySearchResult[] = searchResults.map(r => ({
-                kvkNummer: r.kvkNummer,
-                naam: r.naam,
-                adres: formatAddress(r.adres),
-                plaats: r.adres?.binnenlandsAdres?.plaats || "",
-                type: r.type,
-                actief: r.actief === "Ja",
-            }));
-
-            return {
-                type: "search",
-                results: formattedResults,
-                total: formattedResults.length,
-                meta: {
-                    timestamp: new Date().toISOString(),
-                    bronnen,
-                    verwerkingstijd: Date.now() - startTime,
-                    kvkConfigured,
-                    errors,
-                },
-            };
-        }
-
-        // ========== STEP 2: Get Full Company Profile ==========
-        const primaryResult = searchResults[0];
-        let basisprofiel: KvkBasisprofiel | null = null;
-
-        try {
-            if (useMocks) {
-                basisprofiel = getMockBasisprofiel(primaryResult.kvkNummer);
-            } else {
-                const fullProfile = await getFullCompanyProfile(primaryResult.kvkNummer);
-                basisprofiel = fullProfile.basisprofiel;
-                if (fullProfile.errors.length) {
-                    errors.push(...fullProfile.errors);
-                }
+            // Collect errors
+            for (const error of searchResponse.meta.errors) {
+                errors.push(`${error.source}: ${error.message}`);
             }
-        } catch (error) {
-            errors.push(`Profile fetch failed: ${error instanceof Error ? error.message : "Unknown error"}`);
-            basisprofiel = getMockBasisprofiel(primaryResult.kvkNummer);
-        }
 
-        // ========== STEP 3: Run Enrichments ==========
-        const enrichmentOptions = enrichments || {
-            website: true,
-            socials: true,
-            techStack: true,
-            news: true,
-            reviews: true,
-            aiAnalysis: true,
-        };
-
-        let enrichment: CompanyEnrichment | null = null;
-
-        if (Object.values(enrichmentOptions).some(v => v)) {
-            try {
-                const websiteFromKvk = basisprofiel?.embedded?.hoofdvestiging?.websites?.[0];
-                const city = primaryResult.adres?.binnenlandsAdres?.plaats;
-
-                enrichment = await enrichCompanyData(
-                    primaryResult.naam,
-                    websiteFromKvk,
-                    city,
-                    useMocks
-                );
-
-                if (enrichment.errors.length) {
-                    errors.push(...enrichment.errors);
-                }
-
-                if (enrichment.website.website) bronnen.push("Website");
-                if (enrichment.socials.foundCount > 0) bronnen.push("Social Media");
-                if (enrichment.techStack.totalDetected > 0) bronnen.push("Tech Stack Analysis");
-                if (enrichment.news.articles.length > 0) bronnen.push(`News (${enrichment.news.source})`);
-                if (enrichment.reviews.totalReviews > 0) bronnen.push("Reviews");
-
-            } catch (error) {
-                errors.push(`Enrichment failed: ${error instanceof Error ? error.message : "Unknown error"}`);
-            }
-        }
-
-        // ========== STEP 4: AI Analysis ==========
-        let aiAnalysis: CompanyProfile["aiAnalyse"] = null;
-
-        if (enrichmentOptions.aiAnalysis) {
-            try {
-                const anthropic = new Anthropic();
-
-                const prompt = buildCompanyIntelPrompt({
-                    companyName: primaryResult.naam,
-                    kvkData: {
-                        kvkNummer: primaryResult.kvkNummer,
-                        rechtsvorm: basisprofiel?.embedded?.eigenaar?.rechtsvorm,
-                        sbiCodes: basisprofiel?.sbiActiviteiten,
-                        aantalMedewerkers: basisprofiel?.totaalWerkzamePersonen,
-                        oprichtingsdatum: basisprofiel?.formeleRegistratiedatum,
+            // If no full profile requested, return search results
+            if (!getFullProfile) {
+                return {
+                    type: "search",
+                    results: searchResponse.results.map(r => ({
+                        kvkNummer: r.kvkNummer,
+                        naam: r.naam,
+                        adres: r.adres.volledig,
+                        plaats: r.adres.plaats || "",
+                        type: r.type,
+                        actief: r.actief,
+                        sbiCodes: r.sbiCodes,
+                        hoofdactiviteit: r.hoofdactiviteit,
+                    })),
+                    total: searchResponse.total,
+                    meta: {
+                        timestamp: new Date().toISOString(),
+                        bronnen: [...new Set(bronnen)],
+                        verwerkingstijd: Date.now() - startTime,
+                        errors,
                     },
-                    websiteUrl: enrichment?.website.website,
-                    techStack: enrichment?.techStack,
-                    socialProfiles: enrichment?.socials.profiles,
-                    newsArticles: enrichment?.news.articles,
-                    reviews: enrichment?.reviews,
-                });
-
-                const response = await anthropic.messages.create({
-                    model: "claude-sonnet-4-20250514",
-                    max_tokens: COMPANY_INTEL_PROMPT.maxTokens,
-                    temperature: COMPANY_INTEL_PROMPT.temperature,
-                    messages: [{ role: "user", content: prompt }],
-                });
-
-                const textContent = response.content.find(c => c.type === "text");
-                if (textContent && textContent.type === "text") {
-                    const parsed = JSON.parse(textContent.text);
-                    aiAnalysis = {
-                        samenvatting: parsed.samenvatting || "",
-                        branche: parsed.branche || "",
-                        sterkePunten: parsed.sterkePunten || [],
-                        aandachtspunten: parsed.aandachtspunten || [],
-                        groeiScore: parsed.groeiScore || 0,
-                        digitalScore: parsed.digitalScore || 0,
-                        reputatieScore: parsed.reputatieScore || 0,
-                        overallScore: parsed.overallScore || 0,
-                        aanbevelingen: parsed.aanbevelingen || [],
-                        confidence: parsed.confidence || 0,
-                    };
-                    bronnen.push("AI Analysis (Claude)");
-                }
-            } catch (error) {
-                errors.push(`AI analysis failed: ${error instanceof Error ? error.message : "Unknown error"}`);
+                };
             }
-        }
 
-        // ========== STEP 5: Build Response ==========
-        const profile: CompanyProfile = {
-            kvk: {
-                kvkNummer: primaryResult.kvkNummer,
-                rsin: primaryResult.rsin || null,
-                naam: primaryResult.naam,
-                handelsnamen: basisprofiel?.handelsnamen?.map(h => h.naam) || [primaryResult.naam],
-                rechtsvorm: basisprofiel?.embedded?.eigenaar?.rechtsvorm || null,
-                oprichtingsdatum: basisprofiel?.formeleRegistratiedatum || null,
-                actief: primaryResult.actief === "Ja",
-                sbiCodes: basisprofiel?.sbiActiviteiten?.map(s => ({
-                    code: s.sbiCode,
-                    omschrijving: s.sbiOmschrijving,
-                })) || [],
-                aantalMedewerkers: formatEmployeeCount(basisprofiel?.totaalWerkzamePersonen),
-                hoofdactiviteit: getMainActivity(basisprofiel?.sbiActiviteiten),
-            },
-            adres: {
-                straat: primaryResult.adres?.binnenlandsAdres?.straatnaam || null,
-                huisnummer: primaryResult.adres?.binnenlandsAdres?.huisnummer?.toString() || null,
-                postcode: primaryResult.adres?.binnenlandsAdres?.postcode || null,
-                plaats: primaryResult.adres?.binnenlandsAdres?.plaats || null,
-                volledig: formatAddress(primaryResult.adres),
-                geoLocatie: null, // Would come from vestigingsprofiel with geoData
-            },
-            online: {
-                website: enrichment?.website.website || null,
-                email: enrichment?.website.email || null,
-                telefoon: enrichment?.website.telefoon || null,
-                socials: enrichment?.socials.profiles || {
-                    linkedin: null,
-                    twitter: null,
-                    facebook: null,
-                    instagram: null,
-                    youtube: null,
+            // If no results, return empty
+            if (searchResponse.results.length === 0) {
+                return {
+                    type: "search",
+                    results: [],
+                    total: 0,
+                    meta: {
+                        timestamp: new Date().toISOString(),
+                        bronnen: [...new Set(bronnen)],
+                        verwerkingstijd: Date.now() - startTime,
+                        errors: [...errors, "Geen bedrijven gevonden"],
+                    },
+                };
+            }
+
+            // ========== STEP 2: Get Full Company Profile ==========
+            const primaryResult = searchResponse.results[0];
+
+            // Use include options from request, with sensible defaults
+            const includeOptions = include || {
+                directors: true,
+                relations: false,  // Off by default (expensive)
+                legalStatus: true,
+                financial: true,
+            };
+
+            const profileResponse = await getCompanyProfile(
+                primaryResult.kvkNummer,
+                primaryResult.naam,
+                {
+                    directors: includeOptions.directors ?? true,
+                    relations: includeOptions.relations ?? false,
+                    legalStatus: includeOptions.legalStatus ?? true,
+                    financial: includeOptions.financial ?? true,
+                }
+            );
+
+            const profile = profileResponse.profile;
+
+            // Add profile sources
+            for (const source of profile.meta.sources) {
+                if (!bronnen.includes(source.name)) {
+                    bronnen.push(source.name);
+                }
+            }
+
+            // Collect profile errors
+            for (const error of profile.meta.errors) {
+                errors.push(`${error.source}: ${error.message}`);
+            }
+
+            // ========== STEP 3: Run Enrichments ==========
+            const enrichmentOptions = enrichments || {
+                website: true,
+                socials: true,
+                techStack: true,
+                news: true,
+                reviews: true,
+                aiAnalysis: true,
+            };
+
+            let enrichment: CompanyEnrichment | null = null;
+
+            if (Object.values(enrichmentOptions).some(v => v)) {
+                try {
+                    const city = profile.adres.plaats || undefined;
+
+                    // NO MOCK DATA - enrichCompanyData now returns real data only
+                    enrichment = await enrichCompanyData(
+                        profile.kvk.naam,
+                        undefined, // Let it discover the website
+                        city
+                    );
+
+                    if (enrichment.errors.length) {
+                        errors.push(...enrichment.errors);
+                    }
+
+                    if (enrichment.website.website) bronnen.push("Website");
+                    if (enrichment.socials.foundCount > 0) bronnen.push("Social Media");
+                    if (enrichment.techStack.totalDetected > 0) bronnen.push("Tech Stack Analysis");
+                    if (enrichment.news.articles.length > 0) bronnen.push(`News (${enrichment.news.source})`);
+                    if (enrichment.reviews.totalReviews > 0) bronnen.push("Reviews");
+
+                } catch (error) {
+                    errors.push(`Enrichment failed: ${error instanceof Error ? error.message : "Unknown error"}`);
+                }
+            }
+
+            // ========== STEP 4: AI Analysis ==========
+            let aiAnalysis: CompanyProfile["aiAnalyse"] = null;
+
+            if (enrichmentOptions.aiAnalysis) {
+                try {
+                    const anthropic = new Anthropic();
+
+                    // Build prompt with all available data
+                    const prompt = buildCompanyIntelPrompt({
+                        companyName: profile.kvk.naam,
+                        kvkData: {
+                            kvkNummer: profile.kvk.kvkNummer,
+                            rechtsvorm: profile.kvk.rechtsvorm,
+                            sbiCodes: profile.kvk.sbiCodes.map(s => ({
+                                sbiCode: s.code,
+                                sbiOmschrijving: s.omschrijving,
+                            })),
+                            aantalMedewerkers: profile.kvk.aantalMedewerkers,
+                            oprichtingsdatum: profile.kvk.oprichtingsdatum,
+                        },
+                        websiteUrl: enrichment?.website.website,
+                        techStack: enrichment?.techStack,
+                        socialProfiles: enrichment?.socials.profiles,
+                        newsArticles: enrichment?.news.articles,
+                        reviews: enrichment?.reviews,
+                        // New data from v2.0
+                        legalStatus: profile.juridischeStatus.data ? {
+                            hasBankruptcy: !!profile.juridischeStatus.data.faillissement,
+                            riskIndicator: profile.juridischeStatus.data.risicoIndicator,
+                            recentAnnouncements: profile.juridischeStatus.data.bekendmakingen.length,
+                        } : undefined,
+                        directors: profile.bestuurders.data?.length || 0,
+                        companyAge: profile.financieel.data?.companyAge,
+                    });
+
+                    const response = await anthropic.messages.create({
+                        model: "claude-sonnet-4-20250514",
+                        max_tokens: COMPANY_INTEL_PROMPT.maxTokens,
+                        temperature: COMPANY_INTEL_PROMPT.temperature,
+                        messages: [{ role: "user", content: prompt }],
+                    });
+
+                    const textContent = response.content.find(c => c.type === "text");
+                    if (textContent && textContent.type === "text") {
+                        try {
+                            const parsed = JSON.parse(textContent.text);
+                            aiAnalysis = {
+                                samenvatting: parsed.samenvatting || "",
+                                branche: parsed.branche || "",
+                                branchePositie: parsed.branchePositie || null,
+                                sterkePunten: parsed.sterkePunten || [],
+                                aandachtspunten: parsed.aandachtspunten || [],
+                                technologieAnalyse: parsed.technologieAnalyse || null,
+                                marketingAnalyse: parsed.marketingAnalyse || null,
+                                groeipotentieel: parsed.groeipotentieel || null,
+                                groeiScore: parsed.groeiScore || 0,
+                                digitalScore: parsed.digitalScore || 0,
+                                reputatieScore: parsed.reputatieScore || 0,
+                                overallScore: parsed.overallScore || 0,
+                                aanbevelingen: parsed.aanbevelingen || [],
+                                competitieAnalyse: parsed.competitieAnalyse || null,
+                                targetKlant: parsed.targetKlant || null,
+                                confidence: parsed.confidence || 0,
+                            };
+                            bronnen.push("AI Analysis (Claude)");
+                        } catch (parseError) {
+                            errors.push("AI analysis response parsing failed");
+                        }
+                    }
+                } catch (error) {
+                    errors.push(`AI analysis failed: ${error instanceof Error ? error.message : "Unknown error"}`);
+                }
+            }
+
+            // ========== STEP 5: Build Response ==========
+            const finalProfile = {
+                // KVK Core Data
+                kvk: {
+                    kvkNummer: profile.kvk.kvkNummer,
+                    rsin: profile.kvk.rsin,
+                    naam: profile.kvk.naam,
+                    handelsnamen: profile.kvk.handelsnamen,
+                    rechtsvorm: profile.kvk.rechtsvorm,
+                    oprichtingsdatum: profile.kvk.oprichtingsdatum,
+                    actief: profile.kvk.actief,
+                    sbiCodes: profile.kvk.sbiCodes,
+                    aantalMedewerkers: profile.kvk.aantalMedewerkers,
+                    hoofdactiviteit: profile.kvk.hoofdactiviteit,
                 },
-            },
-            techStack: enrichment?.techStack || {
-                cms: [],
-                frameworks: [],
-                analytics: [],
-                payments: [],
-                marketing: [],
-                ecommerce: [],
-                hosting: [],
-                other: [],
-                totalDetected: 0,
-            },
-            reviews: {
-                google: enrichment?.reviews.google || null,
-                trustpilot: enrichment?.reviews.trustpilot || null,
-                averageRating: enrichment?.reviews.averageRating || null,
-                totalReviews: enrichment?.reviews.totalReviews || 0,
-            },
-            nieuws: enrichment?.news.articles || [],
-            aiAnalyse: aiAnalysis,
-            meta: {
-                timestamp: new Date().toISOString(),
-                bronnen: [...new Set(bronnen)],
-                verwerkingstijd: Date.now() - startTime,
-                kvkConfigured,
-                errors,
-            },
-        };
 
-        return {
-            type: "profile",
-            profile,
-        };
+                // Address
+                adres: {
+                    straat: profile.adres.straat,
+                    huisnummer: profile.adres.huisnummer,
+                    postcode: profile.adres.postcode,
+                    plaats: profile.adres.plaats,
+                    provincie: profile.adres.provincie,
+                    volledig: profile.adres.volledig,
+                    geoLocatie: profile.adres.geoLocatie,
+                },
+
+                // NEW: Directors
+                bestuurders: profile.bestuurders.success
+                    ? profile.bestuurders.data
+                    : null,
+
+                // NEW: Company Relations (if requested)
+                relaties: profile.relaties.success
+                    ? {
+                        moedermaatschappij: profile.relaties.data?.moedermaatschappij || null,
+                        dochtermaatschappijen: profile.relaties.data?.dochtermaatschappijen || [],
+                        verwanteOndernemingen: profile.relaties.data?.verwanteOndernemingen || [],
+                        totaalRelaties: profile.relaties.data?.totaalRelaties || 0,
+                    }
+                    : null,
+
+                // NEW: Legal Status
+                juridischeStatus: profile.juridischeStatus.success
+                    ? {
+                        faillissement: profile.juridischeStatus.data?.faillissement || null,
+                        surseance: profile.juridischeStatus.data?.surseance || null,
+                        ontbinding: profile.juridischeStatus.data?.ontbinding || null,
+                        bekendmakingen: profile.juridischeStatus.data?.bekendmakingen || [],
+                        risicoIndicator: profile.juridischeStatus.data?.risicoIndicator || null,
+                    }
+                    : null,
+
+                // NEW: Financial Indicators
+                financieel: profile.financieel.success
+                    ? profile.financieel.data
+                    : null,
+
+                // Online Presence (from enrichment)
+                online: {
+                    website: enrichment?.website.website || null,
+                    email: enrichment?.website.email || null,
+                    telefoon: enrichment?.website.telefoon || null,
+                    socials: enrichment?.socials.profiles || {
+                        linkedin: null,
+                        twitter: null,
+                        facebook: null,
+                        instagram: null,
+                        youtube: null,
+                    },
+                },
+
+                // Tech Stack
+                techStack: enrichment?.techStack || {
+                    cms: [],
+                    frameworks: [],
+                    analytics: [],
+                    payments: [],
+                    marketing: [],
+                    ecommerce: [],
+                    hosting: [],
+                    other: [],
+                    totalDetected: 0,
+                },
+
+                // Reviews (NO MOCK DATA)
+                reviews: {
+                    google: enrichment?.reviews.google || null,
+                    trustpilot: enrichment?.reviews.trustpilot || null,
+                    averageRating: enrichment?.reviews.averageRating || null,
+                    totalReviews: enrichment?.reviews.totalReviews || 0,
+                },
+
+                // News (NO MOCK DATA)
+                nieuws: enrichment?.news.articles || [],
+
+                // AI Analysis
+                aiAnalyse: aiAnalysis,
+
+                // NEW: Timeline
+                tijdlijn: profile.tijdlijn || [],
+
+                // Meta
+                meta: {
+                    timestamp: new Date().toISOString(),
+                    bronnen: [...new Set(bronnen)],
+                    verwerkingstijd: Date.now() - startTime,
+                    errors,
+                    dataVersheid: {
+                        kvk: profile.meta.timestamp,
+                        enrichment: enrichment ? new Date().toISOString() : null,
+                    },
+                },
+            };
+
+            return {
+                type: "profile",
+                profile: finalProfile,
+            };
+
+        } catch (error) {
+            // Handle KVK-specific errors
+            if (error instanceof KvkSourceError) {
+                if (error.code === "NOT_FOUND") {
+                    return {
+                        type: "search",
+                        results: [],
+                        total: 0,
+                        meta: {
+                            timestamp: new Date().toISOString(),
+                            bronnen,
+                            verwerkingstijd: Date.now() - startTime,
+                            errors: [error.message],
+                        },
+                    };
+                }
+
+                if (error.code === "RATE_LIMITED") {
+                    return {
+                        type: "error",
+                        error: {
+                            code: "RATE_LIMITED",
+                            message: error.message,
+                            retryAfter: error.retryAfter,
+                        },
+                        meta: {
+                            timestamp: new Date().toISOString(),
+                            bronnen,
+                            verwerkingstijd: Date.now() - startTime,
+                            errors: [error.message],
+                        },
+                    };
+                }
+            }
+
+            // Generic error
+            throw error;
+        }
     },
 });

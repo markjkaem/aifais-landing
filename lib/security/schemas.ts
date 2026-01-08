@@ -263,14 +263,43 @@ export const pitchDeckSchema = z.object({
 
 // ==================== Business Intelligence Schemas ====================
 
+// Dutch provinces for filtering
+const dutchProvinces = [
+    "Drenthe", "Flevoland", "Friesland", "Gelderland", "Groningen",
+    "Limburg", "Noord-Brabant", "Noord-Holland", "Overijssel",
+    "Utrecht", "Zeeland", "Zuid-Holland"
+] as const;
+
 export const kvkSearchSchema = z.object({
-    query: z.string().min(1, "Zoekterm is verplicht").max(200),
-    type: z.enum(["naam", "kvkNummer", "vestigingsnummer"]).default("naam"),
+    // Search query - required for name search, optional for postcode/sbi
+    query: z.string().max(200).optional(),
+
+    // Search type - expanded with postcode and SBI code
+    type: z.enum(["naam", "kvkNummer", "postcode", "sbiCode"]).default("naam"),
+
+    // Location filters
     plaats: z.string().max(100).optional(),
+    postcode: z.string().regex(/^\d{4}[A-Z]{2}$/, "Ongeldige postcode (bijv. 1234AB)").optional(),
+    provincie: z.enum(dutchProvinces).optional(),
+
+    // SBI code filter (CBS business classification)
+    sbiCode: z.string().regex(/^\d{2,5}$/, "Ongeldige SBI code (2-5 cijfers)").optional(),
+
+    // Include inactive companies
     inclusiefInactief: z.boolean().optional().default(false),
+
     // For detailed lookup after search
     getFullProfile: z.boolean().optional().default(false),
-    // Enrichment options
+
+    // NEW: Data inclusion options (for full profile)
+    include: z.object({
+        directors: z.boolean().default(true),       // Bestuurders
+        relations: z.boolean().default(false),      // Company relations (expensive)
+        legalStatus: z.boolean().default(true),     // Bankruptcy, dissolution
+        financial: z.boolean().default(true),       // Financial indicators
+    }).optional(),
+
+    // Enrichment options (external data)
     enrichments: z.object({
         website: z.boolean().default(true),
         socials: z.boolean().default(true),
@@ -279,7 +308,28 @@ export const kvkSearchSchema = z.object({
         reviews: z.boolean().default(true),
         aiAnalysis: z.boolean().default(true),
     }).optional(),
-}).merge(paymentSchema);
+}).merge(paymentSchema).refine(
+    // Validate that required fields are present based on search type
+    (data) => {
+        if (data.type === "naam" && !data.query) {
+            return false;
+        }
+        if (data.type === "kvkNummer" && !data.query) {
+            return false;
+        }
+        if (data.type === "postcode" && !data.postcode && !data.query) {
+            return false;
+        }
+        if (data.type === "sbiCode" && !data.sbiCode && !data.query) {
+            return false;
+        }
+        return true;
+    },
+    {
+        message: "Zoekterm is verplicht voor dit zoektype",
+        path: ["query"],
+    }
+);
 
 // ==================== Consulting Schemas ====================
 

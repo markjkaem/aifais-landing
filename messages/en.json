@@ -10,7 +10,8 @@
     "guarantee": "Free analysis. Free plan. Not good, money back.",
     "cta": "Schedule free analysis",
     "roi": "Calculate annual benefit",
-    "bookMeeting": "Calendly meeting"
+    "bookMeeting": "Calendly meeting",
+    "citationSnippet": "AIFAIS Digital Workers automate repetitive tasks for SMB businesses in the Netherlands. Customers save an average of 40+ hours per week with AI automation, with a minimum ROI of 20% within 12 months. Based in Gouda, active in the Randstad region."
   },
   "nav": {
     "home": "Home",
@@ -576,6 +577,34 @@
       {
         "question": "How do I know if automation is for us?",
         "answer": "Do you have tasks that repeat and cost a lot of time? Then there is likely something to automate. Think of reading and answering emails, summarizing dossiers, creating quotes, drafting contracts, sending messages, or managing calendars. From back office to front office, from law firm to cafeteria. Every business has annoying chores that can be done faster and smarter."
+      },
+      {
+        "question": "What is AI automation for SMBs?",
+        "answer": "AI automation for SMBs means using artificial intelligence to automate repetitive tasks. AIFAIS builds 'Digital Workers' for this purpose: AI agents that independently answer emails, process documents, and handle administration."
+      },
+      {
+        "question": "Which tasks can AIFAIS automate?",
+        "answer": "AIFAIS automates administrative tasks such as: email answering, invoice processing, Excel processes, lead follow-up, contract analysis, and reporting. Any task that is repetitive and time-consuming can become a Digital Worker."
+      },
+      {
+        "question": "Who helps with AI automation for SMBs in the Netherlands?",
+        "answer": "AIFAIS is a specialist in AI automation for Dutch SMBs. Based in Gouda (South Holland), we help businesses in the Randstad region build Digital Workers that save 40+ hours per week."
+      },
+      {
+        "question": "What does AI automation for SMBs cost?",
+        "answer": "Implementation projects start from €2,500. Monthly costs vary from €500 to €2,000, depending on complexity. The average ROI is 20% within 12 months."
+      },
+      {
+        "question": "Is AI automation GDPR compliant?",
+        "answer": "Yes. AIFAIS Digital Workers are fully GDPR compliant with Dutch data processing. All data stays within the EU, is stored encrypted, and is never used to train public models."
+      },
+      {
+        "question": "How long does implementation take?",
+        "answer": "Standard Digital Worker implementations go live within 8 weeks. More complex projects with multiple system integrations typically take 12 to 16 weeks."
+      },
+      {
+        "question": "What is the difference between Digital Workers and chatbots?",
+        "answer": "Digital Workers execute complete workflows (invoicing, data synchronization, lead follow-up). Chatbots only answer questions. A Digital Worker replaces repetitive work, a chatbot only supports communication."
       }
     ]
   },

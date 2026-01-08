@@ -303,6 +303,15 @@ const t = await getTranslations({ locale, namespace: "namespace" });
 - Alleen in `NODE_ENV === 'development'` of `'test'`
 - **Geblokkeerd in production**
 
+**Testing Paid Tools:**
+In development mode, bypass payment with `signature: "DEV_BYPASS"`:
+```bash
+curl -X POST http://localhost:3000/api/v1/business/kvk-search \
+  -H "Content-Type: application/json" \
+  -H "Origin: http://localhost:3000" \
+  -d '{"query": "Coolblue", "type": "naam", "signature": "DEV_BYPASS"}'
+```
+
 ---
 
 ## Environment Variables
@@ -312,6 +321,9 @@ Zie `.env.example` voor alle variables:
 ```env
 # AI
 ANTHROPIC_API_KEY=sk-ant-...
+
+# OpenKVK (FREE - register at overheid.io)
+OPENKVK_API_KEY=your-openkvk-api-key
 
 # Solana
 SOLANA_WALLET_ADDRESS=Bqpo3...
@@ -463,6 +475,62 @@ Troubleshooting guide voor Solana en Stripe betalingen.
 
 Diagnosticeert: 402 errors, QR code issues, session problemen, Redis issues.
 
+### `/check-sentry` - Pre-Deploy Sentry Gate
+
+Check voor unresolved critical Sentry issues voor deployment.
+
+```
+/check-sentry
+/check-sentry --strict
+```
+
+Blokkeert deployment als er kritieke issues zijn (>100 users affected).
+
+### `/check-translations` - i18n Sync Validator
+
+Verifieert dat alle translation keys in zowel `en.json` als `nl.json` bestaan.
+
+```
+/check-translations
+/check-translations --fix
+```
+
+Vindt: ontbrekende keys, lege values, structuur mismatches.
+
+### `/check-api-health` - API Endpoint Validator
+
+Verifieert dat alle API endpoints correct reageren.
+
+```
+/check-api-health
+/check-api-health --production
+/check-api-health --local
+```
+
+Test: alle /api/v1/* endpoints, payment verificatie, MCP endpoint.
+
+### `/check-payments` - Payment Systems Health
+
+Verifieert Stripe en Solana payment systemen.
+
+```
+/check-payments
+/check-payments --stripe
+/check-payments --solana
+```
+
+Checkt: Stripe connection, products/prices, Solana RPC, wallet balance.
+
+### `/check-mcp-sync` - MCP-API Alignment Validator
+
+Verifieert dat MCP server tool definities matchen met API routes.
+
+```
+/check-mcp-sync
+```
+
+Vindt: ontbrekende MCP tools, orphaned tools, pricing mismatches.
+
 ---
 
 ## Hooks & Automation
@@ -476,6 +544,11 @@ Geconfigureerd in `.claude/settings.local.json`:
 ### Post-Commit Type Check
 - Runt `npx tsc --noEmit` na git commits
 - Voorkomt TypeScript errors in commits
+
+### Production Deploy Reminder
+- Triggered bij `vercel --prod` commando
+- Herinnert om `/check-sentry` en `/check-api-health` te runnen
+- Voorkomt deployment zonder health checks
 
 ### Status Line
 - Toont huidige branch + "AIFAISS" label
