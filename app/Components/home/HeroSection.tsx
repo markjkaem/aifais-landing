@@ -12,11 +12,11 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[calc(100vh-80px)] flex items-center overflow-hidden bg-[#fafaf9]">
-      {/* Subtle background elements */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* Subtle background elements - hidden on mobile for performance */}
+      <div className="absolute inset-0 pointer-events-none mobile-hide-blur">
         {/* Subtle gradient orbs */}
-        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-amber-100/40 rounded-full blur-[80px]" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-amber-100/40 rounded-full blur-3xl" />
       </div>
 
       {/* Content */}

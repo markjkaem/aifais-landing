@@ -84,3 +84,48 @@ body {
 .blog-content blockquote {
   @apply border-l-4 border-[var(--primary)] pl-6 italic text-[var(--muted-foreground)] my-8 bg-[var(--muted)]/50 py-2 rounded-r-lg;
 }
+
+/* Mobile Performance Optimizations */
+/* Disable heavy animations on mobile for better scroll performance */
+@media (max-width: 768px) {
+  .animate-ping {
+    animation: none !important;
+  }
+
+  /* Hide large blur backgrounds on mobile - they cause GPU jank */
+  .mobile-hide-blur {
+    display: none !important;
+  }
+
+  /* Reduce blur intensity on mobile */
+  .mobile-reduce-blur {
+    filter: blur(20px) !important;
+  }
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-ping,
+  .animate-pulse,
+  .animate-spin,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
+
+/* GPU-optimized animated elements */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}

@@ -36,10 +36,10 @@ export default function ExplainerSection() {
 
   return (
     <section className="py-24 md:py-32 bg-[#fafaf9] relative overflow-hidden">
-      {/* Background elements matching Hero */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-purple-100/30 rounded-full blur-[80px]" />
+      {/* Background elements matching Hero - hidden on mobile for performance */}
+      <div className="absolute inset-0 pointer-events-none mobile-hide-blur">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-100/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] bg-purple-100/30 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
@@ -48,8 +48,8 @@ export default function ExplainerSection() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.4 }}
             className="order-2 lg:order-1"
           >
             {/* Heading */}
@@ -89,8 +89,8 @@ export default function ExplainerSection() {
                   key={i}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: i * 0.1 }}
+                  viewport={{ once: true, margin: "-30px" }}
+                  transition={{ duration: 0.25, delay: i * 0.05 }}
                   className="group flex items-start gap-4 p-4 rounded-2xl bg-white border border-stone-100 hover:border-stone-200 hover:shadow-lg hover:shadow-stone-200/50 transition-all duration-300"
                 >
                   <div
@@ -115,8 +115,8 @@ export default function ExplainerSection() {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.4 }}
             className="order-1 lg:order-2"
           >
             <div className="relative">

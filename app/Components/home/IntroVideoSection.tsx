@@ -19,8 +19,8 @@ export default function IntroVideoSection() {
     <section className="py-24 md:py-32 bg-white relative overflow-hidden">
       {/* Subtle background elements matching ExplainerSection */}
       <div className="absolute inset-0 bg-gradient-to-b from-white to-stone-50/50" />
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-100/30 to-transparent rounded-full blur-3xl" />
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-l from-purple-100/30 to-transparent rounded-full blur-3xl" />
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-100/30 to-transparent rounded-full blur-3xl mobile-hide-blur" />
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-l from-purple-100/30 to-transparent rounded-full blur-3xl mobile-hide-blur" />
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -66,16 +66,13 @@ export default function IntroVideoSection() {
 
             {/* Play Overlay */}
             {!isPlaying && (
-              <div 
-                className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-[2px] hover:bg-black/30 transition-all duration-300"
+              <div
+                className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-all duration-300"
                 onClick={handlePlay}
               >
                 <div className="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-500">
                   <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-blue-600 border-b-[12px] border-b-transparent ml-2" />
                 </div>
-                
-                {/* Pulse Effect */}
-                <div className="absolute w-20 h-20 md:w-24 md:h-24 bg-white/30 rounded-full animate-ping" />
               </div>
             )}
           </div>

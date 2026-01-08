@@ -35,17 +35,10 @@ export default function AgentDemoSection() {
 
   return (
     <section className="py-24 md:py-32 bg-gradient-to-b from-stone-900 via-stone-900 to-stone-800 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px]" />
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
+      {/* Background effects - hidden on mobile for performance */}
+      <div className="absolute inset-0 pointer-events-none mobile-hide-blur">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
@@ -56,7 +49,8 @@ export default function AgentDemoSection() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3 }}
               className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full mb-6"
             >
               <span className="relative flex h-2 w-2">
@@ -72,8 +66,8 @@ export default function AgentDemoSection() {
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3, delay: 0.05 }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight leading-[1.1]"
             >
               {t("title")}{" "}
@@ -86,8 +80,8 @@ export default function AgentDemoSection() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3, delay: 0.1 }}
               className="text-lg text-stone-400 mb-8 leading-relaxed max-w-lg"
             >
               {t("description")}
@@ -97,8 +91,8 @@ export default function AgentDemoSection() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3, delay: 0.15 }}
               className="grid grid-cols-2 gap-4 mb-10"
             >
               {features.map((item, i) => (
@@ -117,8 +111,8 @@ export default function AgentDemoSection() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3, delay: 0.2 }}
               className="flex flex-wrap items-center gap-4"
             >
               <Link
@@ -139,8 +133,8 @@ export default function AgentDemoSection() {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.4 }}
             className="relative"
           >
             {/* Glow */}
@@ -182,25 +176,17 @@ export default function AgentDemoSection() {
 
                   {/* Arrow - hidden on mobile, shown on desktop */}
                   <div className="hidden sm:flex flex-1 items-center justify-center px-2 md:px-4">
-                    <motion.div
-                      animate={{ x: [0, 10, 0] }}
-                      transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                      className="flex items-center gap-1"
-                    >
+                    <div className="flex items-center gap-1">
                       <div className="w-8 md:w-16 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
                       <ArrowRight className="w-4 h-4 text-purple-400" />
-                    </motion.div>
+                    </div>
                   </div>
 
                   {/* Agent */}
                   <div className="flex sm:flex-col items-center gap-3 sm:gap-0">
-                    <motion.div
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                      className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 border border-purple-500/30 flex items-center justify-center sm:mb-2"
-                    >
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-500/30 to-blue-500/30 border border-purple-500/30 flex items-center justify-center sm:mb-2">
                       <Bot className="w-5 h-5 sm:w-7 sm:h-7 text-purple-400" />
-                    </motion.div>
+                    </div>
                     <div className="sm:text-center">
                       <span className="text-stone-400 text-xs block">{t("visual.agent")}</span>
                       <span className="text-white text-sm font-semibold">{t("visual.processing")}</span>
@@ -209,14 +195,10 @@ export default function AgentDemoSection() {
 
                   {/* Arrow - hidden on mobile, shown on desktop */}
                   <div className="hidden sm:flex flex-1 items-center justify-center px-2 md:px-4">
-                    <motion.div
-                      animate={{ x: [0, 10, 0] }}
-                      transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0.5 }}
-                      className="flex items-center gap-1"
-                    >
+                    <div className="flex items-center gap-1">
                       <div className="w-8 md:w-16 h-0.5 bg-gradient-to-r from-purple-500 to-emerald-500 rounded-full" />
                       <ArrowRight className="w-4 h-4 text-emerald-400" />
-                    </motion.div>
+                    </div>
                   </div>
 
                   {/* Drafts */}
@@ -260,12 +242,7 @@ export default function AgentDemoSection() {
                         {email.status === "done" ? (
                           <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
                         ) : email.status === "processing" ? (
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                          >
-                            <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400" />
-                          </motion.div>
+                          <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400" />
                         ) : (
                           <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-stone-500" />
                         )}

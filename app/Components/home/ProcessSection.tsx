@@ -11,7 +11,7 @@ export default function ProcessSection() {
     <section className="relative py-24 md:py-32 bg-[#fafaf9] overflow-hidden">
       {/* Subtle background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:32px_32px]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-100/50 to-purple-100/50 rounded-full blur-3xl opacity-50" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-100/50 to-purple-100/50 rounded-full blur-3xl opacity-50 mobile-hide-blur" />
 
       <div className="container mx-auto px-6 max-w-5xl relative z-10">
         {/* Header */}
