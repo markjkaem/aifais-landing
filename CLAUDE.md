@@ -718,19 +718,22 @@ Dit zorgt ervoor dat je aware bent van productie issues voordat je code wijzigin
 5. Meld aan gebruiker: "Getest in browser ✅, deployed ✅ na X pogingen"
 
 ### Bij ALLE website wijzigingen (pages, components, config, styling):
-1. **Maak de wijzigingen**
-2. **TypeScript check:** `bunx tsc --noEmit`
-3. **Start dev server:** `bun run dev` (in background)
-4. **Browser test met Playwright:**
+1. **Check Sentry EERST:** `search_issues` voor unresolved issues in laatste 24h
+   - Fix kritieke issues voordat je nieuwe wijzigingen maakt
+   - Negeer third-party errors (browser extensions, iOS Safari internal code)
+2. **Maak de wijzigingen**
+3. **TypeScript check:** `bunx tsc --noEmit`
+4. **Start dev server:** `bun run dev` (in background)
+5. **Browser test met Playwright:**
    - Navigeer naar de gewijzigde pagina(s)
    - Verifieer visueel dat alles correct rendert
    - Check console voor errors
-5. **Git commit & push** met descriptieve message
-6. **Vercel deployment check:**
+6. **Git commit & push** met descriptieve message
+7. **Vercel deployment check:**
    - Wacht 30-60 sec
    - Verifieer op production URL
    - Als FAALT: fix → commit → push → herhaal (max 5x)
-7. **Meld resultaat:** "Browser test ✅, deployed ✅"
+8. **Meld resultaat:** "Sentry ✅, Browser test ✅, deployed ✅"
 
 ### Bij API/Tool wijzigingen - Sync Requirements:
 Wanneer je APIs of tools wijzigt, update ALTIJD deze locaties:
