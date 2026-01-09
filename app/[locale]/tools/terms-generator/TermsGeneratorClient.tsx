@@ -34,6 +34,7 @@ import CryptoModal from "@/app/Components/CryptoModal";
 import TemplateSelector from "@/app/Components/tools/TemplateSelector";
 import ToolActionBar from "@/app/Components/tools/ToolActionBar";
 import { useResultHistory } from "@/hooks/useResultHistory";
+import { useDevMode } from "@/hooks/useDevMode";
 import { exportData, downloadExport } from "@/lib/export";
 
 const TERMS_CONFIG = {
@@ -122,10 +123,13 @@ export default function TermsGeneratorClient() {
         id: string;
     } | null>(null);
 
+    // Dev mode for testing (bypasses payment with ?dev=true)
+    const { isDevMode, devBypassSignature } = useDevMode();
+
     // Result history
-    const { 
-        history: historyResults, 
-        saveToHistory, 
+    const {
+        history: historyResults,
+        saveToHistory,
         clearHistory,
         deleteEntry,
         toggleStar,
@@ -144,6 +148,12 @@ export default function TermsGeneratorClient() {
     }, []);
 
     const handleGenClick = () => {
+        // Dev mode bypasses payment
+        if (isDevMode && devBypassSignature) {
+            handleGenerate(devBypassSignature);
+            return;
+        }
+
         if (paymentProof) {
             handleGenerate();
         } else {
