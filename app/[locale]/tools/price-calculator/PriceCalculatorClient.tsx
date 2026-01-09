@@ -136,7 +136,7 @@ export default function PriceCalculatorClient() {
             }
 
             const data = await response.json();
-            setResult(data);
+            setResult(data.data);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Er ging iets mis.");
         } finally {
