@@ -721,6 +721,7 @@ Dit zorgt ervoor dat je aware bent van productie issues voordat je code wijzigin
 1. **Check Sentry EERST:** `search_issues` voor unresolved issues in laatste 24h
    - Fix kritieke issues voordat je nieuwe wijzigingen maakt
    - Negeer third-party errors (browser extensions, iOS Safari internal code)
+   - **Na fix: `update_issue` met `status: resolved`** om issue te sluiten
 2. **Maak de wijzigingen**
 3. **TypeScript check:** `bunx tsc --noEmit`
 4. **Start dev server:** `bun run dev` (in background)
@@ -728,7 +729,7 @@ Dit zorgt ervoor dat je aware bent van productie issues voordat je code wijzigin
    - Navigeer naar de gewijzigde pagina(s)
    - Verifieer visueel dat alles correct rendert
    - Check console voor errors
-6. **Git commit & push** met descriptieve message
+6. **Git commit & push** met descriptieve message (gebruik `Fixes ISSUE-ID` in commit)
 7. **Vercel deployment check:**
    - Wacht 30-60 sec
    - Verifieer op production URL
