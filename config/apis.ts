@@ -153,6 +153,45 @@ export const API_ENDPOINTS: APIEndpoint[] = [
   }
 }`
     },
+    {
+        id: "btw-calculator",
+        name: "btw_calculator",
+        title: "BTW Calculator",
+        description: "Calculate Dutch VAT (BTW) amounts. Add VAT to net amounts or extract VAT from gross amounts. Supports 9% and 21% rates.",
+        method: "POST",
+        path: "/api/v1/finance/btw-calculator",
+        category: "finance",
+        price: "Free",
+        isFree: true,
+        status: "live",
+        isNew: true,
+        params: [
+            { name: "amount", type: "number", required: true, description: "The amount to calculate VAT for" },
+            { name: "vatRate", type: "string", required: false, description: "'9' or '21' (default: 21)" },
+            { name: "calculationType", type: "string", required: false, description: "'addVat' (net→gross) or 'removeVat' (gross→net)" },
+            { name: "amounts", type: "array", required: false, description: "Optional: batch calculate multiple amounts" },
+        ],
+        responseExample: `{
+  "input": {
+    "amount": 100,
+    "vatRate": 21,
+    "calculationType": "addVat",
+    "description": "BTW 21% toevoegen aan netto bedrag"
+  },
+  "result": {
+    "netAmount": 100.00,
+    "vatAmount": 21.00,
+    "grossAmount": 121.00,
+    "vatRate": 21
+  },
+  "alternative": {
+    "vatRate": 9,
+    "netAmount": 100.00,
+    "vatAmount": 9.00,
+    "grossAmount": 109.00
+  }
+}`
+    },
 
     // LEGAL
     {

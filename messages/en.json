@@ -626,6 +626,11 @@
       "label": "Free",
       "description": "Calculate your ROI on automation"
     },
+    "btwCalculator": {
+      "title": "VAT Calculator",
+      "label": "Free",
+      "description": "Calculate VAT amounts quickly and easily"
+    },
     "invoiceCreator": {
       "title": "Invoice Maker",
       "label": "Free",
@@ -655,6 +660,11 @@
         "title": "Savings Calculator",
         "description": "Calculate how much time and money automation saves you. Instant insight, PDF report.",
         "href": "/tools/roi-calculator"
+      },
+      "btwCalculator": {
+        "title": "VAT Calculator",
+        "description": "Calculate VAT amounts quickly. From net to gross or vice versa, with 9% and 21% rates.",
+        "href": "/tools/btw-calculator"
       },
       "invoiceScanner": {
         "title": "Invoice Scanner",

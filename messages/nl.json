@@ -639,6 +639,11 @@
       "label": "Gratis",
       "description": "Bereken je ROI op automatisering"
     },
+    "btwCalculator": {
+      "title": "BTW Calculator",
+      "label": "Gratis",
+      "description": "Bereken BTW bedragen snel en eenvoudig"
+    },
     "invoiceCreator": {
       "title": "Factuur Maker",
       "label": "Gratis",
@@ -668,6 +673,11 @@
         "title": "Besparings Calculator",
         "description": "Bereken hoeveel tijd en geld automatisering jou oplevert. Instant inzicht, PDF rapport.",
         "href": "/tools/roi-calculator"
+      },
+      "btwCalculator": {
+        "title": "BTW Calculator",
+        "description": "Bereken snel BTW bedragen. Van netto naar bruto of andersom, met 9% en 21% tarieven.",
+        "href": "/tools/btw-calculator"
       },
       "invoiceScanner": {
         "title": "Factuur Scanner",

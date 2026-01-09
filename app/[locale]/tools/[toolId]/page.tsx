@@ -155,6 +155,7 @@ export default async function ToolPage({ params }: Props) {
     "invoice-creation/InvoiceGenerator": require("@/app/[locale]/tools/invoice-creation/InvoiceGenerator").default,
     "price-calculator/PriceCalculatorClient": require("@/app/[locale]/tools/price-calculator/PriceCalculatorClient").default,
     "quote-generator/QuoteGeneratorClient": require("@/app/[locale]/tools/quote-generator/QuoteGeneratorClient").default,
+    "btw-calculator/BTWCalculatorClient": require("@/app/[locale]/tools/btw-calculator/BTWCalculatorClient").default,
     "contract-checker/ContractCheckerClient": require("@/app/[locale]/tools/contract-checker/ContractCheckerClient").default,
     "terms-generator/TermsGeneratorClient": require("@/app/[locale]/tools/terms-generator/TermsGeneratorClient").default,
     "roi-calculator/ROICalculatorPageClient": require("@/app/[locale]/tools/roi-calculator/ROICalculatorPageClient").default,

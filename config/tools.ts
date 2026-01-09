@@ -29,6 +29,7 @@ import {
     Image,
     Palette,
     Calculator,
+    Percent,
     Building2,
     FileSpreadsheet,
     Swords,
@@ -167,6 +168,36 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
             type: "free",
         },
         componentPath: "price-calculator/PriceCalculatorClient",
+    },
+
+    "btw-calculator": {
+        id: "btw-calculator",
+        slug: "btw-calculator",
+        title: "BTW Calculator",
+        shortDescription: "Bereken snel BTW bedragen. Van netto naar bruto of andersom, met 9% en 21% tarieven.",
+        longDescription: "Bereken eenvoudig BTW bedragen voor je facturen en offertes. Ondersteunt zowel het lage tarief (9%) als het hoge tarief (21%). Bereken van netto naar bruto of haal BTW uit een bruto bedrag.",
+        icon: Percent,
+        status: "live",
+        category: "finance",
+        new: true,
+        metaTitle: "BTW Calculator | Gratis BTW Berekenen | AIFAIS",
+        metaDescription: "Gratis BTW calculator voor Nederlandse ondernemers. Bereken BTW 9% en 21%, van netto naar bruto of andersom. Direct resultaat.",
+        keywords: ["BTW calculator", "BTW berekenen", "BTW 21%", "BTW 9%", "netto bruto", "omzetbelasting", "VAT calculator"],
+        features: [
+            "BTW 9% en 21% tarieven",
+            "Netto → Bruto berekening",
+            "Bruto → Netto berekening",
+            "Batch berekening meerdere bedragen",
+        ],
+        useCases: [
+            "Facturen opstellen",
+            "Offertes maken",
+            "Boekhouding controle",
+        ],
+        pricing: {
+            type: "free",
+        },
+        componentPath: "btw-calculator/BTWCalculatorClient",
     },
 
     "quote-generator": {
