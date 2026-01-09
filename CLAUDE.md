@@ -26,20 +26,27 @@ AIFAIS is een **AI-powered business tools platform** voor de Nederlandse MKB mar
    - Elke betaalde tool heeft een eigen Stripe Payment Link
 
 ### Tool Pricing
-| Tool | Prijs | Status |
-|------|-------|--------|
-| Factuur Scanner | 0.001 SOL | Live |
-| Factuur Maker | GRATIS | Live |
-| Offerte Generator | GRATIS | Live |
-| Contract Checker | 0.001 SOL | Live |
-| Algemene Voorwaarden | 0.001 SOL | Live |
-| CV Screener | 0.001 SOL | Live |
-| Interview Questions | 0.001 SOL | Live |
-| Social Media Planner | 0.001 SOL | Live |
-| Lead Scorer | 0.001 SOL | Live |
-| Pitch Deck Generator | 0.001 SOL | Live |
-| ROI Calculator | GRATIS | Live |
-| AI Benchmark | GRATIS | Live |
+| Tool | Prijs | Status | Category |
+|------|-------|--------|----------|
+| Factuur Scanner | 0.001 SOL | Live | Finance |
+| Factuur Maker | GRATIS | Live | Finance |
+| Offerte Generator | GRATIS | Live | Finance |
+| Prijs Calculator | GRATIS | Live | Finance |
+| Contract Checker | 0.001 SOL | Live | Legal |
+| Algemene Voorwaarden | 0.001 SOL | Live | Legal |
+| CV Screener | 0.001 SOL | Live | HR |
+| Interview Questions | 0.001 SOL | Live | HR |
+| Social Media Planner | 0.001 SOL | Live | Marketing |
+| Email Generator | GRATIS | Live | Marketing |
+| Lead Scorer | 0.001 SOL | Live | Sales |
+| Pitch Deck Generator | 0.001 SOL | Live | Sales |
+| Competitor Analyzer | 0.001 SOL | Live | Sales |
+| Business Plan Generator | 0.001 SOL | Live | Consulting |
+| SWOT Generator | 0.001 SOL | Live | Consulting |
+| Meeting Summarizer | 0.001 SOL | Live | Business |
+| ROI Calculator | GRATIS | Live | Finance |
+| AI Benchmark | GRATIS | Live | Internal |
+| KVK Bedrijfszoeker | GRATIS | Live | Business |
 
 ### Payment Gatekeeper
 Centrale payment verificatie: `lib/payment-gatekeeper.ts`
@@ -413,16 +420,23 @@ MAILCHIMP_LIST_ID=...
 ## Scripts
 
 ```bash
-npm run dev              # Start development server
-npm run build            # Production build
-npm run start            # Start production server
-npm run test             # Run tests (Vitest)
-npm run lint             # ESLint
-npm run generate:mcp-readme  # Generate MCP README
+bun run dev              # Start development server
+bun run build            # Production build
+bun run start            # Start production server
+bun run test             # Run tests (Vitest)
+bun run test:watch       # Tests in watch mode (TDD)
+bun run test:coverage    # Tests met coverage report
+bun run test:ui          # Vitest UI
+bun run type-check       # TypeScript check
+bun run lint             # ESLint
+bun run e2e              # Playwright E2E tests
+bun run e2e:ui           # Playwright met UI
+bun run e2e:headed       # Playwright in browser
+bun run generate:mcp-readme  # Generate MCP README
 
 # Stripe Payment Links
-npx tsx scripts/create-stripe-links.ts   # Maak alle ontbrekende Stripe links
-npx tsx scripts/ensure-stripe-links.ts   # Check en maak ontbrekende links
+bunx tsx scripts/create-stripe-links.ts   # Maak alle ontbrekende Stripe links
+bunx tsx scripts/ensure-stripe-links.ts   # Check en maak ontbrekende links
 ```
 
 ---
@@ -531,6 +545,78 @@ Verifieert dat MCP server tool definities matchen met API routes.
 
 Vindt: ontbrekende MCP tools, orphaned tools, pricing mismatches.
 
+### `/test-tool` - Quick API Tester
+
+Test API endpoints snel met DEV_BYPASS tijdens development.
+
+```
+/test-tool kvk-search {"query": "Coolblue", "type": "naam"}
+/test-tool cv-screener {"cvText": "Senior developer..."}
+```
+
+Voegt automatisch DEV_BYPASS toe aan betaalde endpoints.
+
+### `/verify` - Verificatie Suite (Boris Principle)
+
+Runt comprehensive verificatie na code changes.
+
+```
+/verify              # Alle checks
+/verify build        # Alleen build
+/verify types        # Alleen TypeScript
+/verify tests        # Alleen tests
+```
+
+Checkt: TypeScript → Lint → Tests → Build. Stopt bij eerste fout.
+
+### `/scaffold-tests` - Test Generator
+
+Genereer unit tests voor API routes op basis van template.
+
+```
+/scaffold-tests finance/create-invoice  # Specifieke route
+/scaffold-tests all                      # Alle untested routes
+/scaffold-tests --check                  # Lijst routes zonder tests
+```
+
+Genereert tests in `app/api/v1/{route}/route.test.ts`.
+
+### `/browser-test` - Browser Tool Verificatie
+
+Test een tool in de browser met automatische DEV_BYPASS.
+
+```
+/browser-test cv-screener              # Test tool in browser
+/browser-test invoice-generator --headed # Watch in browser
+```
+
+Navigeert naar `http://localhost:3000/nl/tools/{slug}?dev=true` en verifieert:
+- Page loads
+- Form werkt
+- Geen payment modal (dev mode)
+- Result displays
+
+---
+
+## Dev Mode (Browser Testing)
+
+In development kun je betaalde tools testen zonder payment:
+
+**URL Parameter:** Voeg `?dev=true` toe aan de tool URL:
+```
+http://localhost:3000/nl/tools/cv-screener?dev=true
+```
+
+**Hoe het werkt:**
+1. `useDevMode` hook detecteert `?dev=true` parameter
+2. `usePaywallTool` hook gebruikt automatisch `DEV_BYPASS` signature
+3. Backend accepteert `DEV_BYPASS` alleen in `NODE_ENV=development`
+
+**Bestanden:**
+- `hooks/useDevMode.ts` - Dev mode detectie
+- `hooks/usePaywallTool.ts` - Automatische bypass
+- `lib/security/dev-bypass.ts` - Server-side verificatie
+
 ---
 
 ## Hooks & Automation
@@ -594,3 +680,115 @@ Geconfigureerd in `.claude/settings.local.json`:
    - Prioriteer fixes voor high-impact issues als relevant voor de taak
 
 Dit zorgt ervoor dat je aware bent van productie issues voordat je code wijzigingen maakt.
+
+---
+
+## MANDATORY Workflows (Automatisch Volgen)
+
+**Claude MOET deze workflows volgen wanneer specifieke taken worden gevraagd:**
+
+### Bij "Maak nieuwe tool" / "Create new tool":
+1. Volg `/new-tool` skill volledig (alle 13 stappen)
+2. **VERPLICHT: Browser verificatie** - Gebruik Playwright om tool te testen met `?dev=true`
+3. Run `/verify` voordat je klaar meldt
+4. Maak screenshot van werkende tool
+5. **Git commit & push:**
+   ```bash
+   git add -A
+   git commit -m "feat: add [tool-name] tool"
+   git push origin master
+   ```
+6. **Vercel deployment check & auto-fix loop:**
+   - Wacht 30-60 seconden na push
+   - Check deployment: `curl -s https://aifais.com/api/health`
+   - **Als deployment FAALT:**
+     1. Check Vercel logs: `vercel logs --limit 50`
+     2. Identificeer de error
+     3. Fix de code
+     4. `git add -A && git commit -m "fix: [error description]" && git push`
+     5. Wacht 30-60 sec, check opnieuw
+     6. **HERHAAL tot deployment slaagt** (max 5 pogingen)
+   - Meld: "Vercel deployment ✅ succesvol na X pogingen" of "❌ kon niet fixen na 5 pogingen"
+
+### Bij code changes aan bestaande tools:
+1. Test de gewijzigde tool met `/browser-test [tool-slug]`
+2. Run type check: `bunx tsc --noEmit`
+3. Git commit & push met descriptieve message
+4. **Vercel deployment check & auto-fix loop** (zelfde als hierboven)
+5. Meld aan gebruiker: "Getest in browser ✅, deployed ✅ na X pogingen"
+
+### Bij ALLE website wijzigingen (pages, components, config, styling):
+1. **Maak de wijzigingen**
+2. **TypeScript check:** `bunx tsc --noEmit`
+3. **Start dev server:** `bun run dev` (in background)
+4. **Browser test met Playwright:**
+   - Navigeer naar de gewijzigde pagina(s)
+   - Verifieer visueel dat alles correct rendert
+   - Check console voor errors
+5. **Git commit & push** met descriptieve message
+6. **Vercel deployment check:**
+   - Wacht 30-60 sec
+   - Verifieer op production URL
+   - Als FAALT: fix → commit → push → herhaal (max 5x)
+7. **Meld resultaat:** "Browser test ✅, deployed ✅"
+
+### Bij API/Tool wijzigingen - Sync Requirements:
+Wanneer je APIs of tools wijzigt, update ALTIJD deze locaties:
+
+| Wijziging | Update ook |
+|-----------|------------|
+| Nieuwe tool | `config/tools.ts`, `config/apis.ts`, `lib/ai/prompts.ts`, `lib/security/schemas.ts`, componentMap in `page.tsx` |
+| Nieuwe API endpoint | `config/apis.ts` (voor /developers page) |
+| Prijs wijziging | `config/tools.ts`, `config/apis.ts`, `CLAUDE.md` (pricing table), MCP server |
+| Nieuwe category | `config/apis.ts` (API_CATEGORIES), developers page colorClasses |
+| UI tekst toevoegen | BEIDE `messages/en.json` EN `messages/nl.json` |
+
+### Vóór production deployment:
+1. `/check-sentry` - Check voor kritieke issues
+2. `/verify` - Full verificatie suite
+3. `/check-api-health` (optioneel) - Test alle endpoints
+
+---
+
+## DON'T DO - Geleerde Lessen
+
+**BELANGRIJK:** Deze sectie bevat dingen die Claude NIET moet doen. Update deze lijst wanneer Claude fouten maakt.
+
+### Code Patterns
+- ❌ **Gebruik GEEN `npm`** - Dit project gebruikt `bun`. Gebruik `bun install`, `bun run`, `bunx`
+- ❌ **Geen hardcoded Stripe links** - Altijd via `process.env.NEXT_PUBLIC_STRIPE_LINK_*`
+- ❌ **Geen DEV_BYPASS in production code** - Alleen in test files en lokale development
+- ❌ **Geen inline styles** - Gebruik Tailwind CSS classes
+- ❌ **Geen `any` types** - Definieer proper types in `lib/tools/types.ts`
+- ❌ **Geen `setResult(data)` in client components** - `createToolHandler` wrapt responses in `{success, data, meta}`. Gebruik `setResult(data.data)` om actual result te extracten
+
+### API Routes
+- ❌ **Geen directe Anthropic calls** - Gebruik `lib/ai/prompts.ts` voor prompts
+- ❌ **Geen handmatige payment checks** - Gebruik `createToolHandler` met `requiresPayment: true`
+- ❌ **Geen nieuwe API routes zonder schema** - Altijd Zod schema in `lib/security/schemas.ts`
+
+### Vertalingen
+- ❌ **Geen hardcoded Nederlandse/Engelse tekst in components** - Gebruik `useTranslations()`
+- ❌ **Geen nieuwe keys in één taal** - Update BEIDE `en.json` en `nl.json`
+
+### Git & Deployment
+- ❌ **Geen commits zonder type check** - Hook runt automatisch, maar fix errors eerst
+- ❌ **Geen production deploy zonder checks** - Run `/verify` of `/check-api-health` eerst
+- ❌ **Geen force push naar master** - Alleen via PR met CI checks
+
+### Verificatie (Boris Principle)
+- ❌ **Geen code changes zonder verificatie** - Run altijd `/verify` na wijzigingen
+- ❌ **Geen aannames over werkende code** - Test met `/test-tool` of curl
+- ❌ **Geen grote refactors zonder plan mode** - Start in plan mode, krijg eerst goedkeuring
+- ❌ **Geen nieuwe tools zonder Playwright browser test** - Test lokaal met Playwright MCP tools VOOR git push. Na deployment: FREE tools volledig testen op production, PAID tools alleen page load checken (kan niet testen zonder te betalen)
+
+### Sync & Documentation
+- ❌ **Geen nieuwe APIs zonder config/apis.ts update** - Developers page haalt data uit config/apis.ts
+- ❌ **Geen nieuwe categories zonder colorClasses check** - Developers page gebruikt colorClasses object
+- ❌ **Geen tool wijzigingen zonder CLAUDE.md update** - Houd Tool Pricing table actueel
+- ❌ **Geen wijzigingen zonder browser test** - ALTIJD Playwright gebruiken om visueel te verifiëren
+
+### Process Killing (Windows)
+- ❌ **Geen `taskkill /F /PID` met forward slashes** - Windows gebruikt `//F //PID` in Git Bash
+- ❌ **Geen dev server starten zonder port check** - Check eerst of port 3000 vrij is met `netstat -ano | findstr ":3000"`
+- ❌ **Geen lock file issues negeren** - Verwijder `.next/dev/lock` als dev server crashed
