@@ -153,6 +153,7 @@ export default async function ToolPage({ params }: Props) {
   const componentMap: Record<string, React.ComponentType<any>> = {
     "invoice-extraction/ScannerClient": require("@/app/[locale]/tools/invoice-extraction/ScannerClient").default,
     "invoice-creation/InvoiceGenerator": require("@/app/[locale]/tools/invoice-creation/InvoiceGenerator").default,
+    "price-calculator/PriceCalculatorClient": require("@/app/[locale]/tools/price-calculator/PriceCalculatorClient").default,
     "quote-generator/QuoteGeneratorClient": require("@/app/[locale]/tools/quote-generator/QuoteGeneratorClient").default,
     "contract-checker/ContractCheckerClient": require("@/app/[locale]/tools/contract-checker/ContractCheckerClient").default,
     "terms-generator/TermsGeneratorClient": require("@/app/[locale]/tools/terms-generator/TermsGeneratorClient").default,

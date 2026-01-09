@@ -107,6 +107,50 @@ export const API_ENDPOINTS: APIEndpoint[] = [
             { name: "validUntil", type: "number", required: false, description: "Validity in days (default: 30)" },
         ]
     },
+    {
+        id: "price-calculator",
+        name: "price_calculator",
+        title: "Price Calculator",
+        description: "Calculate optimal product pricing based on costs, margins, and market analysis with AI-powered insights.",
+        method: "POST",
+        path: "/api/v1/finance/price-calculator",
+        category: "finance",
+        price: "Free",
+        isFree: true,
+        status: "live",
+        isNew: true,
+        params: [
+            { name: "productName", type: "string", required: true, description: "Name of the product" },
+            { name: "costPrice", type: "number", required: true, description: "Cost price per unit" },
+            { name: "targetMargin", type: "number", required: false, description: "Target profit margin percentage (0-100, default: 30)" },
+            { name: "competitorPrices", type: "array", required: false, description: "Array of competitor prices for analysis" },
+            { name: "marketPosition", type: "string", required: false, description: "'budget', 'mid-range', or 'premium' (default: mid-range)" },
+            { name: "includeVAT", type: "boolean", required: false, description: "Include VAT in calculations (default: true)" },
+            { name: "vatRate", type: "number", required: false, description: "VAT percentage (default: 21)" },
+            { name: "quantity", type: "number", required: false, description: "Quantity for bulk calculations" },
+            { name: "additionalCosts", type: "object", required: false, description: "Additional costs: shipping, packaging, marketing, overhead" },
+        ],
+        responseExample: `{
+  "productName": "Premium Widget",
+  "pricing": {
+    "recommendedPriceExVAT": 142.86,
+    "vatAmount": 30.00,
+    "recommendedPriceInclVAT": 172.86,
+    "targetMargin": 30,
+    "actualMargin": 30
+  },
+  "profit": {
+    "perUnit": 42.86,
+    "total": 428.60,
+    "quantity": 10
+  },
+  "aiInsights": {
+    "insights": ["Tip 1", "Tip 2"],
+    "riskLevel": "low",
+    "recommendation": "..."
+  }
+}`
+    },
 
     // LEGAL
     {

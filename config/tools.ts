@@ -136,6 +136,36 @@ export const TOOL_REGISTRY: Record<string, ToolMetadata> = {
         componentPath: "invoice-creation/InvoiceGenerator",
     },
 
+    "price-calculator": {
+        id: "price-calculator",
+        slug: "price-calculator",
+        title: "Prijs Calculator",
+        shortDescription: "Bereken de optimale verkoopprijs voor je producten. Inclusief marge, BTW en concurrentie-analyse.",
+        longDescription: "Bepaal de perfecte verkoopprijs voor je producten met onze AI-powered calculator. Bereken marges, analyseer concurrentieprijzen en krijg strategische prijsadviezen voor jouw marktpositie.",
+        icon: Calculator,
+        status: "live",
+        category: "finance",
+        new: true,
+        metaTitle: "Prijs Calculator | Optimale Verkoopprijs Berekenen | AIFAIS",
+        metaDescription: "Bereken gratis de optimale verkoopprijs voor je producten. Inclusief marge-analyse, BTW berekening en concurrentie-vergelijking.",
+        keywords: ["prijs calculator", "verkoopprijs berekenen", "marge berekenen", "pricing tool", "BTW calculator", "kostprijscalculatie"],
+        features: [
+            "Automatische marge-berekening",
+            "BTW inclusief/exclusief calculator",
+            "Concurrentie prijsanalyse",
+            "AI-powered prijsadvies",
+        ],
+        useCases: [
+            "Nieuwe producten prijzen",
+            "Marges optimaliseren",
+            "Concurrentie-analyse",
+        ],
+        pricing: {
+            type: "free",
+        },
+        componentPath: "price-calculator/PriceCalculatorClient",
+    },
+
     "quote-generator": {
         id: "quote-generator",
         slug: "quote-generator",
