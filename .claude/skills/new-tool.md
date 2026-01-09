@@ -113,9 +113,27 @@ Add to `config/tools.ts` in the `TOOL_REGISTRY`:
 },
 ```
 
-### Step 6: Create Client Component
+### Step 6: Create Client Component & Register in componentMap
 
-Create `app/[locale]/tools/[tool-slug]/page.tsx`:
+**⚠️ CRITICAL: Add to componentMap FIRST!**
+
+You MUST add the component to the static componentMap in `app/[locale]/tools/[toolId]/page.tsx`:
+
+```typescript
+const componentMap: Record<string, React.ComponentType<any>> = {
+    // ... existing tools ...
+    "tool-slug/ToolNameClient": require("@/app/[locale]/tools/tool-slug/ToolNameClient").default,
+};
+```
+
+**If you skip this step, the tool page will return 404!** The error in console will be:
+```
+Component not found for path: tool-slug/ToolNameClient
+```
+
+This is the #1 cause of "tool page not loading" issues!
+
+Then create `app/[locale]/tools/[tool-slug]/page.tsx`:
 
 ```typescript
 import ToolNameClient from "./ToolNameClient";
@@ -182,6 +200,32 @@ curl -X POST https://aifais.com/api/admin/create-stripe-links \
   -H "x-admin-key: $ADMIN_SECRET_KEY"
 ```
 
+**Option D: Use Stripe MCP (recommended)**
+Use Claude's Stripe MCP tools to create the payment link directly:
+
+```typescript
+// 1. First create a product
+mcp__plugin_stripe_stripe__create_product({
+    name: "AIFAISS - Tool Name",
+    description: "One-time use of Tool Name"
+})
+
+// 2. Create a price (€0.50 = 50 cents)
+mcp__plugin_stripe_stripe__create_price({
+    product: "prod_xxx",  // from step 1
+    unit_amount: 50,
+    currency: "eur"
+})
+
+// 3. Create the payment link
+mcp__plugin_stripe_stripe__create_payment_link({
+    price: "price_xxx",  // from step 2
+    quantity: 1
+})
+```
+
+This returns the payment link URL directly - add it to `.env` and Vercel.
+
 Don't forget to add the env var to Vercel!
 
 ### Step 9: Update MCP Server
@@ -209,19 +253,166 @@ Run: `npm run generate:mcp-readme`
 
 Add the tool to `app/[locale]/developers/page.tsx` in the API documentation section.
 
-### Step 11: Verify
+### Step 11: Verify (Build & Type Check)
 
 Run these checks:
 ```bash
+# Type check
+bunx tsc --noEmit
+
 # Build check
 bun run build
-
-# Type check
-npx tsc --noEmit
-
-# Test the tool locally
-bun run dev
 ```
+
+### Step 12: Local Browser Testing with Playwright (MANDATORY - BEFORE PUSH)
+
+**CRITICAL:** Always verify the tool works in the browser using Playwright BEFORE committing and pushing. This catches runtime errors that type checking misses.
+
+1. **Start dev server** (if not running):
+   ```bash
+   bun run dev
+   ```
+
+2. **Test with Playwright MCP tools** on localhost:
+
+```typescript
+// 1. Navigate to the tool (with ?dev=true for paid tools)
+browser_navigate({ url: "http://localhost:3000/nl/tools/{tool-slug}?dev=true" });
+
+// 2. Take a snapshot to see the form
+browser_snapshot();
+
+// 3. Fill in test data (refs will vary - check snapshot output)
+browser_type({ element: "Product name input", ref: "eXX", text: "Test Product" });
+browser_type({ element: "Price input", ref: "eXX", text: "100" });
+
+// 4. Submit the form
+browser_click({ element: "Submit button", ref: "eXX" });
+
+// 5. Take snapshot to verify results display correctly
+browser_snapshot();
+
+// 6. Close browser when done
+browser_close();
+```
+
+3. **Or use `/browser-test` skill:**
+   ```
+   /browser-test {tool-slug}
+   ```
+
+#### Verification Checklist (must pass before commit)
+
+- [ ] Page loads without console errors
+- [ ] Form is visible and fillable
+- [ ] Submit works without payment modal (dev mode)
+- [ ] **Result displays correctly** (check for "Cannot read properties of undefined" errors)
+- [ ] Export buttons work (if applicable)
+- [ ] No cookie consent or other modals blocking interaction
+
+#### Create E2E Test (optional but recommended)
+- Copy `templates/tool-e2e.test.template.ts` to `e2e/tools/{tool-slug}.test.ts`
+- Fill in form selectors and test data
+- Run: `bun run e2e e2e/tools/{tool-slug}.test.ts`
+
+### Step 13: Final Checklist
+
+Run `/verify` to confirm everything works:
+```
+/verify
+```
+
+### Step 14: Git Commit & Push
+
+Commit all changes and push to master:
+```bash
+git add -A
+git commit -m "feat: add {tool-name} tool
+
+- API route: /api/v1/{category}/{tool-slug}
+- Client component with form and result display
+- Translations (NL/EN)
+- MCP server updated
+
+Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>"
+
+git push origin master
+```
+
+### Step 15: Verify Vercel Deployment (Auto-Fix Loop)
+
+After pushing, verify the deployment succeeded. **If it fails, automatically fix and retry.**
+
+1. **Wait 30-60 seconds** for Vercel to build
+
+2. **Check deployment status:**
+   ```bash
+   curl -s https://aifais.com/api/health | jq .
+   ```
+
+3. **Test on production with Playwright** (FREE tools only):
+
+   **For FREE tools** - Full test:
+   ```typescript
+   browser_navigate({ url: "https://www.aifais.com/tools/{tool-slug}" });
+   browser_snapshot();
+   browser_type({ element: "Input field", ref: "eXX", text: "Test Value" });
+   browser_click({ element: "Submit button", ref: "eXX" });
+   browser_snapshot();  // Verify results
+   browser_close();
+   ```
+
+   **For PAID tools** - Only verify page loads (can't test without paying):
+   ```typescript
+   browser_navigate({ url: "https://www.aifais.com/tools/{tool-slug}" });
+   browser_snapshot();  // Verify page and form render correctly
+   browser_close();
+   ```
+
+4. **If deployment FAILED - Auto-Fix Loop:**
+   ```
+   attempt = 1
+   while deployment_failed AND attempt <= 5:
+       1. Get error logs: vercel logs --limit 50
+       2. Identify the error (build error, type error, runtime error)
+       3. Fix the code
+       4. Commit and push:
+          git add -A
+          git commit -m "fix: [describe what was fixed]"
+          git push origin master
+       5. Wait 30-60 seconds
+       6. Check deployment again
+       7. attempt += 1
+   ```
+
+5. **Common deployment errors and fixes:**
+   | Error | Fix |
+   |-------|-----|
+   | Type error | Fix type in indicated file |
+   | Module not found | Check import path, add missing dependency |
+   | Build error | Check syntax, missing exports |
+   | Runtime error | Check API routes, env vars |
+
+6. **Report to user:**
+   ```
+   ## Deployment Status
+
+   | Check | Status |
+   |-------|--------|
+   | Git Push | ✅ |
+   | Vercel Build | ✅ (after X attempts) |
+   | Health Check | ✅ |
+   | Tool Page | ✅ |
+
+   🎉 Tool is live at: https://aifais.com/nl/tools/{tool-slug}
+   ```
+
+   Or if failed after 5 attempts:
+   ```
+   ❌ Deployment failed after 5 attempts
+   Last error: [error message]
+   Manual intervention required - check Vercel dashboard
+   ```
 
 ## File Checklist
 
@@ -229,7 +420,7 @@ After completion, verify these files were created/updated:
 
 - [ ] `app/api/v1/[category]/[tool-name]/route.ts`
 - [ ] `config/tools.ts`
-- [ ] `app/[locale]/tools/[tool-slug]/page.tsx`
+- [ ] **`app/[locale]/tools/[toolId]/page.tsx`** ← ADD TO componentMap! (causes 404 if missing)
 - [ ] `app/[locale]/tools/[tool-slug]/ToolNameClient.tsx`
 - [ ] `messages/nl.json`
 - [ ] `messages/en.json`
@@ -265,11 +456,46 @@ See `terms-generator/TermsGeneratorClient.tsx` for wizard pattern.
 import { exportToPDFReport, exportToCSV, downloadExport } from "@/lib/export";
 ```
 
+## Common Gotchas
+
+### API Response Handling (IMPORTANT!)
+
+The `createToolHandler` wraps all responses in a standard structure:
+
+```typescript
+{
+  success: true,
+  data: { /* actual result here */ },
+  meta: { method: "...", timestamp: "..." }
+}
+```
+
+**In your client component, always extract `data.data`, NOT just `data`:**
+
+```typescript
+// ❌ WRONG - will cause "Cannot read properties of undefined" error
+const data = await response.json();
+setResult(data);  // Sets the wrapper object
+
+// ✅ CORRECT - extracts the actual result
+const data = await response.json();
+setResult(data.data);  // Sets the actual result
+```
+
+This is a common source of runtime errors that type checking won't catch!
+
+### Cookie Consent Banner
+
+When testing with Playwright, cookie consent banners may block form interaction. Dismiss them first or click elsewhere to close them.
+
 ## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
+| **Tool page 404** | **Add component to componentMap in `[toolId]/page.tsx`** (most common!) |
 | Tool not showing | Check `config/tools.ts` slug matches folder name |
 | Payment not working | Verify `stripeLink` env var is set |
 | API 500 error | Check API route schema matches request |
 | Translation missing | Restart dev server after adding translations |
+| "Cannot read properties of undefined" | Use `data.data` not `data` when setting result (see Common Gotchas) |
+| Form submit not working | Check for cookie banners or modals blocking clicks |
