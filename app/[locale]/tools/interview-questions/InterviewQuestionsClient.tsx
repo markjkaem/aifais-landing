@@ -263,10 +263,10 @@ export default function InterviewQuestionsClient() {
     if (!toolMetadata) return <div>Tool niet gevonden</div>;
 
     return (
-        <div className="min-h-screen bg-zinc-950 py-8 px-4">
-            <div className="max-w-6xl mx-auto space-y-6">
+        <div className="min-h-screen bg-zinc-950 py-8 px-4" suppressHydrationWarning>
+            <div className="max-w-6xl mx-auto space-y-6" suppressHydrationWarning>
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between" suppressHydrationWarning>
                     <div className="flex items-center gap-3">
                         <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl">
                             <MessageSquare className="w-6 h-6 text-white" />

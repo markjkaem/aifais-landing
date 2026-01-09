@@ -2,34 +2,117 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [master, main]
   pull_request:
-    branches: [main]
+    branches: [master, main]
+
+env:
+  NODE_ENV: test
 
 jobs:
-  test:
+  quality:
+    name: Type Check & Lint
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: '20'
-          cache: 'npm'
+          bun-version: latest
 
       - name: Install dependencies
-        run: npm ci
-
-      - name: Run linter
-        run: npm run lint
+        run: bun install --frozen-lockfile
 
       - name: Type check
-        run: npx tsc --noEmit
+        run: bunx tsc --noEmit
+
+      - name: Lint
+        run: bun run lint
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run tests
+        run: bun test
+
+  build:
+    name: Build Verification
+    runs-on: ubuntu-latest
+    needs: [quality, test]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: bun run build
         env:
-          SKIP_ENV_VALIDATION: true
+          # Dummy values for build (real secrets in Vercel)
+          ANTHROPIC_API_KEY: sk-ant-dummy-for-build
+          SOLANA_WALLET_ADDRESS: DummyWalletForBuild
+          NEXT_PUBLIC_STRIPE_LINK_SINGLE: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_CONTRACT: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_TERMS: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_CV: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_INTERVIEW: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_SOCIAL: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_PITCH: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_LEAD: https://example.com
+
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: bunx playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: bun run e2e
+        env:
+          ANTHROPIC_API_KEY: sk-ant-dummy-for-e2e
+          SOLANA_WALLET_ADDRESS: DummyWalletForE2E
+          NEXT_PUBLIC_STRIPE_LINK_SINGLE: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_CONTRACT: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_TERMS: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_CV: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_INTERVIEW: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_SOCIAL: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_PITCH: https://example.com
+          NEXT_PUBLIC_STRIPE_LINK_LEAD: https://example.com
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

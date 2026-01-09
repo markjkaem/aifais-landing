@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ToolState, PaymentProof, ToolResponse } from "@/lib/tools/types";
+import { useDevMode } from "./useDevMode";
 
 interface UsePaywallToolOptions<TInput, TOutput> {
     apiEndpoint: string;
@@ -14,6 +15,7 @@ export function usePaywallTool<TInput, TOutput>(
     const [state, setState] = useState<ToolState<TOutput>>({ status: "idle" });
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [pendingInput, setPendingInput] = useState<TInput | null>(null);
+    const { isDevMode, devBypassSignature } = useDevMode();
 
     const reset = () => {
         setState({ status: "idle" });
@@ -21,6 +23,11 @@ export function usePaywallTool<TInput, TOutput>(
     };
 
     const execute = async (input: TInput, paymentProof?: PaymentProof) => {
+        // In dev mode with ?dev=true, automatically bypass payment
+        if (isDevMode && devBypassSignature && !paymentProof) {
+            paymentProof = { type: "crypto", id: devBypassSignature };
+        }
+
         // If it's a paid tool and no proof yet, show modal
         if (options.requiredAmount && options.requiredAmount > 0 && !paymentProof) {
             setPendingInput(input);
@@ -81,5 +88,6 @@ export function usePaywallTool<TInput, TOutput>(
         showPaymentModal,
         setShowPaymentModal,
         handlePaymentSuccess,
+        isDevMode,
     };
 }

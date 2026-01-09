@@ -130,7 +130,7 @@ export default function TemplateSelector<T>({
     };
 
     return (
-        <div className={`relative ${className}`}>
+        <div className={`relative ${className}`} suppressHydrationWarning>
             {/* Trigger button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}

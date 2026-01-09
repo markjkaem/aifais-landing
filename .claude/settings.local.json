@@ -1,6 +1,18 @@
 {
   "permissions": {
     "allow": [
+      "Edit",
+      "Write",
+      "NotebookEdit",
+      "Task",
+      "Bash",
+      "WebFetch",
+      "mcp__github__*",
+      "mcp__plugin_sentry_sentry__*",
+      "mcp__plugin_stripe_stripe__*",
+      "mcp__plugin_Notion_notion__*",
+      "mcp__plugin_playwright_playwright__*",
+      "mcp__plugin_context7_context7__*",
       "Bash(bun add:*)",
       "WebFetch(domain:aifais.com)",
       "Bash(cat:*)",
@@ -15,6 +27,15 @@
       "Skill(deploy)",
       "Skill(update-pricing)",
       "Skill(debug-payments)",
+      "Skill(check-sentry)",
+      "Skill(check-translations)",
+      "Skill(check-api-health)",
+      "Skill(check-payments)",
+      "Skill(check-mcp-sync)",
+      "Skill(test-tool)",
+      "Skill(verify)",
+      "Skill(scaffold-tests)",
+      "Skill(browser-test)",
       "mcp__plugin_playwright_playwright__browser_navigate",
       "Bash(npx tsx:*)",
       "Bash(find:*)",
@@ -23,7 +44,35 @@
       "WebSearch",
       "WebFetch(domain:developers.kvk.nl)",
       "WebFetch(domain:www.kvk.nl)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(claude mcp list:*)",
+      "Bash(claude mcp remove:*)",
+      "Bash(claude mcp add:*)",
+      "Bash(claude mcp auth:*)",
+      "Bash(claude mcp add-json:*)",
+      "mcp__plugin_sentry_sentry__whoami",
+      "mcp__plugin_stripe_stripe__get_stripe_account_info",
+      "mcp__github__list_issues",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "mcp__plugin_sentry_sentry__find_organizations",
+      "mcp__plugin_sentry_sentry__search_issues",
+      "mcp__plugin_stripe_stripe__list_products",
+      "Bash(curl:*)",
+      "Bash(npx next build:*)",
+      "Bash(npx next lint:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npm run lint:*)",
+      "Bash(dir /s /b \"C:\\\\Users\\\\markt\\\\sandbox\\\\aifaiss\\\\lib\\\\external\\\\kvk\\\\*.ts\")",
+      "WebFetch(domain:overheid.io)",
+      "Bash(taskkill:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(powershell -Command \"Start-Sleep -Seconds 15\")",
+      "Skill(ralph-loop:help)",
+      "Bash(ls:*)",
+      "Bash(bunx tsc:*)"
     ]
   },
   "disabledMcpjsonServers": [
@@ -50,6 +99,16 @@
             "command": "npx tsc --noEmit 2>&1 | head -20 || true",
             "timeout": 60,
             "statusMessage": "Running type check..."
+          }
+        ]
+      },
+      {
+        "matcher": "Bash(vercel --prod*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '⚠️  PRODUCTION DEPLOY - Did you run /check-sentry and /check-api-health first?'",
+            "statusMessage": "Pre-deploy reminder..."
           }
         ]
       }

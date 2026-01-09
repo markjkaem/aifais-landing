@@ -278,7 +278,7 @@ export default function BusinessPlanClient() {
     };
 
     return (
-        <div className="min-h-screen bg-zinc-950 py-8 px-4">
+        <div className="min-h-screen bg-zinc-950 py-8 px-4" suppressHydrationWarning>
             <div className="max-w-6xl mx-auto space-y-6">
                 {/* Header */}
                 <div className="flex items-center justify-between">

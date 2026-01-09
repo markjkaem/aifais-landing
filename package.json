@@ -8,6 +8,13 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "type-check": "tsc --noEmit",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "e2e:headed": "playwright test --headed",
     "generate:mcp-readme": "node scripts/generate-mcp-readme.js"
   },
   "dependencies": {
@@ -45,6 +52,7 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
@@ -54,6 +62,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.1.2",
+    "@vitest/coverage-v8": "^4.0.16",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
     "jsdom": "^27.4.0",

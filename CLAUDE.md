@@ -87,7 +87,13 @@ pricing: {
 
 ### Stripe Links Aanmaken
 
-**Scripts:**
+**Aanbevolen: Claude Skill (automatisch naar Vercel)**
+```
+/create-stripe-link [tool-name]
+```
+Maakt product, price, link via Stripe MCP en pusht direct naar Vercel env vars.
+
+**Alternatief - Scripts:**
 - `scripts/create-stripe-links.ts` - Maakt alle payment links aan
 - `scripts/ensure-stripe-links.ts` - Checkt en maakt ontbrekende links
 
@@ -105,9 +111,8 @@ npx tsx scripts/create-stripe-links.ts
 
 **Van Test naar Live:**
 1. Zet live Stripe keys in Vercel (`STRIPE_PRIVATE_KEY=sk_live_...`)
-2. Run het script of call de admin endpoint
-3. Voeg de nieuwe links toe aan Vercel env vars
-4. Redeploy
+2. Run `/create-stripe-link` of het script
+3. Redeploy (env vars worden automatisch gepusht met de skill)
 
 ---
 
@@ -476,6 +481,23 @@ Wijzigt de prijs van een tool in alle 4+ locaties.
 ```
 
 Update: config/tools.ts, MCP server, README, developer docs, CLAUDE.md.
+
+### `/create-stripe-link` - Stripe Payment Link Aanmaken
+
+Maakt een Stripe Payment Link via MCP en pusht naar Vercel.
+
+```
+/create-stripe-link cv-screener
+/create-stripe-link meeting-summarizer
+```
+
+Doet automatisch:
+1. Maakt Stripe Product + Price + Payment Link via MCP
+2. Voegt toe aan lokale `.env`
+3. Pusht naar Vercel env vars (production, preview, development)
+4. Update `config/tools.ts` met de stripeLink
+
+**Vereist:** Stripe MCP plugin connected (`/mcp` → Stripe → Authenticate)
 
 ### `/debug-payments` - Betalingsproblemen
 

@@ -285,7 +285,7 @@ export default function CvScreenerClient() {
     const isProcessing = cvFiles.some(f => f.status === "processing");
 
     return (
-        <div className="max-w-5xl mx-auto p-6 space-y-6">
+        <div className="max-w-5xl mx-auto p-6 space-y-6" suppressHydrationWarning>
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">

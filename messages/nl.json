@@ -644,6 +644,11 @@
       "label": "Gratis",
       "description": "Bereken BTW bedragen snel en eenvoudig"
     },
+    "salaryCalculator": {
+      "title": "Salaris Calculator",
+      "label": "Gratis",
+      "description": "Bereken je netto salaris met 2024/2025 tarieven"
+    },
     "invoiceCreator": {
       "title": "Factuur Maker",
       "label": "Gratis",
@@ -678,6 +683,11 @@
         "title": "BTW Calculator",
         "description": "Bereken snel BTW bedragen. Van netto naar bruto of andersom, met 9% en 21% tarieven.",
         "href": "/tools/btw-calculator"
+      },
+      "salaryCalculator": {
+        "title": "Salaris Calculator",
+        "description": "Bereken je netto salaris met officiële 2024/2025 tarieven. Inclusief 30%-regeling en bijtelling.",
+        "href": "/tools/salary-calculator"
       },
       "invoiceScanner": {
         "title": "Factuur Scanner",

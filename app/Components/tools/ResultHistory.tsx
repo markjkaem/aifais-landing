@@ -116,7 +116,7 @@ export function ResultHistory<T>({
     }
 
     return (
-        <div className={`bg-zinc-900 rounded-xl border border-zinc-800 ${className}`}>
+        <div className={`bg-zinc-900 rounded-xl border border-zinc-800 ${className}`} suppressHydrationWarning>
             {/* Header */}
             <button
                 onClick={() => setIsOpen(!isOpen)}

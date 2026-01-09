@@ -631,6 +631,11 @@
       "label": "Free",
       "description": "Calculate VAT amounts quickly and easily"
     },
+    "salaryCalculator": {
+      "title": "Salary Calculator",
+      "label": "Free",
+      "description": "Calculate your net salary with 2024/2025 rates"
+    },
     "invoiceCreator": {
       "title": "Invoice Maker",
       "label": "Free",
@@ -665,6 +670,11 @@
         "title": "VAT Calculator",
         "description": "Calculate VAT amounts quickly. From net to gross or vice versa, with 9% and 21% rates.",
         "href": "/tools/btw-calculator"
+      },
+      "salaryCalculator": {
+        "title": "Salary Calculator",
+        "description": "Calculate your net salary with official 2024/2025 Dutch tax rates. Including 30% ruling and company car taxation.",
+        "href": "/tools/salary-calculator"
       },
       "invoiceScanner": {
         "title": "Invoice Scanner",

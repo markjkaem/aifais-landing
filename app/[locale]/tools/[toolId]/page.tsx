@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getToolBySlug, getToolSlugs, ToolMetadata } from "@/config/tools";
-import { Zap, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
+import { getToolBySlug, getToolSlugs, ToolMetadata, FAQItem } from "@/config/tools";
+import { Zap, Sparkles, CheckCircle2, ArrowRight, Shield, Clock, Star, ChevronDown, Users, Building2 } from "lucide-react";
 import Link from "next/link";
 import { SolanaLogo, IdealLogo } from "@/app/Components/CustomIcons";
 
@@ -82,63 +82,147 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// Generate JSON-LD structured data
+// Generate JSON-LD structured data including FAQ
 function generateToolJsonLd(tool: ToolMetadata, locale: string) {
   const isNL = locale === "nl";
   const toolUrl = `https://aifais.com${isNL ? "" : "/" + locale}/tools/${tool.slug}`;
 
+  const graph: any[] = [
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${toolUrl}#software`,
+      name: tool.title,
+      description: tool.longDescription,
+      url: toolUrl,
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web Browser",
+      offers: {
+        "@type": "Offer",
+        price: tool.pricing.type === "free" ? "0" : tool.pricing.price?.toString() || "0",
+        priceCurrency: tool.pricing.currency || "EUR",
+      },
+      featureList: tool.features,
+      aggregateRating: tool.stats ? {
+        "@type": "AggregateRating",
+        ratingValue: tool.stats.avgRating,
+        reviewCount: tool.stats.reviewCount,
+        bestRating: 5,
+        worstRating: 1,
+      } : undefined,
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${toolUrl}#webpage`,
+      url: toolUrl,
+      name: tool.metaTitle,
+      description: tool.metaDescription,
+      isPartOf: { "@id": "https://aifais.com#website" },
+      inLanguage: isNL ? "nl-NL" : "en-US",
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://aifais.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Tools",
+            item: "https://aifais.com/tools",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: tool.title,
+            item: toolUrl,
+          },
+        ],
+      },
+    },
+  ];
+
+  // Add FAQ schema if available
+  if (tool.faq && tool.faq.length > 0) {
+    graph.push({
+      "@type": "FAQPage",
+      "@id": `${toolUrl}#faq`,
+      mainEntity: tool.faq.map((item: FAQItem) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    });
+  }
+
   return {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "SoftwareApplication",
-        "@id": `${toolUrl}#software`,
-        name: tool.title,
-        description: tool.longDescription,
-        url: toolUrl,
-        applicationCategory: "BusinessApplication",
-        operatingSystem: "Web Browser",
-        offers: {
-          "@type": "Offer",
-          price: tool.pricing.type === "free" ? "0" : tool.pricing.price?.toString() || "0",
-          priceCurrency: tool.pricing.currency || "EUR",
-        },
-        featureList: tool.features,
-      },
-      {
-        "@type": "WebPage",
-        "@id": `${toolUrl}#webpage`,
-        url: toolUrl,
-        name: tool.metaTitle,
-        description: tool.metaDescription,
-        isPartOf: { "@id": "https://aifais.com#website" },
-        inLanguage: isNL ? "nl-NL" : "en-US",
-        breadcrumb: {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              name: "Home",
-              item: "https://aifais.com",
-            },
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: "Tools",
-              item: "https://aifais.com/tools",
-            },
-            {
-              "@type": "ListItem",
-              position: 3,
-              name: tool.title,
-              item: toolUrl,
-            },
-          ],
-        },
-      },
-    ],
+    "@graph": graph,
   };
+}
+
+// FAQ Accordion Component
+function FAQAccordion({ faq }: { faq: FAQItem[] }) {
+  return (
+    <div className="space-y-3">
+      {faq.map((item, index) => (
+        <details
+          key={index}
+          className="group bg-white border border-zinc-200 rounded-xl overflow-hidden hover:border-emerald-200 transition-colors"
+        >
+          <summary className="flex items-center justify-between gap-4 p-5 cursor-pointer list-none">
+            <span className="font-semibold text-zinc-900">{item.question}</span>
+            <ChevronDown className="w-5 h-5 text-zinc-400 group-open:rotate-180 transition-transform duration-200" />
+          </summary>
+          <div className="px-5 pb-5 pt-0">
+            <p className="text-zinc-600 leading-relaxed">{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  );
+}
+
+// Related Tools Component
+function RelatedTools({ slugs, currentSlug }: { slugs: string[]; currentSlug: string }) {
+  const tools = slugs
+    .filter(slug => slug !== currentSlug)
+    .map(slug => getToolBySlug(slug))
+    .filter(Boolean)
+    .slice(0, 3);
+
+  if (tools.length === 0) return null;
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {tools.map((tool) => {
+        if (!tool) return null;
+        const Icon = tool.icon;
+        return (
+          <Link
+            key={tool.slug}
+            href={`/tools/${tool.slug}`}
+            className="group flex items-center gap-4 p-4 bg-white border border-zinc-200 rounded-xl hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-500/5 transition-all"
+          >
+            <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-emerald-100 transition-colors">
+              <Icon className="w-6 h-6 text-emerald-600" />
+            </div>
+            <div className="min-w-0">
+              <h4 className="font-semibold text-zinc-900 group-hover:text-emerald-700 transition-colors truncate">
+                {tool.title}
+              </h4>
+              <p className="text-sm text-zinc-500 truncate">{tool.shortDescription}</p>
+            </div>
+          </Link>
+        );
+      })}
+    </div>
+  );
 }
 
 export default async function ToolPage({ params }: Props) {
@@ -163,6 +247,7 @@ export default async function ToolPage({ params }: Props) {
     // HR Tools
     "cv-screener/CvScreenerClient": require("@/app/[locale]/tools/cv-screener/CvScreenerClient").default,
     "interview-questions/InterviewQuestionsClient": require("@/app/[locale]/tools/interview-questions/InterviewQuestionsClient").default,
+    "salary-calculator/SalaryCalculatorClient": require("@/app/[locale]/tools/salary-calculator/SalaryCalculatorClient").default,
     // Marketing Tools
     "social-planner/SocialPlannerClient": require("@/app/[locale]/tools/social-planner/SocialPlannerClient").default,
 
@@ -210,13 +295,13 @@ export default async function ToolPage({ params }: Props) {
         <section className="relative overflow-hidden">
           {/* Subtle background gradient */}
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-50/80 via-white to-white" />
-          
+
           {/* Decorative elements */}
           <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-emerald-500/[0.03] rounded-full blur-[120px] pointer-events-none" />
           <div className="absolute top-20 right-1/4 w-[500px] h-[500px] bg-blue-500/[0.03] rounded-full blur-[100px] pointer-events-none" />
-          
+
           {/* Subtle grid pattern */}
-          <div 
+          <div
             className="absolute inset-0 opacity-[0.015] pointer-events-none"
             style={{
               backgroundImage: `radial-gradient(circle at 1px 1px, rgb(0 0 0) 1px, transparent 0)`,
@@ -270,9 +355,25 @@ export default async function ToolPage({ params }: Props) {
             </h1>
 
             {/* Description */}
-            <p className="text-lg sm:text-xl text-zinc-500 text-center max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-lg sm:text-xl text-zinc-500 text-center max-w-2xl mx-auto mb-8 leading-relaxed">
               {tool.longDescription}
             </p>
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-full text-xs text-zinc-600">
+                <Shield className="w-3.5 h-3.5 text-emerald-500" />
+                <span>SSL Beveiligd</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-full text-xs text-zinc-600">
+                <Building2 className="w-3.5 h-3.5 text-emerald-500" />
+                <span>KVK 92453629</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-full text-xs text-zinc-600">
+                <Users className="w-3.5 h-3.5 text-emerald-500" />
+                <span>1000+ gebruikers</span>
+              </div>
+            </div>
 
             {/* Pricing Badge */}
             <div className="flex justify-center">
@@ -307,6 +408,75 @@ export default async function ToolPage({ params }: Props) {
             </div>
           </div>
         </section>
+
+        {/* ===== STATS SECTION ===== */}
+        {tool.stats && (
+          <section className="py-8 border-y border-zinc-100 bg-zinc-50/50">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+                {tool.stats.totalCalculations && (
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-3xl font-bold text-zinc-900">{tool.stats.totalCalculations}</div>
+                    <div className="text-sm text-zinc-500 mt-1">Berekeningen</div>
+                  </div>
+                )}
+                {tool.stats.avgRating && (
+                  <div className="text-center">
+                    <div className="flex items-center justify-center gap-1.5">
+                      <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
+                      <span className="text-2xl sm:text-3xl font-bold text-zinc-900">{tool.stats.avgRating}</span>
+                    </div>
+                    <div className="text-sm text-zinc-500 mt-1">{tool.stats.reviewCount} reviews</div>
+                  </div>
+                )}
+                {tool.stats.responseTime && (
+                  <div className="text-center">
+                    <div className="flex items-center justify-center gap-1.5">
+                      <Clock className="w-5 h-5 text-emerald-500" />
+                      <span className="text-2xl sm:text-3xl font-bold text-zinc-900">{tool.stats.responseTime}</span>
+                    </div>
+                    <div className="text-sm text-zinc-500 mt-1">Responstijd</div>
+                  </div>
+                )}
+                <div className="text-center">
+                  <div className="flex items-center justify-center gap-1.5">
+                    <Shield className="w-5 h-5 text-emerald-500" />
+                    <span className="text-2xl sm:text-3xl font-bold text-zinc-900">100%</span>
+                  </div>
+                  <div className="text-sm text-zinc-500 mt-1">Veilig & Privé</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ===== HOW IT WORKS SECTION ===== */}
+        {tool.howItWorks && tool.howItWorks.length > 0 && (
+          <section className="py-12 sm:py-16 bg-white">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-xl sm:text-2xl font-bold text-center text-zinc-900 mb-8">
+                Hoe werkt het?
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {tool.howItWorks.map((step, index) => (
+                  <div key={index} className="relative">
+                    <div className="flex flex-col items-center text-center">
+                      <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+                        <span className="text-lg font-bold text-emerald-600">{index + 1}</span>
+                      </div>
+                      <p className="text-zinc-700 font-medium">{step}</p>
+                    </div>
+                    {index < (tool.howItWorks?.length || 0) - 1 && (
+                      <div className="hidden sm:block absolute top-6 left-[calc(50%+2rem)] w-[calc(100%-4rem)] h-0.5 bg-emerald-100">
+                        <ArrowRight className="absolute -right-1 -top-2 w-4 h-4 text-emerald-300" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ===== TOOL COMPONENT ===== */}
         <section className="py-12 sm:py-16">
@@ -353,7 +523,7 @@ export default async function ToolPage({ params }: Props) {
                 <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-tight mb-8">
                   Wanneer gebruik je deze tool?
                 </h2>
-                
+
                 <div className="flex flex-wrap justify-center gap-3">
                   {tool.useCases.map((useCase, index) => (
                     <span
@@ -369,6 +539,42 @@ export default async function ToolPage({ params }: Props) {
           </section>
         )}
 
+        {/* ===== FAQ SECTION ===== */}
+        {tool.faq && tool.faq.length > 0 && (
+          <section className="py-16 sm:py-24">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-12">
+                <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-tight mb-4">
+                  Veelgestelde vragen
+                </h2>
+                <p className="text-zinc-500">
+                  Antwoorden op de meest voorkomende vragen
+                </p>
+              </div>
+
+              <FAQAccordion faq={tool.faq} />
+            </div>
+          </section>
+        )}
+
+        {/* ===== RELATED TOOLS SECTION ===== */}
+        {tool.relatedTools && tool.relatedTools.length > 0 && (
+          <section className="py-16 sm:py-24 bg-zinc-50">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-10">
+                <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-tight mb-4">
+                  Gerelateerde Tools
+                </h2>
+                <p className="text-zinc-500">
+                  Bekijk ook deze handige tools
+                </p>
+              </div>
+
+              <RelatedTools slugs={tool.relatedTools} currentSlug={tool.slug} />
+            </div>
+          </section>
+        )}
+
         {/* ===== CTA SECTION ===== */}
         <section className="py-16 sm:py-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -376,14 +582,14 @@ export default async function ToolPage({ params }: Props) {
               <Zap className="w-4 h-4" />
               Geen account nodig
             </div>
-            
+
             <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-tight mb-4">
               Andere tools ontdekken?
             </h2>
             <p className="text-zinc-500 mb-8 max-w-md mx-auto">
               Bekijk onze volledige collectie AI-tools voor het Nederlandse MKB
             </p>
-            
+
             <Link
               href="/tools"
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-zinc-900 text-white font-semibold rounded-xl hover:bg-zinc-800 transition-colors shadow-lg shadow-zinc-900/10"
