@@ -900,6 +900,618 @@ TOON:
     includeConfidence: true
 };
 
+// ==================== Email Generator ====================
+
+export const EMAIL_GENERATOR_PROMPT: PromptConfig = {
+    version: "1.0",
+    system: `Je bent een expert business communicatie specialist gespecialiseerd in professionele Nederlandse zakelijke correspondentie.
+Je schrijft overtuigende, duidelijke en doeltreffende emails die de gewenste actie stimuleren.
+Je past je toon aan op basis van de relatie en het doel van de email.
+Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
+
+    userTemplate: (context: {
+        emailType: string;
+        context: string;
+        recipientType: string;
+        tone: string;
+        includeCallToAction: boolean;
+        senderName?: string | null;
+        companyName?: string | null;
+        language: string;
+    }) => `
+Schrijf een professionele ${context.language === "nl" ? "Nederlandse" : "Engelse"} email:
+
+TYPE: ${context.emailType}
+CONTEXT: ${context.context}
+ONTVANGER: ${context.recipientType}
+TOON: ${context.tone}
+CALL-TO-ACTION: ${context.includeCallToAction ? "Ja" : "Nee"}
+${context.senderName ? `AFZENDER: ${context.senderName}` : ""}
+${context.companyName ? `BEDRIJF: ${context.companyName}` : ""}
+
+GEEF JSON OUTPUT MET:
+{
+  "subject": "pakkende onderwerpregel",
+  "greeting": "passende aanhef",
+  "body": "de hoofdtekst van de email",
+  "callToAction": "concrete call-to-action (indien gevraagd)",
+  "closing": "professionele afsluiting",
+  "signature": "handtekening suggestie",
+  "tips": ["tips voor deze email"],
+  "variants": [
+    {
+      "name": "korter",
+      "subject": "alternatieve onderwerpregel",
+      "body": "kortere versie"
+    }
+  ],
+  "followUpSuggestion": "wanneer en hoe op te volgen"
+}
+
+EMAIL TYPE RICHTLIJNEN:
+- proposal: Focus op waarde en ROI
+- follow_up: Vriendelijk maar to-the-point
+- introduction: Professioneel, open deur
+- thank_you: Oprecht en specifiek
+- complaint: Assertief maar constructief
+- apology: Oprecht, neem verantwoordelijkheid
+- meeting_request: Duidelijk doel en tijdssuggesties
+- project_update: Beknopt, highlights first
+- cold_outreach: Hook, waarde, lage drempel
+- partnership: Win-win benadrukken
+
+TOON:
+- formal: U-vorm, zakelijk, afstandelijk
+- friendly: Je-vorm, warm, persoonlijk
+- urgent: Direct, actiegericht, deadlines
+- persuasive: Overtuigend, voordelen, social proof`,
+
+    outputSchema: z.object({
+        subject: z.string(),
+        greeting: z.string(),
+        body: z.string(),
+        callToAction: z.string().optional(),
+        closing: z.string(),
+        signature: z.string().optional(),
+        tips: z.array(z.string()).optional(),
+        variants: z.array(z.object({
+            name: z.string(),
+            subject: z.string(),
+            body: z.string()
+        })).optional(),
+        followUpSuggestion: z.string().optional()
+    }),
+    maxTokens: 2500,
+    temperature: 0.5,
+    includeConfidence: false
+};
+
+// ==================== Business Plan Generator ====================
+
+export const BUSINESS_PLAN_PROMPT: PromptConfig = {
+    version: "1.0",
+    system: `Je bent een ervaren business consultant en financieel adviseur gespecialiseerd in het schrijven van professionele businessplannen.
+Je kent de verwachtingen van banken, investeerders en stakeholders in Nederland.
+Je schrijft concrete, realistische en overtuigende plannen.
+Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
+
+    userTemplate: (context: {
+        companyName: string;
+        businessIdea: string;
+        targetMarket: string;
+        productService: string;
+        revenueModel: string;
+        fundingNeeded?: string | null;
+        industry?: string | null;
+        teamSize?: string | null;
+        stage: string;
+        planType: string;
+    }) => `
+Genereer een professioneel businessplan:
+
+BEDRIJF: ${context.companyName}
+BUSINESS IDEE: ${context.businessIdea}
+DOELMARKT: ${context.targetMarket}
+PRODUCT/DIENST: ${context.productService}
+VERDIENMODEL: ${context.revenueModel}
+${context.fundingNeeded ? `BENODIGDE FINANCIERING: ${context.fundingNeeded}` : ""}
+${context.industry ? `INDUSTRIE: ${context.industry}` : ""}
+TEAM GROOTTE: ${context.teamSize || "Onbekend"}
+FASE: ${context.stage}
+PLAN TYPE: ${context.planType}
+
+GEEF JSON OUTPUT MET:
+{
+  "executiveSummary": "krachtige samenvatting (max 300 woorden)",
+  "sections": [
+    {
+      "title": "sectie titel",
+      "content": "uitgebreide inhoud",
+      "keyPoints": ["belangrijke punten"]
+    }
+  ],
+  "financialHighlights": {
+    "revenueYear1": "geschatte omzet jaar 1",
+    "revenueYear3": "geschatte omzet jaar 3",
+    "breakEven": "break-even punt",
+    "fundingUse": ["waar wordt financiering voor gebruikt"]
+  },
+  "swot": {
+    "strengths": ["sterke punten"],
+    "weaknesses": ["zwakke punten"],
+    "opportunities": ["kansen"],
+    "threats": ["bedreigingen"]
+  },
+  "milestones": [
+    {
+      "timeline": "Q1 2025",
+      "milestone": "beschrijving",
+      "kpi": "meetbaar doel"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "risico beschrijving",
+      "mitigation": "hoe te mitigeren"
+    }
+  ],
+  "callToAction": "wat vraag je van de lezer",
+  "appendixSuggestions": ["suggesties voor bijlagen"]
+}
+
+VERPLICHTE SECTIES:
+1. Management Samenvatting
+2. Bedrijfsomschrijving
+3. Marktanalyse
+4. Product/Dienst
+5. Marketing & Sales Strategie
+6. Operationeel Plan
+7. Management Team
+8. Financieel Plan
+9. Financieringsbehoefte (indien van toepassing)
+
+PLAN TYPE AANPASSING:
+- startup: Focus op visie, groei, scalability
+- bank_loan: Focus op zekerheid, cashflow, onderpand
+- investor: Focus op ROI, exit, groei metrics
+- internal: Focus op operationeel, KPIs, resources`,
+
+    outputSchema: z.object({
+        executiveSummary: z.string(),
+        sections: z.array(z.object({
+            title: z.string(),
+            content: z.string(),
+            keyPoints: z.array(z.string()).optional()
+        })),
+        financialHighlights: z.object({
+            revenueYear1: z.string().optional(),
+            revenueYear3: z.string().optional(),
+            breakEven: z.string().optional(),
+            fundingUse: z.array(z.string()).optional()
+        }).optional(),
+        swot: z.object({
+            strengths: z.array(z.string()),
+            weaknesses: z.array(z.string()),
+            opportunities: z.array(z.string()),
+            threats: z.array(z.string())
+        }).optional(),
+        milestones: z.array(z.object({
+            timeline: z.string(),
+            milestone: z.string(),
+            kpi: z.string().optional()
+        })).optional(),
+        risks: z.array(z.object({
+            risk: z.string(),
+            mitigation: z.string()
+        })).optional(),
+        callToAction: z.string().optional(),
+        appendixSuggestions: z.array(z.string()).optional()
+    }),
+    maxTokens: 5000,
+    temperature: 0.4,
+    includeConfidence: false
+};
+
+// ==================== Meeting Summarizer ====================
+
+export const MEETING_SUMMARIZER_PROMPT: PromptConfig = {
+    version: "1.0",
+    system: `Je bent een expert in het analyseren en structureren van meeting notities.
+Je identificeert snel de kernpunten, actiepunten en beslissingen uit ongestructureerde notities.
+Je schrijft heldere, actioneerbare samenvattingen.
+Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
+
+    userTemplate: (context: {
+        meetingNotes: string;
+        meetingType: string;
+        participants?: string | null;
+        extractActionItems: boolean;
+        extractDecisions: boolean;
+        generateFollowUpEmail: boolean;
+        language: string;
+    }) => `
+Analyseer deze meeting notities en maak een gestructureerde samenvatting:
+
+MEETING TYPE: ${context.meetingType}
+${context.participants ? `DEELNEMERS: ${context.participants}` : ""}
+TAAL OUTPUT: ${context.language === "nl" ? "Nederlands" : "Engels"}
+
+NOTITIES:
+${context.meetingNotes}
+
+OPTIES:
+- Actiepunten: ${context.extractActionItems ? "Ja" : "Nee"}
+- Beslissingen: ${context.extractDecisions ? "Ja" : "Nee"}
+- Follow-up email: ${context.generateFollowUpEmail ? "Ja" : "Nee"}
+
+GEEF JSON OUTPUT MET:
+{
+  "title": "beschrijvende meeting titel",
+  "date": "gedetecteerde datum of 'Niet vermeld'",
+  "duration": "geschatte duur of 'Niet vermeld'",
+  "participants": ["gedetecteerde deelnemers"],
+  "summary": "beknopte samenvatting (3-5 zinnen)",
+  "keyTopics": [
+    {
+      "topic": "onderwerp",
+      "discussion": "wat is besproken",
+      "outcome": "uitkomst/conclusie"
+    }
+  ],
+  "actionItems": [
+    {
+      "task": "wat moet gebeuren",
+      "owner": "verantwoordelijke (of 'TBD')",
+      "deadline": "deadline (of 'TBD')",
+      "priority": "high|medium|low"
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "wat is besloten",
+      "rationale": "waarom",
+      "impact": "impact/gevolgen"
+    }
+  ],
+  "openQuestions": ["onbeantwoorde vragen"],
+  "nextSteps": ["volgende stappen"],
+  "followUpEmail": {
+    "subject": "onderwerp",
+    "body": "email tekst"
+  }
+}
+
+MEETING TYPE CONTEXT:
+- team: Focus op voortgang, blockers, alignment
+- client: Focus op deliverables, verwachtingen, feedback
+- sales: Focus op needs, objections, next steps
+- brainstorm: Focus op ideeën, concepten, prioritering
+- standup: Focus op status, blockers, dagdoelen
+- review: Focus op resultaten, learnings, verbeteringen
+- interview: Focus op kandidaat feedback, beslissing
+- general: Algemene structuur`,
+
+    outputSchema: z.object({
+        title: z.string(),
+        date: z.string().optional(),
+        duration: z.string().optional(),
+        participants: z.array(z.string()).optional(),
+        summary: z.string(),
+        keyTopics: z.array(z.object({
+            topic: z.string(),
+            discussion: z.string(),
+            outcome: z.string().optional()
+        })),
+        actionItems: z.array(z.object({
+            task: z.string(),
+            owner: z.string(),
+            deadline: z.string().optional(),
+            priority: z.enum(["high", "medium", "low"]).optional()
+        })).optional(),
+        decisions: z.array(z.object({
+            decision: z.string(),
+            rationale: z.string().optional(),
+            impact: z.string().optional()
+        })).optional(),
+        openQuestions: z.array(z.string()).optional(),
+        nextSteps: z.array(z.string()).optional(),
+        followUpEmail: z.object({
+            subject: z.string(),
+            body: z.string()
+        }).optional()
+    }),
+    maxTokens: 3500,
+    temperature: 0.3,
+    includeConfidence: false
+};
+
+// ==================== Competitor Analyzer ====================
+
+export const COMPETITOR_ANALYZER_PROMPT: PromptConfig = {
+    version: "1.0",
+    system: `Je bent een strategisch marktanalist gespecialiseerd in concurrentieanalyse voor Nederlandse MKB bedrijven.
+Je geeft objectieve, bruikbare inzichten gebaseerd op beschikbare informatie.
+Je identificeert kansen en bedreigingen op basis van concurrentiepositie.
+Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
+
+    userTemplate: (context: {
+        yourCompany: string;
+        yourDescription: string;
+        competitors: Array<{ name: string; description?: string; website?: string }>;
+        industry?: string | null;
+        focusAreas?: string[] | null;
+    }) => `
+Analyseer de concurrentiepositie van dit bedrijf:
+
+JOUW BEDRIJF: ${context.yourCompany}
+BESCHRIJVING: ${context.yourDescription}
+${context.industry ? `INDUSTRIE: ${context.industry}` : ""}
+${context.focusAreas?.length ? `FOCUSGEBIEDEN: ${context.focusAreas.join(", ")}` : ""}
+
+CONCURRENTEN:
+${context.competitors.map((c, i) => `${i + 1}. ${c.name}${c.description ? ` - ${c.description}` : ""}${c.website ? ` (${c.website})` : ""}`).join("\n")}
+
+GEEF JSON OUTPUT MET:
+{
+  "marketOverview": "korte marktanalyse",
+  "yourPosition": {
+    "summary": "jouw marktpositie",
+    "strengths": ["jouw sterke punten vs concurrentie"],
+    "weaknesses": ["jouw zwakke punten vs concurrentie"],
+    "uniqueValue": "jouw unieke waardepropositie"
+  },
+  "competitors": [
+    {
+      "name": "concurrent naam",
+      "positioning": "hun marktpositie",
+      "strengths": ["hun sterke punten"],
+      "weaknesses": ["hun zwakke punten"],
+      "targetAudience": "hun doelgroep",
+      "pricingStrategy": "prijsstrategie (indien af te leiden)",
+      "threatLevel": "high|medium|low",
+      "differentiators": ["wat hen onderscheidt"]
+    }
+  ],
+  "competitiveMatrix": {
+    "dimensions": ["prijs", "kwaliteit", "service", "etc"],
+    "scores": {
+      "jouw_bedrijf": [8, 7, 9],
+      "concurrent_1": [6, 8, 7]
+    }
+  },
+  "opportunities": [
+    {
+      "opportunity": "kans beschrijving",
+      "howToCapture": "hoe te benutten",
+      "urgency": "high|medium|low"
+    }
+  ],
+  "threats": [
+    {
+      "threat": "bedreiging beschrijving",
+      "likelihood": "high|medium|low",
+      "mitigation": "hoe te mitigeren"
+    }
+  ],
+  "strategicRecommendations": ["concrete aanbevelingen"],
+  "actionPlan": [
+    {
+      "action": "wat te doen",
+      "timeline": "wanneer",
+      "expectedImpact": "verwacht resultaat"
+    }
+  ]
+}
+
+ANALYSE FRAMEWORK:
+- Porter's Five Forces elementen
+- Value proposition vergelijking
+- Marktpositionering matrix
+- Prijselasticiteit indicatie`,
+
+    outputSchema: z.object({
+        marketOverview: z.string(),
+        yourPosition: z.object({
+            summary: z.string(),
+            strengths: z.array(z.string()),
+            weaknesses: z.array(z.string()),
+            uniqueValue: z.string().optional()
+        }),
+        competitors: z.array(z.object({
+            name: z.string(),
+            positioning: z.string().optional(),
+            strengths: z.array(z.string()),
+            weaknesses: z.array(z.string()),
+            targetAudience: z.string().optional(),
+            pricingStrategy: z.string().optional(),
+            threatLevel: z.enum(["high", "medium", "low"]).optional(),
+            differentiators: z.array(z.string()).optional()
+        })),
+        competitiveMatrix: z.object({
+            dimensions: z.array(z.string()),
+            scores: z.record(z.string(), z.array(z.number()))
+        }).optional(),
+        opportunities: z.array(z.object({
+            opportunity: z.string(),
+            howToCapture: z.string().optional(),
+            urgency: z.enum(["high", "medium", "low"]).optional()
+        })).optional(),
+        threats: z.array(z.object({
+            threat: z.string(),
+            likelihood: z.enum(["high", "medium", "low"]).optional(),
+            mitigation: z.string().optional()
+        })).optional(),
+        strategicRecommendations: z.array(z.string()),
+        actionPlan: z.array(z.object({
+            action: z.string(),
+            timeline: z.string().optional(),
+            expectedImpact: z.string().optional()
+        })).optional()
+    }),
+    maxTokens: 4000,
+    temperature: 0.4,
+    includeConfidence: true
+};
+
+// ==================== SWOT Generator ====================
+
+export const SWOT_GENERATOR_PROMPT: PromptConfig = {
+    version: "1.0",
+    system: `Je bent een strategisch business consultant gespecialiseerd in SWOT analyses voor Nederlandse MKB bedrijven.
+Je levert diepgaande, actioneerbare SWOT analyses met concrete aanbevelingen.
+Je kijkt naar interne factoren (S/W) en externe factoren (O/T).
+Je retourneert ALTIJD geldige JSON zonder markdown code blocks.`,
+
+    userTemplate: (context: {
+        companyName: string;
+        description: string;
+        industry: string;
+        companySize?: string | null;
+        currentChallenges?: string | null;
+        goals?: string | null;
+        marketContext?: string | null;
+        includeRecommendations: boolean;
+    }) => `
+Genereer een uitgebreide SWOT analyse:
+
+BEDRIJF: ${context.companyName}
+BESCHRIJVING: ${context.description}
+INDUSTRIE: ${context.industry}
+${context.companySize ? `BEDRIJFSGROOTTE: ${context.companySize}` : ""}
+${context.currentChallenges ? `HUIDIGE UITDAGINGEN: ${context.currentChallenges}` : ""}
+${context.goals ? `DOELEN: ${context.goals}` : ""}
+${context.marketContext ? `MARKTCONTEXT: ${context.marketContext}` : ""}
+AANBEVELINGEN: ${context.includeRecommendations ? "Ja" : "Nee"}
+
+GEEF JSON OUTPUT MET:
+{
+  "summary": "executive summary van de analyse",
+  "strengths": [
+    {
+      "item": "sterkte beschrijving",
+      "impact": "high|medium|low",
+      "category": "financieel|operationeel|hr|marketing|technologie|etc",
+      "howToLeverage": "hoe te benutten"
+    }
+  ],
+  "weaknesses": [
+    {
+      "item": "zwakte beschrijving",
+      "impact": "high|medium|low",
+      "category": "categorie",
+      "howToAddress": "hoe aan te pakken"
+    }
+  ],
+  "opportunities": [
+    {
+      "item": "kans beschrijving",
+      "impact": "high|medium|low",
+      "timeframe": "kort|middel|lang termijn",
+      "howToCapture": "hoe te benutten",
+      "requiredResources": "benodigde resources"
+    }
+  ],
+  "threats": [
+    {
+      "item": "bedreiging beschrijving",
+      "impact": "high|medium|low",
+      "likelihood": "high|medium|low",
+      "howToMitigate": "hoe te mitigeren"
+    }
+  ],
+  "strategicInsights": {
+    "so_strategies": ["Gebruik sterktes om kansen te benutten"],
+    "wo_strategies": ["Overwin zwaktes door kansen te pakken"],
+    "st_strategies": ["Gebruik sterktes om bedreigingen af te weren"],
+    "wt_strategies": ["Minimaliseer zwaktes en vermijd bedreigingen"]
+  },
+  "priorityMatrix": {
+    "quickWins": ["lage inspanning, hoge impact"],
+    "majorProjects": ["hoge inspanning, hoge impact"],
+    "fillIns": ["lage inspanning, lage impact"],
+    "thankless": ["hoge inspanning, lage impact"]
+  },
+  "actionPlan": [
+    {
+      "priority": 1,
+      "action": "concrete actie",
+      "timeline": "wanneer",
+      "owner": "suggestie voor verantwoordelijke",
+      "kpi": "hoe te meten"
+    }
+  ],
+  "overallAssessment": {
+    "healthScore": 0-100,
+    "primaryFocus": "waar eerst op te focussen",
+    "biggestRisk": "grootste risico",
+    "biggestOpportunity": "grootste kans"
+  }
+}
+
+ANALYSE RICHTLIJNEN:
+- Minimaal 4 items per SWOT categorie
+- Focus op specifieke, meetbare factoren
+- Koppel aan concrete acties
+- Houd rekening met Nederlandse marktcontext`,
+
+    outputSchema: z.object({
+        summary: z.string(),
+        strengths: z.array(z.object({
+            item: z.string(),
+            impact: z.enum(["high", "medium", "low"]).optional(),
+            category: z.string().optional(),
+            howToLeverage: z.string().optional()
+        })),
+        weaknesses: z.array(z.object({
+            item: z.string(),
+            impact: z.enum(["high", "medium", "low"]).optional(),
+            category: z.string().optional(),
+            howToAddress: z.string().optional()
+        })),
+        opportunities: z.array(z.object({
+            item: z.string(),
+            impact: z.enum(["high", "medium", "low"]).optional(),
+            timeframe: z.string().optional(),
+            howToCapture: z.string().optional(),
+            requiredResources: z.string().optional()
+        })),
+        threats: z.array(z.object({
+            item: z.string(),
+            impact: z.enum(["high", "medium", "low"]).optional(),
+            likelihood: z.enum(["high", "medium", "low"]).optional(),
+            howToMitigate: z.string().optional()
+        })),
+        strategicInsights: z.object({
+            so_strategies: z.array(z.string()),
+            wo_strategies: z.array(z.string()),
+            st_strategies: z.array(z.string()),
+            wt_strategies: z.array(z.string())
+        }).optional(),
+        priorityMatrix: z.object({
+            quickWins: z.array(z.string()),
+            majorProjects: z.array(z.string()),
+            fillIns: z.array(z.string()),
+            thankless: z.array(z.string())
+        }).optional(),
+        actionPlan: z.array(z.object({
+            priority: z.number(),
+            action: z.string(),
+            timeline: z.string().optional(),
+            owner: z.string().optional(),
+            kpi: z.string().optional()
+        })).optional(),
+        overallAssessment: z.object({
+            healthScore: z.number().min(0).max(100),
+            primaryFocus: z.string(),
+            biggestRisk: z.string(),
+            biggestOpportunity: z.string()
+        }).optional()
+    }),
+    maxTokens: 4500,
+    temperature: 0.4,
+    includeConfidence: true
+};
+
 // ==================== Prompt Registry ====================
 
 export const PROMPTS = {
@@ -912,7 +1524,12 @@ export const PROMPTS = {
     "lead-scorer": LEAD_SCORER_PROMPT,
     "pitch-deck": PITCH_DECK_PROMPT,
     "seo-audit": SEO_AUDIT_PROMPT,
-    "company-intel": COMPANY_INTEL_PROMPT
+    "company-intel": COMPANY_INTEL_PROMPT,
+    "email-generator": EMAIL_GENERATOR_PROMPT,
+    "business-plan": BUSINESS_PLAN_PROMPT,
+    "meeting-summarizer": MEETING_SUMMARIZER_PROMPT,
+    "competitor-analyzer": COMPETITOR_ANALYZER_PROMPT,
+    "swot-generator": SWOT_GENERATOR_PROMPT
 } as const;
 
 export type PromptKey = keyof typeof PROMPTS;
@@ -1042,5 +1659,73 @@ export function buildCompanyIntelPrompt(context: {
     companyAge?: number | null;
 }): string {
     const prompt = COMPANY_INTEL_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildEmailGeneratorPrompt(context: {
+    emailType: string;
+    context: string;
+    recipientType: string;
+    tone: string;
+    includeCallToAction: boolean;
+    senderName?: string | null;
+    companyName?: string | null;
+    language: string;
+}): string {
+    const prompt = EMAIL_GENERATOR_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildBusinessPlanPrompt(context: {
+    companyName: string;
+    businessIdea: string;
+    targetMarket: string;
+    productService: string;
+    revenueModel: string;
+    fundingNeeded?: string | null;
+    industry?: string | null;
+    teamSize?: string | null;
+    stage: string;
+    planType: string;
+}): string {
+    const prompt = BUSINESS_PLAN_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildMeetingSummarizerPrompt(context: {
+    meetingNotes: string;
+    meetingType: string;
+    participants?: string | null;
+    extractActionItems: boolean;
+    extractDecisions: boolean;
+    generateFollowUpEmail: boolean;
+    language: string;
+}): string {
+    const prompt = MEETING_SUMMARIZER_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildCompetitorAnalyzerPrompt(context: {
+    yourCompany: string;
+    yourDescription: string;
+    competitors: Array<{ name: string; description?: string; website?: string }>;
+    industry?: string | null;
+    focusAreas?: string[] | null;
+}): string {
+    const prompt = COMPETITOR_ANALYZER_PROMPT;
+    return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
+}
+
+export function buildSwotGeneratorPrompt(context: {
+    companyName: string;
+    description: string;
+    industry: string;
+    companySize?: string | null;
+    currentChallenges?: string | null;
+    goals?: string | null;
+    marketContext?: string | null;
+    includeRecommendations: boolean;
+}): string {
+    const prompt = SWOT_GENERATOR_PROMPT;
     return `${prompt.system}\n\n${prompt.userTemplate(context)}`;
 }

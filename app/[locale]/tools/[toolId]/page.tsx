@@ -171,6 +171,19 @@ export default async function ToolPage({ params }: Props) {
 
     // Business Intelligence Tools
     "kvk-search/KvkSearchClient": require("@/app/[locale]/tools/kvk-search/KvkSearchClient").default,
+
+    // Marketing Tools (new)
+    "email-generator/EmailGeneratorClient": require("@/app/[locale]/tools/email-generator/EmailGeneratorClient").default,
+
+    // Consulting Tools (new)
+    "business-plan/BusinessPlanClient": require("@/app/[locale]/tools/business-plan/BusinessPlanClient").default,
+    "swot-generator/SwotGeneratorClient": require("@/app/[locale]/tools/swot-generator/SwotGeneratorClient").default,
+
+    // Business Tools (new)
+    "meeting-summarizer/MeetingSummarizerClient": require("@/app/[locale]/tools/meeting-summarizer/MeetingSummarizerClient").default,
+
+    // Sales Tools (new)
+    "competitor-analyzer/CompetitorAnalyzerClient": require("@/app/[locale]/tools/competitor-analyzer/CompetitorAnalyzerClient").default,
   };
 
   const ToolComponent = componentMap[tool.componentPath];

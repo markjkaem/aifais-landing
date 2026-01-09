@@ -348,6 +348,79 @@ export const roiCalculatorSchema = z.object({
     timeframe: z.number().min(1).max(60).default(12), // months
 }).merge(paymentSchema);
 
+// ==================== Email Generator Schema ====================
+
+export const emailGeneratorSchema = z.object({
+    emailType: z.enum([
+        "proposal", "follow_up", "introduction", "thank_you",
+        "complaint", "apology", "meeting_request", "project_update",
+        "cold_outreach", "partnership"
+    ]),
+    context: z.string().min(10, "Beschrijf de context (min. 10 tekens)").max(MAX_DESCRIPTION_LENGTH),
+    recipientType: z.enum(["client", "prospect", "supplier", "colleague", "manager", "partner"]),
+    tone: z.enum(["formal", "friendly", "urgent", "persuasive"]).default("formal"),
+    includeCallToAction: z.boolean().default(true),
+    senderName: z.string().max(100).optional(),
+    companyName: z.string().max(100).optional(),
+    language: z.enum(["nl", "en"]).default("nl"),
+}).merge(paymentSchema);
+
+// ==================== Business Plan Generator Schema ====================
+
+export const businessPlanSchema = z.object({
+    companyName: z.string().min(1, "Bedrijfsnaam is verplicht").max(200),
+    businessIdea: z.string().min(50, "Beschrijf je business idee (min. 50 tekens)").max(MAX_DESCRIPTION_LENGTH),
+    targetMarket: z.string().min(10, "Beschrijf je doelmarkt").max(1000),
+    productService: z.string().min(10, "Beschrijf je product/dienst").max(2000),
+    revenueModel: z.string().min(10, "Beschrijf je verdienmodel").max(1000),
+    fundingNeeded: z.string().max(100).optional(),
+    industry: z.string().max(100).optional(),
+    teamSize: z.enum(["solo", "2-5", "6-10", "11-50", "50+"]).optional(),
+    stage: z.enum(["idea", "mvp", "early_revenue", "growth", "scaling"]).default("idea"),
+    planType: z.enum(["startup", "bank_loan", "investor", "internal"]).default("investor"),
+}).merge(paymentSchema);
+
+// ==================== Meeting Summarizer Schema ====================
+
+export const meetingSummarizerSchema = z.object({
+    meetingNotes: z.string().min(50, "Meeting notities te kort (min. 50 tekens)").max(MAX_TEXT_LENGTH * 2),
+    meetingType: z.enum(["team", "client", "sales", "brainstorm", "standup", "review", "interview", "general"]).default("general"),
+    participants: z.string().max(500).optional(),
+    extractActionItems: z.boolean().default(true),
+    extractDecisions: z.boolean().default(true),
+    generateFollowUpEmail: z.boolean().default(false),
+    language: z.enum(["nl", "en"]).default("nl"),
+}).merge(paymentSchema);
+
+// ==================== Competitor Analyzer Schema ====================
+
+export const competitorAnalyzerSchema = z.object({
+    yourCompany: z.string().min(1, "Je bedrijfsnaam is verplicht").max(200),
+    yourDescription: z.string().min(20, "Beschrijf je eigen bedrijf (min. 20 tekens)").max(2000),
+    competitors: z.array(z.object({
+        name: z.string().min(1).max(200),
+        description: z.string().max(1000).optional(),
+        website: z.string().url().optional(),
+    })).min(1, "Voeg minimaal 1 concurrent toe").max(5),
+    industry: z.string().max(100).optional(),
+    focusAreas: z.array(
+        z.enum(["pricing", "features", "market_position", "strengths", "weaknesses", "opportunities"])
+    ).optional(),
+}).merge(paymentSchema);
+
+// ==================== SWOT Generator Schema ====================
+
+export const swotGeneratorSchema = z.object({
+    companyName: z.string().min(1, "Bedrijfsnaam is verplicht").max(200),
+    description: z.string().min(30, "Beschrijf je bedrijf (min. 30 tekens)").max(MAX_DESCRIPTION_LENGTH),
+    industry: z.string().min(1, "Industrie is verplicht").max(100),
+    companySize: z.enum(["solo", "2-10", "11-50", "51-200", "200+"]).optional(),
+    currentChallenges: z.string().max(2000).optional(),
+    goals: z.string().max(2000).optional(),
+    marketContext: z.string().max(2000).optional(),
+    includeRecommendations: z.boolean().default(true),
+}).merge(paymentSchema);
+
 // ==================== Type Exports ====================
 
 export type ScanInput = z.infer<typeof scanSchema>;
@@ -363,4 +436,9 @@ export type LeadScorerInput = z.infer<typeof leadScorerSchema>;
 export type PitchDeckInput = z.infer<typeof pitchDeckSchema>;
 export type RoiCalculatorInput = z.infer<typeof roiCalculatorSchema>;
 export type KvkSearchInput = z.infer<typeof kvkSearchSchema>;
+export type EmailGeneratorInput = z.infer<typeof emailGeneratorSchema>;
+export type BusinessPlanInput = z.infer<typeof businessPlanSchema>;
+export type MeetingSummarizerInput = z.infer<typeof meetingSummarizerSchema>;
+export type CompetitorAnalyzerInput = z.infer<typeof competitorAnalyzerSchema>;
+export type SwotGeneratorInput = z.infer<typeof swotGeneratorSchema>;
 
