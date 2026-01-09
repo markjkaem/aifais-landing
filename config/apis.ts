@@ -13,7 +13,7 @@ export type APIEndpoint = {
     description: string;
     method: "GET" | "POST" | "PUT" | "DELETE";
     path: string;
-    category: "finance" | "legal" | "hr" | "marketing" | "sales";
+    category: "finance" | "legal" | "hr" | "marketing" | "sales" | "consulting" | "business";
     price: string; // Display price
     isFree?: boolean;
     status: "live" | "beta" | "coming";
@@ -28,6 +28,8 @@ export const API_CATEGORIES = [
     { id: "hr", name: "HR", icon: "👥", description: "Personeelszaken & recruitment", color: "amber" },
     { id: "marketing", name: "Marketing", icon: "📢", description: "Content, SEO & campagnes", color: "rose" },
     { id: "sales", name: "Sales", icon: "🤝", description: "Leads, pipeline & deals", color: "blue" },
+    { id: "consulting", name: "Consulting", icon: "📊", description: "Businessplannen, SWOT & strategie", color: "cyan" },
+    { id: "business", name: "Business", icon: "💼", description: "Vergaderingen, productiviteit & operations", color: "amber" },
 ] as const;
 
 export const API_ENDPOINTS: APIEndpoint[] = [
@@ -285,6 +287,162 @@ export const API_ENDPOINTS: APIEndpoint[] = [
             { name: "problemSolution", type: "string", required: true, description: "Problem and solution statement" },
             { name: "signature", type: "string", required: true, description: "X402 payment signature" },
         ]
+    },
+
+    // MARKETING - Email Generator
+    {
+        id: "email-generator",
+        name: "email_generator",
+        title: "Email Generator",
+        description: "Generate professional business emails with AI. Supports proposals, follow-ups, introductions and more.",
+        method: "POST",
+        path: "/api/v1/marketing/email-generator",
+        category: "marketing",
+        price: "Free",
+        isFree: true,
+        status: "live",
+        isNew: true,
+        params: [
+            { name: "emailType", type: "string", required: true, description: "Type: proposal, follow-up, introduction, thank-you, etc." },
+            { name: "context", type: "string", required: true, description: "Context and what you want to achieve" },
+            { name: "recipientType", type: "string", required: true, description: "Recipient: client, prospect, supplier, colleague" },
+            { name: "tone", type: "string", required: false, description: "Tone: formal, friendly, urgent, persuasive" },
+            { name: "language", type: "string", required: false, description: "Language: nl or en (default: nl)" },
+        ],
+        responseExample: `{
+  "success": true,
+  "data": {
+    "subject": "Voorstel samenwerking - [Onderwerp]",
+    "body": "Beste [Naam],\\n\\n...",
+    "callToAction": "Plan een gesprek in",
+    "tips": ["Personaliseer de aanhef", "..."]
+  }
+}`
+    },
+
+    // CONSULTING - Business Plan & SWOT
+    {
+        id: "business-plan",
+        name: "business_plan",
+        title: "Business Plan Generator",
+        description: "Generate comprehensive business plans ready for banks or investors. Includes financials, SWOT and milestones.",
+        method: "POST",
+        path: "/api/v1/consulting/business-plan",
+        category: "consulting",
+        price: "0.001 SOL",
+        status: "live",
+        isNew: true,
+        params: [
+            { name: "companyName", type: "string", required: true, description: "Company name" },
+            { name: "businessIdea", type: "string", required: true, description: "Detailed business idea description" },
+            { name: "targetMarket", type: "string", required: true, description: "Target market description" },
+            { name: "revenueModel", type: "string", required: true, description: "How the business makes money" },
+            { name: "planType", type: "string", required: false, description: "startup, bank, investors, internal" },
+            { name: "signature", type: "string", required: true, description: "X402 payment signature" },
+        ],
+        responseExample: `{
+  "success": true,
+  "data": {
+    "executiveSummary": "...",
+    "marketAnalysis": { "size": "...", "trends": [...] },
+    "financialProjections": { "year1": {...}, "year2": {...} },
+    "swotAnalysis": { "strengths": [...], ... },
+    "milestones": [...]
+  }
+}`
+    },
+    {
+        id: "swot-generator",
+        name: "swot_generator",
+        title: "SWOT Generator",
+        description: "Generate a professional SWOT analysis with strategic insights and action recommendations.",
+        method: "POST",
+        path: "/api/v1/consulting/swot-generator",
+        category: "consulting",
+        price: "0.001 SOL",
+        status: "live",
+        isNew: true,
+        params: [
+            { name: "companyName", type: "string", required: true, description: "Company name" },
+            { name: "description", type: "string", required: true, description: "Company description" },
+            { name: "industry", type: "string", required: false, description: "Industry sector" },
+            { name: "currentChallenges", type: "string", required: false, description: "Current challenges" },
+            { name: "goals", type: "string", required: false, description: "Business goals" },
+            { name: "signature", type: "string", required: true, description: "X402 payment signature" },
+        ],
+        responseExample: `{
+  "success": true,
+  "data": {
+    "strengths": [{ "point": "...", "priority": "high" }],
+    "weaknesses": [...],
+    "opportunities": [...],
+    "threats": [...],
+    "recommendations": [...]
+  }
+}`
+    },
+
+    // BUSINESS - Meeting Summarizer
+    {
+        id: "meeting-summarizer",
+        name: "meeting_summarizer",
+        title: "Meeting Summarizer",
+        description: "Transform meeting notes into structured summaries with action items, decisions and follow-up emails.",
+        method: "POST",
+        path: "/api/v1/business/meeting-summarizer",
+        category: "business",
+        price: "0.001 SOL",
+        status: "live",
+        isNew: true,
+        params: [
+            { name: "meetingNotes", type: "string", required: true, description: "Raw meeting notes or transcript" },
+            { name: "meetingType", type: "string", required: false, description: "team, client, sales, brainstorm, standup" },
+            { name: "participants", type: "string", required: false, description: "List of participants" },
+            { name: "extractActionItems", type: "boolean", required: false, description: "Extract action items (default: true)" },
+            { name: "generateFollowUpEmail", type: "boolean", required: false, description: "Generate follow-up email" },
+            { name: "signature", type: "string", required: true, description: "X402 payment signature" },
+        ],
+        responseExample: `{
+  "success": true,
+  "data": {
+    "summary": "...",
+    "keyPoints": [...],
+    "actionItems": [{ "task": "...", "owner": "...", "deadline": "...", "priority": "high" }],
+    "decisions": [...],
+    "followUpEmail": "..."
+  }
+}`
+    },
+
+    // SALES - Competitor Analyzer
+    {
+        id: "competitor-analyzer",
+        name: "competitor_analyzer",
+        title: "Competitor Analyzer",
+        description: "Compare your business against competitors with strategic insights on strengths, weaknesses and opportunities.",
+        method: "POST",
+        path: "/api/v1/sales/competitor-analyzer",
+        category: "sales",
+        price: "0.001 SOL",
+        status: "live",
+        isNew: true,
+        params: [
+            { name: "yourCompany", type: "string", required: true, description: "Your company name" },
+            { name: "yourDescription", type: "string", required: true, description: "Your company description" },
+            { name: "competitors", type: "array", required: true, description: "Array of competitors with name and description" },
+            { name: "industry", type: "string", required: false, description: "Industry for context" },
+            { name: "focusAreas", type: "array", required: false, description: "Areas to focus analysis on" },
+            { name: "signature", type: "string", required: true, description: "X402 payment signature" },
+        ],
+        responseExample: `{
+  "success": true,
+  "data": {
+    "competitorAnalysis": [{ "name": "...", "threatLevel": "high", "strengths": [...] }],
+    "yourStrengths": [...],
+    "opportunities": [...],
+    "recommendations": [...]
+  }
+}`
     },
 
     // COMING SOON EXAMPLES (for UI purposes)
