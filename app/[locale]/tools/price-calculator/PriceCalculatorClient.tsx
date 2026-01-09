@@ -136,7 +136,12 @@ export default function PriceCalculatorClient() {
             }
 
             const data = await response.json();
-            setResult(data.data);
+            // Validate response structure before setting - Fixes JAVASCRIPT-NEXTJS-5
+            if (data.success && data.data?.pricing) {
+                setResult(data.data);
+            } else {
+                throw new Error(data.error || "Ongeldig antwoord van server");
+            }
         } catch (err) {
             setError(err instanceof Error ? err.message : "Er ging iets mis.");
         } finally {
