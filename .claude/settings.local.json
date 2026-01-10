@@ -72,7 +72,8 @@
       "Bash(powershell -Command \"Start-Sleep -Seconds 15\")",
       "Skill(ralph-loop:help)",
       "Bash(ls:*)",
-      "Bash(bunx tsc:*)"
+      "Bash(bunx tsc:*)",
+      "Skill(ralph-loop:cancel-ralph)"
     ]
   },
   "disabledMcpjsonServers": [
